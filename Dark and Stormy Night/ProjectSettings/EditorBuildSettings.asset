@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/HoleTown.unity
     guid: 99fe8213aa33d5c48abbcce63e53fdc1
+  - enabled: 1
+    path: Assets/Scenes/Hotel.unity
+    guid: 1ba98a80cf199484f80fa4d0d80d2ca1
   m_configObjects: {}
