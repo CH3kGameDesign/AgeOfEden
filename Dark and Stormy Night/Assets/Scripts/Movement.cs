@@ -26,7 +26,7 @@ public class Movement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        canMove = false;
+        canMove = true;
         player = this.gameObject;
 	}
 	

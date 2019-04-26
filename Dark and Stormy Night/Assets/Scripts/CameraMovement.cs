@@ -34,7 +34,7 @@ public class CameraMovement : MonoBehaviour {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         snapToPlayer = true;
-        goToPlayer = false;
+        goToPlayer = true;
         cameraObject = this.gameObject;
     }
 	

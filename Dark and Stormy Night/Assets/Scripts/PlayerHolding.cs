@@ -18,6 +18,8 @@ public class PlayerHolding : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        CameraMovement.goToPlayer = false;
+        Movement.canMove = false;
         RaycastHit hit;
 
         DepthOfFieldModel.Settings DOFSettings = CameraMovement.cameraObject.GetComponentInChildren<PostProcessingBehaviour>().profile.depthOfField.settings;
