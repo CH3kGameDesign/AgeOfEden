@@ -112,7 +112,6 @@
     <Compile Include="Assets\ProCore\ProBuilder\API Examples\Procedural Mesh\ExtrudeRandomEdges.cs" />
     <Compile Include="Assets\ProCore\ProBuilder\API Examples\Runtime Editing\RuntimeEdit.cs" />
     <Compile Include="Assets\ProCore\ProBuilder\API Examples\Vertex Colors\HighlightNearestFace.cs" />
-    <Compile Include="Assets\Scripts\AlternateTimeGate.cs" />
     <Compile Include="Assets\Scripts\BreathingObject.cs" />
     <Compile Include="Assets\Scripts\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\ContinonousRotation.cs" />
@@ -128,12 +127,16 @@
     <Compile Include="Assets\Scripts\NeverEndingCorridor.cs" />
     <Compile Include="Assets\Scripts\PlayerHolding.cs" />
     <Compile Include="Assets\Scripts\PlayerModel.cs" />
+    <Compile Include="Assets\Scripts\Portal\PortalCamera.cs" />
+    <Compile Include="Assets\Scripts\Portal\PortalTeleporter.cs" />
+    <Compile Include="Assets\Scripts\Portal\PortalTextureSetup.cs" />
     <Compile Include="Assets\Scripts\SceneChanger.cs" />
     <Compile Include="Assets\Scripts\SmoothCameraMovement.cs" />
     <Compile Include="Assets\Scripts\SoftRotation.cs" />
     <Compile Include="Assets\Scripts\TextGeneration.cs" />
     <Compile Include="Assets\Scripts\TextGenerationCollider.cs" />
     <Compile Include="Assets\Scripts\TriggerEnabler.cs" />
+    <Compile Include="Assets\Scripts\TunnelCamera.cs" />
     <None Include="Assets\PostProcessing\Resources\Shaders\DepthOfField.shader" />
     <None Include="Assets\ProCore\ProBuilder\Shader\pb_TransparentOverlay.shader" />
     <None Include="Assets\ProCore\ProBuilder\API Examples\Icosphere FFT\README.txt" />
@@ -182,6 +185,7 @@
     <None Include="Assets\PostProcessing\Resources\Shaders\Common.cginc" />
     <None Include="Assets\PostProcessing\Resources\Bluenoise64\COPYING.txt" />
     <None Include="Assets\ProCore\ProBuilder\Shader\pb_UnlitVertexColor.shader" />
+    <None Include="Assets\Shaders\ScreenCutoutShader.shader" />
     <None Include="Assets\ProCore\ProBuilder\Shader\pb_FacePicker.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\PostProcessing\Editor Resources\UI\Trackball.shader" />
@@ -225,16 +229,16 @@
     <None Include="Assets\ProCore\ProBuilder\Shader\pb_SmoothingPreview.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>C:/Users/s181319/Documents/SVN/Dark and Stormy Night/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>C:/Users/s181319/Desktop/Eden/Dark and Stormy Night/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/s181319/Documents/SVN/Dark and Stormy Night/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/Users/s181319/Desktop/Eden/Dark and Stormy Night/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>C:/Users/s181319/Documents/SVN/Dark and Stormy Night/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>C:/Users/s181319/Desktop/Eden/Dark and Stormy Night/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/s181319/Documents/SVN/Dark and Stormy Night/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/Users/s181319/Desktop/Eden/Dark and Stormy Night/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity 2018.2.5f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -435,19 +439,19 @@
       <HintPath>C:/Program Files/Unity 2018.2.5f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="ProBuilderCore-Unity5">
-      <HintPath>C:/Users/s181319/Documents/SVN/Dark and Stormy Night/Assets/ProCore/ProBuilder/Classes/ProBuilderCore-Unity5.dll</HintPath>
+      <HintPath>C:/Users/s181319/Desktop/Eden/Dark and Stormy Night/Assets/ProCore/ProBuilder/Classes/ProBuilderCore-Unity5.dll</HintPath>
     </Reference>
     <Reference Include="ProBuilderMeshOps-Unity5">
-      <HintPath>C:/Users/s181319/Documents/SVN/Dark and Stormy Night/Assets/ProCore/ProBuilder/Classes/ProBuilderMeshOps-Unity5.dll</HintPath>
+      <HintPath>C:/Users/s181319/Desktop/Eden/Dark and Stormy Night/Assets/ProCore/ProBuilder/Classes/ProBuilderMeshOps-Unity5.dll</HintPath>
     </Reference>
     <Reference Include="KdTreeLib">
-      <HintPath>C:/Users/s181319/Documents/SVN/Dark and Stormy Night/Assets/ProCore/ProBuilder/Classes/ClassesLib/KdTreeLib.dll</HintPath>
+      <HintPath>C:/Users/s181319/Desktop/Eden/Dark and Stormy Night/Assets/ProCore/ProBuilder/Classes/ClassesLib/KdTreeLib.dll</HintPath>
     </Reference>
     <Reference Include="pb_Stl">
-      <HintPath>C:/Users/s181319/Documents/SVN/Dark and Stormy Night/Assets/ProCore/ProBuilder/Classes/ClassesLib/pb_Stl.dll</HintPath>
+      <HintPath>C:/Users/s181319/Desktop/Eden/Dark and Stormy Night/Assets/ProCore/ProBuilder/Classes/ClassesLib/pb_Stl.dll</HintPath>
     </Reference>
     <Reference Include="Poly2Tri">
-      <HintPath>C:/Users/s181319/Documents/SVN/Dark and Stormy Night/Assets/ProCore/ProBuilder/Classes/ClassesLib/Poly2Tri.dll</HintPath>
+      <HintPath>C:/Users/s181319/Desktop/Eden/Dark and Stormy Night/Assets/ProCore/ProBuilder/Classes/ClassesLib/Poly2Tri.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>C:/Users/s181319/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/UnityEngine.Analytics.dll</HintPath>
