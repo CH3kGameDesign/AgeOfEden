@@ -13,6 +13,7 @@ public class PlayerModel : MonoBehaviour {
     [Header("Variables")]
     public float rotSpeed;
 
+    
     private float desiredYRotation;
 
     // Use this for initialization
@@ -24,6 +25,8 @@ public class PlayerModel : MonoBehaviour {
 	void Update () {
         //desiredYRotation = Mathf.Lerp(desiredYRotation, cameraHolder.transform.rotation.eulerAngles.y, rotSpeed);
         if (Movement.canMove == true)
-            transform.rotation = Quaternion.Euler(0, cameraHolder.transform.rotation.eulerAngles.y, 0);
+        {
+            transform.rotation = Quaternion.Euler(0, cameraHolder.transform.rotation.eulerAngles.y, cameraHolder.transform.rotation.eulerAngles.z);
+        }
 	}
 }

@@ -29,10 +29,14 @@ public class SmoothCameraMovement : MonoBehaviour {
 
     public float frameCounter = 20;
 
-    Quaternion originalRotation;
+    public static Quaternion originalRotation;
+
+    public static float gravDirection = 0;
 
     void Update()
     {
+            originalRotation = Quaternion.Euler(0, 0, Mathf.Lerp(originalRotation.eulerAngles.z, gravDirection, Time.deltaTime));
+
         if (CameraMovement.canMove == true)
         {
             if (axes == RotationAxes.MouseXAndY)
@@ -149,5 +153,11 @@ public class SmoothCameraMovement : MonoBehaviour {
             }
         }
         return Mathf.Clamp(angle, min, max);
+    }
+
+    public static void gravSnap (float gravSnapDirection)
+    {
+        originalRotation = Quaternion.Euler(0, 0, gravSnapDirection);
+        gravDirection = gravSnapDirection;
     }
 }

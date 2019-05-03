@@ -6,8 +6,10 @@ public class InvertGravity : MonoBehaviour {
 
     public Vector3 alteredGravity;
     private Vector3 normalGravity;
-	// Use this for initialization
-	void Start () {
+
+    public static bool invertedGravity = false;
+    // Use this for initialization
+    void Start () {
         normalGravity = Physics.gravity;
 	}
 	
@@ -21,6 +23,8 @@ public class InvertGravity : MonoBehaviour {
         if (other.tag == "Player")
         {
             Physics.gravity = alteredGravity;
+            invertedGravity = true;
+            SmoothCameraMovement.gravDirection = 180;
             
             Debug.Log("Flip");
         }
@@ -29,5 +33,7 @@ public class InvertGravity : MonoBehaviour {
     private void OnDisable()
     {
         Physics.gravity = normalGravity;
+        invertedGravity = false;
+        SmoothCameraMovement.gravDirection = 0;
     }
 }
