@@ -17,7 +17,7 @@ public class GravityTunnel : MonoBehaviour {
     private float pointDistance;
 
 	// Use this for initialization
-	void Start () {
+	void Start () { 
         pointDistance = Vector3.Distance(pointA.position, pointB.position);
 	}
 	
