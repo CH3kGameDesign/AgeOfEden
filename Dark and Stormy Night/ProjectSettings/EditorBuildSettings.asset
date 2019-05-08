@@ -5,13 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/HoleTown.unity
     guid: 99fe8213aa33d5c48abbcce63e53fdc1
   - enabled: 1
     path: Assets/Scenes/Hotel.unity
     guid: 1ba98a80cf199484f80fa4d0d80d2ca1
+  - enabled: 1
+    path: Assets/Scenes/Manor.unity
+    guid: 841488512e776e8469cd480a425de74f
   m_configObjects: {}

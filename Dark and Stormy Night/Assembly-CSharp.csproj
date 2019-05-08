@@ -124,6 +124,9 @@
     <Compile Include="Assets\Scripts\InteractableObject.cs" />
     <Compile Include="Assets\Scripts\InvertGravity.cs" />
     <Compile Include="Assets\Scripts\LockRotation.cs" />
+    <Compile Include="Assets\Scripts\Mirror\MirrorCamera.cs" />
+    <Compile Include="Assets\Scripts\Mirror\MirrorTextureSetup.cs" />
+    <Compile Include="Assets\Scripts\MirrorReflection.cs" />
     <Compile Include="Assets\Scripts\Movement.cs" />
     <Compile Include="Assets\Scripts\NeverEndingCorridor.cs" />
     <Compile Include="Assets\Scripts\PlayerHolding.cs" />
@@ -176,6 +179,7 @@
     <None Include="Assets\PostProcessing\Resources\Shaders\MotionBlur.shader" />
     <None Include="Assets\ProCore\ProBuilder\Shader\DiffuseTextureBlend.shader" />
     <None Include="Assets\PostProcessing\Resources\Shaders\AmbientOcclusion.shader" />
+    <None Include="Assets\Shaders\MirrorReflection.shader" />
     <None Include="Assets\ProCore\ProBuilder\Shader\pb_StandardVertexColor.shader" />
     <None Include="Assets\ProCore\ProBuilder\Shader\pb_VertexPicker.shader" />
     <None Include="Assets\ProCore\ProBuilder\Shader\pb_HideVertices.shader" />
