@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.PostProcessing;
 
 public class FadeToScene : MonoBehaviour {
 
     public float tarFogStrength;
     public float fadeSpeed;
 
-    public bool fadeTrue;
+    public bool fadeTrue = false;
 
 	// Use this for initialization
 	void Start () {
-        fadeTrue = false;
 	}
 	
 	// Update is called once per frame
@@ -30,7 +30,13 @@ public class FadeToScene : MonoBehaviour {
     private void Fade ()
     {
         if (RenderSettings.fogDensity < tarFogStrength)
+        {
             RenderSettings.fogDensity += fadeSpeed * Time.deltaTime;
+            /*
+            VignetteModel tarVig = CameraMovement.cameraObject.GetComponent<PostProcessingBehaviour>().profile.vignette;
+            tarVig.settings.intensity  = Mathf.Lerp()
+            */
+        }
         else
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }

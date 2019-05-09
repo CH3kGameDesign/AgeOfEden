@@ -14,7 +14,11 @@ public class FacePlayer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (tilt == true)
+        {
             transform.LookAt(Movement.player.transform);
+            if (InvertGravity.invertedGravity)
+                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, 0);
+        }
         else
         {
             Vector3 lookPos = transform.position - Movement.player.transform.position;
@@ -22,5 +26,7 @@ public class FacePlayer : MonoBehaviour {
             Quaternion rotation = Quaternion.LookRotation(lookPos);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime);
         }
+        
+            
 	}
 }

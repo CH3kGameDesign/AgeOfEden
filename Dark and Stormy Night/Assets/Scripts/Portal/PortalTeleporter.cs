@@ -6,8 +6,10 @@ public class PortalTeleporter : MonoBehaviour {
 
 	public Transform player;
 	public Transform reciever;
+    public GameObject[] activateOnTeleport;
+    public GameObject[] DeActivateOnTeleport;
 
-	private bool playerIsOverlapping = false;
+    private bool playerIsOverlapping = false;
 
 	// Update is called once per frame
 	void Update () {
@@ -28,7 +30,15 @@ public class PortalTeleporter : MonoBehaviour {
 				player.position = reciever.position + positionOffset;
 
 				playerIsOverlapping = false;
-			}
+                for (int i = 0; i < activateOnTeleport.Length; i++)
+                {
+                    activateOnTeleport[i].SetActive(true);
+                }
+                for (int i = 0; i < DeActivateOnTeleport.Length; i++)
+                {
+                    DeActivateOnTeleport[i].SetActive(false);
+                }
+            }
 		}
 	}
 

@@ -18,5 +18,9 @@ public class PortalCamera : MonoBehaviour {
 		Quaternion portalRotationalDifference = Quaternion.AngleAxis(angularDifferenceBetweenPortalRotations, Vector3.up);
 		Vector3 newCameraDirection = portalRotationalDifference * playerCamera.forward;
 		transform.rotation = Quaternion.LookRotation(newCameraDirection, Vector3.up);
+        if (InvertGravity.invertedGravity == true)
+        {
+            transform.localEulerAngles += new Vector3(0, 0, 180);
+        }
 	}
 }

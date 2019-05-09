@@ -10,6 +10,8 @@ public class SoftRotation : MonoBehaviour {
     [HideInInspector]
     public Vector3 rotMin;
 
+    public bool rotateBack = true;
+
     private int direction = 0;
 
 	// Use this for initialization
@@ -21,12 +23,17 @@ public class SoftRotation : MonoBehaviour {
 	void FixedUpdate () {
         if (direction == 0)
             transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(rotMax), rotSpeed * Time.deltaTime);
-        else
+        else if (direction == 1)
             transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(rotMin), rotSpeed * Time.deltaTime);
 
 
         if (Mathf.Abs(Quaternion.Angle(transform.rotation, Quaternion.Euler(rotMax))) <= 1)
-            direction = 1;
+        {
+            if (rotateBack == true)
+                direction = 1;
+            else
+                direction = 2;
+        }
         if (Mathf.Abs(Quaternion.Angle(transform.rotation, Quaternion.Euler(rotMin))) <= 1)
             direction = 0;
     }
