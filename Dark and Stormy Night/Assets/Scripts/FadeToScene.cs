@@ -13,14 +13,21 @@ public class FadeToScene : MonoBehaviour {
 
     public bool restartScene = true;
     public int tarSceneNumber = 0;
+
+	private float startVignetteStrength = -1;
     
 
 	// Use this for initialization
 	void Start () {
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (startVignetteStrength == -1) {
+			PostProcessingProfile mainCamProfile = CameraMovement.cameraObject.GetComponentInChildren<PostProcessingBehaviour>().profile;
+			startVignetteStrength = mainCamProfile.vignette.settings.intensity;
+		}
         if (fadeTrue == true)
             Fade();
 	}
@@ -45,6 +52,11 @@ public class FadeToScene : MonoBehaviour {
         }
         else
         {
+			PostProcessingProfile mainCamProfile = CameraMovement.cameraObject.GetComponentInChildren<PostProcessingBehaviour>().profile;
+			var vignette = mainCamProfile.vignette.settings;
+
+			vignette.intensity = startVignetteStrength;
+			mainCamProfile.vignette.settings = vignette;
             if (restartScene == true)
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             else
