@@ -15,6 +15,14 @@ public class TextGeneration : MonoBehaviour {
     [Tooltip ("0: Delete || 1: BlowAway")]
     public int disperseOption;
 
+    public bool playOnAwake = false;
+
+    [Space(20)]
+
+    [Header ("Activate")]
+    public GameObject[] activateOnFinish;
+    public GameObject[] activateOnDestroy;
+
     private float destroyTime;
 
     private int textCount;
@@ -29,12 +37,22 @@ public class TextGeneration : MonoBehaviour {
         textString = textObject.GetComponent<TextMeshPro>().text;
         textObject.GetComponent<TextMeshPro>().text = "";
 
-    }
-	
-	// Update is called once per frame
-	void Update () {
-		if (transform.childCount == textString.Length + 1)
+        if (playOnAwake == true)
         {
+            StartCoroutine("TextGenerate", textSpeed);
+            played = true;
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (transform.childCount == textString.Length + 1)
+        {
+            for (int i = 0; i < activateOnFinish.Length; i++)
+            {
+                activateOnFinish[i].SetActive(true);
+            }
             if (destroyTime >= destroyTimer)
             {
                 Destroy(transform.GetChild(0).gameObject);
@@ -47,7 +65,14 @@ public class TextGeneration : MonoBehaviour {
             else
                 destroyTime += Time.deltaTime;
         }
-	}
+        if (destroyTime >= destroyTimer && transform.childCount == 0)
+        {
+            for (int i = 0; i < activateOnDestroy.Length; i++)
+            {
+                activateOnDestroy[i].SetActive(true);
+            }
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {

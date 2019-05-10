@@ -9,6 +9,10 @@ public class PortalTeleporter : MonoBehaviour {
     public GameObject[] activateOnTeleport;
     public GameObject[] DeActivateOnTeleport;
 
+    public enum PortalType {NotMenu, PlayerPortal, MenuPortal}
+
+    public PortalType portalType;
+
     private bool playerIsOverlapping = false;
 
 	// Update is called once per frame
@@ -37,6 +41,15 @@ public class PortalTeleporter : MonoBehaviour {
                 for (int i = 0; i < DeActivateOnTeleport.Length; i++)
                 {
                     DeActivateOnTeleport[i].SetActive(false);
+                }
+
+                if (portalType == PortalType.PlayerPortal)
+                {
+                    Menu.inRoom = true;
+                }
+                if (portalType == PortalType.MenuPortal)
+                {
+                    Menu.inRoom = false;
                 }
             }
 		}

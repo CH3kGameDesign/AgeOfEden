@@ -18,8 +18,8 @@ public class SmoothCameraMovement : MonoBehaviour {
     public float minimumY = -60F;
     public float maximumY = 60F;
 
-    float rotationX = 0F;
-    float rotationY = 0F;
+    public float rotationX = 0F;
+    public float rotationY = 0F;
 
     private List<float> rotArrayX = new List<float>();
     float rotAverageX = 0F;
@@ -38,6 +38,21 @@ public class SmoothCameraMovement : MonoBehaviour {
         if (GravityTunnel.inGravTunnel == false)
             originalRotation = Quaternion.Euler(0, 0, Mathf.Lerp(originalRotation.eulerAngles.z, gravDirection, Time.deltaTime * 2));
 
+        CameraUpdate();
+    }
+
+    void Start()
+    {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb)
+            rb.freezeRotation = true;
+        originalRotation = Quaternion.Euler(Vector3.zero);
+        rotationX = startRotY;
+        rotationY = startRotX;
+    }
+
+    public void CameraUpdate ()
+    {
         if (CameraMovement.canMove == true)
         {
             if (axes == RotationAxes.MouseXAndY)
@@ -47,6 +62,9 @@ public class SmoothCameraMovement : MonoBehaviour {
 
                 rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
                 rotationX += Input.GetAxis("Mouse X") * sensitivityX;
+
+                rotationY = ClampAngle(rotationY, minimumY, maximumY);
+                //rotationX = ClampAngle(rotationX, minimumX, maximumX);
 
                 rotArrayY.Add(rotationY);
                 rotArrayX.Add(rotationX);
@@ -72,7 +90,7 @@ public class SmoothCameraMovement : MonoBehaviour {
                 rotAverageY /= rotArrayY.Count;
                 rotAverageX /= rotArrayX.Count;
 
-                rotAverageY = ClampAngle(rotAverageY, minimumY, maximumY);
+                //rotAverageY = ClampAngle(rotAverageY, minimumY, maximumY);
                 rotAverageX = ClampAngle(rotAverageX, minimumX, maximumX);
 
                 Quaternion yQuaternion = Quaternion.AngleAxis(rotAverageY, Vector3.left);
@@ -127,16 +145,6 @@ public class SmoothCameraMovement : MonoBehaviour {
                 transform.localRotation = originalRotation * yQuaternion;
             }
         }
-    }
-
-    void Start()
-    {
-        Rigidbody rb = GetComponent<Rigidbody>();
-        if (rb)
-            rb.freezeRotation = true;
-        originalRotation = Quaternion.Euler(Vector3.zero);
-        rotationX = startRotY;
-        rotationY = startRotX;
     }
 
     public static float ClampAngle(float angle, float min, float max)

@@ -11,6 +11,10 @@ public class FadeToScene : MonoBehaviour {
 
     public bool fadeTrue = false;
 
+    public bool restartScene = true;
+    public int tarSceneNumber = 0;
+    
+
 	// Use this for initialization
 	void Start () {
 	}
@@ -32,12 +36,24 @@ public class FadeToScene : MonoBehaviour {
         if (RenderSettings.fogDensity < tarFogStrength)
         {
             RenderSettings.fogDensity += fadeSpeed * Time.deltaTime;
-            /*
-            VignetteModel tarVig = CameraMovement.cameraObject.GetComponent<PostProcessingBehaviour>().profile.vignette;
-            tarVig.settings.intensity  = Mathf.Lerp()
-            */
+
+            PostProcessingProfile mainCamProfile = CameraMovement.cameraObject.GetComponentInChildren<PostProcessingBehaviour>().profile;
+            var vignette = mainCamProfile.vignette.settings;
+
+            vignette.intensity = Mathf.Lerp(vignette.intensity, 0, fadeSpeed * Time.deltaTime);
+            mainCamProfile.vignette.settings = vignette;
         }
         else
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        {
+            if (restartScene == true)
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            else
+            {
+                if (tarSceneNumber == -1)
+                    Application.Quit();
+                else
+                    SceneManager.LoadScene(tarSceneNumber);
+            }
+        }
     }
 }
