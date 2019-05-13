@@ -24,6 +24,10 @@ public class TriggerEnabler : MonoBehaviour {
 
     [Space(10)]
 
+	public List<FadeOut> FadeOut = new List<FadeOut>();
+
+	[Space(10)]
+
     public float Timer;
 
 	// Use this for initialization
@@ -81,6 +85,7 @@ public class TriggerEnabler : MonoBehaviour {
             Gravity[i].useGravity = false;
             Gravity[i].isKinematic = true;
         }
+
         for (int i = 0; i < SoftRotation.Count; i++)
         {
             SoftRotation[i].enabled = true;
@@ -89,6 +94,11 @@ public class TriggerEnabler : MonoBehaviour {
         {
             SoftRotationDisable[i].enabled = false;
         }
+
+		for (int i = 0; i < FadeOut.Count; i++)
+		{
+			FadeOut[i].enabled = true;
+		}
 
     }
 }

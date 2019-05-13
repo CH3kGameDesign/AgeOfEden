@@ -134,6 +134,7 @@
      <Compile Include="Assets\Scripts\Portal\PortalCamera.cs" />
      <Compile Include="Assets\Scripts\Portal\PortalTeleporter.cs" />
      <Compile Include="Assets\Scripts\Portal\PortalTextureSetup.cs" />
+     <Compile Include="Assets\Scripts\PortalCameraEnabler.cs" />
      <Compile Include="Assets\Scripts\PostProcessingChange.cs" />
      <Compile Include="Assets\Scripts\PushObject.cs" />
      <Compile Include="Assets\Scripts\SceneChanger.cs" />

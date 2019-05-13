@@ -19,7 +19,7 @@ public class Menu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0) && inRoom == false)
+		if ((Input.GetKeyDown(KeyCode.Mouse2) || Input.GetKeyDown(KeyCode.Alpha9))&& inRoom == false)
         {
             portal.transform.position = Movement.player.transform.position + Movement.player.transform.forward;
             portal.transform.LookAt(Movement.player.transform);
@@ -28,7 +28,7 @@ public class Menu : MonoBehaviour
             room.transform.rotation = portal.transform.rotation;
             portal.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
         }
-        if (Input.GetKeyDown(KeyCode.Mouse1) && inRoom == false)
+		if ((Input.GetKeyDown(KeyCode.Mouse1) || Input.GetKeyDown(KeyCode.Alpha0)) && inRoom == false)
         {
             portal.transform.position = room.transform.position;
         }

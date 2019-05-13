@@ -1,10 +1,20 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\FadeToScene.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\FadeIn.cs">
     <Files>
       <File FileName="Assets\Scripts\GravityTunnel.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\SmoothCameraMovement.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\FadeToScene.cs" Line="27" Column="30" />
+      <File FileName="Assets\Scripts\FadeToScene.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PortalCameraEnabler.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Movement.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Enablers\RaycastEnable.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Menu\Menu.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CameraMovement.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Portal\PortalCamera.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Mirror\MirrorCamera.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\FadeOut.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Enablers\TriggerEnabler.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\FadeIn.cs" Line="32" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

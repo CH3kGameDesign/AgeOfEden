@@ -35,7 +35,7 @@ public class RaycastEnable : MonoBehaviour {
     {
         if (CameraLookAt != null)
         {
-            CameraMovement.cameraObject.GetComponent<SmoothCameraMovement>().enabled = false;
+            CameraMovement.canMove = false;
             Vector3 relPos = CameraLookAt.position - CameraMovement.cameraObject.transform.position;
             Quaternion tarRot = Quaternion.LookRotation(relPos, -Vector3.up);
             CameraMovement.cameraObject.transform.rotation = Quaternion.Slerp(CameraMovement.cameraObject.transform.rotation, tarRot, Time.deltaTime * 0.5f);

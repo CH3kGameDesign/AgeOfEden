@@ -7,9 +7,12 @@ public class CameraMovement : MonoBehaviour {
 
     [Header("CameraSpeed")]
 	public float camRunShakeSpeed;
+	public float zoomSpeed = 4;
 
     [Header("CameraLimits")]
 	public float camRunShakeMax;
+	public float fovNormal = 60;
+	public float fovMin = 25;
 
     [Header("Transforms")]
     public Transform cameraHook;
@@ -29,6 +32,8 @@ public class CameraMovement : MonoBehaviour {
     public static GameObject cameraObject;
 
 
+
+
 	// Use this for initialization
 	void Start () {
         Cursor.lockState = CursorLockMode.Locked;
@@ -36,6 +41,7 @@ public class CameraMovement : MonoBehaviour {
         snapToPlayer = true;
         goToPlayer = true;
         cameraObject = this.gameObject;
+		canMove = true;
     }
 	
 	// Update is called once per frame
@@ -67,6 +73,15 @@ public class CameraMovement : MonoBehaviour {
                 }
             }
         }
+
+		if (canMove == true) {
+			if (Input.GetMouseButton (1))
+				transform.GetChild (0).GetComponent<Camera> ().fieldOfView = Mathf.Lerp (transform.GetChild (0).GetComponent<Camera> ().fieldOfView, fovMin, Time.deltaTime * zoomSpeed);
+			else
+				transform.GetChild (0).GetComponent<Camera> ().fieldOfView = Mathf.Lerp (transform.GetChild (0).GetComponent<Camera> ().fieldOfView, fovNormal, Time.deltaTime * zoomSpeed * 2);
+		}
+		else
+			transform.GetChild (0).GetComponent<Camera> ().fieldOfView = Mathf.Lerp (transform.GetChild (0).GetComponent<Camera> ().fieldOfView, fovNormal, Time.deltaTime * zoomSpeed * 2);
     }
 
 	void RunShake()

@@ -16,15 +16,24 @@ public class FadeOut : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (fade == true)
-        {
-            GetComponent<TextMeshPro>().color =Color.Lerp(GetComponent<TextMeshPro>().color, Color.clear, fadeSpeed * Time.deltaTime);
+		if (fade == true) {
+			if (GetComponent<TextMeshPro> () != null) {
+				GetComponent<TextMeshPro> ().color = Color.Lerp (GetComponent<TextMeshPro> ().color, Color.clear, fadeSpeed * Time.deltaTime);
             
 
-            if (GetComponent<TextMeshPro>().color.a == 0)
-            {
-                Destroy(this.gameObject);
-            }
-        }
+				if (GetComponent<TextMeshPro> ().color.a == 0) {
+					Destroy (this.gameObject);
+				}
+			} else {
+				if (GetComponent<MeshRenderer> () != null) {
+					GetComponent<MeshRenderer> ().material.color = Color.Lerp (GetComponent<MeshRenderer> ().material.color, Color.clear, fadeSpeed * Time.deltaTime);
+
+
+					if (GetComponent<MeshRenderer> ().material.color.a == 0) {
+						Destroy (this.gameObject);
+					}
+				}
+			}
+		}
     }
 }

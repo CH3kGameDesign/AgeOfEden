@@ -22,5 +22,7 @@ public class PortalCamera : MonoBehaviour {
         {
             transform.localEulerAngles += new Vector3(0, 0, 180);
         }
+
+		GetComponent<Camera> ().fieldOfView = CameraMovement.cameraObject.transform.GetChild (0).GetComponent<Camera> ().fieldOfView;
 	}
 }

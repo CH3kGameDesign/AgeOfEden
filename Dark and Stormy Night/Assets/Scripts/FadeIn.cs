@@ -27,6 +27,9 @@ public class FadeIn : MonoBehaviour {
             GetComponent<SpriteRenderer>().color = Color.Lerp(GetComponent<SpriteRenderer>().color, Color.white, fadeSpeed * Time.deltaTime);
         if (GetComponent<RawImage>() != null)
             GetComponent<RawImage>().color = Color.Lerp(GetComponent<RawImage>().color, Color.white, fadeSpeed * Time.deltaTime);
+		if (GetComponent<MeshRenderer>() != null)
+			GetComponent<MeshRenderer>().material.color = Color.Lerp(GetComponent<MeshRenderer>().material.color, Color.white, fadeSpeed * Time.deltaTime);
+		
     }
 
     void FadeOutActivate ()
