@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TriggerEnabler : MonoBehaviour {
 
@@ -30,10 +31,16 @@ public class TriggerEnabler : MonoBehaviour {
 
     public float Timer;
 
+    public UnityEvent activateEvent;
+    public enum Collision {OnEnter, OnExit};
+
+    public Collision collision;
+
 	// Use this for initialization
 	void Start () {
-		
-	}
+        if (activateEvent == null)
+            activateEvent = new UnityEvent();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -42,7 +49,14 @@ public class TriggerEnabler : MonoBehaviour {
 
     void OnTriggerEnter (Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && collision == Collision.OnEnter)
+        {
+            Invoke("EnableObjects", Timer);
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player" && collision == Collision.OnExit)
         {
             Invoke("EnableObjects", Timer);
         }
@@ -50,6 +64,7 @@ public class TriggerEnabler : MonoBehaviour {
 
     private void EnableObjects ()
     {
+        activateEvent.Invoke();
         for (int i = 0; i < GO.Count; i++)
         {
             GO[i].SetActive(true);

@@ -8,10 +8,13 @@ public class CameraMovement : MonoBehaviour {
     [Header("CameraSpeed")]
 	public float camRunShakeSpeed;
 	public float zoomSpeed = 4;
+    public float camIdleShakeSpeed = 2;
 
     [Header("CameraLimits")]
 	public float camRunShakeMax;
-	public float fovNormal = 60;
+    public float camIdleShakeMax;
+    public int camIdleTickAmount;
+    public float fovNormal = 60;
 	public float fovMin = 25;
 
     [Header("Transforms")]
@@ -24,13 +27,19 @@ public class CameraMovement : MonoBehaviour {
 
 	private float camRunShakeAmount;
 	private float camRunShake;
+    
+    private float camIdleShake;
+    private int camIdleTicker;
+    private Vector2 camRandomShakeDirection;
 
     public static bool snapToPlayer;
     public static bool goToPlayer;
     public static bool canMove = true;
+    public static bool shake = true;
 
     public static GameObject cameraObject;
 
+    public static Vector2 camShakeDirection;
 
 
 
@@ -42,15 +51,21 @@ public class CameraMovement : MonoBehaviour {
         goToPlayer = true;
         cameraObject = this.gameObject;
 		canMove = true;
+        camRandomShakeDirection = Random.insideUnitCircle;
     }
 	
 	// Update is called once per frame
 	void Update () {
         if (snapToPlayer == true)
             transform.position = cameraHook.position;
-           
-		RunShake ();
-        
+
+        if (shake)
+        {
+            RunShake();
+            IdleShake();
+        }
+
+
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
             aimPoint.position = hit.point;
@@ -114,4 +129,28 @@ public class CameraMovement : MonoBehaviour {
 		else
 			camRunShake = 0;
 	}
+
+    void IdleShake()
+    {
+        if (camIdleShake > camIdleShakeMax && camIdleShakeSpeed > 0)
+            camIdleShakeSpeed = -camIdleShakeSpeed;
+        if (camIdleShake < -camIdleShakeMax && camIdleShakeSpeed < 0)
+            camIdleShakeSpeed = -camIdleShakeSpeed;
+        camIdleShake +=  camIdleShakeSpeed;
+
+        camShakeDirection = camRandomShakeDirection * camIdleShake;
+
+        if (camIdleTickAmount <= camIdleTicker)
+        {
+            camRandomShakeDirection = Random.insideUnitCircle;
+            camIdleTicker = 0;
+        }
+        camIdleTicker++;
+    }
+
+    public void ChangeShakeStatus(bool shaking)
+    {
+        shake = shaking;
+        camShakeDirection = Vector2.zero;
+    }
 }

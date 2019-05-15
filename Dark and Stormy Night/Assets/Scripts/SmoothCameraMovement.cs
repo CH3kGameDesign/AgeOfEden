@@ -63,6 +63,9 @@ public class SmoothCameraMovement : MonoBehaviour {
                 rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
                 rotationX += Input.GetAxis("Mouse X") * sensitivityX;
 
+                rotationY += CameraMovement.camShakeDirection.y;
+                rotationX += CameraMovement.camShakeDirection.x;
+
                 rotationY = ClampAngle(rotationY, minimumY, maximumY);
                 //rotationX = ClampAngle(rotationX, minimumX, maximumX);
 
