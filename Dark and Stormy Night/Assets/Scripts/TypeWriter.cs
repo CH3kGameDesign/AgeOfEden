@@ -18,7 +18,11 @@ public class TypeWriter : MonoBehaviour {
     [Header("Strings")]
     public List<string> scriptLines = new List<string>();
     [Space(10)]
-    public int lineScriptTakesOver;
+    public List<int> freeCharsBeforeScript;
+
+    private int scriptLineCounter = 0;
+    private int charScriptTakesOverCounter;
+    
     private bool scriptTyping = false;
     private int scriptCharCounter = 0;
 
@@ -38,7 +42,7 @@ public class TypeWriter : MonoBehaviour {
             NextRow();
         if (row >= text.childCount)
             return;
-        if (lineScriptTakesOver == row)
+        if (charScriptTakesOverCounter >= freeCharsBeforeScript[scriptLineCounter])
             scriptTyping = true;
         KeyPress();
         paper.transform.localPosition = new Vector3(halfLength - (letterWidth * text.GetChild(row).GetComponent<TextMeshPro>().text.Length), 0.025f * (row + 1), 0);
@@ -62,9 +66,15 @@ public class TypeWriter : MonoBehaviour {
 
     void AnyKeyScript()
     {
-        text.GetChild(row).GetComponent<TextMeshPro>().text += scriptLines[0][scriptCharCounter];
-        Debug.Log(scriptCharCounter);
+        text.GetChild(row).GetComponent<TextMeshPro>().text += scriptLines[scriptLineCounter][scriptCharCounter];
         scriptCharCounter++;
+        if (scriptCharCounter >= scriptLines[scriptLineCounter].Length)
+        {
+            scriptLineCounter++;
+            scriptCharCounter = 0;
+            scriptTyping = false;
+            charScriptTakesOverCounter = 0;
+        }
     }
 
     void Type(string letter)
@@ -76,6 +86,7 @@ public class TypeWriter : MonoBehaviour {
             if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
                 letter = letter.ToUpper();
             text.GetChild(row).GetComponent<TextMeshPro>().text += letter;
+            charScriptTakesOverCounter++;
         }
     }
 
