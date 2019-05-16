@@ -20,19 +20,21 @@ public class Movement : MonoBehaviour {
 	[HideInInspector]
     public float sprint;
 
+    public bool canMoveOnStart = true;
+
     public static bool canMove;
 
     public static GameObject player;
 
 	// Use this for initialization
 	void Start () {
-        canMove = true;
+        canMove = canMoveOnStart;
         player = this.gameObject;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (canMove == true) {
+        if (canMove == true) {
 			playerModel.GetComponent<Animator> ().SetBool ("Standing", true);
 			if (Input.GetKey (KeyCode.LeftShift)) {
 				playerModel.GetComponent<Animator> ().SetBool ("Sprinting", true);

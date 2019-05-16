@@ -32,6 +32,9 @@ public class CameraMovement : MonoBehaviour {
     private int camIdleTicker;
     private Vector2 camRandomShakeDirection;
 
+
+    public bool canMoveOnStart = true;
+    public bool snapToPlayerOnStart = true;
     public static bool snapToPlayer;
     public static bool goToPlayer;
     public static bool canMove = true;
@@ -47,10 +50,10 @@ public class CameraMovement : MonoBehaviour {
 	void Start () {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        snapToPlayer = true;
-        goToPlayer = true;
+        snapToPlayer = snapToPlayerOnStart;
+        goToPlayer = snapToPlayerOnStart;
         cameraObject = this.gameObject;
-		canMove = true;
+		canMove = canMoveOnStart;
         camRandomShakeDirection = Random.insideUnitCircle;
     }
 	
@@ -80,7 +83,7 @@ public class CameraMovement : MonoBehaviour {
             if (Vector3.Distance(transform.position, cameraHook.position) < 0.3f)
             {
                 snapToPlayer = true;
-                Movement.canMove = true;
+                //Movement.canMove = true;
                 goToPlayer = false;
                 for (int i = 0; i < enableObjects.Count; i++)
                 {
