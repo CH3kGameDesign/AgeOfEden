@@ -3,57 +3,65 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NonVisibleEnable : MonoBehaviour {
-
-    public List<GameObject> GO = new List<GameObject>();
-    public List<GameObject> GODisable = new List<GameObject>();
+    public List<GameObject> GOOnView = new List<GameObject>();
+    public List<GameObject> GODisableOnView = new List<GameObject>();
 
     [Space(10)]
 
-    public List<GameObject> Collider = new List<GameObject>();
-    public List<GameObject> ColliderDisable = new List<GameObject>();
+    public List<GameObject> GOOnNotView = new List<GameObject>();
+    public List<GameObject> GODisableOnNotView = new List<GameObject>();
 
-    public float Timer;
+    private int visible = -1;
 
     // Use this for initialization
     void Start () {
 		
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
-    private void OnBecameInvisible()
+    // Update is called once per frame
+    void Update()
     {
-        Invoke("EnableObjects", Timer);
+        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(CameraMovement.cameraObject.transform.GetChild(0).GetComponent<Camera>());
+
+        if (GeometryUtility.TestPlanesAABB(planes, GetComponent<Renderer>().bounds))
+        {
+            EnableObjects();
+        }
+        else
+        {
+            DisableObjects();
+        }
     }
 
     private void EnableObjects ()
     {
-        for (int i = 0; i < GO.Count; i++)
+        if (visible != 0)
         {
-            GO[i].SetActive(true);
-        }
-        for (int i = 0; i < GODisable.Count; i++)
-        {
-            GODisable[i].SetActive(false);
-        }
-
-        for (int i = 0; i < Collider.Count; i++)
-        {
-            for (int j = 0; j < Collider[i].GetComponentsInChildren<Collider>().Length; j++)
+            for (int i = 0; i < GOOnView.Count; i++)
             {
-                Collider[i].GetComponentsInChildren<Collider>()[j].enabled = true;
+                GOOnView[i].SetActive(true);
             }
-
-        }
-        for (int i = 0; i < ColliderDisable.Count; i++)
-        {
-            for (int j = 0; j < ColliderDisable[i].GetComponentsInChildren<Collider>().Length; j++)
+            for (int i = 0; i < GODisableOnView.Count; i++)
             {
-                ColliderDisable[i].GetComponentsInChildren<Collider>()[j].enabled = false;
+                GODisableOnView[i].SetActive(false);
             }
         }
+        visible = 0;
+    }
+
+    private void DisableObjects ()
+    {
+        if (visible != 1)
+        {
+            for (int i = 0; i < GOOnNotView.Count; i++)
+            {
+                GOOnNotView[i].SetActive(true);
+            }
+            for (int i = 0; i < GODisableOnNotView.Count; i++)
+            {
+                GODisableOnNotView[i].SetActive(false);
+            }
+        }
+        visible = 1;
     }
 }

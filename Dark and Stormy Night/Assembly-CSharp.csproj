@@ -120,6 +120,7 @@
     <Compile Include="Assets\Scripts\Enablers\InvisibleEnable.cs" />
     <Compile Include="Assets\Scripts\Enablers\RaycastEnable.cs" />
     <Compile Include="Assets\Scripts\Enablers\TriggerEnabler.cs" />
+    <Compile Include="Assets\Scripts\Enablers\VisibilityEnabler.cs" />
     <Compile Include="Assets\Scripts\FacePlayer.cs" />
     <Compile Include="Assets\Scripts\FadeIn.cs" />
     <Compile Include="Assets\Scripts\FadeOut.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Assets\Scripts\Mirror\MirrorTextureSetup.cs" />
     <Compile Include="Assets\Scripts\MirrorReflection.cs" />
     <Compile Include="Assets\Scripts\Movement.cs" />
+    <Compile Include="Assets\Scripts\MovementVariables.cs" />
     <Compile Include="Assets\Scripts\NeverEndingCorridor.cs" />
     <Compile Include="Assets\Scripts\NonVisibleEnable.cs" />
     <Compile Include="Assets\Scripts\OptionManager.cs" />
@@ -151,10 +153,12 @@
     <Compile Include="Assets\Scripts\SceneChanger.cs" />
     <Compile Include="Assets\Scripts\SmoothCameraMovement.cs" />
     <Compile Include="Assets\Scripts\SoftRotation.cs" />
+    <Compile Include="Assets\Scripts\SpawnInsideArea.cs" />
     <Compile Include="Assets\Scripts\TextGeneration.cs" />
     <Compile Include="Assets\Scripts\TextGenerationCollider.cs" />
     <Compile Include="Assets\Scripts\TypeWriter.cs" />
     <None Include="Assets\PostProcessing\Resources\Shaders\DepthOfField.shader" />
+    <None Include="Assets\Shaders\delete.shader" />
     <None Include="Assets\ProCore\ProBuilder\Shader\pb_TransparentOverlay.shader" />
     <None Include="Assets\ProCore\ProBuilder\API Examples\Icosphere FFT\README.txt" />
     <None Include="Assets\Shaders\Diffuse RefNotEqualOne.shader" />
