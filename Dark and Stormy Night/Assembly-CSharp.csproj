@@ -127,7 +127,8 @@
     <Compile Include="Assets\Scripts\FadeToScene.cs" />
     <Compile Include="Assets\Scripts\FakeFall.cs" />
     <Compile Include="Assets\Scripts\GravityTunnel.cs" />
-    <Compile Include="Assets\Scripts\InspectorEditor.cs" />
+    <Compile Include="Assets\Scripts\InspectorEditors\FadeToScene_IE.cs" />
+    <Compile Include="Assets\Scripts\InspectorEditors\SpawnInsideArea_IE.cs" />
     <Compile Include="Assets\Scripts\InteractableObject.cs" />
     <Compile Include="Assets\Scripts\InvertGravity.cs" />
     <Compile Include="Assets\Scripts\LightFixture.cs" />

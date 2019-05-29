@@ -33,10 +33,12 @@ public class SmoothCameraMovement : MonoBehaviour {
 
     public static float gravDirection = 0;
 
+    public static float turnAroundValue = 0;
+
     void Update()
     {
         if (GravityTunnel.inGravTunnel == false)
-            originalRotation = Quaternion.Euler(0, 0, Mathf.Lerp(originalRotation.eulerAngles.z, gravDirection, Time.deltaTime * 2));
+            originalRotation = Quaternion.Euler(0, turnAroundValue, Mathf.Lerp(originalRotation.eulerAngles.z, gravDirection, Time.deltaTime * 2));
 
         CameraUpdate();
     }
