@@ -10,6 +10,7 @@ public class FacePlayer : MonoBehaviour {
     [Space (10)]
 
     public bool tilt = false;
+    public float delay = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -29,7 +30,7 @@ public class FacePlayer : MonoBehaviour {
             Vector3 lookPos = transform.position - (Movement.player.transform.position + offset);
             lookPos.y = 0;
             Quaternion rotation = Quaternion.LookRotation(lookPos);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * delay);
         }
         
             

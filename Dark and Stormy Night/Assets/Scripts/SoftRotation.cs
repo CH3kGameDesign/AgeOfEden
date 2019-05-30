@@ -26,15 +26,15 @@ public class SoftRotation : MonoBehaviour {
         else if (direction == 1)
             transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(rotMin), rotSpeed * Time.deltaTime);
 
-
-        if (Mathf.Abs(Quaternion.Angle(transform.rotation, Quaternion.Euler(rotMax))) <= 1)
+        Debug.Log(Time.fixedTime + " " + Mathf.Abs(Quaternion.Angle(transform.rotation, Quaternion.Euler(rotMax))));
+        if (Mathf.Abs(Quaternion.Angle(transform.localRotation, Quaternion.Euler(rotMax))) <= 1)
         {
             if (rotateBack == true)
                 direction = 1;
             else
                 direction = 2;
         }
-        if (Mathf.Abs(Quaternion.Angle(transform.rotation, Quaternion.Euler(rotMin))) <= 1)
+        if (Mathf.Abs(Quaternion.Angle(transform.localRotation, Quaternion.Euler(rotMin))) <= 1)
             direction = 0;
     }
 }
