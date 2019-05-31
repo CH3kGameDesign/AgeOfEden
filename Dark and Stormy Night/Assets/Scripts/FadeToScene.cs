@@ -11,8 +11,8 @@ public class FadeToScene : MonoBehaviour {
 
     public bool fadeTrue = false;
 
-    public bool restartScene = true;
-    public int tarSceneNumber = 0;
+    public bool restartScene = false;
+    public int tarSceneNumber = 1;
 
 	private float startVignetteStrength = -1;
     

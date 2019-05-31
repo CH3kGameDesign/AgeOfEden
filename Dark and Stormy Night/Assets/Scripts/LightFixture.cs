@@ -124,11 +124,5 @@ public class LightFixture : MonoBehaviour {
         }
         setTimer += Time.deltaTime;
         flashTimer += Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("FPS: " + flashPerSet);
-            Debug.Log("TBS: " + timeBetweenSets);
-            Debug.Log("FOffT: " + flashOffTimes + "; FOnT: " + flashOnTimes);
-        }
     }
 }

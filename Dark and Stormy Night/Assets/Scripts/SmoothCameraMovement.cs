@@ -21,6 +21,8 @@ public class SmoothCameraMovement : MonoBehaviour {
     public float rotationX = 0F;
     public float rotationY = 0F;
 
+    public Vector2 sittingMaxRotation = new Vector2 (-60, 60);
+
     private List<float> rotArrayX = new List<float>();
     float rotAverageX = 0F;
 
@@ -69,7 +71,9 @@ public class SmoothCameraMovement : MonoBehaviour {
                 rotationX += CameraMovement.camShakeDirection.x;
 
                 rotationY = ClampAngle(rotationY, minimumY, maximumY);
-                //rotationX = ClampAngle(rotationX, minimumX, maximumX);
+
+                if (Movement.canMove == false)
+                    rotationX = ClampAngle(rotationX, sittingMaxRotation.x, sittingMaxRotation.y);
 
                 rotArrayY.Add(rotationY);
                 rotArrayX.Add(rotationX);
@@ -95,7 +99,8 @@ public class SmoothCameraMovement : MonoBehaviour {
                 rotAverageY /= rotArrayY.Count;
                 rotAverageX /= rotArrayX.Count;
 
-                //rotAverageY = ClampAngle(rotAverageY, minimumY, maximumY);
+                //if (Movement.canMove == false)
+                  //  rotAverageY = ClampAngle(rotAverageY, sittingMaxRotation.x, sittingMaxRotation.y);
                 rotAverageX = ClampAngle(rotAverageX, minimumX, maximumX);
 
                 Quaternion yQuaternion = Quaternion.AngleAxis(rotAverageY, Vector3.left);
