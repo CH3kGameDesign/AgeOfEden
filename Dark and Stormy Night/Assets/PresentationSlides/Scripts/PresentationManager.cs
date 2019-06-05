@@ -34,8 +34,10 @@ public class PresentationManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
-	}
+        if (currentSlide == 2)
+            currentSlide++;
+        ChangeSlide();
+    }
 	
 	// Update is called once per frame
 	void Update () {
