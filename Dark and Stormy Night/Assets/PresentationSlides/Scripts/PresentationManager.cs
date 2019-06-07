@@ -34,7 +34,7 @@ public class PresentationManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        if (currentSlide == 2)
+        if (currentSlide == 4)
             currentSlide++;
         ChangeSlide();
     }
@@ -73,7 +73,10 @@ public class PresentationManager : MonoBehaviour {
             if (i == currentSlide)
                 Slides[i].SetActive(true);
             else
-                Slides[i].SetActive(false);
+            {
+                if (Slides[i] != Slides[currentSlide])
+                    Slides[i].SetActive(false);
+            }
         }
     }
 
