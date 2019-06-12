@@ -5,12 +5,14 @@ using TMPro;
 
 public class TextDrop : MonoBehaviour {
 
-    public enum styles { drop, twist}
+    public enum styles { drop, twist, fade}
     public styles transistionStyle;
     public bool onOut = true;
     public bool down = true;
+    public Vector2 timeForFallBounds;
 
     public string changeTo;
+    public float tarAlphaValue;
 
     public int tarSlide;
     private float timeForFall;
@@ -24,14 +26,21 @@ public class TextDrop : MonoBehaviour {
     private Quaternion faceRotation;
     private Quaternion startRotation;
 
-	// Use this for initialization
-	void Start () {
-        timeForFall = Random.Range(0f, 1f);
+    // Use this for initialization
+    void Start()
+    {
+        if (tarAlphaValue == 0)
+            tarAlphaValue = 1;
+        if (timeForFallBounds != Vector2.zero)
+        {
+            timeForFall = Random.Range(timeForFallBounds.x, timeForFallBounds.y);
+        }
+
         timer = 0;
         speed = 0;
         startYValue = transform.position.y;
 
-        
+
         Vector3 dif = Camera.main.transform.position - transform.position;
         faceRotation = Quaternion.LookRotation(dif, Vector3.up);
         faceRotation *= Quaternion.Euler(0, 90, 0);
@@ -52,6 +61,15 @@ public class TextDrop : MonoBehaviour {
             if (onOut == false)
             {
                 transform.rotation = faceRotation;
+                GetComponent<Renderer>().enabled = false;
+            }
+        }
+
+        if (transistionStyle == styles.fade)
+        {
+            if (onOut == false)
+            {
+                GetComponent<Renderer>().material.color = Color.clear;
             }
         }
     }
@@ -106,6 +124,7 @@ public class TextDrop : MonoBehaviour {
                     }
                     else
                     {
+                        GetComponent<Renderer>().enabled = true;
                         transform.rotation = Quaternion.Lerp(transform.rotation, startRotation, Time.deltaTime);
                     }
                     if (onOut == true && changeTo != null)
@@ -118,6 +137,23 @@ public class TextDrop : MonoBehaviour {
                         }
                     }
                 }
+
+
+
+
+                if (transistionStyle == styles.fade)
+                {
+                    speed = 1;
+                    if (onOut == true)
+                    {
+                        GetComponent<Renderer>().material.color = Color.Lerp(GetComponent<Renderer>().material.color, Color.clear, Time.deltaTime * speed);
+                    }
+                    else
+                    {
+                        GetComponent<Renderer>().material.color = Color.Lerp(GetComponent<Renderer>().material.color, new Color(1, 1, 1, tarAlphaValue), Time.deltaTime * speed);
+                    }
+                }
+
             }
             timer += Time.deltaTime;
         }

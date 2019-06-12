@@ -6,7 +6,7 @@ public class PresentationManager : MonoBehaviour {
 
     public List<GameObject> Slides = new List<GameObject>();
     
-    public enum TransitionStyle { None, Flicker, Drop}
+    public enum TransitionStyle { None, Flicker, Drop, Fade}
 
     public List<TransitionStyle> transitions = new List<TransitionStyle>();
 
@@ -19,10 +19,13 @@ public class PresentationManager : MonoBehaviour {
     public Vector2 timeBetweenSetsBounds;
     public Vector2 flashPerSetBounds;
     public int SetAmount;
-    [Space(10)]
+    [Space(20)]
     private float setTimer = 0;
     private float flashTimer = 0;
     private int flashCounter = 0;
+
+    [Header("Fade Stuff")]
+    public Renderer fadeRenderer;
 
     private float flashOffTimes;
     private float flashOnTimes;
@@ -31,6 +34,7 @@ public class PresentationManager : MonoBehaviour {
     private int SetCounter;
 
     private bool midFlicker;
+    private int fadeStage = 2;
 
     // Use this for initialization
     void Start () {
@@ -50,6 +54,8 @@ public class PresentationManager : MonoBehaviour {
                     ChangeSlide();
                 if (transitions[currentSlide] == TransitionStyle.Flicker)
                     FlickerStart();
+                if (transitions[currentSlide] == TransitionStyle.Fade)
+                    fadeStage = 1;
             }
             else
                 ChangeSlide();
@@ -64,6 +70,9 @@ public class PresentationManager : MonoBehaviour {
         {
             Flickering();
         }
+
+        if (fadeStage > 0)
+            Fade();
     }
 
     void ChangeSlide ()
@@ -131,5 +140,27 @@ public class PresentationManager : MonoBehaviour {
         }
         setTimer += Time.deltaTime;
         flashTimer += Time.deltaTime;
+    }
+
+    void Fade ()
+    {
+        if (fadeStage == 1)
+        {
+            fadeRenderer.material.color = Color.Lerp(fadeRenderer.material.color, Color.black, Time.deltaTime * 1.5f);
+            if (fadeRenderer.material.color.a > 0.99f)
+            {
+                ChangeSlide();
+                fadeStage = 2;
+            }
+        }
+        if (fadeStage == 2)
+        {
+            fadeRenderer.material.color = Color.Lerp(fadeRenderer.material.color, Color.clear, Time.deltaTime * 1.5f);
+            if (fadeRenderer.material.color.a < 0.01f)
+            {
+                fadeRenderer.material.color = Color.clear;
+                fadeStage = 0;
+            }
+        }
     }
 }

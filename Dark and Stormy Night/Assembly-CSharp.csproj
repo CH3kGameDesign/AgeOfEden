@@ -147,6 +147,7 @@
     <Compile Include="Assets\Scripts\MovementVariables.cs" />
     <Compile Include="Assets\Scripts\NeverEndingCorridor.cs" />
     <Compile Include="Assets\Scripts\NonVisibleEnable.cs" />
+    <Compile Include="Assets\Scripts\OffsetAnimations.cs" />
     <Compile Include="Assets\Scripts\OptionManager.cs" />
     <Compile Include="Assets\Scripts\PlayerHolding.cs" />
     <Compile Include="Assets\Scripts\PlayerModel.cs" />
