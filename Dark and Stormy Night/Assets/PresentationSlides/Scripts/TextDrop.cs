@@ -77,7 +77,7 @@ public class TextDrop : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (PresentationManager.currentSlide == tarSlide)
+        if (PresentationManager.currentSlide >= tarSlide)
         {
             if (timer >= timeForFall)
             {

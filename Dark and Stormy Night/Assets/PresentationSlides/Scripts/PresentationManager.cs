@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PresentationManager : MonoBehaviour {
 
     public List<GameObject> Slides = new List<GameObject>();
     
-    public enum TransitionStyle { None, Flicker, Drop, Fade}
+    public enum TransitionStyle { None, Flicker, QuickFade, Fade}
 
     public List<TransitionStyle> transitions = new List<TransitionStyle>();
 
@@ -33,13 +34,18 @@ public class PresentationManager : MonoBehaviour {
     private int flashPerSet;
     private int SetCounter;
 
+    private static bool goingBack = false;
+
     private bool midFlicker;
     private int fadeStage = 2;
+    private int quickFadeStage = 0;
 
     // Use this for initialization
     void Start () {
-        if (currentSlide == 4)
+        if (currentSlide == 4 && goingBack == false)
             currentSlide++;
+        else
+            goingBack = false;
         ChangeSlide();
     }
 	
@@ -48,6 +54,8 @@ public class PresentationManager : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetMouseButtonDown(0))
         {
             currentSlide++;
+            if (currentSlide > Slides.Count - 1)
+                currentSlide = Slides.Count - 1;
             if (currentSlide < transitions.Count)
             {
                 if (transitions[currentSlide] == TransitionStyle.None)
@@ -56,6 +64,8 @@ public class PresentationManager : MonoBehaviour {
                     FlickerStart();
                 if (transitions[currentSlide] == TransitionStyle.Fade)
                     fadeStage = 1;
+                if (transitions[currentSlide] == TransitionStyle.QuickFade)
+                    quickFadeStage = 1;
             }
             else
                 ChangeSlide();
@@ -63,7 +73,10 @@ public class PresentationManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetMouseButtonDown(1))
         {
             currentSlide--;
-            ChangeSlide();
+            if (currentSlide < 0)
+                currentSlide = 0;
+            goingBack = true;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         if (midFlicker)
@@ -73,6 +86,8 @@ public class PresentationManager : MonoBehaviour {
 
         if (fadeStage > 0)
             Fade();
+        if (quickFadeStage > 0)
+            QuickFade();
     }
 
     void ChangeSlide ()
@@ -156,6 +171,28 @@ public class PresentationManager : MonoBehaviour {
         if (fadeStage == 2)
         {
             fadeRenderer.material.color = Color.Lerp(fadeRenderer.material.color, Color.clear, Time.deltaTime * 1.5f);
+            if (fadeRenderer.material.color.a < 0.01f)
+            {
+                fadeRenderer.material.color = Color.clear;
+                fadeStage = 0;
+            }
+        }
+    }
+
+    void QuickFade()
+    {
+        if (fadeStage == 1)
+        {
+            fadeRenderer.material.color = Color.Lerp(fadeRenderer.material.color, Color.black, Time.deltaTime * 3f);
+            if (fadeRenderer.material.color.a > 0.99f)
+            {
+                ChangeSlide();
+                fadeStage = 2;
+            }
+        }
+        if (fadeStage == 2)
+        {
+            fadeRenderer.material.color = Color.Lerp(fadeRenderer.material.color, Color.clear, Time.deltaTime * 3f);
             if (fadeRenderer.material.color.a < 0.01f)
             {
                 fadeRenderer.material.color = Color.clear;
