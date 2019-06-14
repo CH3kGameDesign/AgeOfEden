@@ -21,6 +21,6 @@ public class LoadSceneByButton : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Keypad3))
             SceneManager.LoadScene(3);
         if (Input.GetKeyDown(KeyCode.Escape))
-            SceneManager.LoadScene(3);
+            SceneManager.LoadScene(0);
     }
 }

@@ -181,23 +181,6 @@ public class PresentationManager : MonoBehaviour {
 
     void QuickFade()
     {
-        if (fadeStage == 1)
-        {
-            fadeRenderer.material.color = Color.Lerp(fadeRenderer.material.color, Color.black, Time.deltaTime * 3f);
-            if (fadeRenderer.material.color.a > 0.99f)
-            {
-                ChangeSlide();
-                fadeStage = 2;
-            }
-        }
-        if (fadeStage == 2)
-        {
-            fadeRenderer.material.color = Color.Lerp(fadeRenderer.material.color, Color.clear, Time.deltaTime * 3f);
-            if (fadeRenderer.material.color.a < 0.01f)
-            {
-                fadeRenderer.material.color = Color.clear;
-                fadeStage = 0;
-            }
-        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

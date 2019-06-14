@@ -25,6 +25,9 @@ public class TextDrop : MonoBehaviour {
 
     private Quaternion faceRotation;
     private Quaternion startRotation;
+    private bool done = false;
+
+    
 
     // Use this for initialization
     void Start()
@@ -119,6 +122,7 @@ public class TextDrop : MonoBehaviour {
                         if (Quaternion.Angle(transform.rotation, faceRotation) <= 2)
                         {
                             transform.rotation = faceRotation;
+                            GetComponent<Renderer>().enabled = false;
                         }
                         transform.rotation = Quaternion.Lerp(transform.rotation, faceRotation, Time.deltaTime * speed);
                     }
@@ -131,7 +135,10 @@ public class TextDrop : MonoBehaviour {
                     {
                         if (Quaternion.Angle(transform.rotation, faceRotation) <= 1)
                         {
-                            GetComponent<TextMeshPro>().text = changeTo;
+                            if (GetComponent<TextMeshPro>() != null)
+                                GetComponent<TextMeshPro>().text = changeTo;
+                            else
+                                GetComponent<Renderer>().enabled = false;
                             onOut = false;
                             startRotation *= Quaternion.Euler(0, 360, 0);
                         }
@@ -143,14 +150,23 @@ public class TextDrop : MonoBehaviour {
 
                 if (transistionStyle == styles.fade)
                 {
-                    speed = 1;
-                    if (onOut == true)
+                    if (done == false)
                     {
-                        GetComponent<Renderer>().material.color = Color.Lerp(GetComponent<Renderer>().material.color, Color.clear, Time.deltaTime * speed);
-                    }
-                    else
-                    {
-                        GetComponent<Renderer>().material.color = Color.Lerp(GetComponent<Renderer>().material.color, new Color(1, 1, 1, tarAlphaValue), Time.deltaTime * speed);
+                        if (timer >= timeForFall + 3)
+                            done = true;
+                        speed = 1;
+                        if (onOut == true)
+                        {
+                            GetComponent<Renderer>().material.color = Color.Lerp(GetComponent<Renderer>().material.color, Color.clear, Time.deltaTime * speed);
+                            if (GetComponent<Renderer>().material.color == Color.clear)
+                                done = true;
+                        }
+                        else
+                        {
+                            GetComponent<Renderer>().material.color = Color.Lerp(GetComponent<Renderer>().material.color, new Color(1, 1, 1, tarAlphaValue), Time.deltaTime * speed);
+                            if (GetComponent<Renderer>().material.color == new Color(1, 1, 1, tarAlphaValue))
+                                done = true;
+                        }
                     }
                 }
 
