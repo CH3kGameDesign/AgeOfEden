@@ -9,6 +9,7 @@ public class SoftRotation : MonoBehaviour {
     public Vector3 rotMax;
     [HideInInspector]
     public Vector3 rotMin;
+    public Transform Movee;
 
     public bool rotateBack = true;
 
@@ -16,25 +17,27 @@ public class SoftRotation : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        rotMin = transform.localEulerAngles;
+        if (Movee == null)
+            Movee = this.transform;
+        rotMin = Movee.localEulerAngles;
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
         if (direction == 0)
-            transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(rotMax), rotSpeed * Time.deltaTime);
+            Movee.localRotation = Quaternion.Lerp(Movee.localRotation, Quaternion.Euler(rotMax), rotSpeed * Time.deltaTime);
         else if (direction == 1)
-            transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(rotMin), rotSpeed * Time.deltaTime);
+            Movee.localRotation = Quaternion.Lerp(Movee.localRotation, Quaternion.Euler(rotMin), rotSpeed * Time.deltaTime);
 
-        Debug.Log(Time.fixedTime + " " + Mathf.Abs(Quaternion.Angle(transform.rotation, Quaternion.Euler(rotMax))));
-        if (Mathf.Abs(Quaternion.Angle(transform.localRotation, Quaternion.Euler(rotMax))) <= 1)
+        Debug.Log(Time.fixedTime + " " + Mathf.Abs(Quaternion.Angle(Movee.rotation, Quaternion.Euler(rotMax))));
+        if (Mathf.Abs(Quaternion.Angle(Movee.localRotation, Quaternion.Euler(rotMax))) <= 1)
         {
             if (rotateBack == true)
                 direction = 1;
             else
                 direction = 2;
         }
-        if (Mathf.Abs(Quaternion.Angle(transform.localRotation, Quaternion.Euler(rotMin))) <= 1)
+        if (Mathf.Abs(Quaternion.Angle(Movee.localRotation, Quaternion.Euler(rotMin))) <= 1)
             direction = 0;
     }
 }

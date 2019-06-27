@@ -1,0 +1,141 @@
+fileFormatVersion: 2
+guid: cb1c75708bb74b149b379113adc95704
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Block2_ED
+    100002: Block3_D90D
+    100004: Block4_R0D
+    100006: Block6_U0D
+    100008: Block7_M270D
+    100010: Block_RD
+    100012: //RootNode
+    100014: BlockU1_0D
+    100016: BlockU2_180D
+    100018: BlockW1_180D
+    400000: Block2_ED
+    400002: Block3_D90D
+    400004: Block4_R0D
+    400006: Block6_U0D
+    400008: Block7_M270D
+    400010: Block_RD
+    400012: //RootNode
+    400014: BlockU1_0D
+    400016: BlockU2_180D
+    400018: BlockW1_180D
+    2100000: Block_R
+    2100002: Block_E
+    2100004: D_Block
+    2100006: U_Block
+    2100008: M_Block
+    2100010: W_Block1
+    2300000: Block2_ED
+    2300002: Block3_D90D
+    2300004: Block4_R0D
+    2300006: Block6_U0D
+    2300008: Block7_M270D
+    2300010: Block_RD
+    2300012: BlockU1_0D
+    2300014: BlockU2_180D
+    2300016: BlockW1_180D
+    3300000: Block2_ED
+    3300002: Block3_D90D
+    3300004: Block4_R0D
+    3300006: Block6_U0D
+    3300008: Block7_M270D
+    3300010: Block_RD
+    3300012: BlockU1_0D
+    3300014: BlockU2_180D
+    3300016: BlockW1_180D
+    4300000: Block_RD
+    4300002: Block2_ED
+    4300004: Block3_D90D
+    4300006: Block4_R0D
+    4300008: Block6_U0D
+    4300010: Block7_M270D
+    4300012: BlockU1_0D
+    4300014: BlockW1_180D
+    4300016: BlockU2_180D
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

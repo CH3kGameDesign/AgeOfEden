@@ -51,7 +51,7 @@ public class PresentationManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetMouseButtonDown(0))
+		if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.PageDown))
         {
             currentSlide++;
             if (currentSlide > Slides.Count - 1)
@@ -70,7 +70,7 @@ public class PresentationManager : MonoBehaviour {
             else
                 ChangeSlide();
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.PageUp))
         {
             currentSlide--;
             if (currentSlide < 0)
