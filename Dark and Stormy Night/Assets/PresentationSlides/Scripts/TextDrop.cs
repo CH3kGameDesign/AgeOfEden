@@ -5,7 +5,7 @@ using TMPro;
 
 public class TextDrop : MonoBehaviour {
 
-    public enum styles { drop, twist, fade}
+    public enum styles { drop, twist, fade, cut}
     public styles transistionStyle;
     public bool onOut = true;
     public bool down = true;
@@ -26,12 +26,12 @@ public class TextDrop : MonoBehaviour {
     private Quaternion faceRotation;
     private Quaternion startRotation;
     private bool done = false;
-
     
 
     // Use this for initialization
     void Start()
     {
+        done = false;
         if (tarAlphaValue == 0)
             tarAlphaValue = 1;
         if (timeForFallBounds != Vector2.zero)
@@ -75,11 +75,21 @@ public class TextDrop : MonoBehaviour {
                 GetComponent<Renderer>().material.color = Color.clear;
             }
         }
+
+        if (transistionStyle == styles.cut)
+        {
+            if (onOut == false)
+            {
+                GetComponent<Renderer>().material.color = Color.clear;
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (PresentationManager.currentSlide > tarSlide && onOut == false)
+            done = true;
         if (PresentationManager.currentSlide >= tarSlide)
         {
             if (timer >= timeForFall)
@@ -152,8 +162,10 @@ public class TextDrop : MonoBehaviour {
                 {
                     if (done == false)
                     {
+                        /*
                         if (timer >= timeForFall + 3)
                             done = true;
+                            */
                         speed = 1;
                         if (onOut == true)
                         {
@@ -168,6 +180,17 @@ public class TextDrop : MonoBehaviour {
                                 done = true;
                         }
                     }
+                }
+                if (transistionStyle == styles.cut)
+                {
+                        if (onOut == true)
+                        {
+                            GetComponent<Renderer>().material.color = Color.clear;
+                        }
+                        else
+                        {
+                            GetComponent<Renderer>().material.color = Color.white;
+                        }
                 }
 
             }

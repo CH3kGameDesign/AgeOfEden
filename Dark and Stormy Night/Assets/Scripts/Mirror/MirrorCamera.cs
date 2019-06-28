@@ -8,7 +8,7 @@ public class MirrorCamera : MonoBehaviour {
 	public Transform renderPlane;
 	
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
 		Vector3 playerOffsetFromPortal = playerCamera.position - renderPlane.position;
 		transform.position = new Vector3(renderPlane.position.x - playerOffsetFromPortal.x, renderPlane.position.y + playerOffsetFromPortal.y, renderPlane.position.z - playerOffsetFromPortal.z);
 

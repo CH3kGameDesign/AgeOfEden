@@ -11,7 +11,7 @@ public class PortalCamera : MonoBehaviour {
     public bool turnAround = false;
 
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
 		Vector3 playerOffsetFromPortal = playerCamera.position - otherPortal.position;
         if (turnAround == false)
         {
