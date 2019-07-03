@@ -32,7 +32,5 @@ public class FacePlayer : MonoBehaviour {
             Quaternion rotation = Quaternion.LookRotation(lookPos);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * delay);
         }
-        
-            
 	}
 }

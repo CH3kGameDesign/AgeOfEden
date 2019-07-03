@@ -8,6 +8,9 @@ public class LightFixture : MonoBehaviour {
     public List<Light> Lights = new List<Light>();
     public List<MeshRenderer> Fixtures = new List<MeshRenderer>();
 
+    public List<GameObject> LightObjects = new List<GameObject>();
+    public List<GameObject> DarkObjects = new List<GameObject>();
+
     [Space (10)]
 
     [Header ("Variables")]
@@ -34,8 +37,13 @@ public class LightFixture : MonoBehaviour {
     public float onAmount;
     public float offAmount;
 
+    [HideInInspector]
+    public bool on;
+    public bool active;
+
     // Use this for initialization
     void Start () {
+        on = true;
         if (Lights.Count >= 1)
             for (int i = 0; i < Lights.Count; i++)
             {
@@ -57,72 +65,106 @@ public class LightFixture : MonoBehaviour {
         flashOnTimes = Random.Range(flashOnTimesBounds.x, flashOnTimesBounds.y);
         timeBetweenSets = Random.Range(timeBetweenSetsBounds.x, timeBetweenSetsBounds.y);
         flashPerSet = Mathf.RoundToInt(Random.Range(flashPerSetBounds.x, flashPerSetBounds.y));
+
+        for (int i = 0; i < LightObjects.Count; i++)
+        {
+            LightObjects[i].SetActive(on);
+        }
+        for (int i = 0; i < DarkObjects.Count; i++)
+        {
+            DarkObjects[i].SetActive(!on);
+        }
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (setTimer > timeBetweenSets)
+        if (active)
         {
-            if (flashTimer < flashOffTimes)
+            if (setTimer > timeBetweenSets)
             {
-                if (Lights.Count >= 1)
-                    for (int i = 0; i < Lights.Count; i++)
+                if (flashTimer < flashOffTimes)
+                {
+                    on = false;
+                    if (GetComponent<CandleFixture>() == null)
                     {
-                        Lights[i].intensity = offAmount;
-                    }
-                else
-                    GetComponentInChildren<Light>().intensity = offAmount;
+                        if (Lights.Count >= 1)
+                            for (int i = 0; i < Lights.Count; i++)
+                            {
+                                Lights[i].intensity = offAmount;
+                            }
+                        else
+                            GetComponentInChildren<Light>().intensity = offAmount;
 
-                if (Fixtures.Count >= 1)
-                    for (int i = 0; i < Fixtures.Count; i++)
-                    {
-                        Fixtures[i].material = offMat;
+                        if (Fixtures.Count >= 1)
+                            for (int i = 0; i < Fixtures.Count; i++)
+                            {
+                                Fixtures[i].material = offMat;
+                            }
+                        else
+                            GetComponent<MeshRenderer>().material = offMat;
                     }
+                }
                 else
-                    GetComponent<MeshRenderer>().material = offMat;
+                {
+                    on = true;
+                    if (GetComponent<CandleFixture>() == null)
+                    {
+                        if (Lights.Count >= 1)
+                            for (int i = 0; i < Lights.Count; i++)
+                            {
+                                Lights[i].intensity = onAmount;
+                            }
+                        else
+                            GetComponentInChildren<Light>().intensity = onAmount;
+
+                        if (Fixtures.Count >= 1)
+                            for (int i = 0; i < Fixtures.Count; i++)
+                            {
+                                Fixtures[i].material = onMat;
+                            }
+                        else
+                            GetComponent<MeshRenderer>().material = onMat;
+                    }
+
+                    if (flashTimer > flashOffTimes + flashOnTimes)
+                    {
+                        if (flashCounter < flashPerSet)
+                        {
+                            flashTimer = 0;
+                            flashOffTimes = Random.Range(flashOffTimesBounds.x, flashOffTimesBounds.y);
+                            flashOnTimes = Random.Range(flashOnTimesBounds.x, flashOnTimesBounds.y);
+                            flashCounter++;
+                        }
+                        else
+                        {
+                            flashCounter = 0;
+                            setTimer = 0;
+                            timeBetweenSets = Random.Range(timeBetweenSetsBounds.x, timeBetweenSetsBounds.y);
+                            flashPerSet = Mathf.RoundToInt(Random.Range(flashPerSetBounds.x, flashPerSetBounds.y));
+                        }
+                    }
+                }
+                for (int i = 0; i < LightObjects.Count; i++)
+                {
+                    LightObjects[i].SetActive(on);
+                }
+                for (int i = 0; i < DarkObjects.Count; i++)
+                {
+                    DarkObjects[i].SetActive(!on);
+                }
             }
             else
             {
-                if (Lights.Count >= 1)
-                    for (int i = 0; i < Lights.Count; i++)
-                    {
-                        Lights[i].intensity = onAmount;
-                    }
-                else
-                    GetComponentInChildren<Light>().intensity = onAmount;
-
-                if (Fixtures.Count >= 1)
-                    for (int i = 0; i < Fixtures.Count; i++)
-                    {
-                        Fixtures[i].material = onMat;
-                    }
-                else
-                    GetComponent<MeshRenderer>().material = onMat;
-
-                if (flashTimer > flashOffTimes + flashOnTimes)
-                {
-                    if (flashCounter < flashPerSet)
-                    {
-                        flashTimer = 0;
-                        flashOffTimes = Random.Range(flashOffTimesBounds.x, flashOffTimesBounds.y);
-                        flashOnTimes = Random.Range(flashOnTimesBounds.x, flashOnTimesBounds.y);
-                        flashCounter++;
-                    }
-                    else
-                    {
-                        flashCounter = 0;
-                        setTimer = 0;
-                        timeBetweenSets = Random.Range(timeBetweenSetsBounds.x, timeBetweenSetsBounds.y);
-                        flashPerSet = Mathf.RoundToInt(Random.Range(flashPerSetBounds.x, flashPerSetBounds.y));
-                    }
-                }
+                flashTimer = 0;
             }
+            setTimer += Time.deltaTime;
+            flashTimer += Time.deltaTime;
         }
-        else
-        {
-            flashTimer = 0;
-        }
-        setTimer += Time.deltaTime;
-        flashTimer += Time.deltaTime;
+    }
+
+    public void Activate (bool truth)
+    {
+        on = true;
+        active = truth;
     }
 }

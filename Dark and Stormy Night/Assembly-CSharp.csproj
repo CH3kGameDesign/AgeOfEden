@@ -133,6 +133,7 @@
     <Compile Include="Assets\Scripts\FadeToScene.cs" />
     <Compile Include="Assets\Scripts\FakeFall.cs" />
     <Compile Include="Assets\Scripts\GravityTunnel.cs" />
+    <Compile Include="Assets\Scripts\HandSpawner.cs" />
     <Compile Include="Assets\Scripts\InteractableObject.cs" />
     <Compile Include="Assets\Scripts\InvertGravity.cs" />
     <Compile Include="Assets\Scripts\LightFixture.cs" />

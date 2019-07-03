@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class VisibilityEnabler : MonoBehaviour
 {
@@ -12,12 +13,18 @@ public class VisibilityEnabler : MonoBehaviour
     public List<GameObject> GOOnNotView = new List<GameObject>();
     public List<GameObject> GODisableOnNotView = new List<GameObject>();
 
+    public UnityEvent activateEvent;
+    public UnityEvent deactivateEvent;
+
     private int visible = -1;
 
     // Use this for initialization
     void Start()
     {
-
+        if (activateEvent == null)
+            activateEvent = new UnityEvent();
+        if (deactivateEvent == null)
+            deactivateEvent = new UnityEvent();
     }
 
     // Update is called once per frame
@@ -39,6 +46,7 @@ public class VisibilityEnabler : MonoBehaviour
     {
         if (visible != 0)
         {
+            activateEvent.Invoke();
             for (int i = 0; i < GOOnView.Count; i++)
             {
                 GOOnView[i].SetActive(true);
@@ -55,6 +63,7 @@ public class VisibilityEnabler : MonoBehaviour
     {
         if (visible != 1)
         {
+            deactivateEvent.Invoke();
             for (int i = 0; i < GOOnNotView.Count; i++)
             {
                 GOOnNotView[i].SetActive(true);
