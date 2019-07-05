@@ -9,9 +9,11 @@ public class CandleFixture : MonoBehaviour {
     public List<MeshRenderer> Fixtures = new List<MeshRenderer>();
 
 
-    [Space(10)]
+    [Space(20)]
     public float onAmount;
     public float offAmount;
+    [Space(10)]
+    public float changePerFrame = 0.02f;
 
     private float saveIntensity;
     private List<Color> emissionStart = new List<Color>();
@@ -51,7 +53,7 @@ public class CandleFixture : MonoBehaviour {
                 }
             }
 
-            float changeAmount = Random.Range(-0.02f, 0.02f);
+            float changeAmount = Random.Range(-changePerFrame, changePerFrame);
             if (changeAmount + Lights[0].intensity > onAmount)
                 changeAmount = -changeAmount;
             if (changeAmount + Lights[0].intensity < offAmount)

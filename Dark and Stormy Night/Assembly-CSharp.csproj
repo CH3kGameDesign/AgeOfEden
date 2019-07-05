@@ -177,6 +177,7 @@
     <Compile Include="Assets\Scripts\SpawnInsideArea.cs" />
     <Compile Include="Assets\Scripts\TextGeneration.cs" />
     <Compile Include="Assets\Scripts\TextGenerationCollider.cs" />
+    <Compile Include="Assets\Scripts\TrainBounce.cs" />
     <Compile Include="Assets\Scripts\TypeWriter.cs" />
     <None Include="Assets\PostProcessing\Resources\Shaders\DepthOfField.shader" />
     <None Include="Assets\Shaders\delete.shader" />
