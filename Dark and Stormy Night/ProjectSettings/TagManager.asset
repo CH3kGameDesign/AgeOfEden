@@ -6,6 +6,8 @@ TagManager:
   tags:
   - PlayerHolding
   - Movable
+  - WoodArea
+  - CarpetArea
   layers:
   - Default
   - TransparentFX
@@ -23,7 +25,7 @@ TagManager:
   - RaycastThroughObjects
   - NotSeenInReflection
   - OnlySeenInReflection
-  - 
+  - SoundArea
   - 
   - 
   - 

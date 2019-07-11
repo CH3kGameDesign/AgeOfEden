@@ -31,6 +31,10 @@ public class TypeWriter : MonoBehaviour {
     [Space(10)]
     public List<int> freeCharsBeforeScript;
 
+    [Space(20)]
+    public List<GameObject> clickSounds = new List<GameObject>();
+    public GameObject exitSound;
+
     private int scriptLineCounter = 0;
     private int charScriptTakesOverCounter;
     
@@ -148,6 +152,7 @@ public class TypeWriter : MonoBehaviour {
                     text.GetChild(row).GetComponent<TextMeshPro>().text += lastLine;
                     voidOnFinish.Invoke();
                     startTyping = false;
+                    Instantiate(exitSound, transform.position, transform.rotation);
                 }
             }
         }
@@ -165,6 +170,8 @@ public class TypeWriter : MonoBehaviour {
             text.GetChild(row).GetComponent<TextMeshPro>().text += letter;
             charScriptTakesOverCounter++;
         }
+        int ranInt = Random.Range(0, clickSounds.Count);
+        Instantiate(clickSounds[ranInt], transform.position, transform.rotation);
     }
 
     void ArmMove (string letter)

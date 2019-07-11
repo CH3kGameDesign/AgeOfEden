@@ -10,8 +10,12 @@ public class Movement : MonoBehaviour {
     public float backwardSpeed;
     public float sprintMultiplier;
 
+    private float timeBetweenSteps;
+    private float stepTimer;
+
     [Header("GameObjects")]
     public GameObject playerModel;
+    //public FootStepManager footStepManager;
 
 	[HideInInspector]
 	public float verSpeed;
@@ -30,6 +34,7 @@ public class Movement : MonoBehaviour {
 	void Start () {
         canMove = canMoveOnStart;
         player = this.gameObject;
+        timeBetweenSteps = forwardSpeed / 4;
 	}
 	
 	// Update is called once per frame
@@ -52,15 +57,31 @@ public class Movement : MonoBehaviour {
 				verSpeed = 0;
 			horSpeed = Input.GetAxis ("Horizontal") * strafeSpeed * sprint;
 
-			if (new Vector3 (verSpeed, 0, horSpeed) == Vector3.zero)
-				playerModel.GetComponent<Animator> ().SetBool ("Moving", false);
-			else
-				playerModel.GetComponent<Animator> ().SetBool ("Moving", true);
+            if (new Vector3(verSpeed, 0, horSpeed) == Vector3.zero)
+            {
+                playerModel.GetComponent<Animator>().SetBool("Moving", false);
+                if (stepTimer != 0)
+                {
+                    //footStepManager.MakeSound();
+                    stepTimer = 0;
+                }
+            }
+            else
+            {
+                playerModel.GetComponent<Animator>().SetBool("Moving", true);
+                stepTimer += Time.deltaTime;
+            }
 
 			Vector3 desiredPosition = Vector3.ClampMagnitude (new Vector3 (verSpeed, 0, horSpeed), forwardSpeed * Time.deltaTime * sprint);
 			transform.position += transform.forward * desiredPosition.x;
 			transform.position += transform.right * desiredPosition.z;
 
+
+            if (stepTimer > timeBetweenSteps / sprint)
+            {
+                //footStepManager.MakeSound();
+                stepTimer = 0;
+            }
 			/*
             RaycastHit hit;
             Debug.DrawRay(transform.position + new Vector3 (0, -0.9f, 0), new Vector3(0, -0.2f, 0), Color.red);
@@ -73,6 +94,7 @@ public class Movement : MonoBehaviour {
 		} else {
 			playerModel.GetComponent<Animator>().SetBool("Sprinting", false);
 			playerModel.GetComponent<Animator>().SetBool("Moving", false);
-		}
+            stepTimer = 0;
+        }
     }
 }
