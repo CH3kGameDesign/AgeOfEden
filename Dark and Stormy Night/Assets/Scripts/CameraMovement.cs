@@ -38,6 +38,7 @@ public class CameraMovement : MonoBehaviour {
     public static bool snapToPlayer;
     public static bool goToPlayer;
     public static bool canMove = true;
+    public static bool canZoom = true;
     public static bool shake = true;
 
     public static GameObject cameraObject;
@@ -92,14 +93,18 @@ public class CameraMovement : MonoBehaviour {
             }
         }
 
-		if (canMove == true) {
-			if (Input.GetMouseButton (1))
-				transform.GetChild (0).GetComponent<Camera> ().fieldOfView = Mathf.Lerp (transform.GetChild (0).GetComponent<Camera> ().fieldOfView, fovMin, Time.deltaTime * zoomSpeed);
-			else
-				transform.GetChild (0).GetComponent<Camera> ().fieldOfView = Mathf.Lerp (transform.GetChild (0).GetComponent<Camera> ().fieldOfView, fovNormal, Time.deltaTime * zoomSpeed * 2);
-		}
-		else
-			transform.GetChild (0).GetComponent<Camera> ().fieldOfView = Mathf.Lerp (transform.GetChild (0).GetComponent<Camera> ().fieldOfView, fovNormal, Time.deltaTime * zoomSpeed * 2);
+        if (canZoom == true)
+        {
+            if (canMove == true)
+            {
+                if (Input.GetMouseButton(1))
+                    transform.GetChild(0).GetComponent<Camera>().fieldOfView = Mathf.Lerp(transform.GetChild(0).GetComponent<Camera>().fieldOfView, fovMin, Time.deltaTime * zoomSpeed);
+                else
+                    transform.GetChild(0).GetComponent<Camera>().fieldOfView = Mathf.Lerp(transform.GetChild(0).GetComponent<Camera>().fieldOfView, fovNormal, Time.deltaTime * zoomSpeed * 2);
+            }
+            else
+                transform.GetChild(0).GetComponent<Camera>().fieldOfView = Mathf.Lerp(transform.GetChild(0).GetComponent<Camera>().fieldOfView, fovNormal, Time.deltaTime * zoomSpeed * 2);
+        }
     }
 
 	void RunShake()

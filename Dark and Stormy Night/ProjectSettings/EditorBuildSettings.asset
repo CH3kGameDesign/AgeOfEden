@@ -24,6 +24,6 @@ EditorBuildSettings:
     path: Assets/Scenes/TypeWriter.unity
     guid: 66f7e6716d7cbd74b9d264c4696649a4
   - enabled: 1
-    path: Assets/Scenes/Manor.unity
-    guid: 841488512e776e8469cd480a425de74f
+    path: Assets/Scenes/Train.unity
+    guid: 1412fe4b3994bcc439761ce2b9cf29aa
   m_configObjects: {}

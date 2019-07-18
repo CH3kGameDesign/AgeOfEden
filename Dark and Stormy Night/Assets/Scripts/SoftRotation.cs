@@ -29,7 +29,7 @@ public class SoftRotation : MonoBehaviour {
         else if (direction == 1)
             Movee.localRotation = Quaternion.Lerp(Movee.localRotation, Quaternion.Euler(rotMin), rotSpeed * Time.deltaTime);
 
-        Debug.Log(Time.fixedTime + " " + Mathf.Abs(Quaternion.Angle(Movee.rotation, Quaternion.Euler(rotMax))));
+        //Debug.Log(Time.fixedTime + " " + Mathf.Abs(Quaternion.Angle(Movee.rotation, Quaternion.Euler(rotMax))));
         if (Mathf.Abs(Quaternion.Angle(Movee.localRotation, Quaternion.Euler(rotMax))) <= 1)
         {
             if (rotateBack == true)
