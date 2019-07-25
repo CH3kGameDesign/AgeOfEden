@@ -6,8 +6,11 @@ public class MoveTo : MonoBehaviour {
 
     public float metresPerSecond;
     public float lerpSpeed;
+    private float lerpSpeedActual = 0;
 
     public Transform Movee;
+
+    public bool movePlayer;
 
     public Vector3 tarPos;
 
@@ -24,7 +27,12 @@ public class MoveTo : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         if (Movee == null)
-            Movee = this.transform;
+        {
+            if (movePlayer == true)
+                Movee = Movement.player.transform;
+            else
+                Movee = this.transform;
+        }
         if (relativePos == true)
         {
             if (localPos == true)
@@ -85,6 +93,7 @@ public class MoveTo : MonoBehaviour {
 
     void MoveByLerp ()
     {
+        lerpSpeedActual = Mathf.Lerp(lerpSpeedActual, lerpSpeed, Time.deltaTime);
         if (localPos == true)
         {
             if (Vector3.Distance(Movee.position, Movee.parent.position + tarPos) < 0.5f)
@@ -95,7 +104,7 @@ public class MoveTo : MonoBehaviour {
             }
             else
             {
-                Movee.localPosition = Vector3.Lerp(Movee.localPosition, tarPos, lerpSpeed * Time.deltaTime);
+                Movee.localPosition = Vector3.Lerp(Movee.localPosition, tarPos, lerpSpeedActual * Time.deltaTime);
             }
         }
         else
@@ -109,7 +118,7 @@ public class MoveTo : MonoBehaviour {
             }
             else
             {
-                Movee.position = Vector3.Lerp(Movee.position, tarPos, lerpSpeed * Time.deltaTime);
+                Movee.position = Vector3.Lerp(Movee.position, tarPos, lerpSpeedActual * Time.deltaTime);
             }
         }
     }
@@ -117,6 +126,7 @@ public class MoveTo : MonoBehaviour {
     void Finish ()
     {
         moveOnStart = false;
+        if (activateOnFinish != null)
         activateOnFinish.SetActive(true);
     }
 }

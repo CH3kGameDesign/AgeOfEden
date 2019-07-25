@@ -12,10 +12,9 @@ public class SceneChanger : MonoBehaviour {
     private bool added;
     private Scene tarScene;
 
-    public GameObject PlayerManagerObjects;
-
 	// Use this for initialization
 	void Start () {
+        
         tarScene = SceneManager.GetSceneByBuildIndex(sceneToLoad);
 	}
 	

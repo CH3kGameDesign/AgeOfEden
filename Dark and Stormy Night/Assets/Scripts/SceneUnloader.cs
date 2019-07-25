@@ -9,6 +9,8 @@ public class SceneUnloader : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        if (Movement.player != null)
+            playerManagerObjects = Movement.player.transform.parent.parent.gameObject;
         StartCoroutine(UnloadScene());
 	}
 	

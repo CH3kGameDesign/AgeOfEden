@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\_InspectorExtensions\HelpAttribute.cs" />
     <Compile Include="Assets\OBJExport\OBJExporter.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\MinAttribute.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Assets\ProCore\ProBuilder\API Examples\Procedural Mesh\ExtrudeRandomEdges.cs" />
     <Compile Include="Assets\ProCore\ProBuilder\API Examples\Runtime Editing\RuntimeEdit.cs" />
     <Compile Include="Assets\ProCore\ProBuilder\API Examples\Vertex Colors\HighlightNearestFace.cs" />
+    <Compile Include="Assets\Scripts\ActivateScriptInParent.cs" />
     <Compile Include="Assets\Scripts\BreathingObject.cs" />
     <Compile Include="Assets\Scripts\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\CandleFixture.cs" />
@@ -123,6 +125,7 @@
     <Compile Include="Assets\Scripts\ContinonousRotation.cs" />
     <Compile Include="Assets\Scripts\CopyAnimations.cs" />
     <Compile Include="Assets\Scripts\CopyLocation.cs" />
+    <Compile Include="Assets\Scripts\DestroyOnSoundFinish.cs" />
     <Compile Include="Assets\Scripts\Enablers\InvisibleEnable.cs" />
     <Compile Include="Assets\Scripts\Enablers\RaycastEnable.cs" />
     <Compile Include="Assets\Scripts\Enablers\TriggerEnabler.cs" />
@@ -132,10 +135,12 @@
     <Compile Include="Assets\Scripts\FadeOut.cs" />
     <Compile Include="Assets\Scripts\FadeToScene.cs" />
     <Compile Include="Assets\Scripts\FakeFall.cs" />
+    <Compile Include="Assets\Scripts\FootStepManager.cs" />
     <Compile Include="Assets\Scripts\GravityTunnel.cs" />
     <Compile Include="Assets\Scripts\HandSpawner.cs" />
     <Compile Include="Assets\Scripts\InteractableObject.cs" />
     <Compile Include="Assets\Scripts\InvertGravity.cs" />
+    <Compile Include="Assets\Scripts\KeyEnable.cs" />
     <Compile Include="Assets\Scripts\LightFixture.cs" />
     <Compile Include="Assets\Scripts\Line\Bezier.cs" />
     <Compile Include="Assets\Scripts\Line\BezierControlPointMode.cs" />
@@ -167,11 +172,12 @@
     <Compile Include="Assets\Scripts\Portal\PortalTeleporter.cs" />
     <Compile Include="Assets\Scripts\Portal\PortalTextureSetup.cs" />
     <Compile Include="Assets\Scripts\PortalCameraEnabler.cs" />
-    <Compile Include="Assets\Scripts\PostProcessingChange.cs" />
     <Compile Include="Assets\Scripts\PushObject.cs" />
     <Compile Include="Assets\Scripts\ReflectObject.cs" />
+    <Compile Include="Assets\Scripts\RorschachManager.cs" />
     <Compile Include="Assets\Scripts\RotateTo.cs" />
     <Compile Include="Assets\Scripts\SceneChanger.cs" />
+    <Compile Include="Assets\Scripts\SceneUnloader.cs" />
     <Compile Include="Assets\Scripts\SmoothCameraMovement.cs" />
     <Compile Include="Assets\Scripts\SoftRotation.cs" />
     <Compile Include="Assets\Scripts\SpawnInsideArea.cs" />
@@ -179,6 +185,9 @@
     <Compile Include="Assets\Scripts\TextGenerationCollider.cs" />
     <Compile Include="Assets\Scripts\TrainBounce.cs" />
     <Compile Include="Assets\Scripts\TypeWriter.cs" />
+    <Compile Include="Assets\Scripts\VisualStuff\ChangeSkybox.cs" />
+    <Compile Include="Assets\Scripts\VisualStuff\FieldOfViewChange.cs" />
+    <Compile Include="Assets\Scripts\VisualStuff\PostProcessingChange.cs" />
     <None Include="Assets\PostProcessing\Resources\Shaders\DepthOfField.shader" />
     <None Include="Assets\Shaders\delete.shader" />
     <None Include="Assets\ProCore\ProBuilder\Shader\pb_TransparentOverlay.shader" />
@@ -195,6 +204,7 @@
     <None Include="Assets\Shaders\Diffuse RefEqualTwo.shader" />
     <None Include="Assets\PostProcessing\Resources\Shaders\LutGen.shader" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramRender.shader" />
+    <None Include="Assets\Shaders\Rorschach.shader" />
     <None Include="Assets\PostProcessing\Editor Resources\UI\CurveBackground.shader" />
     <None Include="Assets\Shaders\Hidden.shader" />
     <None Include="Assets\ProCore\ProBuilder\Shader\pb_FaceHighlight.shader" />

@@ -8,10 +8,11 @@ public class FieldOfViewChange : MonoBehaviour {
     private float startFOV;
 
     public float lerpSpeed;
+    private float lerpSpeedActual = 0;
 
     private Camera mainCam;
 
-    public enum FOVVar { outwards, back, none}
+    public enum FOVVar { outwards, back, back2, none}
     public FOVVar FOVChange;
 
 	// Use this for initialization
@@ -22,16 +23,19 @@ public class FieldOfViewChange : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        lerpSpeedActual = Mathf.Lerp(lerpSpeedActual, lerpSpeed, Time.deltaTime);
         if (FOVChange == FOVVar.outwards)
             ZoomOut();
         if (FOVChange == FOVVar.back)
             ZoomBack();
-	}
+        if (FOVChange == FOVVar.back2)
+            ZoomBack2();
+    }
 
     void ZoomOut ()
     {
         CameraMovement.canZoom = false;
-        mainCam.fieldOfView = Mathf.Lerp(mainCam.fieldOfView, tarFOV, lerpSpeed * Time.deltaTime);
+        mainCam.fieldOfView = Mathf.Lerp(mainCam.fieldOfView, tarFOV, lerpSpeedActual * Time.deltaTime);
         if (Mathf.Abs(mainCam.fieldOfView - tarFOV) < 0.5f)
         {
             FOVChange = FOVVar.back;
@@ -40,7 +44,16 @@ public class FieldOfViewChange : MonoBehaviour {
 
     void ZoomBack ()
     {
-        mainCam.fieldOfView = Mathf.Lerp(mainCam.fieldOfView, startFOV, lerpSpeed * Time.deltaTime);
+        mainCam.fieldOfView = Mathf.Lerp(mainCam.fieldOfView, startFOV - 25, lerpSpeedActual * Time.deltaTime);
+        if (Mathf.Abs(mainCam.fieldOfView - (startFOV - 25)) < 0.5f)
+        {
+            mainCam.fieldOfView = startFOV - 25;
+            FOVChange = FOVVar.back2;
+        }
+    }
+    void ZoomBack2()
+    {
+        mainCam.fieldOfView = Mathf.Lerp(mainCam.fieldOfView, startFOV, lerpSpeed * Time.deltaTime/ 2);
         if (Mathf.Abs(mainCam.fieldOfView - startFOV) < 0.5f)
         {
             mainCam.fieldOfView = startFOV;

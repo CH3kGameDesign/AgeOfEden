@@ -8,6 +8,7 @@ public class ChangeSkybox : MonoBehaviour {
     public float lerpPerSecond;
 
     public bool activateOnStart;
+    public float disableTime = 5;
 
 	// Use this for initialization
 	void Start () {
@@ -26,7 +27,7 @@ public class ChangeSkybox : MonoBehaviour {
 	void Update () {
         if (activateOnStart)
             Change();
-        Invoke("Disable", 5);
+        Invoke("Disable", disableTime);
 	}
 
     void Change ()

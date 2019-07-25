@@ -9,6 +9,7 @@ public class PostProcessingChange : MonoBehaviour {
     public PostProcessingBehaviour tarCamera;
 
     public float lerpSpeed;
+    public float disableTime = 5;
 
 	// Use this for initialization
 	void Start () {
@@ -22,7 +23,7 @@ public class PostProcessingChange : MonoBehaviour {
     private void Awake()
     {
         //tarCamera.profile = tarProfile;
-        Invoke("Disable", 5);
+        Invoke("Disable", disableTime);
     }
 
     // Update is called once per frame

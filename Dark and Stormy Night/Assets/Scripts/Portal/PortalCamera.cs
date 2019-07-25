@@ -10,8 +10,14 @@ public class PortalCamera : MonoBehaviour {
 
     public bool turnAround = false;
 
-	// Update is called once per frame
-	void LateUpdate () {
+    private void Start()
+    {
+        if (CameraMovement.cameraObject != null)
+            playerCamera = CameraMovement.cameraObject.transform.GetChild(0);
+    }
+
+    // Update is called once per frame
+    void LateUpdate () {
 		Vector3 playerOffsetFromPortal = playerCamera.position - otherPortal.position;
         if (turnAround == false)
         {

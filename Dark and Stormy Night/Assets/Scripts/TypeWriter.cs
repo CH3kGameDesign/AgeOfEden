@@ -33,6 +33,7 @@ public class TypeWriter : MonoBehaviour {
 
     [Space(20)]
     public List<GameObject> clickSounds = new List<GameObject>();
+    public GameObject spaceSound;
     public GameObject exitSound;
 
     private int scriptLineCounter = 0;
@@ -160,18 +161,28 @@ public class TypeWriter : MonoBehaviour {
 
     void Type(string letter)
     {
-        ArmMove(letter);
+        string textSound = "";
         if (scriptTyping == true)
+        {
+            textSound = scriptLines[scriptLineCounter][scriptCharCounter].ToString().ToLower();
             AnyKeyScript();
+        }
         else
         {
+            textSound = letter;
             if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
                 letter = letter.ToUpper();
             text.GetChild(row).GetComponent<TextMeshPro>().text += letter;
             charScriptTakesOverCounter++;
         }
         int ranInt = Random.Range(0, clickSounds.Count);
-        Instantiate(clickSounds[ranInt], transform.position, transform.rotation);
+        if (textSound != " ")
+        {
+            ArmMove(textSound);
+            Instantiate(clickSounds[ranInt], transform.position, transform.rotation);
+        }
+        else
+            Instantiate(spaceSound, transform.position, transform.rotation);
     }
 
     void ArmMove (string letter)
@@ -250,6 +261,8 @@ public class TypeWriter : MonoBehaviour {
             choice = 34;
         if (letter == "9")
             choice = 35;
+        if (letter == ".")
+            choice = 28;
 
         if (choice != -1)
         {

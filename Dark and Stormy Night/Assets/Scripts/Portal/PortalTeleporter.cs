@@ -15,8 +15,14 @@ public class PortalTeleporter : MonoBehaviour {
 
     private bool playerIsOverlapping = false;
 
-	// Update is called once per frame
-	void Update () {
+    private void Start()
+    {
+        if (Movement.player != null)
+        player = Movement.player.transform;
+    }
+
+    // Update is called once per frame
+    void Update () {
 		if (playerIsOverlapping)
 		{
 			Vector3 portalToPlayer = player.position - transform.position;
