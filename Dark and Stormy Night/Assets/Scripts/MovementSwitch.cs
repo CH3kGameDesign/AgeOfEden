@@ -12,6 +12,8 @@ public class MovementSwitch : MonoBehaviour
     public bool enable;
     public bool changeOnStart;
 
+    public float rotateOffset;
+
     // Use this for initialization
     void Start()
     {
@@ -24,11 +26,12 @@ public class MovementSwitch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
 
     public void Switch()
     {
+        if (rotateOffset != 0)
+            CameraMovement.cameraObject.GetComponent<SmoothCameraMovement>().rotateOffset = rotateOffset;
         if (choice != choices.camera)
             Movement.canMove = enable;
         if (choice != choices.movement)

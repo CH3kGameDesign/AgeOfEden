@@ -12,6 +12,8 @@ public class Movement : MonoBehaviour {
 
     private float timeBetweenSteps;
     private float stepTimer;
+    [HideInInspector]
+    public float speedMultiplier = 1;
 
     [Header("GameObjects")]
     public GameObject playerModel;
@@ -73,8 +75,8 @@ public class Movement : MonoBehaviour {
             }
 
 			Vector3 desiredPosition = Vector3.ClampMagnitude (new Vector3 (verSpeed, 0, horSpeed), forwardSpeed * Time.deltaTime * sprint);
-			transform.position += transform.forward * desiredPosition.x;
-			transform.position += transform.right * desiredPosition.z;
+			transform.position += transform.forward * desiredPosition.x * speedMultiplier;
+			transform.position += transform.right * desiredPosition.z * speedMultiplier;
 
 
             if (stepTimer > timeBetweenSteps / sprint)

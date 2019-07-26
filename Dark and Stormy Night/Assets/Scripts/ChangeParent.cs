@@ -5,12 +5,15 @@ using UnityEngine;
 public class ChangeParent : MonoBehaviour {
 
     public Transform child;
+    public bool playerChild;
     public Transform parent;
 
     public bool activateOnStart = true;
 
 	// Use this for initialization
 	void Start () {
+        if (child == null && playerChild == true)
+            child = Movement.player.transform;
         if (activateOnStart)
             Activate();
 	}

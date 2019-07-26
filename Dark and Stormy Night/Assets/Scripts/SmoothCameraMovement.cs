@@ -21,7 +21,9 @@ public class SmoothCameraMovement : MonoBehaviour {
     public float rotationX = 0F;
     public float rotationY = 0F;
 
-    public Vector2 sittingMaxRotation = new Vector2 (-60, 60);
+    public Vector2 publicSittingMaxRotation = new Vector2 (-60, 60);
+    public static Vector2 sittingMaxRotation;
+    public float rotateOffset;
 
     private List<float> rotArrayX = new List<float>();
     float rotAverageX = 0F;
@@ -37,6 +39,7 @@ public class SmoothCameraMovement : MonoBehaviour {
 
     public static float turnAroundValue = 0;
 
+
     void Update()
     {
         if (GravityTunnel.inGravTunnel == false)
@@ -47,6 +50,7 @@ public class SmoothCameraMovement : MonoBehaviour {
 
     void Start()
     {
+        sittingMaxRotation = publicSittingMaxRotation;
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb)
             rb.freezeRotation = true;
@@ -74,7 +78,7 @@ public class SmoothCameraMovement : MonoBehaviour {
 
                 if (Movement.canMove == false)
                     rotationX = ClampAngle(rotationX, sittingMaxRotation.x, sittingMaxRotation.y);
-
+                
                 rotArrayY.Add(rotationY);
                 rotArrayX.Add(rotationX);
 
@@ -98,6 +102,8 @@ public class SmoothCameraMovement : MonoBehaviour {
 
                 rotAverageY /= rotArrayY.Count;
                 rotAverageX /= rotArrayX.Count;
+
+                rotAverageX += rotateOffset;
 
                 //if (Movement.canMove == false)
                   //  rotAverageY = ClampAngle(rotAverageY, sittingMaxRotation.x, sittingMaxRotation.y);
@@ -178,5 +184,13 @@ public class SmoothCameraMovement : MonoBehaviour {
     {
         originalRotation = Quaternion.Euler(0, 0, gravSnapDirection);
         gravDirection = gravSnapDirection;
+    }
+
+    public void resetRotation ()
+    {
+        rotationX = 0;
+        rotationY = 0;
+        rotArrayX.Clear();
+        rotArrayY.Clear();
     }
 }

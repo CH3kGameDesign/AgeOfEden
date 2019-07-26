@@ -16,6 +16,8 @@ public class MoveTo : MonoBehaviour {
 
     
     public bool localPos;
+    public Transform localTo;
+
     public bool relativePos;
 
     public bool lerp = false;
@@ -33,10 +35,12 @@ public class MoveTo : MonoBehaviour {
             else
                 Movee = this.transform;
         }
+        if (localPos == true && localTo == null)
+            localTo = Movee;
         if (relativePos == true)
         {
             if (localPos == true)
-                tarPos += Movee.localPosition;
+                tarPos += localTo.localPosition;
             else
                 tarPos += Movee.position;
         }
@@ -56,18 +60,19 @@ public class MoveTo : MonoBehaviour {
 
         if (localPos == true)
         {
-            if (Vector3.Distance(Movee.position, Movee.parent.position + tarPos) < speed)
+            Vector3 finalPos = localTo.parent.position + tarPos;
+            if (Vector3.Distance(Movee.position, finalPos) < speed)
             {
-                Movee.localPosition = tarPos;
+                Movee.position = finalPos;
                 if (disableAfterFinish)
                     Finish();
             }
             else
             {
-                Vector3 direction = tarPos - Movee.localPosition;
+                Vector3 direction = finalPos - Movee.position;
                 direction = Vector3.ClampMagnitude(direction, 1);
 
-                Movee.localPosition += direction * speed;
+                Movee.position += direction * speed;
             }
         }
         else

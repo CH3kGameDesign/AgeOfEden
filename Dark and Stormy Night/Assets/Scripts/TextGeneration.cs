@@ -107,7 +107,7 @@ public class TextGeneration : MonoBehaviour {
 
             //Destroy(transform.GetChild(0).gameObject);
             transform.GetChild(0).GetComponent<FadeOut>().fade = true;
-            transform.GetChild(0).SetParent(null);
+            transform.GetChild(0).SetParent(transform.parent);
 
             textCount++;
         }

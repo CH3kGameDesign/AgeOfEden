@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
+using System;
 
 public class TypeWriter : MonoBehaviour {
 
@@ -25,11 +26,24 @@ public class TypeWriter : MonoBehaviour {
 
     private int letterPerRow;
 
-    [Header("Strings")]
-    public List<string> scriptLines = new List<string>();
-    public string lastLine;
-    [Space(10)]
-    public List<int> freeCharsBeforeScript;
+    private int endingNo;
+    
+    [Serializable]
+    public class ending
+    {
+        public List<string> startLines = new List<string>();
+        public List<string> scriptLines = new List<string>();
+        public List<int> freeCharsBeforeScript = new List<int>();
+        public GameObject activateOnStart;
+        public string lastLine;
+    }
+
+    [SerializeField]
+    public List<ending> EndingChanges = new List<ending>();
+
+    private List<string> scriptLines = new List<string>();
+    private string lastLine;
+    private List<int> freeCharsBeforeScript;
 
     [Space(20)]
     public List<GameObject> clickSounds = new List<GameObject>();
@@ -45,6 +59,20 @@ public class TypeWriter : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        endingNo = PermanentData.saveInfo.lastEndingAchieved;
+        for (int i = 0; i < EndingChanges[endingNo].startLines.Count; i++)
+        {
+            text.GetChild(i).GetComponent<TextMeshPro>().text = EndingChanges[endingNo].startLines[i];
+        }
+        row = EndingChanges[endingNo].startLines.Count;
+
+        scriptLines = EndingChanges[endingNo].scriptLines;
+        lastLine = EndingChanges[endingNo].lastLine;
+        freeCharsBeforeScript = EndingChanges[endingNo].freeCharsBeforeScript;
+
+        if (EndingChanges[endingNo].activateOnStart != null)
+            EndingChanges[endingNo].activateOnStart.SetActive(true);
+
         for (int i = 0; i < 36; i++)
         {
             armMoveRotation.Add(-300);
@@ -175,7 +203,7 @@ public class TypeWriter : MonoBehaviour {
             text.GetChild(row).GetComponent<TextMeshPro>().text += letter;
             charScriptTakesOverCounter++;
         }
-        int ranInt = Random.Range(0, clickSounds.Count);
+        int ranInt = UnityEngine.Random.Range(0, clickSounds.Count);
         if (textSound != " ")
         {
             ArmMove(textSound);

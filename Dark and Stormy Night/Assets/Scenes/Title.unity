@@ -2222,6 +2222,7 @@ Transform:
   - {fileID: 2052223389}
   - {fileID: 666667674}
   - {fileID: 389662317}
+  - {fileID: 1496555328}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2370,6 +2371,7 @@ MonoBehaviour:
   strafeSpeed: 2.85
   backwardSpeed: 2.2
   sprintMultiplier: 2
+  speedMultiplier: 1
   playerModel: {fileID: 846939947}
   verSpeed: 0
   horSpeed: 0
@@ -8119,7 +8121,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: ALPHA.7-25w
+  m_text: ALPHA.7-26a
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 028c896bed41043408be11a2228d84f2, type: 2}
   m_sharedMaterial: {fileID: 21113873226524262, guid: 028c896bed41043408be11a2228d84f2,
@@ -8417,6 +8419,49 @@ Transform:
   m_Father: {fileID: 2074542135}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: -1.1926504, y: 0.32040322, z: -6.164427}
+--- !u!1 &1496555327
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1496555328}
+  - component: {fileID: 1496555329}
+  m_Layer: 0
+  m_Name: LoadData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1496555328
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1496555327}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 564958583}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1496555329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1496555327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca5db10949db02444841c232bc4646fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onAwake: 1
+  endingNo: 0
+  choice: 1
 --- !u!1 &1525873629
 GameObject:
   m_ObjectHideFlags: 0
@@ -8458,7 +8503,8 @@ MonoBehaviour:
   maximumY: 75
   rotationX: 0
   rotationY: 0
-  sittingMaxRotation: {x: -60, y: 60}
+  publicSittingMaxRotation: {x: -60, y: 60}
+  rotateOffset: 0
   frameCounter: 15
 --- !u!114 &1525873631
 MonoBehaviour:

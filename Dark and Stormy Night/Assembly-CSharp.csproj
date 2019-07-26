@@ -117,6 +117,7 @@
     <Compile Include="Assets\ProCore\ProBuilder\API Examples\Runtime Editing\RuntimeEdit.cs" />
     <Compile Include="Assets\ProCore\ProBuilder\API Examples\Vertex Colors\HighlightNearestFace.cs" />
     <Compile Include="Assets\Scripts\ActivateScriptInParent.cs" />
+    <Compile Include="Assets\Scripts\AnimationOveride.cs" />
     <Compile Include="Assets\Scripts\BreathingObject.cs" />
     <Compile Include="Assets\Scripts\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\CandleFixture.cs" />
@@ -135,6 +136,9 @@
     <Compile Include="Assets\Scripts\FadeOut.cs" />
     <Compile Include="Assets\Scripts\FadeToScene.cs" />
     <Compile Include="Assets\Scripts\FakeFall.cs" />
+    <Compile Include="Assets\Scripts\Files\PermanentData.cs" />
+    <Compile Include="Assets\Scripts\Files\SaveEnding.cs" />
+    <Compile Include="Assets\Scripts\Files\SaveLoad.cs" />
     <Compile Include="Assets\Scripts\FootStepManager.cs" />
     <Compile Include="Assets\Scripts\GravityTunnel.cs" />
     <Compile Include="Assets\Scripts\HandSpawner.cs" />
@@ -158,6 +162,7 @@
     <Compile Include="Assets\Scripts\Mirror\MirrorTextureSetup.cs" />
     <Compile Include="Assets\Scripts\MirrorReflection.cs" />
     <Compile Include="Assets\Scripts\Movement.cs" />
+    <Compile Include="Assets\Scripts\MovementSpeedChange.cs" />
     <Compile Include="Assets\Scripts\MovementSwitch.cs" />
     <Compile Include="Assets\Scripts\MovementVariables.cs" />
     <Compile Include="Assets\Scripts\MoveTo.cs" />

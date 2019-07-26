@@ -8,6 +8,7 @@ public class SceneChanger : MonoBehaviour {
     public int sceneToLoad;
 
     public bool additive;
+    public bool activateOnStart = false;
 
     private bool added;
     private Scene tarScene;
@@ -16,6 +17,10 @@ public class SceneChanger : MonoBehaviour {
 	void Start () {
         
         tarScene = SceneManager.GetSceneByBuildIndex(sceneToLoad);
+        if (sceneToLoad == -2)
+            sceneToLoad = SceneManager.GetActiveScene().buildIndex;
+        if (activateOnStart)
+            StartLoad();
 	}
 	
 	// Update is called once per frame
@@ -25,13 +30,20 @@ public class SceneChanger : MonoBehaviour {
 
     public void StartLoad()
     {
-        if (added == false)
+        if (sceneToLoad == -1)
+            Application.Quit();
+
+        else if (added == false)
         {
             //SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive);
             added = true;
-            StartCoroutine(LoadNewScene());
+            if (additive == true)
+                StartCoroutine(LoadNewSceneAdditive());
+            else
+                StartCoroutine(LoadNewScene());
             //Invoke("FinishLoad", 0.5f);
         }
+        
     }
 
     void FinishLoad ()
@@ -44,13 +56,23 @@ public class SceneChanger : MonoBehaviour {
 
     IEnumerator LoadNewScene()
     {
+        AsyncOperation async = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Single);
+
+        while (!async.isDone)
+        {
+            yield return null;
+        }
+    }
+
+    IEnumerator LoadNewSceneAdditive()
+    {
         AsyncOperation async = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive);
 
         while (!async.isDone)
         {
             yield return null;
         }
-            FinishLoad();
+        FinishLoad();
 
     }
 }
