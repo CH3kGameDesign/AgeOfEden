@@ -1,35 +1,34 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.Events;
-using System;
 
-public class TypeWriter : MonoBehaviour {
+public class TypeWriter : MonoBehaviour
+{
+    public Transform m_tPaper;
+    public Transform m_tText;
+    public List<Transform> m_lArms = new List<Transform>();
+    private List<float> m_lArmMoveRotation = new List<float>();
+    private bool m_bArmMove = false;
 
-    public Transform paper;
-    public Transform text;
-    public List<Transform> arms = new List<Transform>();
-    private List<float> armMoveRotation = new List<float>();
-    private bool armMove = false;
+    public float m_fHalfLength;
+    private float m_fLetterWidth;
 
-    public float halfLength;
-    private float letterWidth;
+    public int m_iRow;
 
-    public int row;
+    public bool m_bStartTyping = true;
+    public bool m_bReturnToTyping = false;
+    public List<GameObject> m_lActivateOnFinish = new List<GameObject>();
+    public List<GameObject> m_lDeactivateOnFinish = new List<GameObject>();
+    public UnityEvent m_ueVoidOnFinish;
 
-    public bool startTyping = true;
-    public bool returnToTyping = false;
-    public List<GameObject> activateOnFinish = new List<GameObject>();
-    public List<GameObject> deActivateOnFinish = new List<GameObject>();
-    public UnityEvent voidOnFinish;
+    private int m_iLetterPerRow;
 
-    private int letterPerRow;
-
-    private int endingNo;
+    private int m_iEndingNo;
     
     [Serializable]
-    public class ending
+    public class Ending
     {
         public List<string> startLines = new List<string>();
         public List<string> scriptLines = new List<string>();
@@ -39,431 +38,421 @@ public class TypeWriter : MonoBehaviour {
     }
 
     [SerializeField]
-    public List<ending> EndingChanges = new List<ending>();
+    public List<Ending> m_lEndingChanges = new List<Ending>();
 
-    private List<string> scriptLines = new List<string>();
-    private string lastLine;
-    private List<int> freeCharsBeforeScript;
+    private List<string> m_lScriptLines = new List<string>();
+    private string m_sLastLine;
+    private List<int> m_lFfreeCharsBeforeScript;
 
     [Space(20)]
-    public List<GameObject> clickSounds = new List<GameObject>();
-    public GameObject spaceSound;
-    public GameObject exitSound;
+    public List<GameObject> m_goClickSounds = new List<GameObject>();
+    public GameObject m_goSpaceSound;
+    public GameObject m_goExitSound;
 
-    private int scriptLineCounter = 0;
-    private int charScriptTakesOverCounter;
+    private int m_iScriptLineCounter = 0;
+    private int m_iCharScriptTakesOverCounter;
     
-    private bool scriptTyping = false;
-    private int scriptCharCounter = 0;
-    private string updateLetter;
+    private bool m_bScriptTyping = false;
+    private int m_iScriptCharCounter = 0;
+    private string m_sUpdateLetter;
 
-	// Use this for initialization
-	void Start () {
-        endingNo = PermanentData.saveInfo.lastEndingAchieved;
-        for (int i = 0; i < EndingChanges[endingNo].startLines.Count; i++)
+	// Called once before the first frame
+	private void Start ()
+    {
+        m_iEndingNo = PermanentData.saveInfo.lastEndingAchieved;
+        for (int i = 0; i < m_lEndingChanges[m_iEndingNo].startLines.Count; i++)
         {
-            text.GetChild(i).GetComponent<TextMeshPro>().text = EndingChanges[endingNo].startLines[i];
+            m_tText.GetChild(i).GetComponent<TextMeshPro>().text = m_lEndingChanges[m_iEndingNo].startLines[i];
         }
-        row = EndingChanges[endingNo].startLines.Count;
+        m_iRow = m_lEndingChanges[m_iEndingNo].startLines.Count;
 
-        scriptLines = EndingChanges[endingNo].scriptLines;
-        lastLine = EndingChanges[endingNo].lastLine;
-        freeCharsBeforeScript = EndingChanges[endingNo].freeCharsBeforeScript;
+        m_lScriptLines = m_lEndingChanges[m_iEndingNo].scriptLines;
+        m_sLastLine = m_lEndingChanges[m_iEndingNo].lastLine;
+        m_lFfreeCharsBeforeScript = m_lEndingChanges[m_iEndingNo].freeCharsBeforeScript;
 
-        if (EndingChanges[endingNo].activateOnStart != null)
-            EndingChanges[endingNo].activateOnStart.SetActive(true);
+        if (m_lEndingChanges[m_iEndingNo].activateOnStart != null)
+            m_lEndingChanges[m_iEndingNo].activateOnStart.SetActive(true);
 
         for (int i = 0; i < 36; i++)
         {
-            armMoveRotation.Add(-300);
+            m_lArmMoveRotation.Add(-300);
         }
-        letterPerRow = Mathf.RoundToInt((0.166f * (text.GetChild(0).GetComponent<RectTransform>().rect.width * 100))/ text.GetChild(0).GetComponent<TextMeshPro>().fontSize);
-        paper.transform.localPosition = new Vector3(halfLength, 0.025f * (row + 1), 0);
-        letterWidth = (halfLength * 2) / letterPerRow;
+
+        m_iLetterPerRow = Mathf.RoundToInt((0.166f * (m_tText.GetChild(0).GetComponent<RectTransform>().rect.width * 100))/ m_tText.GetChild(0).GetComponent<TextMeshPro>().fontSize);
+        m_tPaper.transform.localPosition = new Vector3(m_fHalfLength, 0.025f * (m_iRow + 1), 0);
+        m_fLetterWidth = (m_fHalfLength * 2) / m_iLetterPerRow;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update ()
     {
-        if (startTyping == true)
+        if (m_bStartTyping)
         {
-            updateLetter = null;
-            if (row >= text.childCount)
+            if (m_iRow >= m_tText.childCount)
                 return;
-            if (text.GetChild(row).GetComponent<TextMeshPro>().text.Length >= letterPerRow)
+
+            m_sUpdateLetter = null;
+
+            // If max letters on one row reached, move to next row
+            if (m_tText.GetChild(m_iRow).GetComponent<TextMeshPro>().text.Length >= m_iLetterPerRow)
                 NextRow();
-            if (row >= text.childCount)
+
+            // Once max row count is reached, end typewriter sequence
+            if (m_iRow >= m_tText.childCount)
             {
-                if (activateOnFinish.Count != 0)
+                if (m_lActivateOnFinish.Count != 0)
                 {
-                    for (int i = 0; i < activateOnFinish.Count; i++)
+                    for (int i = 0; i < m_lActivateOnFinish.Count; i++)
                     {
-                        activateOnFinish[i].SetActive(true);
+                        m_lActivateOnFinish[i].SetActive(true);
                     }
                 }
-                if (deActivateOnFinish.Count != 0)
+
+                if (m_lDeactivateOnFinish.Count != 0)
                 {
-                    for (int i = 0; i < deActivateOnFinish.Count; i++)
+                    for (int i = 0; i < m_lDeactivateOnFinish.Count; i++)
                     {
-                        deActivateOnFinish[i].SetActive(false);
+                        m_lDeactivateOnFinish[i].SetActive(false);
                     }
                 }
-                voidOnFinish.Invoke();
-                startTyping = false;
+
+                m_ueVoidOnFinish.Invoke();
+                m_bStartTyping = false;
                 return;
             }
-            if (charScriptTakesOverCounter >= freeCharsBeforeScript[scriptLineCounter])
-                scriptTyping = true;
+
+            if (m_iCharScriptTakesOverCounter >= m_lFfreeCharsBeforeScript[m_iScriptLineCounter])
+                m_bScriptTyping = true;
+
             KeyPress();
-            paper.transform.localPosition = new Vector3(halfLength - (letterWidth * text.GetChild(row).GetComponent<TextMeshPro>().text.Length), 0.025f * (row + 1), 0);
-            if (updateLetter != null)
-                Type(updateLetter);
+            m_tPaper.transform.localPosition = new Vector3(m_fHalfLength - (m_fLetterWidth * m_tText.GetChild(m_iRow).GetComponent<TextMeshPro>().text.Length), 0.025f * (m_iRow + 1), 0);
+
+            if (m_sUpdateLetter != null)
+                Type(m_sUpdateLetter);
         }
-        if (armMove == true)
+        if (m_bArmMove == true)
             ArmMoveBack();
     }
-
-
-
-
-
-
+    
     /// <summary>
-    /// /////////////////////////////////////////////////////////////////////
+    /// Increments the row count
     /// </summary>
-
-
-    void NextRow ()
+    private void NextRow ()
     {
-        row++;
-        if (row != text.childCount)
-            paper.transform.localPosition = new Vector3(halfLength, 0.025f * (row + 1), 0);
+        m_iRow++;
+        if (m_iRow != m_tText.childCount)
+            m_tPaper.transform.localPosition = new Vector3(m_fHalfLength, 0.025f * (m_iRow + 1), 0);
     }
 
-    void AnyKeyScript()
+    /// <summary>
+    /// Function that takes over the players input
+    /// </summary>
+    private void AnyKeyScript ()
     {
-        text.GetChild(row).GetComponent<TextMeshPro>().text += scriptLines[scriptLineCounter][scriptCharCounter];
-        scriptCharCounter++;
-        if (scriptCharCounter >= scriptLines[scriptLineCounter].Length)
+        m_tText.GetChild(m_iRow).GetComponent<TextMeshPro>().text += m_lScriptLines[m_iScriptLineCounter][m_iScriptCharCounter];
+        m_iScriptCharCounter++;
+
+        if (m_iScriptCharCounter >= m_lScriptLines[m_iScriptLineCounter].Length)
         {
-            if (scriptLineCounter < scriptLines.Count - 1)
+            if (m_iScriptLineCounter < m_lScriptLines.Count - 1)
             {
-                scriptLineCounter++;
-                scriptCharCounter = 0;
-                scriptTyping = false;
-                charScriptTakesOverCounter = 0;
+                m_iScriptLineCounter++;
+                m_iScriptCharCounter = 0;
+                m_bScriptTyping = false;
+                m_iCharScriptTakesOverCounter = 0;
             }
             else
             {
-                if (returnToTyping == true)
+                if (m_bReturnToTyping)
                 {
-                    charScriptTakesOverCounter = -1000;
-                    scriptTyping = false;
+                    m_iCharScriptTakesOverCounter = -1000;
+                    m_bScriptTyping = false;
                 }
                 else
                 {
-                    if (activateOnFinish.Count != 0)
+                    if (m_lActivateOnFinish.Count != 0)
                     {
-                        for (int i = 0; i < activateOnFinish.Count; i++)
+                        for (int i = 0; i < m_lActivateOnFinish.Count; i++)
                         {
-                            activateOnFinish[i].SetActive(true);
+                            m_lActivateOnFinish[i].SetActive(true);
                         }
                     }
-                    if (deActivateOnFinish.Count != 0)
+                    if (m_lDeactivateOnFinish.Count != 0)
                     {
-                        for (int i = 0; i < deActivateOnFinish.Count; i++)
+                        for (int i = 0; i < m_lDeactivateOnFinish.Count; i++)
                         {
-                            deActivateOnFinish[i].SetActive(false);
+                            m_lDeactivateOnFinish[i].SetActive(false);
                         }
                     }
                     NextRow();
                     NextRow();
-                    text.GetChild(row).GetComponent<TextMeshPro>().text += lastLine;
-                    voidOnFinish.Invoke();
-                    startTyping = false;
-                    Instantiate(exitSound, transform.position, transform.rotation);
+                    m_tText.GetChild(m_iRow).GetComponent<TextMeshPro>().text += m_sLastLine;
+                    m_ueVoidOnFinish.Invoke();
+                    m_bStartTyping = false;
+                    Instantiate(m_goExitSound, transform.position, transform.rotation);
                 }
             }
         }
     }
 
-    void Type(string letter)
+    /// <summary>
+    /// Adds the pressed key onto the onscreen textbox
+    /// </summary>
+    /// <param name="pLetter"></param>
+    private void Type (string pLetter)
     {
         string textSound = "";
-        if (scriptTyping == true)
+
+        if (m_bScriptTyping)
         {
-            textSound = scriptLines[scriptLineCounter][scriptCharCounter].ToString().ToLower();
+            textSound = m_lScriptLines[m_iScriptLineCounter][m_iScriptCharCounter].ToString().ToLower();
             AnyKeyScript();
         }
         else
         {
-            textSound = letter;
+            textSound = pLetter;
+
             if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-                letter = letter.ToUpper();
-            text.GetChild(row).GetComponent<TextMeshPro>().text += letter;
-            charScriptTakesOverCounter++;
+                pLetter = pLetter.ToUpper();
+
+            m_tText.GetChild(m_iRow).GetComponent<TextMeshPro>().text += pLetter;
+            m_iCharScriptTakesOverCounter++;
         }
-        int ranInt = UnityEngine.Random.Range(0, clickSounds.Count);
+
+        int ranInt = UnityEngine.Random.Range(0, m_goClickSounds.Count);
+
         if (textSound != " ")
         {
             ArmMove(textSound);
-            Instantiate(clickSounds[ranInt], transform.position, transform.rotation);
+            Instantiate(m_goClickSounds[ranInt], transform.position, transform.rotation);
         }
         else
-            Instantiate(spaceSound, transform.position, transform.rotation);
+            Instantiate(m_goSpaceSound, transform.position, transform.rotation);
     }
 
-    void ArmMove (string letter)
+    /// <summary>
+    /// Moves the arm of the pressed key forward
+    /// </summary>
+    /// <param name="pLetter"></param>
+    private void ArmMove (string pLetter)
     {
         int choice = -1;
 
-        if (letter == "a")
+        if (pLetter == "a")
             choice = 0;
-        if (letter == "b")
+        if (pLetter == "b")
             choice = 1;
-        if (letter == "c")
+        if (pLetter == "c")
             choice = 2;
-        if (letter == "d")
+        if (pLetter == "d")
             choice = 3;
-        if (letter == "e")
+        if (pLetter == "e")
             choice = 4;
-        if (letter == "f")
+        if (pLetter == "f")
             choice = 5;
-        if (letter == "g")
+        if (pLetter == "g")
             choice = 6;
-        if (letter == "h")
+        if (pLetter == "h")
             choice = 7;
-        if (letter == "i")
+        if (pLetter == "i")
             choice = 8;
-        if (letter == "j")
+        if (pLetter == "j")
             choice = 9;
-        if (letter == "k")
+        if (pLetter == "k")
             choice = 10;
-        if (letter == "l")
+        if (pLetter == "l")
             choice = 11;
-        if (letter == "m")
+        if (pLetter == "m")
             choice = 12;
-        if (letter == "n")
+        if (pLetter == "n")
             choice = 13;
-        if (letter == "o")
+        if (pLetter == "o")
             choice = 14;
-        if (letter == "p")
+        if (pLetter == "p")
             choice = 15;
-        if (letter == "q")
+        if (pLetter == "q")
             choice = 16;
-        if (letter == "r")
+        if (pLetter == "r")
             choice = 17;
-        if (letter == "s")
+        if (pLetter == "s")
             choice = 18;
-        if (letter == "t")
+        if (pLetter == "t")
             choice = 19;
-        if (letter == "u")
+        if (pLetter == "u")
             choice = 20;
-        if (letter == "v")
+        if (pLetter == "v")
             choice = 21;
-        if (letter == "w")
+        if (pLetter == "w")
             choice = 22;
-        if (letter == "x")
+        if (pLetter == "x")
             choice = 23;
-        if (letter == "y")
+        if (pLetter == "y")
             choice = 24;
-        if (letter == "z")
+        if (pLetter == "z")
             choice = 25;
-        if (letter == "0")
+        if (pLetter == "0")
             choice = 26;
-        if (letter == "1")
+        if (pLetter == "1")
             choice = 27;
-        if (letter == "2")
+        if (pLetter == "2")
             choice = 28;
-        if (letter == "3")
+        if (pLetter == "3")
             choice = 29;
-        if (letter == "4")
+        if (pLetter == "4")
             choice = 30;
-        if (letter == "5")
+        if (pLetter == "5")
             choice = 31;
-        if (letter == "6")
+        if (pLetter == "6")
             choice = 32;
-        if (letter == "7")
+        if (pLetter == "7")
             choice = 33;
-        if (letter == "8")
+        if (pLetter == "8")
             choice = 34;
-        if (letter == "9")
+        if (pLetter == "9")
             choice = 35;
-        if (letter == ".")
+        if (pLetter == ".")
             choice = 28;
 
+        // As long as a valid key is pressed, move the arm into position
         if (choice != -1)
         {
-            arms[choice].GetChild(0).localEulerAngles = new Vector3(0, 0, -130);
-            armMove = true;
-            armMoveRotation[choice] = -130;
+            m_lArms[choice].GetChild(0).localEulerAngles = new Vector3(0, 0, -130);
+            m_bArmMove = true;
+            m_lArmMoveRotation[choice] = -130;
         }
     }
 
-    void ArmMoveBack ()
+    /// <summary>
+    /// Returns the typewriter arm to its original position
+    /// </summary>
+    private void ArmMoveBack ()
     {
-        armMove = false;
-        for (int i = 0; i < armMoveRotation.Count; i++)
+        m_bArmMove = false;
+        for (int i = 0; i < m_lArmMoveRotation.Count; i++)
         {
-            if (armMoveRotation[i] != -300)
+            if (m_lArmMoveRotation[i] != -300)
             {
-                armMove = true;
-                armMoveRotation[i] -= 10;
-                arms[i].GetChild(0).localEulerAngles = new Vector3(0, 0, armMoveRotation[i]);
+                m_bArmMove = true;
+                m_lArmMoveRotation[i] -= 10;
+                m_lArms[i].GetChild(0).localEulerAngles = new Vector3(0, 0, m_lArmMoveRotation[i]);
             }
         }
     }
 
-
-    void KeyPress ()
+    /// <summary>
+    /// Loads the most recent key pressed into memory
+    /// </summary>
+    private void KeyPress ()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-        {
-            updateLetter = " ";
-        }
+            m_sUpdateLetter = " ";
+
         if (Input.GetKeyDown(KeyCode.A))
-        {
-            updateLetter = "a";
-        }
+            m_sUpdateLetter = "a";
+
         if (Input.GetKeyDown(KeyCode.B))
-        {
-            updateLetter = "b";
-        }
+            m_sUpdateLetter = "b";
+        
         if (Input.GetKeyDown(KeyCode.C))
-        {
-            updateLetter = "c";
-        }
+            m_sUpdateLetter = "c";
+        
         if (Input.GetKeyDown(KeyCode.D))
-        {
-            updateLetter = "d";
-        }
+            m_sUpdateLetter = "d";
+        
         if (Input.GetKeyDown(KeyCode.E))
-        {
-            updateLetter = "e";
-        }
+            m_sUpdateLetter = "e";
+        
         if (Input.GetKeyDown(KeyCode.F))
-        {
-            updateLetter = "f";
-        }
+            m_sUpdateLetter = "f";
+        
         if (Input.GetKeyDown(KeyCode.G))
-        {
-            updateLetter = "g";
-        }
+            m_sUpdateLetter = "g";
+        
         if (Input.GetKeyDown(KeyCode.H))
-        {
-            updateLetter = "h";
-        }
+            m_sUpdateLetter = "h";
+        
         if (Input.GetKeyDown(KeyCode.I))
-        {
-            updateLetter = "i";
-        }
+            m_sUpdateLetter = "i";
+        
         if (Input.GetKeyDown(KeyCode.J))
-        {
-            updateLetter = "j";
-        }
+            m_sUpdateLetter = "j";
+        
         if (Input.GetKeyDown(KeyCode.K))
-        {
-            updateLetter = "k";
-        }
+            m_sUpdateLetter = "k";
+        
         if (Input.GetKeyDown(KeyCode.L))
-        {
-            updateLetter = "l";
-        }
+            m_sUpdateLetter = "l";
+        
         if (Input.GetKeyDown(KeyCode.M))
-        {
-            updateLetter = "m";
-        }
+            m_sUpdateLetter = "m";
+        
         if (Input.GetKeyDown(KeyCode.N))
-        {
-            updateLetter = "n";
-        }
+            m_sUpdateLetter = "n";
+        
         if (Input.GetKeyDown(KeyCode.O))
-        {
-            updateLetter = "o";
-        }
+            m_sUpdateLetter = "o";
+        
         if (Input.GetKeyDown(KeyCode.P))
-        {
-            updateLetter = "p";
-        }
+            m_sUpdateLetter = "p";
+        
         if (Input.GetKeyDown(KeyCode.Q))
-        {
-            updateLetter = "q";
-        }
+            m_sUpdateLetter = "q";
+        
         if (Input.GetKeyDown(KeyCode.R))
-        {
-            updateLetter = "r";
-        }
+            m_sUpdateLetter = "r";
+        
         if (Input.GetKeyDown(KeyCode.S))
-        {
-            updateLetter = "s";
-        }
+            m_sUpdateLetter = "s";
+        
         if (Input.GetKeyDown(KeyCode.T))
-        {
-            updateLetter = "t";
-        }
+            m_sUpdateLetter = "t";
+        
         if (Input.GetKeyDown(KeyCode.U))
-        {
-            updateLetter = "u";
-        }
+            m_sUpdateLetter = "u";
+        
         if (Input.GetKeyDown(KeyCode.V))
-        {
-            updateLetter = "v";
-        }
+            m_sUpdateLetter = "v";
+        
         if (Input.GetKeyDown(KeyCode.W))
-        {
-            updateLetter = "w";
-        }
+            m_sUpdateLetter = "w";
+        
         if (Input.GetKeyDown(KeyCode.X))
-        {
-            updateLetter = "x";
-        }
+            m_sUpdateLetter = "x";
+        
         if (Input.GetKeyDown(KeyCode.Y))
-        {
-            updateLetter = "y";
-        }
+            m_sUpdateLetter = "y";
+        
         if (Input.GetKeyDown(KeyCode.Z))
-        {
-            updateLetter = "z";
-        }
+            m_sUpdateLetter = "z";
+        
         if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            updateLetter = "1";
-        }
+            m_sUpdateLetter = "1";
+        
         if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            updateLetter = "2";
-        }
+            m_sUpdateLetter = "2";
+        
         if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            updateLetter = "3";
-        }
+            m_sUpdateLetter = "3";
+        
         if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            updateLetter = "4";
-        }
+            m_sUpdateLetter = "4";
+        
         if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            updateLetter = "5";
-        }
+            m_sUpdateLetter = "5";
+        
         if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            updateLetter = "6";
-        }
+            m_sUpdateLetter = "6";
+        
         if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            updateLetter = "7";
-        }
+            m_sUpdateLetter = "7";
+        
         if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            updateLetter = "8";
-        }
+            m_sUpdateLetter = "8";
+        
         if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            updateLetter = "9";
-        }
+            m_sUpdateLetter = "9";
+        
         if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            updateLetter = "0";
-        }
+            m_sUpdateLetter = "0";
     }
 }

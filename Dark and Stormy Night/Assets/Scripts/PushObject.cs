@@ -2,21 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PushObject : MonoBehaviour {
+public class PushObject : MonoBehaviour
+{
+    public Vector3 m_v3PushForce;
+    
+    public GameObject m_goPushee;
 
-    public GameObject pushee;
-
-    public Vector3 pushForce;
-
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
 	// Update is called once per frame
-	void Update () {
-        pushee.GetComponent<Rigidbody>().AddForce(pushForce, ForceMode.Impulse);
-        this.gameObject.SetActive(false);
+	void Update ()
+    {
+        m_goPushee.GetComponent<Rigidbody>().AddForce(m_v3PushForce, ForceMode.Impulse);
+        gameObject.SetActive(false);
 	}
 }

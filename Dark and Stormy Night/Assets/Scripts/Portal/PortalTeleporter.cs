@@ -2,78 +2,77 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PortalTeleporter : MonoBehaviour {
-
-	public Transform player;
-	public Transform reciever;
-    public GameObject[] activateOnTeleport;
-    public GameObject[] DeActivateOnTeleport;
-
-    public enum PortalType {NotMenu, PlayerPortal, MenuPortal}
-
-    public PortalType portalType;
-
-    private bool playerIsOverlapping = false;
-
-    private void Start()
+public class PortalTeleporter : MonoBehaviour
+{
+    public enum PortalType
     {
-        if (Movement.player != null)
-        player = Movement.player.transform;
+        NotMenu,
+        PlayerPortal,
+        MenuPortal
+    }
+
+    private bool m_bPlayerIsOverlapping = false;
+
+    public PortalType m_ptPortalType;
+
+	public Transform m_tPlayer;
+	public Transform m_tReciever;
+
+    public GameObject[] m_goActivateOnTeleport;
+    public GameObject[] m_goDeactivateOnTeleport;
+    
+    // Called before the first frame
+    private void Start ()
+    {
+        if (Movement.player)
+            m_tPlayer = Movement.player.transform;
     }
 
     // Update is called once per frame
-    void Update () {
-		if (playerIsOverlapping)
+    private void Update ()
+    {
+		if (m_bPlayerIsOverlapping)
 		{
-			Vector3 portalToPlayer = player.position - transform.position;
+			Vector3 portalToPlayer = m_tPlayer.position - transform.position;
 			float dotProduct = Vector3.Dot(transform.up, portalToPlayer);
 
 			// If this is true: The player has moved across the portal
 			if (dotProduct < 0f)
 			{
 				// Teleport him!
-				float rotationDiff = -Quaternion.Angle(transform.rotation, reciever.rotation);
+				float rotationDiff = -Quaternion.Angle(transform.rotation, m_tReciever.rotation);
 				rotationDiff += 180;
                 SmoothCameraMovement.turnAroundValue += rotationDiff;
 
 				Vector3 positionOffset = Quaternion.Euler(0f, rotationDiff, 0f) * portalToPlayer;
-				player.position = reciever.position + positionOffset;
+				m_tPlayer.position = m_tReciever.position + positionOffset;
 
-				playerIsOverlapping = false;
-                for (int i = 0; i < activateOnTeleport.Length; i++)
-                {
-                    activateOnTeleport[i].SetActive(true);
-                }
-                for (int i = 0; i < DeActivateOnTeleport.Length; i++)
-                {
-                    DeActivateOnTeleport[i].SetActive(false);
-                }
+				m_bPlayerIsOverlapping = false;
 
-                if (portalType == PortalType.PlayerPortal)
-                {
+                for (int i = 0; i < m_goActivateOnTeleport.Length; i++)
+                    m_goActivateOnTeleport[i].SetActive(true);
+
+                for (int i = 0; i < m_goDeactivateOnTeleport.Length; i++)
+                    m_goDeactivateOnTeleport[i].SetActive(false);
+
+                if (m_ptPortalType == PortalType.PlayerPortal)
                     Menu.inRoom = true;
-                }
-                if (portalType == PortalType.MenuPortal)
-                {
+
+                if (m_ptPortalType == PortalType.MenuPortal)
                     Menu.inRoom = false;
-                }
             }
 		}
 	}
 
-	void OnTriggerEnter (Collider other)
+	private void OnTriggerEnter (Collider other)
 	{
 		if (other.tag == "Player")
-		{
-			playerIsOverlapping = true;
-		}
+			m_bPlayerIsOverlapping = true;
 	}
 
-	void OnTriggerExit (Collider other)
+	private void OnTriggerExit (Collider other)
 	{
 		if (other.tag == "Player")
-		{
-			playerIsOverlapping = false;
-		}
+			m_bPlayerIsOverlapping = false;
 	}
 }
