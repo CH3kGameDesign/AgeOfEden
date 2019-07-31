@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
-{
+public class Movement : MonoBehaviour {
+
     [Header("Variables")]
     public float forwardSpeed;
     public float strafeSpeed;
@@ -32,42 +32,31 @@ public class Movement : MonoBehaviour
 
     public static GameObject player;
 
-	// Called once before the first frame
-	private void Start ()
-    {
+	// Use this for initialization
+	void Start () {
         canMove = canMoveOnStart;
-        player = gameObject;
+        player = this.gameObject;
         timeBetweenSteps = forwardSpeed / 4;
 	}
 	
 	// Update is called once per frame
-	private void Update ()
-    {
-        if (canMove)
-        {
-            // Starts the player as standing
+	void Update () {
+        if (canMove == true) {
 			playerModel.GetComponent<Animator> ().SetBool ("Standing", true);
-
-			if (Input.GetKey (KeyCode.LeftShift))
-            {
+			if (Input.GetKey (KeyCode.LeftShift)) {
 				playerModel.GetComponent<Animator> ().SetBool ("Sprinting", true);
 				sprint = Mathf.Lerp (sprint, sprintMultiplier, Time.deltaTime / 0.2f);
-			}
-            else
-            {
+			} else {
 				playerModel.GetComponent<Animator> ().SetBool ("Sprinting", false);
 				sprint = Mathf.Lerp (sprint, 1, Time.deltaTime / 0.1f);
 			}
 
 			if (Input.GetAxis ("Vertical") > 0)
 				verSpeed = forwardSpeed * sprint;
-
 			if (Input.GetAxis ("Vertical") < 0)
 				verSpeed = -backwardSpeed * sprint;
-
 			if (Input.GetAxis ("Vertical") == 0)
 				verSpeed = 0;
-
 			horSpeed = Input.GetAxis ("Horizontal") * strafeSpeed * sprint;
 
             if (new Vector3(verSpeed, 0, horSpeed) == Vector3.zero)
@@ -104,9 +93,7 @@ public class Movement : MonoBehaviour
                 GetComponent<Rigidbody>().AddForce(Vector3.up * 600, ForceMode.Impulse);
             }
             */
-		}
-        else
-        {
+		} else {
 			playerModel.GetComponent<Animator>().SetBool("Sprinting", false);
 			playerModel.GetComponent<Animator>().SetBool("Moving", false);
             stepTimer = 0;

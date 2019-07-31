@@ -22,7 +22,7 @@ public class FacePlayer : MonoBehaviour {
         if (tilt == true)
         {
             transform.LookAt(Movement.player.transform.position + offset);
-            if (InvertGravity.m_bInvertedGravity)
+            if (InvertGravity.invertedGravity)
                 transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, 0);
         }
         else

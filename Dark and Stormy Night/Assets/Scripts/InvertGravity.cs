@@ -2,24 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InvertGravity : MonoBehaviour
-{
-    public bool m_bPlayOnAwake;
+public class InvertGravity : MonoBehaviour {
 
-    public static bool m_bInvertedGravity = false;
+    public Vector3 alteredGravity;
+    private Vector3 normalGravity;
 
-    public Vector3 m_v3AlteredGravity;
-    private Vector3 m_v3NormalGravity;
+    public bool playOnAwake;
 
-    // Called once before the first frame
-    private void Start ()
-    {
-        m_v3NormalGravity = Physics.gravity;
-
-        if (m_bPlayOnAwake == true)
+    public static bool invertedGravity = false;
+    // Use this for initialization
+    void Start () {
+        normalGravity = Physics.gravity;
+        if (playOnAwake == true)
             Flip();
 	}
 	
+	// Update is called once per frame
+	void Update () {
+        
+	}
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
@@ -30,17 +32,17 @@ public class InvertGravity : MonoBehaviour
 
     private void Flip ()
     {
-        Physics.gravity = m_v3AlteredGravity;
-        m_bInvertedGravity = true;
+        Physics.gravity = alteredGravity;
+        invertedGravity = true;
         SmoothCameraMovement.gravDirection = 180;
 
-        //Debug.Log("Flip");
+        Debug.Log("Flip");
     }
 
-    private void OnDisable ()
+    private void OnDisable()
     {
-        Physics.gravity = m_v3NormalGravity;
-        m_bInvertedGravity = false;
+        Physics.gravity = normalGravity;
+        invertedGravity = false;
         SmoothCameraMovement.gravDirection = 0;
     }
 }

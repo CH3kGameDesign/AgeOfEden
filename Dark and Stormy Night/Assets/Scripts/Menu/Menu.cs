@@ -23,7 +23,7 @@ public class Menu : MonoBehaviour
         {
             portal.transform.position = Movement.player.transform.position + Movement.player.transform.forward;
             portal.transform.LookAt(Movement.player.transform);
-            if (InvertGravity.m_bInvertedGravity == true)
+            if (InvertGravity.invertedGravity == true)
                 portal.transform.eulerAngles = new Vector3(0, portal.transform.eulerAngles.y, 180);
             room.transform.rotation = portal.transform.rotation;
             portal.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
