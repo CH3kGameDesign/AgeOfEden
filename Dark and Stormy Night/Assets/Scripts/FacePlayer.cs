@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FacePlayer : MonoBehaviour {
-
+public class FacePlayer : MonoBehaviour
+{
     [Space(10)]
     public Vector3 offset;
 
@@ -11,19 +11,16 @@ public class FacePlayer : MonoBehaviour {
 
     public bool tilt = false;
     public float delay = 1;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
+    
 	// Update is called once per frame
-	void Update () {
-        if (tilt == true)
+	private void Update ()
+    {
+        if (tilt)
         {
             transform.LookAt(Movement.player.transform.position + offset);
             if (InvertGravity.invertedGravity)
-                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, 0);
+                transform.localEulerAngles = new Vector3(
+                    transform.localEulerAngles.x, transform.localEulerAngles.y, 0);
         }
         else
         {

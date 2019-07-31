@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationOveride : MonoBehaviour {
-
+public class AnimationOveride : MonoBehaviour
+{
     public Animator tarAnimator;
     public bool player;
 
@@ -13,18 +13,25 @@ public class AnimationOveride : MonoBehaviour {
     public bool activateOnStart;
 
 	// Use this for initialization
-	void Start () {
+	private void Start ()
+    {
         if (tarAnimator == false && player == true)
-            tarAnimator = Movement.player.GetComponent<Movement>().playerModel.GetComponent<Animator>();
+            tarAnimator = Movement.player.GetComponent<Movement>().
+                playerModel.GetComponent<Animator>();
+
         if (activateOnStart)
             Change();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
         Change();
 	}
 
+    /// <summary>
+    /// Sets an animation variable to a preset
+    /// </summary>
     public void Change()
     {
         tarAnimator.GetComponent<Animator>().SetBool(parameter, value);

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightFixture : MonoBehaviour {
-
+public class LightFixture : MonoBehaviour
+{
     [Header("GameObjects")]
     public List<Light> Lights = new List<Light>();
     public List<MeshRenderer> Fixtures = new List<MeshRenderer>();
@@ -42,42 +42,40 @@ public class LightFixture : MonoBehaviour {
     public bool active;
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         on = true;
         if (Lights.Count >= 1)
+        {
             for (int i = 0; i < Lights.Count; i++)
-            {
                 Lights[i].intensity = onAmount;
-            }
+        }
         else
             GetComponentInChildren<Light>().intensity = onAmount;
 
         if (Fixtures.Count >= 1)
+        {
             for (int i = 0; i < Fixtures.Count; i++)
-            {
                 Fixtures[i].material = onMat;
-            }
+        }
         else
             GetComponent<MeshRenderer>().material = onMat;
-
-
+        
         flashOffTimes = Random.Range(flashOffTimesBounds.x, flashOffTimesBounds.y);
         flashOnTimes = Random.Range(flashOnTimesBounds.x, flashOnTimesBounds.y);
         timeBetweenSets = Random.Range(timeBetweenSetsBounds.x, timeBetweenSetsBounds.y);
         flashPerSet = Mathf.RoundToInt(Random.Range(flashPerSetBounds.x, flashPerSetBounds.y));
 
         for (int i = 0; i < LightObjects.Count; i++)
-        {
             LightObjects[i].SetActive(on);
-        }
+
         for (int i = 0; i < DarkObjects.Count; i++)
-        {
             DarkObjects[i].SetActive(!on);
-        }
     }
 	
 	// Update is called once per frame
-	void Update () {
+	private void Update ()
+    {
         if (active)
         {
             if (setTimer > timeBetweenSets)
@@ -85,21 +83,21 @@ public class LightFixture : MonoBehaviour {
                 if (flashTimer < flashOffTimes)
                 {
                     on = false;
-                    if (GetComponent<CandleFixture>() == null)
+                    if (!GetComponent<CandleFixture>())
                     {
                         if (Lights.Count >= 1)
+                        {
                             for (int i = 0; i < Lights.Count; i++)
-                            {
                                 Lights[i].intensity = offAmount;
-                            }
+                        }
                         else
                             GetComponentInChildren<Light>().intensity = offAmount;
 
                         if (Fixtures.Count >= 1)
+                        {
                             for (int i = 0; i < Fixtures.Count; i++)
-                            {
                                 Fixtures[i].material = offMat;
-                            }
+                        }
                         else
                             GetComponent<MeshRenderer>().material = offMat;
                     }
@@ -107,21 +105,21 @@ public class LightFixture : MonoBehaviour {
                 else
                 {
                     on = true;
-                    if (GetComponent<CandleFixture>() == null)
+                    if (!GetComponent<CandleFixture>())
                     {
                         if (Lights.Count >= 1)
+                        {
                             for (int i = 0; i < Lights.Count; i++)
-                            {
                                 Lights[i].intensity = onAmount;
-                            }
+                        }
                         else
                             GetComponentInChildren<Light>().intensity = onAmount;
 
                         if (Fixtures.Count >= 1)
+                        {
                             for (int i = 0; i < Fixtures.Count; i++)
-                            {
                                 Fixtures[i].material = onMat;
-                            }
+                        }
                         else
                             GetComponent<MeshRenderer>().material = onMat;
                     }
@@ -139,29 +137,32 @@ public class LightFixture : MonoBehaviour {
                         {
                             flashCounter = 0;
                             setTimer = 0;
-                            timeBetweenSets = Random.Range(timeBetweenSetsBounds.x, timeBetweenSetsBounds.y);
-                            flashPerSet = Mathf.RoundToInt(Random.Range(flashPerSetBounds.x, flashPerSetBounds.y));
+                            timeBetweenSets = Random.Range(
+                                timeBetweenSetsBounds.x, timeBetweenSetsBounds.y);
+
+                            flashPerSet = Mathf.RoundToInt(
+                                Random.Range(flashPerSetBounds.x, flashPerSetBounds.y));
                         }
                     }
                 }
                 for (int i = 0; i < LightObjects.Count; i++)
-                {
                     LightObjects[i].SetActive(on);
-                }
+
                 for (int i = 0; i < DarkObjects.Count; i++)
-                {
                     DarkObjects[i].SetActive(!on);
-                }
             }
             else
-            {
                 flashTimer = 0;
-            }
+
             setTimer += Time.deltaTime;
             flashTimer += Time.deltaTime;
         }
     }
 
+    /// <summary>
+    /// Sets the active state
+    /// </summary>
+    /// <param name="truth"></param>
     public void Activate (bool truth)
     {
         on = true;

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FootStepManager : MonoBehaviour {
-
-
+public class FootStepManager : MonoBehaviour
+{
     [System.Serializable]
     public class footStepHolder
     {
@@ -20,24 +19,17 @@ public class FootStepManager : MonoBehaviour {
     private bool leftStepNext;
 
     public List<footStepHolder> footSteps = new List<footStepHolder>(1);
-
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-	}
-
+    
+    /// <summary>
+    /// Called to make a footstep sound
+    /// </summary>
     public void MakeSound ()
     {
         int stepNo = 0;
+
         if (leftStepNext == false)
-        {
             stepNo = Random.Range(0, 1);
-        }
+
         leftStepNext = !leftStepNext;
 
         if (area != 100)
@@ -50,15 +42,18 @@ public class FootStepManager : MonoBehaviour {
         else
         {
             if (leftStepNext)
-                Instantiate(footSteps[defaultSound].leftStep[stepNo], transform.position, transform.rotation);
+                Instantiate(footSteps[defaultSound].leftStep[stepNo],
+                    transform.position, transform.rotation);
             else
-                Instantiate(footSteps[defaultSound].rightStep[stepNo], transform.position, transform.rotation);
+                Instantiate(footSteps[defaultSound].rightStep[stepNo],
+                    transform.position, transform.rotation);
         }
     }
 
-    void OnTriggerStay (Collider other)
+    private void OnTriggerStay (Collider other)
     {
         int stepArea = 100;
+
         if (other.tag == "CarpetArea")
             stepArea = 0;
         if (other.tag == "WoodArea")
@@ -67,9 +62,11 @@ public class FootStepManager : MonoBehaviour {
         if (stepArea < area)
             area = stepArea;
     }
-    void OnTriggerExit(Collider other)
+
+    private void OnTriggerExit(Collider other)
     {
         int stepArea = 100;
+
         if (other.tag == "CarpetArea")
             stepArea = 0;
         if (other.tag == "WoodArea")
@@ -78,5 +75,4 @@ public class FootStepManager : MonoBehaviour {
         if (area == stepArea)
             area = 100;
     }
-    
 }

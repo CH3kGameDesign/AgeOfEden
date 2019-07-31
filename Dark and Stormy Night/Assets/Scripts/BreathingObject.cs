@@ -2,20 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BreathingObject : MonoBehaviour {
-
+public class BreathingObject : MonoBehaviour
+{
     public float breathSpeed;
     public Vector3 breathMax;
 
     private bool inflate = true;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
+    
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
         if (inflate == true)
             transform.localScale = Vector3.Lerp(transform.localScale, breathMax, breathSpeed * Time.deltaTime);
         else
@@ -23,6 +19,7 @@ public class BreathingObject : MonoBehaviour {
 
         if (Vector3.Distance(transform.localScale, breathMax) <= 0.01f)
             inflate = false;
+
         if (Vector3.Distance(transform.localScale, Vector3.one) <= 0.01f)
             inflate = true;
     }

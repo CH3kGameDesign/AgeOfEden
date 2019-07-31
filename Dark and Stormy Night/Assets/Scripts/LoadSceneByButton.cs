@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LoadSceneByButton : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
+public class LoadSceneByButton : MonoBehaviour
+{
 	// Update is called once per frame
-	void Update () {
+	private void Update ()
+    {
         if (Input.GetKeyDown(KeyCode.Keypad0))
             SceneManager.LoadScene(0);
         if (Input.GetKeyDown(KeyCode.Keypad1))

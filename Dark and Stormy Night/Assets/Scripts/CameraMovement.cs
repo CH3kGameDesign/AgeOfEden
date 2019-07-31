@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PostProcessing;
 
-public class CameraMovement : MonoBehaviour {
-
+public class CameraMovement : MonoBehaviour
+{
     [Header("CameraSpeed")]
 	public float camRunShakeSpeed;
 	public float zoomSpeed = 4;
@@ -32,7 +32,6 @@ public class CameraMovement : MonoBehaviour {
     private int camIdleTicker;
     private Vector2 camRandomShakeDirection;
 
-
     public bool canMoveOnStart = true;
     public bool snapToPlayerOnStart = true;
     public static bool snapToPlayer;
@@ -45,10 +44,9 @@ public class CameraMovement : MonoBehaviour {
 
     public static Vector2 camShakeDirection;
 
-
-
 	// Use this for initialization
-	void Start () {
+	private void Start ()
+    {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         snapToPlayer = snapToPlayerOnStart;
@@ -59,8 +57,9 @@ public class CameraMovement : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
-        if (snapToPlayer == true)
+	private void Update ()
+    {
+        if (snapToPlayer)
             transform.position = cameraHook.position;
 
         if (shake)
@@ -69,18 +68,20 @@ public class CameraMovement : MonoBehaviour {
             IdleShake();
         }
 
-
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
             aimPoint.position = hit.point;
         else
             aimPoint.position = transform.position + (transform.forward * 100);
 
-        transform.GetChild(0).localPosition = Vector3.Lerp(transform.GetChild(0).localPosition, Vector3.zero, 0.3f);
+        transform.GetChild(0).localPosition = Vector3.Lerp(
+            transform.GetChild(0).localPosition, Vector3.zero, 0.3f);
 
-        if (goToPlayer == true)
+        if (goToPlayer)
         {
-            transform.position = Vector3.Lerp(transform.position, cameraHook.position, 1.5f * Time.deltaTime);
+            transform.position = Vector3.Lerp(
+                transform.position, cameraHook.position, 1.5f * Time.deltaTime);
+
             if (Vector3.Distance(transform.position, cameraHook.position) < 0.3f)
             {
                 snapToPlayer = true;
@@ -93,21 +94,32 @@ public class CameraMovement : MonoBehaviour {
             }
         }
 
-        if (canZoom == true)
+        if (canZoom)
         {
-            if (canMove == true)
+            if (canMove)
             {
                 if (Input.GetMouseButton(1))
-                    transform.GetChild(0).GetComponent<Camera>().fieldOfView = Mathf.Lerp(transform.GetChild(0).GetComponent<Camera>().fieldOfView, fovMin, Time.deltaTime * zoomSpeed);
+                    transform.GetChild(0).GetComponent<Camera>().fieldOfView =
+                        Mathf.Lerp(transform.GetChild(0).GetComponent<Camera>().fieldOfView,
+                        fovMin, Time.deltaTime * zoomSpeed);
                 else
-                    transform.GetChild(0).GetComponent<Camera>().fieldOfView = Mathf.Lerp(transform.GetChild(0).GetComponent<Camera>().fieldOfView, fovNormal, Time.deltaTime * zoomSpeed * 2);
+                    transform.GetChild(0).GetComponent<Camera>().fieldOfView =
+                        Mathf.Lerp(transform.GetChild(0).GetComponent<Camera>().fieldOfView,
+                        fovNormal, Time.deltaTime * zoomSpeed * 2);
             }
             else
-                transform.GetChild(0).GetComponent<Camera>().fieldOfView = Mathf.Lerp(transform.GetChild(0).GetComponent<Camera>().fieldOfView, fovNormal, Time.deltaTime * zoomSpeed * 2);
+            {
+                transform.GetChild(0).GetComponent<Camera>().fieldOfView =
+                    Mathf.Lerp(transform.GetChild(0).GetComponent<Camera>().fieldOfView,
+                    fovNormal, Time.deltaTime * zoomSpeed * 2);
+            }
         }
     }
 
-	void RunShake()
+    /// <summary>
+    /// Applies a shake to the camera when you run
+    /// </summary>
+	private void RunShake ()
 	{
 		float horSpeed = PlayerModel.player.GetComponent<Movement> ().horSpeed;
 		float verSpeed = PlayerModel.player.GetComponent<Movement> ().verSpeed;
@@ -138,7 +150,10 @@ public class CameraMovement : MonoBehaviour {
 			camRunShake = 0;
 	}
 
-    void IdleShake()
+    /// <summary>
+    /// Adds an idle shake to the camera
+    /// </summary>
+    private void IdleShake ()
     {
         if (camIdleShake > camIdleShakeMax && camIdleShakeSpeed > 0)
             camIdleShakeSpeed = -camIdleShakeSpeed;
@@ -155,10 +170,14 @@ public class CameraMovement : MonoBehaviour {
         }
         camIdleTicker++;
     }
-
-    public void ChangeShakeStatus(bool shaking)
+    
+    /// <summary>
+    /// Changes the shake status
+    /// </summary>
+    /// <param name="pShaking"></param>
+    public void ChangeShakeStatus (bool pShaking)
     {
-        shake = shaking;
+        shake = pShaking;
         camShakeDirection = Vector2.zero;
     }
 }
