@@ -12,17 +12,25 @@ public class AnimationOveride : MonoBehaviour {
 
     public bool activateOnStart;
 
+    public float waitTime;
+    private float timer;
+
 	// Use this for initialization
 	void Start () {
         if (tarAnimator == false && player == true)
             tarAnimator = Movement.player.GetComponent<Movement>().playerModel.GetComponent<Animator>();
+        /*
         if (activateOnStart)
             Change();
+            */
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        Change();
+        if (timer >= waitTime)
+            Change();
+        else
+            timer += Time.deltaTime;
 	}
 
     public void Change()

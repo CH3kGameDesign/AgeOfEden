@@ -127,6 +127,8 @@
     <Compile Include="Assets\Scripts\CopyAnimations.cs" />
     <Compile Include="Assets\Scripts\CopyLocation.cs" />
     <Compile Include="Assets\Scripts\DestroyOnSoundFinish.cs" />
+    <Compile Include="Assets\Scripts\DropStuff.cs" />
+    <Compile Include="Assets\Scripts\Enablers\ActivateOnAnimation.cs" />
     <Compile Include="Assets\Scripts\Enablers\InvisibleEnable.cs" />
     <Compile Include="Assets\Scripts\Enablers\RaycastEnable.cs" />
     <Compile Include="Assets\Scripts\Enablers\TriggerEnabler.cs" />
@@ -145,6 +147,7 @@
     <Compile Include="Assets\Scripts\InteractableObject.cs" />
     <Compile Include="Assets\Scripts\InvertGravity.cs" />
     <Compile Include="Assets\Scripts\KeyEnable.cs" />
+    <Compile Include="Assets\Scripts\LanternSwing.cs" />
     <Compile Include="Assets\Scripts\LightFixture.cs" />
     <Compile Include="Assets\Scripts\Line\Bezier.cs" />
     <Compile Include="Assets\Scripts\Line\BezierControlPointMode.cs" />
@@ -165,6 +168,7 @@
     <Compile Include="Assets\Scripts\MovementSpeedChange.cs" />
     <Compile Include="Assets\Scripts\MovementSwitch.cs" />
     <Compile Include="Assets\Scripts\MovementVariables.cs" />
+    <Compile Include="Assets\Scripts\MoveRelativeOnTrain.cs" />
     <Compile Include="Assets\Scripts\MoveTo.cs" />
     <Compile Include="Assets\Scripts\NeverEndingCorridor.cs" />
     <Compile Include="Assets\Scripts\NonVisibleEnable.cs" />
