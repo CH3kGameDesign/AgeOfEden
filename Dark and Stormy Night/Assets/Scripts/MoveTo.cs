@@ -13,6 +13,7 @@ public class MoveTo : MonoBehaviour {
     public bool movePlayer;
 
     public Vector3 tarPos;
+    public Transform TarTransPos;
 
     
     public bool localPos;
@@ -28,6 +29,8 @@ public class MoveTo : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        if (TarTransPos != null)
+            tarPos = TarTransPos.position;
         if (Movee == null)
         {
             if (movePlayer == true)
@@ -48,6 +51,8 @@ public class MoveTo : MonoBehaviour {
 	
     void Update ()
     {
+        if (TarTransPos != null)
+            tarPos = TarTransPos.position;
         if (moveOnStart == true && lerp == false)
             MoveByMetre();
         if (moveOnStart == true && lerp == true)
@@ -133,5 +138,15 @@ public class MoveTo : MonoBehaviour {
         moveOnStart = false;
         if (activateOnFinish != null)
         activateOnFinish.SetActive(true);
+    }
+
+    public void ChangeTransPos(Transform trans)
+    {
+        TarTransPos = trans;
+    }
+    public void ChangeTarPos(Vector3 tar)
+    {
+        tarPos = tar;
+        TarTransPos = null;
     }
 }
