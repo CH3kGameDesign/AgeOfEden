@@ -42,26 +42,16 @@ public class LightFixture : MonoBehaviour
     public bool active;
 
     // Use this for initialization
-    void Start ()
+    private void Start ()
     {
         on = true;
         if (Lights.Count > 0)
         {
-            if (Lights.Count >= 1)
-                for (int i = 0; i < Lights.Count; i++)
-                {
-                    Lights[i].intensity = onAmount;
-                }
-            else
-                GetComponentInChildren<Light>().intensity = onAmount;
+            for (int i = 0; i < Lights.Count; i++)
+                Lights[i].intensity = onAmount;
 
-            if (Fixtures.Count >= 1)
-                for (int i = 0; i < Fixtures.Count; i++)
-                {
-                    Fixtures[i].material = onMat;
-                }
-            else
-                GetComponent<MeshRenderer>().material = onMat;
+            for (int i = 0; i < Fixtures.Count; i++)
+                Fixtures[i].material = onMat;
         }
 
         flashOffTimes = Random.Range(flashOffTimesBounds.x, flashOffTimesBounds.y);
@@ -90,21 +80,11 @@ public class LightFixture : MonoBehaviour
                     {
                         if (Lights.Count > 0)
                         {
-                            if (Lights.Count >= 1)
-                                for (int i = 0; i < Lights.Count; i++)
-                                {
-                                    Lights[i].intensity = offAmount;
-                                }
-                            else
-                                GetComponentInChildren<Light>().intensity = offAmount;
+                            for (int i = 0; i < Lights.Count; i++)
+                                Lights[i].intensity = offAmount;
 
-                            if (Fixtures.Count >= 1)
-                                for (int i = 0; i < Fixtures.Count; i++)
-                                {
-                                    Fixtures[i].material = offMat;
-                                }
-                            else
-                                GetComponent<MeshRenderer>().material = offMat;
+                            for (int i = 0; i < Fixtures.Count; i++)
+                                Fixtures[i].material = offMat;
                         }
                     }
                 }
@@ -115,21 +95,11 @@ public class LightFixture : MonoBehaviour
                     {
                         if (Lights.Count > 0)
                         {
-                            if (Lights.Count >= 1)
-                                for (int i = 0; i < Lights.Count; i++)
-                                {
-                                    Lights[i].intensity = onAmount;
-                                }
-                            else
-                                GetComponentInChildren<Light>().intensity = onAmount;
+                            for (int i = 0; i < Lights.Count; i++)
+                                Lights[i].intensity = onAmount;
 
-                            if (Fixtures.Count >= 1)
-                                for (int i = 0; i < Fixtures.Count; i++)
-                                {
-                                    Fixtures[i].material = onMat;
-                                }
-                            else
-                                GetComponent<MeshRenderer>().material = onMat;
+                            for (int i = 0; i < Fixtures.Count; i++)
+                                Fixtures[i].material = onMat;
                         }
                     }
 
