@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HandSpawner : MonoBehaviour {
-
+public class HandSpawner : MonoBehaviour
+{
     public GameObject hand;
     [Space(10)]
     public Vector2 spawnAreaMin;
@@ -17,25 +17,28 @@ public class HandSpawner : MonoBehaviour {
     private float spawnTimer;
 
     public bool spawnHands;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
+    
 	// Update is called once per frame
-	void Update () {
-		if (spawnHands == true)
+	private void Update ()
+    {
+		if (spawnHands)
         {
             if (spawnTimer > 0)
             {
-                Vector3 spawnLocation = new Vector3(Random.Range(spawnAreaMin.x, spawnAreaMax.x), Random.Range(spawnAreaMin.y, spawnAreaMax.y), 0);
-                Quaternion spawnRotation = Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 360)));
+                Vector3 spawnLocation = new Vector3(Random.Range(
+                    spawnAreaMin.x, spawnAreaMax.x), Random.Range(
+                        spawnAreaMin.y, spawnAreaMax.y), 0);
+
+                Quaternion spawnRotation = Quaternion.Euler(
+                    new Vector3(0, 0, Random.Range(0, 360)));
+
                 GameObject GO = Instantiate(hand, transform);
                 GO.transform.localPosition = spawnLocation;
                 GO.transform.rotation = spawnRotation;
-                GO.GetComponent<FadeOut>().fadeWait = Random.Range(fadeTimeBounds.x, fadeTimeBounds.y);
-                GO.GetComponent<FadeOut>().fadeSpeed = Random.Range(fadeRateBounds.x, fadeRateBounds.y);
+                GO.GetComponent<FadeOut>().fadeWait = Random.Range(
+                    fadeTimeBounds.x, fadeTimeBounds.y);
+                GO.GetComponent<FadeOut>().fadeSpeed = Random.Range(
+                    fadeRateBounds.x, fadeRateBounds.y);
 
                 spawnTimer = -(Random.Range(spawnRateBounds.x, spawnRateBounds.y));
             }
@@ -43,8 +46,12 @@ public class HandSpawner : MonoBehaviour {
         }
 	}
 
-    public void SpawnHands (bool truth)
+    /// <summary>
+    /// Assigns a value to a variable
+    /// </summary>
+    /// <param name="pTruth"></param>
+    public void SpawnHands (bool pTruth)
     {
-        spawnHands = truth;
+        spawnHands = pTruth;
     }
 }

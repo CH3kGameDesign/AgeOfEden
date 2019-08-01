@@ -33,7 +33,6 @@ public class ChangeSkybox : MonoBehaviour {
     void Change ()
     {
         RenderSettings.skybox.SetColor("_Tint", Color.Lerp(RenderSettings.skybox.GetColor("_Tint"), tarSkybox.GetColor("_Tint"), lerpPerSecond * Time.deltaTime));
-        RenderSettings.fogColor = RenderSettings.skybox.GetColor("_Tint");
     }
 
     void Disable ()

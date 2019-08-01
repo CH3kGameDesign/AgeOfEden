@@ -5,8 +5,8 @@ using TMPro;
 using UnityEngine.Events;
 using System;
 
-public class TypeWriter : MonoBehaviour {
-
+public class TypeWriter : MonoBehaviour
+{
     public Transform paper;
     public Transform text;
     public List<Transform> arms = new List<Transform>();
@@ -57,93 +57,101 @@ public class TypeWriter : MonoBehaviour {
     private int scriptCharCounter = 0;
     private string updateLetter;
 
-	// Use this for initialization
-	void Start () {
+	// Called once before the first frame
+	private void Start ()
+    {
         endingNo = PermanentData.saveInfo.lastEndingAchieved;
+
         for (int i = 0; i < EndingChanges[endingNo].startLines.Count; i++)
-        {
-            text.GetChild(i).GetComponent<TextMeshPro>().text = EndingChanges[endingNo].startLines[i];
-        }
+            text.GetChild(i).GetComponent<TextMeshPro>().text =
+                EndingChanges[endingNo].startLines[i];
+
         row = EndingChanges[endingNo].startLines.Count;
 
         scriptLines = EndingChanges[endingNo].scriptLines;
         lastLine = EndingChanges[endingNo].lastLine;
         freeCharsBeforeScript = EndingChanges[endingNo].freeCharsBeforeScript;
 
-        if (EndingChanges[endingNo].activateOnStart != null)
+        if (EndingChanges[endingNo].activateOnStart)
             EndingChanges[endingNo].activateOnStart.SetActive(true);
 
         for (int i = 0; i < 36; i++)
-        {
             armMoveRotation.Add(-300);
-        }
-        letterPerRow = Mathf.RoundToInt((0.166f * (text.GetChild(0).GetComponent<RectTransform>().rect.width * 100))/ text.GetChild(0).GetComponent<TextMeshPro>().fontSize);
+
+        letterPerRow = Mathf.RoundToInt(0.166f *
+            (text.GetChild(0).GetComponent<RectTransform>().rect.width * 100)
+            / text.GetChild(0).GetComponent<TextMeshPro>().fontSize);
+
         paper.transform.localPosition = new Vector3(halfLength, 0.025f * (row + 1), 0);
         letterWidth = (halfLength * 2) / letterPerRow;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update ()
     {
-        if (startTyping == true)
+        if (startTyping)
         {
             updateLetter = null;
+
             if (row >= text.childCount)
                 return;
+
             if (text.GetChild(row).GetComponent<TextMeshPro>().text.Length >= letterPerRow)
                 NextRow();
+
+            // Once max rows have been reached, end typewriter sequence
             if (row >= text.childCount)
             {
                 if (activateOnFinish.Count != 0)
                 {
                     for (int i = 0; i < activateOnFinish.Count; i++)
-                    {
                         activateOnFinish[i].SetActive(true);
-                    }
                 }
                 if (deActivateOnFinish.Count != 0)
                 {
                     for (int i = 0; i < deActivateOnFinish.Count; i++)
-                    {
                         deActivateOnFinish[i].SetActive(false);
-                    }
                 }
                 voidOnFinish.Invoke();
                 startTyping = false;
                 return;
             }
+
             if (charScriptTakesOverCounter >= freeCharsBeforeScript[scriptLineCounter])
                 scriptTyping = true;
+
             KeyPress();
-            paper.transform.localPosition = new Vector3(halfLength - (letterWidth * text.GetChild(row).GetComponent<TextMeshPro>().text.Length), 0.025f * (row + 1), 0);
+            paper.transform.localPosition = new Vector3(halfLength - (letterWidth *
+                text.GetChild(row).GetComponent<TextMeshPro>().text.Length),
+                0.025f * (row + 1), 0);
+
             if (updateLetter != null)
                 Type(updateLetter);
         }
         if (armMove == true)
             ArmMoveBack();
     }
-
-
-
-
-
-
+    
     /// <summary>
-    /// /////////////////////////////////////////////////////////////////////
+    /// Moves over to the next row of the paper
     /// </summary>
-
-
-    void NextRow ()
+    private void NextRow ()
     {
         row++;
         if (row != text.childCount)
             paper.transform.localPosition = new Vector3(halfLength, 0.025f * (row + 1), 0);
     }
 
-    void AnyKeyScript()
+    /// <summary>
+    /// Function for when the script takes control of whats being typed
+    /// </summary>
+    private void AnyKeyScript ()
     {
-        text.GetChild(row).GetComponent<TextMeshPro>().text += scriptLines[scriptLineCounter][scriptCharCounter];
+        text.GetChild(row).GetComponent<TextMeshPro>().text +=
+            scriptLines[scriptLineCounter][scriptCharCounter];
+
         scriptCharCounter++;
+
         if (scriptCharCounter >= scriptLines[scriptLineCounter].Length)
         {
             if (scriptLineCounter < scriptLines.Count - 1)
@@ -165,16 +173,12 @@ public class TypeWriter : MonoBehaviour {
                     if (activateOnFinish.Count != 0)
                     {
                         for (int i = 0; i < activateOnFinish.Count; i++)
-                        {
                             activateOnFinish[i].SetActive(true);
-                        }
                     }
                     if (deActivateOnFinish.Count != 0)
                     {
                         for (int i = 0; i < deActivateOnFinish.Count; i++)
-                        {
                             deActivateOnFinish[i].SetActive(false);
-                        }
                     }
                     NextRow();
                     NextRow();
@@ -187,7 +191,11 @@ public class TypeWriter : MonoBehaviour {
         }
     }
 
-    void Type(string letter)
+    /// <summary>
+    /// Enters the desired letter onto the paper in game
+    /// </summary>
+    /// <param name="pLetter"></param>
+    private void Type (string pLetter)
     {
         string textSound = "";
         if (scriptTyping == true)
@@ -197,13 +205,17 @@ public class TypeWriter : MonoBehaviour {
         }
         else
         {
-            textSound = letter;
+            textSound = pLetter;
+
             if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-                letter = letter.ToUpper();
-            text.GetChild(row).GetComponent<TextMeshPro>().text += letter;
+                pLetter = pLetter.ToUpper();
+
+            text.GetChild(row).GetComponent<TextMeshPro>().text += pLetter;
             charScriptTakesOverCounter++;
         }
+
         int ranInt = UnityEngine.Random.Range(0, clickSounds.Count);
+
         if (textSound != " ")
         {
             ArmMove(textSound);
@@ -213,85 +225,90 @@ public class TypeWriter : MonoBehaviour {
             Instantiate(spaceSound, transform.position, transform.rotation);
     }
 
-    void ArmMove (string letter)
+    /// <summary>
+    /// Moves the correct arm into place based on what key was pressed
+    /// </summary>
+    /// <param name="pLetter"></param>
+    private void ArmMove (string pLetter)
     {
         int choice = -1;
 
-        if (letter == "a")
+        if (pLetter == "a")
             choice = 0;
-        if (letter == "b")
+        if (pLetter == "b")
             choice = 1;
-        if (letter == "c")
+        if (pLetter == "c")
             choice = 2;
-        if (letter == "d")
+        if (pLetter == "d")
             choice = 3;
-        if (letter == "e")
+        if (pLetter == "e")
             choice = 4;
-        if (letter == "f")
+        if (pLetter == "f")
             choice = 5;
-        if (letter == "g")
+        if (pLetter == "g")
             choice = 6;
-        if (letter == "h")
+        if (pLetter == "h")
             choice = 7;
-        if (letter == "i")
+        if (pLetter == "i")
             choice = 8;
-        if (letter == "j")
+        if (pLetter == "j")
             choice = 9;
-        if (letter == "k")
+        if (pLetter == "k")
             choice = 10;
-        if (letter == "l")
+        if (pLetter == "l")
             choice = 11;
-        if (letter == "m")
+        if (pLetter == "m")
             choice = 12;
-        if (letter == "n")
+        if (pLetter == "n")
             choice = 13;
-        if (letter == "o")
+        if (pLetter == "o")
             choice = 14;
-        if (letter == "p")
+        if (pLetter == "p")
             choice = 15;
-        if (letter == "q")
+        if (pLetter == "q")
             choice = 16;
-        if (letter == "r")
+        if (pLetter == "r")
             choice = 17;
-        if (letter == "s")
+        if (pLetter == "s")
             choice = 18;
-        if (letter == "t")
+        if (pLetter == "t")
             choice = 19;
-        if (letter == "u")
+        if (pLetter == "u")
             choice = 20;
-        if (letter == "v")
+        if (pLetter == "v")
             choice = 21;
-        if (letter == "w")
+        if (pLetter == "w")
             choice = 22;
-        if (letter == "x")
+        if (pLetter == "x")
             choice = 23;
-        if (letter == "y")
+        if (pLetter == "y")
             choice = 24;
-        if (letter == "z")
+        if (pLetter == "z")
             choice = 25;
-        if (letter == "0")
+        if (pLetter == "0")
             choice = 26;
-        if (letter == "1")
+        if (pLetter == "1")
             choice = 27;
-        if (letter == "2")
+        if (pLetter == "2")
             choice = 28;
-        if (letter == "3")
+        if (pLetter == "3")
             choice = 29;
-        if (letter == "4")
+        if (pLetter == "4")
             choice = 30;
-        if (letter == "5")
+        if (pLetter == "5")
             choice = 31;
-        if (letter == "6")
+        if (pLetter == "6")
             choice = 32;
-        if (letter == "7")
+        if (pLetter == "7")
             choice = 33;
-        if (letter == "8")
+        if (pLetter == "8")
             choice = 34;
-        if (letter == "9")
+        if (pLetter == "9")
             choice = 35;
-        if (letter == ".")
+        if (pLetter == ".")
             choice = 28;
 
+        // As long as a valid key is pressed, the typewriter arm is moved into position
         if (choice != -1)
         {
             arms[choice].GetChild(0).localEulerAngles = new Vector3(0, 0, -130);
@@ -300,7 +317,10 @@ public class TypeWriter : MonoBehaviour {
         }
     }
 
-    void ArmMoveBack ()
+    /// <summary>
+    /// Returns the arm to its idle state
+    /// </summary>
+    private void ArmMoveBack ()
     {
         armMove = false;
         for (int i = 0; i < armMoveRotation.Count; i++)
@@ -314,156 +334,121 @@ public class TypeWriter : MonoBehaviour {
         }
     }
 
-
-    void KeyPress ()
+    /// <summary>
+    /// Loads the most recently pressed key into memory
+    /// </summary>
+    private void KeyPress ()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-        {
             updateLetter = " ";
-        }
+        
         if (Input.GetKeyDown(KeyCode.A))
-        {
             updateLetter = "a";
-        }
+        
         if (Input.GetKeyDown(KeyCode.B))
-        {
             updateLetter = "b";
-        }
+        
         if (Input.GetKeyDown(KeyCode.C))
-        {
             updateLetter = "c";
-        }
+        
         if (Input.GetKeyDown(KeyCode.D))
-        {
             updateLetter = "d";
-        }
+        
         if (Input.GetKeyDown(KeyCode.E))
-        {
             updateLetter = "e";
-        }
+        
         if (Input.GetKeyDown(KeyCode.F))
-        {
             updateLetter = "f";
-        }
+        
         if (Input.GetKeyDown(KeyCode.G))
-        {
             updateLetter = "g";
-        }
+        
         if (Input.GetKeyDown(KeyCode.H))
-        {
             updateLetter = "h";
-        }
+        
         if (Input.GetKeyDown(KeyCode.I))
-        {
             updateLetter = "i";
-        }
+        
         if (Input.GetKeyDown(KeyCode.J))
-        {
             updateLetter = "j";
-        }
+        
         if (Input.GetKeyDown(KeyCode.K))
-        {
             updateLetter = "k";
-        }
+        
         if (Input.GetKeyDown(KeyCode.L))
-        {
             updateLetter = "l";
-        }
+        
         if (Input.GetKeyDown(KeyCode.M))
-        {
             updateLetter = "m";
-        }
+        
         if (Input.GetKeyDown(KeyCode.N))
-        {
             updateLetter = "n";
-        }
+        
         if (Input.GetKeyDown(KeyCode.O))
-        {
             updateLetter = "o";
-        }
+        
         if (Input.GetKeyDown(KeyCode.P))
-        {
             updateLetter = "p";
-        }
+        
         if (Input.GetKeyDown(KeyCode.Q))
-        {
             updateLetter = "q";
-        }
+        
         if (Input.GetKeyDown(KeyCode.R))
-        {
             updateLetter = "r";
-        }
+        
         if (Input.GetKeyDown(KeyCode.S))
-        {
             updateLetter = "s";
-        }
+        
         if (Input.GetKeyDown(KeyCode.T))
-        {
             updateLetter = "t";
-        }
+        
         if (Input.GetKeyDown(KeyCode.U))
-        {
             updateLetter = "u";
-        }
+        
         if (Input.GetKeyDown(KeyCode.V))
-        {
             updateLetter = "v";
-        }
+        
         if (Input.GetKeyDown(KeyCode.W))
-        {
             updateLetter = "w";
-        }
+        
         if (Input.GetKeyDown(KeyCode.X))
-        {
             updateLetter = "x";
-        }
+        
         if (Input.GetKeyDown(KeyCode.Y))
-        {
             updateLetter = "y";
-        }
+        
         if (Input.GetKeyDown(KeyCode.Z))
-        {
             updateLetter = "z";
-        }
+        
         if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
             updateLetter = "1";
-        }
+        
         if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
             updateLetter = "2";
-        }
+        
         if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
             updateLetter = "3";
-        }
+        
         if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
             updateLetter = "4";
-        }
+        
         if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
             updateLetter = "5";
-        }
+        
         if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
             updateLetter = "6";
-        }
+        
         if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
             updateLetter = "7";
-        }
+        
         if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
             updateLetter = "8";
-        }
+        
         if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
             updateLetter = "9";
-        }
+        
         if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
             updateLetter = "0";
-        }
+        
     }
 }
