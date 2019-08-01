@@ -11,6 +11,7 @@ public class SceneChanger : MonoBehaviour
     public bool async = true;
     public bool activateOnStart = false;
     public bool fadeOut = false;
+    public float fadeSpeed = 4;
 
     private bool added;
     private Scene tarScene;
@@ -32,7 +33,7 @@ public class SceneChanger : MonoBehaviour
         if (fadeOut == true && added == true)
         {
             var tarCG = Camera.main.GetComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>().profile.colorGrading.settings;
-            tarCG.basic.postExposure = Mathf.Lerp(tarCG.basic.postExposure, -10f, Time.deltaTime /4);
+            tarCG.basic.postExposure = Mathf.Lerp(tarCG.basic.postExposure, -10f, Time.deltaTime /fadeSpeed);
             
             if (tarCG.basic.postExposure <= -8f)
             {

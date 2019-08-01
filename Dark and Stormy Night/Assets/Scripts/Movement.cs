@@ -6,7 +6,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     public static bool canMove;
-
+    public bool legacyMovement = false;
     [HideInInspector]
     public bool m_bIsSprinting = false;
 
@@ -41,6 +41,7 @@ public class Movement : MonoBehaviour
     public Animator m_aModelAnimator;
 
     //public FootStepManager footStepManager;
+    private float m_fSprint = 1f;
 
     // What is this???
     public static GameObject m_goPlayerObject;
@@ -64,69 +65,10 @@ public class Movement : MonoBehaviour
     {
         if (canMove)
         {
-            DoMovement();
-
-            //----------vvv OLD SYSTEM vvv----------
-
-            //m_aModelAnimator.SetBool("Standing", true);
-
-            //if (Input.GetKey(KeyCode.LeftShift))
-            //{
-            //    m_aModelAnimator.SetBool("Sprinting", true);
-            //    m_fSprint = Mathf.Lerp(m_fSprint, m_fSprintMultiplier, Time.deltaTime / 0.2f);
-            //}
-            //else
-            //{
-            //    m_aModelAnimator.SetBool("Sprinting", false);
-            //    m_fSprint = Mathf.Lerp(m_fSprint, 1, Time.deltaTime / 0.1f);
-            //}
-
-            //if (Input.GetAxis("Vertical") > 0)
-            //    desiredVelocity.x = m_fForwardSpeed * m_fSprint;
-            //if (Input.GetAxis("Vertical") < 0)
-            //    desiredVelocity.x = -m_fBackwardSpeed * m_fSprint;
-            //if (Input.GetAxis("Vertical") == 0)
-            //    desiredVelocity.x = 0;
-
-            //desiredVelocity.y = Input.GetAxis("Horizontal") * m_fStrafeSpeed * m_fSprint;
-
-            //if (desiredVelocity == Vector2.zero)
-            //{
-            //    m_aModelAnimator.SetBool("Moving", false);
-            //    if (m_fStepTimer != 0)
-            //    {
-            //        footStepManager.MakeSound();
-            //        m_fStepTimer = 0;
-            //    }
-            //}
-            //else
-            //{
-            //    m_aModelAnimator.SetBool("Moving", true);
-            //    m_fStepTimer += Time.deltaTime;
-            //}
-
-            //Vector3 desiredPosition = Vector3.ClampMagnitude(
-            //    new Vector3(desiredVelocity.x, 0, desiredVelocity.y),
-            //    m_fForwardSpeed * Time.deltaTime * m_fSprint);
-
-            //transform.position += transform.forward * desiredPosition.x * m_fSpeedMultiplier;
-            //transform.position += transform.right * desiredPosition.z * m_fSpeedMultiplier;
-
-            //if (m_fStepTimer > m_fStepDelay / m_fSprint)
-            //{
-            //    footStepManager.MakeSound();
-            //    m_fStepTimer = 0;
-            //}
-
-            //RaycastHit hit;
-            //Debug.DrawRay(transform.position + new Vector3(0, -0.9f, 0),
-            //    new Vector3(0, -0.2f, 0), Color.red);
-
-            //if (Physics.Raycast(transform.position + new Vector3(0, -0.9f, 0),
-            //    Vector3.down, out hit, 0.2f) && Input.GetKeyDown(KeyCode.Space))
-            //{
-            //    GetComponent<Rigidbody>().AddForce(Vector3.up * 600, ForceMode.Impulse);
-            //}
+            if (!legacyMovement)
+                DoMovement();
+            else
+                DoMovementLegacy();
         }
         else
         {
@@ -206,5 +148,70 @@ public class Movement : MonoBehaviour
 
         // Pushes to in-engine physics
         m_rbRigidbody.AddForce(appliedForce);
+    }
+
+    private void DoMovementLegacy ()
+    {
+        //----------vvv OLD SYSTEM vvv----------
+
+        m_aModelAnimator.SetBool("Standing", true);
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            m_aModelAnimator.SetBool("Sprinting", true);
+            m_fSprint = Mathf.Lerp(m_fSprint, m_fSprintMultiplier, Time.deltaTime / 0.2f);
+        }
+        else
+        {
+            m_aModelAnimator.SetBool("Sprinting", false);
+            m_fSprint = Mathf.Lerp(m_fSprint, 1, Time.deltaTime / 0.1f);
+        }
+
+        if (Input.GetAxis("Vertical") > 0)
+            desiredVelocity.x = m_fForwardSpeed * m_fSprint;
+        if (Input.GetAxis("Vertical") < 0)
+            desiredVelocity.x = -m_fBackwardSpeed * m_fSprint;
+        if (Input.GetAxis("Vertical") == 0)
+            desiredVelocity.x = 0;
+
+        desiredVelocity.y = Input.GetAxis("Horizontal") * m_fStrafeSpeed * m_fSprint;
+
+        if (desiredVelocity == Vector2.zero)
+        {
+            m_aModelAnimator.SetBool("Moving", false);
+            if (m_fStepTimer != 0)
+            {
+            //   footStepManager.MakeSound();
+                m_fStepTimer = 0;
+            }
+        }
+        else
+        {
+            m_aModelAnimator.SetBool("Moving", true);
+            m_fStepTimer += Time.deltaTime;
+        }
+
+        Vector3 desiredPosition = Vector3.ClampMagnitude(
+            new Vector3(desiredVelocity.x, 0, desiredVelocity.y),
+            m_fForwardSpeed * Time.deltaTime * m_fSprint);
+
+        transform.position += transform.forward * desiredPosition.x * m_fSpeedMultiplier;
+        transform.position += transform.right * desiredPosition.z * m_fSpeedMultiplier;
+
+        if (m_fStepTimer > m_fStepDelay / m_fSprint)
+        {
+        //    footStepManager.MakeSound();
+            m_fStepTimer = 0;
+        }
+
+        RaycastHit hit;
+        Debug.DrawRay(transform.position + new Vector3(0, -0.9f, 0),
+            new Vector3(0, -0.2f, 0), Color.red);
+
+        if (Physics.Raycast(transform.position + new Vector3(0, -0.9f, 0),
+            Vector3.down, out hit, 0.2f) && Input.GetKeyDown(KeyCode.Space))
+        {
+            GetComponent<Rigidbody>().AddForce(Vector3.up * 600, ForceMode.Impulse);
+        }
     }
 }
