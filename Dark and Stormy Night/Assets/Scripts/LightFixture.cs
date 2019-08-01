@@ -10,7 +10,7 @@ public class LightFixture : MonoBehaviour {
 
     public List<GameObject> LightObjects = new List<GameObject>();
     public List<GameObject> DarkObjects = new List<GameObject>();
-
+    public bool randomDarkObject = false;
     [Space (10)]
 
     [Header ("Variables")]
@@ -28,6 +28,7 @@ public class LightFixture : MonoBehaviour {
     private float flashOnTimes;
     private float timeBetweenSets;
     private int flashPerSet;
+    private int darkObject;
 
     [Header ("Materials")]
 
@@ -36,6 +37,7 @@ public class LightFixture : MonoBehaviour {
     [Space(10)]
     public float onAmount;
     public float offAmount;
+    
 
     [HideInInspector]
     public bool on;
@@ -136,6 +138,7 @@ public class LightFixture : MonoBehaviour {
 
                     if (flashTimer > flashOffTimes + flashOnTimes)
                     {
+                        darkObject = Random.Range(0, DarkObjects.Count);
                         if (flashCounter < flashPerSet)
                         {
                             flashTimer = 0;
@@ -153,13 +156,20 @@ public class LightFixture : MonoBehaviour {
                     }
                 }
                 for (int i = 0; i < LightObjects.Count; i++)
-                {
                     LightObjects[i].SetActive(on);
-                }
-                for (int i = 0; i < DarkObjects.Count; i++)
+
+                if (randomDarkObject == false)
+                    for (int i = 0; i < DarkObjects.Count; i++)
+                        DarkObjects[i].SetActive(!on);
+                else
                 {
-                    DarkObjects[i].SetActive(!on);
+                    if (on == false)
+                        DarkObjects[darkObject].SetActive(true);
+                    else
+                        for (int i = 0; i < DarkObjects.Count; i++)
+                            DarkObjects[i].SetActive(false);
                 }
+
             }
             else
             {

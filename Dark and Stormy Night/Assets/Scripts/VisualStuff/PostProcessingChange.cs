@@ -7,7 +7,7 @@ public class PostProcessingChange : MonoBehaviour {
 
     public PostProcessingProfile tarProfile;
     public PostProcessingBehaviour tarCamera;
-
+    
     public float lerpSpeed;
     public float disableTime = 5;
 
@@ -22,6 +22,7 @@ public class PostProcessingChange : MonoBehaviour {
 
     private void Awake()
     {
+        
         //tarCamera.profile = tarProfile;
         Invoke("Disable", disableTime);
     }

@@ -8,14 +8,15 @@ public class SceneChanger : MonoBehaviour {
     public int sceneToLoad;
 
     public bool additive;
+    public bool async = true;
     public bool activateOnStart = false;
+    public bool fadeOut = false;
 
     private bool added;
     private Scene tarScene;
 
 	// Use this for initialization
 	void Start () {
-        
         tarScene = SceneManager.GetSceneByBuildIndex(sceneToLoad);
         if (sceneToLoad == -2)
             sceneToLoad = SceneManager.GetActiveScene().buildIndex;
@@ -25,25 +26,50 @@ public class SceneChanger : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-	}
+        if (fadeOut == true && added == true)
+        {
+            var tarCG = Camera.main.GetComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>().profile.colorGrading.settings;
+            tarCG.basic.postExposure = Mathf.Lerp(tarCG.basic.postExposure, -10f, Time.deltaTime /4);
+            
+            if (tarCG.basic.postExposure <= -8f)
+            {
+                tarCG.basic.postExposure = -10f;
+                Camera.main.GetComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>().profile.colorGrading.settings = tarCG;
+                MidLoad();
+                fadeOut = false;
+            }
+            else
+                Camera.main.GetComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>().profile.colorGrading.settings = tarCG;
+        }
+    }
 
     public void StartLoad()
     {
-        if (sceneToLoad == -1)
-            Application.Quit();
-
-        else if (added == false)
+        if (added == false)
         {
-            //SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive);
             added = true;
-            if (additive == true)
-                StartCoroutine(LoadNewSceneAdditive());
-            else
-                StartCoroutine(LoadNewScene());
-            //Invoke("FinishLoad", 0.5f);
+            if (fadeOut == false)
+                MidLoad();
         }
         
+    }
+
+    void MidLoad ()
+    {
+        if (sceneToLoad == -1)
+            Application.Quit();
+        else
+        {
+            if (async)
+            {
+                if (additive == true)
+                    StartCoroutine(LoadNewSceneAdditive());
+                else
+                    StartCoroutine(LoadNewScene());
+            }
+            else
+                SceneManager.LoadScene(sceneToLoad);
+        }
     }
 
     void FinishLoad ()

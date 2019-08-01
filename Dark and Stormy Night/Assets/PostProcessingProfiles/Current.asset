@@ -48,7 +48,7 @@ MonoBehaviour:
       downsampling: 1
       forceForwardCompatibility: 0
       ambientOnly: 0
-      highPrecision: 0
+      highPrecision: 1
   screenSpaceReflection:
     m_Enabled: 0
     m_Settings:
@@ -77,9 +77,9 @@ MonoBehaviour:
       useCameraFov: 0
       kernelSize: 0
   motionBlur:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
-      shutterAngle: 270
+      shutterAngle: 180
       sampleCount: 10
       frameBlending: 0
   eyeAdaptation:
@@ -120,23 +120,23 @@ MonoBehaviour:
         neutralWhiteLevel: 20
         neutralWhiteClip: 10
       basic:
-        postExposure: -0.1
-        temperature: -22
-        tint: 8
-        hueShift: -9
-        saturation: 0.96
-        contrast: 0.754
+        postExposure: -0.15718481
+        temperature: -21.999998
+        tint: 7.9999995
+        hueShift: -8.999999
+        saturation: 0.96000004
+        contrast: 0.75400007
       channelMixer:
-        red: {x: 0.87, y: 0.42, z: -0.13}
+        red: {x: 0.87000006, y: 0.41999996, z: -0.12999998}
         green: {x: 0, y: 1, z: 0}
         blue: {x: 0, y: 0, z: 1}
         currentEditingChannel: 0
       colorWheels:
         mode: 1
         log:
-          slope: {r: 0.96774524, g: 1, b: 0.9900897, a: -0.026578072}
-          power: {r: 0.996083, g: 0.9315768, b: 1, a: 0}
-          offset: {r: 1, g: 0.8954816, b: 0.8759124, a: 0}
+          slope: {r: 0.9677452, g: 0.99999994, b: 0.9900898, a: -0.026578072}
+          power: {r: 0.9960831, g: 0.9315767, b: 0.99999994, a: 0}
+          offset: {r: 1, g: 0.8954815, b: 0.87591237, a: 0}
         linear:
           lift: {r: 0, g: 0, b: 0, a: 0}
           gamma: {r: 0, g: 0, b: 0, a: 0}

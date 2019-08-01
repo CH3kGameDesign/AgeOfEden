@@ -69,12 +69,14 @@ public class CameraMovement : MonoBehaviour {
             IdleShake();
         }
 
-
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
-            aimPoint.position = hit.point;
-        else
-            aimPoint.position = transform.position + (transform.forward * 100);
+        if (aimPoint != null)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
+                aimPoint.position = hit.point;
+            else
+                aimPoint.position = transform.position + (transform.forward * 100);
+        }
 
         transform.GetChild(0).localPosition = Vector3.Lerp(transform.GetChild(0).localPosition, Vector3.zero, 0.3f);
 

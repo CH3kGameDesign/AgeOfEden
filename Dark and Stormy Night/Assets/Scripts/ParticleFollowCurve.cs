@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class ParticleFollowCurve : MonoBehaviour {
 
-    public ParticleSystem particleSystem;
+    public ParticleSystem parSystem;
 
     public BezierCurve bezier;
+
+    public float sizeDivide = 100f;
 
     private ParticleSystem.Particle[] particles;
 
 	// Use this for initialization
 	void Start () {
-        if (particleSystem == null)
-            particleSystem = GetComponent<ParticleSystem>();
-        if (particles == null || particles.Length < particleSystem.main.maxParticles)
-            particles = new ParticleSystem.Particle[particleSystem.main.maxParticles];
+        if (parSystem == null)
+            parSystem = GetComponent<ParticleSystem>();
+        if (particles == null || particles.Length < parSystem.main.maxParticles)
+            particles = new ParticleSystem.Particle[parSystem.main.maxParticles];
     }
 	
 	// Update is called once per frame
@@ -25,15 +27,15 @@ public class ParticleFollowCurve : MonoBehaviour {
 
     void LateUpdate()
     {
-        int numParticlesAlive = particleSystem.GetParticles(particles);
+        int numParticlesAlive = parSystem.GetParticles(particles);
         for (int i = 0; i < numParticlesAlive; i++)
         {
             float lerp = particles[i].remainingLifetime / particles[i].startLifetime;
             lerp = 1 - lerp;
             Vector3 newPosition = bezier.GetPoint(lerp);
             particles[i].position = newPosition;
-            particles[i].startSize = particles[i].startLifetime / 100;
+            particles[i].startSize = particles[i].startLifetime / sizeDivide;
         }
-        particleSystem.SetParticles(particles, numParticlesAlive);
+        parSystem.SetParticles(particles, numParticlesAlive);
     }
 }

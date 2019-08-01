@@ -39,6 +39,7 @@ public class SmoothCameraMovement : MonoBehaviour {
 
     public static float turnAroundValue = 0;
 
+    
 
     void Update()
     {
@@ -50,6 +51,8 @@ public class SmoothCameraMovement : MonoBehaviour {
 
     void Start()
     {
+        CameraMovement.camShakeDirection.y = 0;
+        CameraMovement.camShakeDirection.x = 0;
         sittingMaxRotation = publicSittingMaxRotation;
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb)
