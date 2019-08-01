@@ -21,8 +21,8 @@ public class Menu : MonoBehaviour
     {
 		if ((Input.GetKeyDown(KeyCode.Mouse2) || Input.GetKeyDown(KeyCode.Alpha9))&& inRoom == false)
         {
-            portal.transform.position = Movement.player.transform.position + Movement.player.transform.forward;
-            portal.transform.LookAt(Movement.player.transform);
+            portal.transform.position = Movement.m_goPlayerObject.transform.position + Movement.m_goPlayerObject.transform.forward;
+            portal.transform.LookAt(Movement.m_goPlayerObject.transform);
             if (InvertGravity.invertedGravity == true)
                 portal.transform.eulerAngles = new Vector3(0, portal.transform.eulerAngles.y, 180);
             room.transform.rotation = portal.transform.rotation;

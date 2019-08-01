@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SmoothCameraMovement : MonoBehaviour {
-
+public class SmoothCameraMovement : MonoBehaviour
+{
     public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
     public RotationAxes axes = RotationAxes.MouseXAndY;
     public float sensitivityX = 15F;
@@ -39,17 +39,8 @@ public class SmoothCameraMovement : MonoBehaviour {
 
     public static float turnAroundValue = 0;
 
-    
-
-    void Update()
-    {
-        if (GravityTunnel.inGravTunnel == false)
-            originalRotation = Quaternion.Euler(0, turnAroundValue, Mathf.Lerp(originalRotation.eulerAngles.z, gravDirection, Time.deltaTime * 2));
-
-        CameraUpdate();
-    }
-
-    void Start()
+    // Called once before the first frame
+    private void Start ()
     {
         CameraMovement.camShakeDirection.y = 0;
         CameraMovement.camShakeDirection.x = 0;
@@ -62,9 +53,23 @@ public class SmoothCameraMovement : MonoBehaviour {
         rotationY = startRotX;
     }
 
+    // Called once per frame
+    private void Update ()
+    {
+        if (!GravityTunnel.inGravTunnel)
+            originalRotation = Quaternion.Euler(
+                0, turnAroundValue, Mathf.Lerp(
+                    originalRotation.eulerAngles.z, gravDirection, Time.deltaTime * 2));
+
+        CameraUpdate();
+    }
+
+    /// <summary>
+    /// Updates the camera movement
+    /// </summary>
     public void CameraUpdate ()
     {
-        if (CameraMovement.canMove == true)
+        if (CameraMovement.canMove)
         {
             if (axes == RotationAxes.MouseXAndY)
             {
@@ -79,29 +84,23 @@ public class SmoothCameraMovement : MonoBehaviour {
 
                 rotationY = ClampAngle(rotationY, minimumY, maximumY);
 
-                if (Movement.canMove == false)
+                if (!Movement.canMove)
                     rotationX = ClampAngle(rotationX, sittingMaxRotation.x, sittingMaxRotation.y);
                 
                 rotArrayY.Add(rotationY);
                 rotArrayX.Add(rotationX);
 
                 if (rotArrayY.Count >= frameCounter)
-                {
                     rotArrayY.RemoveAt(0);
-                }
+
                 if (rotArrayX.Count >= frameCounter)
-                {
                     rotArrayX.RemoveAt(0);
-                }
 
                 for (int j = 0; j < rotArrayY.Count; j++)
-                {
                     rotAverageY += rotArrayY[j];
-                }
+
                 for (int i = 0; i < rotArrayX.Count; i++)
-                {
                     rotAverageX += rotArrayX[i];
-                }
 
                 rotAverageY /= rotArrayY.Count;
                 rotAverageX /= rotArrayX.Count;
@@ -126,13 +125,11 @@ public class SmoothCameraMovement : MonoBehaviour {
                 rotArrayX.Add(rotationX);
 
                 if (rotArrayX.Count >= frameCounter)
-                {
                     rotArrayX.RemoveAt(0);
-                }
+
                 for (int i = 0; i < rotArrayX.Count; i++)
-                {
                     rotAverageX += rotArrayX[i];
-                }
+
                 rotAverageX /= rotArrayX.Count;
 
                 rotAverageX = ClampAngle(rotAverageX, minimumX, maximumX);
@@ -149,13 +146,11 @@ public class SmoothCameraMovement : MonoBehaviour {
                 rotArrayY.Add(rotationY);
 
                 if (rotArrayY.Count >= frameCounter)
-                {
                     rotArrayY.RemoveAt(0);
-                }
+
                 for (int j = 0; j < rotArrayY.Count; j++)
-                {
                     rotAverageY += rotArrayY[j];
-                }
+
                 rotAverageY /= rotArrayY.Count;
 
                 rotAverageY = ClampAngle(rotAverageY, minimumY, maximumY);
@@ -166,29 +161,42 @@ public class SmoothCameraMovement : MonoBehaviour {
         }
     }
 
-    public static float ClampAngle(float angle, float min, float max)
+    /// <summary>
+    /// Clamps the angle given between two values
+    /// </summary>
+    /// <param name="pAngle">The value to be clamped</param>
+    /// <param name="pMin">The minimum value allowed</param>
+    /// <param name="pMax">The maximum value allowed</param>
+    /// <returns></returns>
+    public static float ClampAngle (float pAngle, float pMin, float pMax)
     {
-        angle = angle % 360;
-        if ((angle >= -360F) && (angle <= 360F))
+        pAngle = pAngle % 360;
+
+        if ((pAngle >= -360f) && (pAngle <= 360f))
         {
-            if (angle < -360F)
-            {
-                angle += 360F;
-            }
-            if (angle > 360F)
-            {
-                angle -= 360F;
-            }
+            if (pAngle < -360f)
+                pAngle += 360f;
+
+            if (pAngle > 360f)
+                pAngle -= 360f;
         }
-        return Mathf.Clamp(angle, min, max);
+
+        return Mathf.Clamp(pAngle, pMin, pMax);
     }
 
-    public static void gravSnap (float gravSnapDirection)
+    /// <summary>
+    /// Snaps the gravity to a set direction
+    /// </summary>
+    /// <param name="pGravSnapDirection"></param>
+    public static void gravSnap (float pGravSnapDirection)
     {
-        originalRotation = Quaternion.Euler(0, 0, gravSnapDirection);
-        gravDirection = gravSnapDirection;
+        originalRotation = Quaternion.Euler(0, 0, pGravSnapDirection);
+        gravDirection = pGravSnapDirection;
     }
 
+    /// <summary>
+    /// Resets the rotation variables
+    /// </summary>
     public void resetRotation ()
     {
         rotationX = 0;

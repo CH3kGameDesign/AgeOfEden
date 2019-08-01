@@ -2,23 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReflectObject : MonoBehaviour {
-
+public class ReflectObject : MonoBehaviour
+{
     public Transform reflectableObject;
     public Transform reflectPoint;
     public Vector3 reflectAmount;
     public Transform reflectingThing;
 
-	// Use this for initialization
-	void Start () {
-        if (reflectPoint == null)
-            reflectPoint = this.transform;
+	// Called once before the first frame
+	private void Start ()
+    {
+        if (!reflectPoint)
+            reflectPoint = transform;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	private void Update ()
+    {
         Vector3 DistanceBetween = reflectPoint.position - reflectableObject.position;
-        Vector3 TarRelPos = new Vector3(DistanceBetween.x * reflectAmount.x, DistanceBetween.y * reflectAmount.y, DistanceBetween.z * reflectAmount.z);
+
+        Vector3 TarRelPos = new Vector3(
+            DistanceBetween.x * reflectAmount.x,
+            DistanceBetween.y * reflectAmount.y,
+            DistanceBetween.z * reflectAmount.z);
+
         reflectingThing.position = reflectPoint.position + TarRelPos;
 	}
 }

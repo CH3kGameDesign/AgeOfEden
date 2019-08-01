@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnInsideArea : MonoBehaviour {
-    
+public class SpawnInsideArea : MonoBehaviour
+{
     public enum area {box, sphere}
 
     public area areaType;
@@ -18,23 +18,26 @@ public class SpawnInsideArea : MonoBehaviour {
 
     public List<GameObject> spawnObjects = new List<GameObject>();
 
-
-	// Use this for initialization
-	void Start () {
+	// Called once before the first frame
+	private void Start ()
+    {
         spawnRate = Random.Range(spawnRateMax.x, spawnRateMax.y);
         spawnRateCounter = 0;
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	// Called once per frame
+	private void Update ()
+    {
         if (spawnRateCounter > spawnRate)
         {
             int sel = Random.Range(0, spawnObjects.Count);
+
             if (areaType == area.sphere)
             {
                 Vector3 pos = Random.insideUnitSphere * radius;
                 Instantiate(spawnObjects[sel], point.position + pos, spawnObjects[sel].transform.rotation);
             }
+
             if (areaType == area.box)
             {
                 float x = Random.Range(pointMin.x, pointMax.x);

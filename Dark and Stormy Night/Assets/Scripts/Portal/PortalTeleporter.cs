@@ -17,8 +17,8 @@ public class PortalTeleporter : MonoBehaviour {
 
     private void Start()
     {
-        if (Movement.player != null)
-        player = Movement.player.transform;
+        if (Movement.m_goPlayerObject != null)
+        player = Movement.m_goPlayerObject.transform;
     }
 
     // Update is called once per frame

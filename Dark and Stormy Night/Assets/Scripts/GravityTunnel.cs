@@ -55,8 +55,8 @@ public class GravityTunnel : MonoBehaviour
         {
             inGravTunnel = true;
 
-            float distanceToA = Vector3.Distance(Movement.player.transform.position, pointA.position);
-            float distanceToB = Vector3.Distance(Movement.player.transform.position, pointB.position);
+            float distanceToA = Vector3.Distance(Movement.m_goPlayerObject.transform.position, pointA.position);
+            float distanceToB = Vector3.Distance(Movement.m_goPlayerObject.transform.position, pointB.position);
 
             distanceToA /= pointDistance;
             distanceToB /= pointDistance;
@@ -68,8 +68,8 @@ public class GravityTunnel : MonoBehaviour
 
             if (affectPlayer)
             {
-                Movement.player.GetComponent<Rigidbody>().useGravity = false;
-                Movement.player.GetComponent<Rigidbody>().AddForce(
+                Movement.m_goPlayerObject.GetComponent<Rigidbody>().useGravity = false;
+                Movement.m_goPlayerObject.GetComponent<Rigidbody>().AddForce(
                     gravDirection * 9.2f, ForceMode.Acceleration);
 
                 SmoothCameraMovement.originalRotation = Quaternion.Lerp(
@@ -101,11 +101,11 @@ public class GravityTunnel : MonoBehaviour
 
             if (affectPlayer)
             {
-                Movement.player.GetComponent<Rigidbody>().useGravity = true;
+                Movement.m_goPlayerObject.GetComponent<Rigidbody>().useGravity = true;
                 //SmoothCameraMovement.gravSnap(0);
 
-                if (Vector3.Distance(Movement.player.transform.position, pointA.position)
-                    < Vector3.Distance(Movement.player.transform.position, pointB.position))
+                if (Vector3.Distance(Movement.m_goPlayerObject.transform.position, pointA.position)
+                    < Vector3.Distance(Movement.m_goPlayerObject.transform.position, pointB.position))
                     SmoothCameraMovement.gravDirection = gravA;
                 else
                     SmoothCameraMovement.gravDirection = gravB;

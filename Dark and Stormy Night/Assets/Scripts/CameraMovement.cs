@@ -132,24 +132,25 @@ public class CameraMovement : MonoBehaviour
     /// </summary>
 	private void RunShake ()
 	{
-		float horSpeed = PlayerModel.player.GetComponent<Movement> ().horSpeed;
-		float verSpeed = PlayerModel.player.GetComponent<Movement> ().verSpeed;
-		float sprint = PlayerModel.player.GetComponent<Movement> ().sprint;
+		float verSpeed = PlayerModel.player.GetComponent<Movement> ().desiredVelocity.x;
+		float horSpeed = PlayerModel.player.GetComponent<Movement> ().desiredVelocity.y;
+        bool isSprinting = PlayerModel.player.GetComponent<Movement>().m_bIsSprinting;
+        float sprintMult = PlayerModel.player.GetComponent<Movement>().m_fSprintMultiplier;
 
-		if (horSpeed < 0)
-			horSpeed = -horSpeed;
 		if (verSpeed < 0)
 			verSpeed = -verSpeed;
+		if (horSpeed < 0)
+			horSpeed = -horSpeed;
 
 		if (horSpeed > verSpeed)
 			camRunShakeAmount = horSpeed;
 		else
 			camRunShakeAmount = verSpeed;
 		
-		if (sprint > 1)
-			sprint = (sprint + 0.4f) / 2;
+		if (isSprinting)
+            sprintMult = (sprintMult + 0.3f) / 2;
 		
-		float cameraRunBound = camRunShakeMax * sprint;
+		float cameraRunBound = camRunShakeMax * sprintMult;
 
 		if (camRunShake > cameraRunBound && camRunShakeSpeed > 0)
 			camRunShakeSpeed = -camRunShakeSpeed;

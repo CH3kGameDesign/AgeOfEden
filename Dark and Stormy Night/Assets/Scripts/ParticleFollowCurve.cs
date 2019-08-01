@@ -20,12 +20,10 @@ public class ParticleFollowCurve : MonoBehaviour {
             particles = new ParticleSystem.Particle[parSystem.main.maxParticles];
     }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    void LateUpdate()
+    /// <summary>
+    /// A delayed update function
+    /// </summary>
+    private void LateUpdate ()
     {
         int numParticlesAlive = parSystem.GetParticles(particles);
         for (int i = 0; i < numParticlesAlive; i++)

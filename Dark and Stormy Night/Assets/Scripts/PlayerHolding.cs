@@ -3,28 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PostProcessing;
 
-public class PlayerHolding : MonoBehaviour {
-
+public class PlayerHolding : MonoBehaviour
+{
     public float lookTimer;
     public float zoomAmount;
 
     private float lookTime;
     private float FOV = 0.7f;
 
-    // Use this for initialization
-    void Start () {
+    // Called once before the first frame
+    private void Start ()
+    {
         FOV = 0.7f;
     }
 	
 	// Update is called once per frame
-	void Update () {
+	private void Update ()
+    {
         CameraMovement.goToPlayer = false;
         Movement.canMove = false;
         RaycastHit hit;
 
-        DepthOfFieldModel.Settings DOFSettings = CameraMovement.cameraObject.GetComponentInChildren<PostProcessingBehaviour>().profile.depthOfField.settings;
+        DepthOfFieldModel.Settings DOFSettings = CameraMovement.cameraObject.
+            GetComponentInChildren<PostProcessingBehaviour>().profile.depthOfField.settings;
 
-        if (Physics.Raycast(CameraMovement.cameraObject.transform.position, CameraMovement.cameraObject.transform.forward, out hit, 10, 1 << 9))
+        if (Physics.Raycast(CameraMovement.cameraObject.transform.position, 
+            CameraMovement.cameraObject.transform.forward, out hit, 10, 1 << 9))
         {
             if (hit.transform.tag == "PlayerHolding")
             {
@@ -32,10 +36,13 @@ public class PlayerHolding : MonoBehaviour {
                 {
                     CameraMovement.goToPlayer = true;
                     lookTime = 0;
-                    CameraMovement.cameraObject.GetComponentInChildren<Camera>().fieldOfView = 60 - (lookTime * zoomAmount);
+                    CameraMovement.cameraObject.GetComponentInChildren<Camera>().
+                        fieldOfView = 60 - (lookTime * zoomAmount);
 
                     DOFSettings.focusDistance = 3f;
-                    CameraMovement.cameraObject.GetComponentInChildren<PostProcessingBehaviour>().profile.depthOfField.settings = DOFSettings;
+                    CameraMovement.cameraObject.GetComponentInChildren
+                        <PostProcessingBehaviour>().profile.depthOfField.settings = DOFSettings;
+
                     Destroy(hit.transform.gameObject);
                     return;
                 }
@@ -56,9 +63,11 @@ public class PlayerHolding : MonoBehaviour {
             DOFSettings.focusDistance = FOV;
             lookTime = Mathf.Lerp(lookTime, 0, 0.4f);
         }
-        CameraMovement.cameraObject.GetComponentInChildren<Camera>().fieldOfView = 60 - (lookTime * zoomAmount);
 
+        CameraMovement.cameraObject.GetComponentInChildren
+            <Camera>().fieldOfView = 60 - (lookTime * zoomAmount);
         
-        CameraMovement.cameraObject.GetComponentInChildren<PostProcessingBehaviour>().profile.depthOfField.settings = DOFSettings;
+        CameraMovement.cameraObject.GetComponentInChildren
+            <PostProcessingBehaviour>().profile.depthOfField.settings = DOFSettings;
     }
 }

@@ -17,14 +17,14 @@ public class FacePlayer : MonoBehaviour
     {
         if (tilt)
         {
-            transform.LookAt(Movement.player.transform.position + offset);
+            transform.LookAt(Movement.m_goPlayerObject.transform.position + offset);
             if (InvertGravity.invertedGravity)
                 transform.localEulerAngles = new Vector3(
                     transform.localEulerAngles.x, transform.localEulerAngles.y, 0);
         }
         else
         {
-            Vector3 lookPos = transform.position - (Movement.player.transform.position + offset);
+            Vector3 lookPos = transform.position - (Movement.m_goPlayerObject.transform.position + offset);
             lookPos.y = 0;
             Quaternion rotation = Quaternion.LookRotation(lookPos);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * delay);

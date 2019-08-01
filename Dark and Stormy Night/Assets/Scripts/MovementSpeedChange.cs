@@ -2,18 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementSpeedChange : MonoBehaviour {
-
+public class MovementSpeedChange : MonoBehaviour
+{
     public float tarSpeedMultiplier;
 
-	// Use this for initialization
-	void Start () {
-        Movement.player.GetComponent<Movement>().speedMultiplier = tarSpeedMultiplier;
+	// Called once before the first frame
+	private void Start ()
+    {
+        Movement.m_goPlayerObject.GetComponent<Movement>().m_fSpeedMultiplier = tarSpeedMultiplier;
         GetComponent<MovementSpeedChange>().enabled = false;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 }

@@ -39,14 +39,14 @@ public class TrainBounce : MonoBehaviour
     private Quaternion m_qDefaultRot;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start ()
     {
         m_v3DefaultPos = transform.position;
         m_qDefaultRot = transform.rotation;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update ()
     {
         m_fTimeStep += Time.deltaTime;
 

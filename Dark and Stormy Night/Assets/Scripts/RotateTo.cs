@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RotateTo : MonoBehaviour {
-
+public class RotateTo : MonoBehaviour
+{
     public float degreesPerSecond;
 
     public Transform Movee;
@@ -18,23 +18,27 @@ public class RotateTo : MonoBehaviour {
 
     public GameObject activateOnFinish;
 
-    // Use this for initialization
-    void Start()
+    // Called once before the first frame
+    private void Start()
     {
-        if (Movee == null && movePlayer == true)
-            Movee = Movement.player.transform;
-        if (Movee == null && moveCamera == true)
+        if (!Movee && movePlayer)
+            Movee = Movement.m_goPlayerObject.transform;
+
+        if (!Movee && moveCamera)
         {
             Movee = CameraMovement.cameraObject.transform;
-            CameraMovement.cameraObject.GetComponent<SmoothCameraMovement>().resetRotation();
+            CameraMovement.cameraObject.GetComponent
+                <SmoothCameraMovement>().resetRotation();
         }
 
         tarRot = Quaternion.Euler(eulerTarRotation);
-        if (Movee == null)
-            Movee = this.transform;
-        if (relativeRot == true)
+
+        if (!Movee)
+            Movee = transform;
+
+        if (relativeRot)
         {
-            if (localRot == true)
+            if (localRot)
                 tarRot *= Movee.localRotation;
             else
                 tarRot *= Movee.rotation;
@@ -42,16 +46,17 @@ public class RotateTo : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         float speed = degreesPerSecond * Time.deltaTime;
 
-        if (localRot == true)
+        if (localRot)
         {
             if (Quaternion.Angle(Movee.localRotation, tarRot) < speed)
             {
                 Movee.localRotation = tarRot;
-                if (activateOnFinish != null)
+
+                if (activateOnFinish)
                     activateOnFinish.SetActive(true);
             }
             else
@@ -61,11 +66,11 @@ public class RotateTo : MonoBehaviour {
         }
         else
         {
-
             if (Quaternion.Angle(Movee.rotation, tarRot) < speed)
             {
                 Movee.rotation = tarRot;
-                if (activateOnFinish != null)
+
+                if (activateOnFinish)
                     activateOnFinish.SetActive(true);
             }
             else
@@ -73,6 +78,5 @@ public class RotateTo : MonoBehaviour {
                 Movee.rotation = Quaternion.RotateTowards(Movee.rotation, tarRot, speed);
             }
         }
-
     }
 }

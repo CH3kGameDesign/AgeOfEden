@@ -5,8 +5,8 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.PostProcessing;
 
-public class RorschachManager : MonoBehaviour {
-
+public class RorschachManager : MonoBehaviour
+{
     public Renderer rorschachQuad;
     public TextMeshPro titleText;
     public ParticleSystem particles;
@@ -14,7 +14,6 @@ public class RorschachManager : MonoBehaviour {
     public float speed;
 
     [Space (20)]
-
     public int sceneToLoad;
 
     [Space(20)]
@@ -26,27 +25,36 @@ public class RorschachManager : MonoBehaviour {
     private bool sceneLoaded = false;
     private bool transitionOver = false;
 
-	// Use this for initialization
-	void Start () {
+	// Called once before the first frame
+	private void Start ()
+    {
         StartCoroutine(LoadNewScene());
     }
 	
 	// Update is called once per frame
-	void Update () {
+	private void Update ()
+    {
         if (stage == 0)
             Change();
-        if (sceneLoaded == true && transitionOver == true)
+        if (sceneLoaded && transitionOver)
             Invoke("FinishLoad", 3);
 	}
 
-    void Change ()
+    /// <summary>
+    /// Changes the current rorschach image
+    /// </summary>
+    private void Change ()
     {
         titleText.alpha = Mathf.Lerp(titleText.alpha, 0, Time.deltaTime / speed);
 
         var main = particles.main;
-        main.startColor = Color.Lerp(particles.main.startColor.color, Color.clear, Time.deltaTime / speed);
 
-        float lerpNum = Mathf.Lerp(rorschachQuad.material.GetFloat("_Contrast"), 0, Time.deltaTime / speed);
+        main.startColor = Color.Lerp(
+            particles.main.startColor.color, Color.clear, Time.deltaTime / speed);
+
+        float lerpNum = Mathf.Lerp(
+            rorschachQuad.material.GetFloat("_Contrast"), 0, Time.deltaTime / speed);
+
         rorschachQuad.material.SetFloat("_Contrast", lerpNum);
 
         if (titleText.alpha < 0.01f)
@@ -59,9 +67,14 @@ public class RorschachManager : MonoBehaviour {
         }
     }
 
-    void FinishLoad ()
+    /// <summary>
+    /// Finishes the load sequence
+    /// </summary>
+    private void FinishLoad ()
     {
-        var tarCG = Camera.main.GetComponent<PostProcessingBehaviour>().profile.colorGrading.settings;
+        var tarCG = Camera.main.GetComponent
+            <PostProcessingBehaviour>().profile.colorGrading.settings;
+
         tarCG.basic.postExposure = -10;
 
         Camera.main.GetComponent<PostProcessingBehaviour>().profile.colorGrading.settings = tarCG;
@@ -71,9 +84,14 @@ public class RorschachManager : MonoBehaviour {
         StartCoroutine(UnloadScene());
     }
 
+    /// <summary>
+    /// Loads a new scene in the background
+    /// </summary>
+    /// <returns></returns>
     IEnumerator LoadNewScene()
     {
-        AsyncOperation async = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive);
+        AsyncOperation async = SceneManager.LoadSceneAsync(
+            sceneToLoad, LoadSceneMode.Additive);
 
         while (!async.isDone)
         {
@@ -82,14 +100,18 @@ public class RorschachManager : MonoBehaviour {
         sceneLoaded = true;
     }
 
+    /// <summary>
+    /// Unloads a new scene in the background
+    /// </summary>
+    /// <returns></returns>
     IEnumerator UnloadScene()
     {
-        AsyncOperation async = SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(0).buildIndex);
+        AsyncOperation async = SceneManager.UnloadSceneAsync(
+            SceneManager.GetSceneAt(0).buildIndex);
 
         while (!async.isDone)
         {
             yield return null;
         }
-
     }
 }

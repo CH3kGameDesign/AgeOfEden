@@ -3,31 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneUnloader : MonoBehaviour {
-
+public class SceneUnloader : MonoBehaviour
+{
     public GameObject playerManagerObjects;
 
-	// Use this for initialization
-	void Start () {
-        if (Movement.player != null)
-            playerManagerObjects = Movement.player.transform.parent.parent.gameObject;
+	// Called once before the first frame
+	private void Start ()
+    {
+        if (Movement.m_goPlayerObject)
+            playerManagerObjects = Movement.m_goPlayerObject.transform.parent.parent.gameObject;
+
         StartCoroutine(UnloadScene());
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
+    /// <summary>
+    /// Unloads a scene in the background
+    /// </summary>
+    /// <returns></returns>
     IEnumerator UnloadScene()
     {
-        SceneManager.MoveGameObjectToScene(playerManagerObjects, SceneManager.GetSceneAt(1));
-        AsyncOperation async = SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(0).buildIndex);
+        SceneManager.MoveGameObjectToScene(
+            playerManagerObjects, SceneManager.GetSceneAt(1));
+
+        AsyncOperation async = SceneManager.UnloadSceneAsync(
+            SceneManager.GetSceneAt(0).buildIndex);
 
         while (!async.isDone)
         {
             yield return null;
         }
-
     }
 }

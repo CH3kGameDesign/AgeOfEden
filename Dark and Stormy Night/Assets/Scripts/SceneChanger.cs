@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneChanger : MonoBehaviour {
-
+public class SceneChanger : MonoBehaviour
+{
     public int sceneToLoad;
 
     public bool additive;
@@ -15,11 +15,14 @@ public class SceneChanger : MonoBehaviour {
     private bool added;
     private Scene tarScene;
 
-	// Use this for initialization
-	void Start () {
+	// Called once before the first frame
+	private void Start ()
+    {
         tarScene = SceneManager.GetSceneByBuildIndex(sceneToLoad);
+
         if (sceneToLoad == -2)
             sceneToLoad = SceneManager.GetActiveScene().buildIndex;
+
         if (activateOnStart)
             StartLoad();
 	}
@@ -72,17 +75,24 @@ public class SceneChanger : MonoBehaviour {
         }
     }
 
-    void FinishLoad ()
+    /// <summary>
+    /// Finishes the loading sequence
+    /// </summary>
+    private void FinishLoad ()
     {
         //SceneManager.SetActiveScene(tarScene);
-        if (GetComponent<MoveTo>() != null)
+        if (GetComponent<MoveTo>())
             GetComponent<MoveTo>().moveOnStart = true;
     }
 
-
+    /// <summary>
+    /// Loads scene in the background
+    /// </summary>
+    /// <returns></returns>
     IEnumerator LoadNewScene()
     {
-        AsyncOperation async = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Single);
+        AsyncOperation async = SceneManager.LoadSceneAsync(
+            sceneToLoad, LoadSceneMode.Single);
 
         while (!async.isDone)
         {
@@ -90,15 +100,19 @@ public class SceneChanger : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Loads scene additively in the background
+    /// </summary>
+    /// <returns></returns>
     IEnumerator LoadNewSceneAdditive()
     {
-        AsyncOperation async = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive);
+        AsyncOperation async = SceneManager.LoadSceneAsync(
+            sceneToLoad, LoadSceneMode.Additive);
 
         while (!async.isDone)
         {
             yield return null;
         }
         FinishLoad();
-
     }
 }
