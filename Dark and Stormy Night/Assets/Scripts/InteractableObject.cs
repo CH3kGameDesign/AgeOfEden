@@ -36,7 +36,7 @@ public class InteractableObject : MonoBehaviour
                     GetComponent<SpriteRenderer>().color = clickColor;
 
                     Movement.m_goPlayerObject.GetComponent<Movement>().
-                        playerModel.GetComponent<Animator>().SetInteger("Interaction", 1);
+                        m_aModelAnimator.GetComponent<Animator>().SetInteger("Interaction", 1);
                 }
             }
         }
