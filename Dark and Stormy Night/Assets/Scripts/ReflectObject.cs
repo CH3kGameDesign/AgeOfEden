@@ -5,6 +5,7 @@ using UnityEngine;
 public class ReflectObject : MonoBehaviour
 {
     public Transform reflectableObject;
+    public bool reflectPlayer = false;
     public Transform reflectPoint;
     public Vector3 reflectAmount;
     public Transform reflectingThing;
@@ -14,6 +15,8 @@ public class ReflectObject : MonoBehaviour
     {
         if (!reflectPoint)
             reflectPoint = transform;
+        if (reflectPlayer)
+            reflectableObject = Movement.m_goPlayerObject.GetComponent<Movement>().m_aModelAnimator.transform;
 	}
 	
 	// Update is called once per frame

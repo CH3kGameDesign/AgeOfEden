@@ -35,10 +35,9 @@ public class Movement : MonoBehaviour
 
     //[HideInInspector]
     //public float m_fSprint;
-
-    [Header("References")]
-    public Rigidbody m_rbRigidbody;
-
+    
+    private Rigidbody m_rbRigidbody;
+    [HideInInspector]
     public Animator m_aModelAnimator;
 
     //public FootStepManager footStepManager;

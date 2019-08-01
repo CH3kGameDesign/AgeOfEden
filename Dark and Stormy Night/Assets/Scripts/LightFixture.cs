@@ -130,7 +130,6 @@ public class LightFixture : MonoBehaviour
                 for (int i = 0; i < LightObjects.Count; i++)
                     LightObjects[i].SetActive(on);
 
-<<<<<<< HEAD
                 if (randomDarkObject == false)
                     for (int i = 0; i < DarkObjects.Count; i++)
                         DarkObjects[i].SetActive(!on);
@@ -143,10 +142,8 @@ public class LightFixture : MonoBehaviour
                             DarkObjects[i].SetActive(false);
                 }
 
-=======
                 for (int i = 0; i < DarkObjects.Count; i++)
                     DarkObjects[i].SetActive(!on);
->>>>>>> master
             }
             else
                 flashTimer = 0;

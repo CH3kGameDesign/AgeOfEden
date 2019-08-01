@@ -67,23 +67,21 @@ public class CameraMovement : MonoBehaviour
             RunShake();
             IdleShake();
         }
-
-<<<<<<< HEAD
+        
         if (aimPoint != null)
         {
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
-                aimPoint.position = hit.point;
+            RaycastHit hit2;
+            if (Physics.Raycast(transform.position, transform.forward, out hit2, 100))
+                aimPoint.position = hit2.point;
             else
                 aimPoint.position = transform.position + (transform.forward * 100);
         }
-=======
+
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
             aimPoint.position = hit.point;
         else
             aimPoint.position = transform.position + (transform.forward * 100);
->>>>>>> master
 
         transform.GetChild(0).localPosition = Vector3.Lerp(
             transform.GetChild(0).localPosition, Vector3.zero, 0.3f);

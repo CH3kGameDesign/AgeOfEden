@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 0
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 4441e11789a93a84f99980c8410b3ea8, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 86e20406fc795654294a6692ce3dc2a0, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -2367,16 +2367,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17a2ea94070d62840985155d4118f6da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardSpeed: 2.25
-  strafeSpeed: 2.85
-  backwardSpeed: 2.2
-  sprintMultiplier: 2
-  speedMultiplier: 1
-  playerModel: {fileID: 846939947}
-  verSpeed: 0
-  horSpeed: 0
-  sprint: 0
-  canMoveOnStart: 0
+  m_bIsSprinting: 0
+  m_bCanMoveOnStart: 1
+  m_fForwardSpeed: 3
+  m_fStrafeSpeed: 2.5
+  m_fBackwardSpeed: 2
+  m_fSpeedScalar: 100
+  m_fSprintMultiplier: 1.5
+  m_fSpeedMultiplier: 1
+  desiredVelocity: {x: 0, y: 0}
+  m_rbRigidbody: {fileID: 0}
+  m_aModelAnimator: {fileID: 0}
 --- !u!114 &616285312
 MonoBehaviour:
   m_ObjectHideFlags: 0
