@@ -204,14 +204,14 @@ public class Movement : MonoBehaviour
             m_fStepTimer = 0;
         }
 
-        RaycastHit hit;
-        Debug.DrawRay(transform.position + new Vector3(0, -0.9f, 0),
-            new Vector3(0, -0.2f, 0), Color.red);
+        //RaycastHit hit;
+        //Debug.DrawRay(transform.position + new Vector3(0, -0.9f, 0),
+        //    new Vector3(0, -0.2f, 0), Color.red);
 
-        if (Physics.Raycast(transform.position + new Vector3(0, -0.9f, 0),
-            Vector3.down, out hit, 0.2f) && Input.GetKeyDown(KeyCode.Space))
-        {
-            GetComponent<Rigidbody>().AddForce(Vector3.up * 600, ForceMode.Impulse);
-        }
+        //if (Physics.Raycast(transform.position + new Vector3(0, -0.9f, 0),
+        //    Vector3.down, out hit, 0.2f) && Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    GetComponent<Rigidbody>().AddForce(Vector3.up * 600, ForceMode.Impulse);
+        //}
     }
 }
