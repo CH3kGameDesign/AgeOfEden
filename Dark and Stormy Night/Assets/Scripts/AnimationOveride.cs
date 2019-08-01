@@ -19,7 +19,7 @@ public class AnimationOveride : MonoBehaviour
 	private void Start ()
     {
         if (tarAnimator == false && player == true)
-            tarAnimator = Movement.player.GetComponent<Movement>().
+            tarAnimator = Movement.m_goPlayerObject.GetComponent<Movement>().
                 playerModel.GetComponent<Animator>();
         /*
         if (activateOnStart)

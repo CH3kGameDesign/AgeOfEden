@@ -2,27 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TextGenerationCollider : MonoBehaviour {
-
+public class TextGenerationCollider : MonoBehaviour
+{
     [Header("GameObjects")]
     public GameObject TextObject;
 
-	// Use this for initialization
-	void Start () {
-        if (TextObject == null)
+	// Called once before the first frame
+	private void Start ()
+    {
+        if (!TextObject)
             TextObject = transform.parent.gameObject;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter (Collider other)
     {
-        if (other.tag == "Player" && TextObject.GetComponent<TextGeneration>().played == false)
+        if (other.tag == "Player" && !TextObject.GetComponent<TextGeneration>().played)
         {
-            TextObject.GetComponent<TextGeneration>().StartCoroutine("TextGenerate", TextObject.GetComponent<TextGeneration>().textSpeed);
+            TextObject.GetComponent<TextGeneration>().StartCoroutine(
+                "TextGenerate", TextObject.GetComponent<TextGeneration>().textSpeed);
+
             TextObject.GetComponent<TextGeneration>().played = true;
         }
     }

@@ -20,7 +20,7 @@ public class InteractableObject : MonoBehaviour
 	// Update is called once per frame
 	private void Update ()
     {
-        if (Vector3.Distance(transform.position, Movement.player.transform.position) < 2)
+        if (Vector3.Distance(transform.position, Movement.m_goPlayerObject.transform.position) < 2)
         {
             if (!inUse)
             {
@@ -35,7 +35,7 @@ public class InteractableObject : MonoBehaviour
                     inUse = true;
                     GetComponent<SpriteRenderer>().color = clickColor;
 
-                    Movement.player.GetComponent<Movement>().
+                    Movement.m_goPlayerObject.GetComponent<Movement>().
                         playerModel.GetComponent<Animator>().SetInteger("Interaction", 1);
                 }
             }
@@ -53,8 +53,8 @@ public class InteractableObject : MonoBehaviour
                 transform.localScale, Vector3.zero, Time.deltaTime * 2);
 
             Movement.canMove = false;
-            Movement.player.transform.position = Vector3.Lerp(
-                Movement.player.transform.position, transform.parent.GetChild(1).position,
+            Movement.m_goPlayerObject.transform.position = Vector3.Lerp(
+                Movement.m_goPlayerObject.transform.position, transform.parent.GetChild(1).position,
                 Time.deltaTime);
 
             CameraMovement.canMove = false;

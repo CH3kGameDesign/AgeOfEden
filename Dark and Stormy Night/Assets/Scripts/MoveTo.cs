@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveTo : MonoBehaviour {
-
+public class MoveTo : MonoBehaviour
+{
     public float metresPerSecond;
     public float lerpSpeed;
     private float lerpSpeedActual = 0;
@@ -14,7 +14,6 @@ public class MoveTo : MonoBehaviour {
 
     public Vector3 tarPos;
     public Transform TarTransPos;
-
     
     public bool localPos;
     public Transform localTo;
@@ -27,45 +26,56 @@ public class MoveTo : MonoBehaviour {
     public bool disableAfterFinish = false;
     public GameObject activateOnFinish;
 
-	// Use this for initialization
-	void Start () {
-        if (TarTransPos != null)
+	// Called once before the first frame
+	private void Start ()
+    {
+        if (TarTransPos)
             tarPos = TarTransPos.position;
-        if (Movee == null)
+
+        if (!Movee)
         {
-            if (movePlayer == true)
-                Movee = Movement.player.transform;
+            if (movePlayer)
+                Movee = Movement.m_goPlayerObject.transform;
             else
-                Movee = this.transform;
+                Movee = transform;
         }
-        if (localPos == true && localTo == null)
+
+        if (localPos && !localTo)
             localTo = Movee;
-        if (relativePos == true)
+
+        if (relativePos)
         {
-            if (localPos == true)
+            if (localPos)
                 tarPos += localTo.localPosition;
             else
                 tarPos += Movee.position;
         }
 	}
 	
-    void Update ()
+    // Called once per frame
+    private void Update ()
     {
-        if (TarTransPos != null)
+        if (TarTransPos)
             tarPos = TarTransPos.position;
-        if (moveOnStart == true && lerp == false)
+
+        if (moveOnStart && !lerp)
             MoveByMetre();
-        if (moveOnStart == true && lerp == true)
+
+        if (moveOnStart && lerp)
             MoveByLerp();
     }
 
-	// Update is called once per frame
-	void MoveByMetre () {
+    /// <summary>
+    /// Moves the object at a constant speed
+    /// </summary>
+    private void MoveByMetre ()
+    {
         float speed = metresPerSecond * Time.deltaTime;
 
-        if (localPos == true)
+        if (localPos)
         {
             Vector3 finalPos = localTo.parent.position + tarPos;
+
             if (Vector3.Distance(Movee.position, finalPos) < speed)
             {
                 Movee.position = finalPos;
@@ -82,7 +92,6 @@ public class MoveTo : MonoBehaviour {
         }
         else
         {
-
             if (Vector3.Distance(Movee.position, tarPos) < speed)
             {
                 Movee.position = tarPos;
@@ -98,13 +107,16 @@ public class MoveTo : MonoBehaviour {
                 Movee.position += direction * speed;
             }
         }
-
 	}
 
-    void MoveByLerp ()
+    /// <summary>
+    /// Moves the object with the use of linear interpolation
+    /// </summary>
+    private void MoveByLerp ()
     {
         lerpSpeedActual = Mathf.Lerp(lerpSpeedActual, lerpSpeed, Time.deltaTime);
-        if (localPos == true)
+
+        if (localPos)
         {
             if (Vector3.Distance(Movee.position, Movee.parent.position + tarPos) < 0.5f)
             {
@@ -114,12 +126,12 @@ public class MoveTo : MonoBehaviour {
             }
             else
             {
-                Movee.localPosition = Vector3.Lerp(Movee.localPosition, tarPos, lerpSpeedActual * Time.deltaTime);
+                Movee.localPosition = Vector3.Lerp(
+                    Movee.localPosition, tarPos, lerpSpeedActual * Time.deltaTime);
             }
         }
         else
         {
-
             if (Vector3.Distance(Movee.position, tarPos) < 0.5f)
             {
                 Movee.position = tarPos;
@@ -128,25 +140,35 @@ public class MoveTo : MonoBehaviour {
             }
             else
             {
-                Movee.position = Vector3.Lerp(Movee.position, tarPos, lerpSpeedActual * Time.deltaTime);
+                Movee.position = Vector3.Lerp(
+                    Movee.position, tarPos, lerpSpeedActual * Time.deltaTime);
             }
         }
     }
 
-    void Finish ()
+    /// <summary>
+    /// Called when an action is completed
+    /// </summary>
+    private void Finish ()
     {
         moveOnStart = false;
-        if (activateOnFinish != null)
-        activateOnFinish.SetActive(true);
+
+        if (activateOnFinish)
+            activateOnFinish.SetActive(true);
     }
 
-    public void ChangeTransPos(Transform trans)
+    public void ChangeTransPos (Transform pTransform)
     {
-        TarTransPos = trans;
+        TarTransPos = pTransform;
     }
-    public void ChangeTarPos(Vector3 tar)
+
+    /// <summary>
+    /// Changes the target position
+    /// </summary>
+    /// <param name="pTarget">The desired target position</param>
+    public void ChangeTarPos (Vector3 pTarget)
     {
-        tarPos = tar;
+        tarPos = pTarget;
         TarTransPos = null;
     }
 }
