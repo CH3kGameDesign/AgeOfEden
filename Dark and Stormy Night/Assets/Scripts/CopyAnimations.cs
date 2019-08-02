@@ -5,7 +5,14 @@ using UnityEngine;
 public class CopyAnimations : MonoBehaviour
 {
     public Animator target;
-    
+    public bool copyPlayer = false;
+
+    private void Start()
+    {
+        if (copyPlayer)
+            target = Movement.m_goPlayerObject.GetComponent<Movement>().m_aModelAnimator;
+    }
+
     // Update is called once per frame
     private void Update()
     {
