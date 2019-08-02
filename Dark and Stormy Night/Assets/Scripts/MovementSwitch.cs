@@ -5,6 +5,7 @@ using UnityEngine;
 public class MovementSwitch : MonoBehaviour
 {
     public enum choices { movement, camera, both }
+    public Vector2 sittingMaxRotation;
     public enum choices2 { disable, enable, unChanged }
     public choices choice;
     public choices2 rigidBodyState;
@@ -28,10 +29,15 @@ public class MovementSwitch : MonoBehaviour
         if (rotateOffset != 0)
             CameraMovement.cameraObject.GetComponent
                 <SmoothCameraMovement>().rotateOffset = rotateOffset;
+        if (sittingMaxRotation != Vector2.zero)
+            SmoothCameraMovement.sittingMaxRotation = sittingMaxRotation;
         if (choice != choices.camera)
             Movement.canMove = enable;
         if (choice != choices.movement)
+        {
             CameraMovement.canMove = enable;
+            CameraMovement.cameraObject.GetComponent<SmoothCameraMovement>().resetRotation();
+        }
 
         if (rigidBodyState == choices2.disable)
             Movement.m_goPlayerObject.GetComponent<Rigidbody>().isKinematic = true;

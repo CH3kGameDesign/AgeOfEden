@@ -33,6 +33,8 @@ public class SmoothCameraMovement : MonoBehaviour
 
     public float frameCounter = 20;
 
+    public bool reset = false;
+
     public static Quaternion originalRotation;
 
     public static float gravDirection = 0;
@@ -51,6 +53,8 @@ public class SmoothCameraMovement : MonoBehaviour
         originalRotation = Quaternion.Euler(Vector3.zero);
         rotationX = startRotY;
         rotationY = startRotX;
+        if (reset)
+            resetRotation();
     }
 
     // Called once per frame
@@ -86,7 +90,9 @@ public class SmoothCameraMovement : MonoBehaviour
 
                 if (!Movement.canMove)
                     rotationX = ClampAngle(rotationX, sittingMaxRotation.x, sittingMaxRotation.y);
+
                 
+
                 rotArrayY.Add(rotationY);
                 rotArrayX.Add(rotationX);
 

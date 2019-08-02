@@ -19,8 +19,6 @@ public class SceneChanger : MonoBehaviour
 	// Called once before the first frame
 	private void Start ()
     {
-        tarScene = SceneManager.GetSceneByBuildIndex(sceneToLoad);
-
         if (sceneToLoad == -2)
             sceneToLoad = SceneManager.GetActiveScene().buildIndex;
 
@@ -81,7 +79,8 @@ public class SceneChanger : MonoBehaviour
     /// </summary>
     private void FinishLoad ()
     {
-        //SceneManager.SetActiveScene(tarScene);
+        tarScene = SceneManager.GetSceneByBuildIndex(sceneToLoad);
+        SceneManager.SetActiveScene(tarScene);
         if (GetComponent<MoveTo>())
             GetComponent<MoveTo>().moveOnStart = true;
     }

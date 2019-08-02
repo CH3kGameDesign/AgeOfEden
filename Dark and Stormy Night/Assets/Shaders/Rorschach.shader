@@ -5,6 +5,7 @@ Shader "Unlit/Rorschach"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+		_Color ("Tint", Color) = (1,1,1,1)
         _BlackLevel("Black Level", Range(0, 1)) = 0.27
         _Contrast("Contrast", float) = 60
     }
@@ -37,6 +38,7 @@ Shader "Unlit/Rorschach"
             float4 _MainTex_ST;
             float _BlackLevel;
             float _Contrast;
+			fixed4 _Color;
 
             v2f vert (appdata v)
             {
@@ -59,8 +61,7 @@ Shader "Unlit/Rorschach"
 
                 float mask = max(mirrored.x, mirrored.y);
                 mask *= mask * mask * _BlackLevel;
-
-                return saturate((noise + mask - _BlackLevel) * _Contrast);
+                return saturate((noise + mask - _BlackLevel) * _Contrast) * _Color;
             }
             ENDCG
         }

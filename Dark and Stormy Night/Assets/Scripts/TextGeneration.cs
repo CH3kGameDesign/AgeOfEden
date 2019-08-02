@@ -12,6 +12,10 @@ public class TextGeneration : MonoBehaviour
     public float destroyTimer;
     public Vector3 direction;
     public float randomPositioning;
+
+    public List<GameObject> singleKeySounds = new List<GameObject>();
+    public GameObject spaceKeySound;
+
     [Tooltip("0: Delete || 1: BlowAway")]
     public int disperseOption;
 
@@ -107,6 +111,19 @@ public class TextGeneration : MonoBehaviour
 
             GOText.GetComponent<TextMeshPro>().text =
                 textString.ToCharArray()[textCount].ToString();
+
+            if (singleKeySounds.Count != 0)
+            {
+                if (textString.ToCharArray()[textCount].ToString() == " ")
+                    Instantiate(
+                        spaceKeySound, GOText.transform.position, transform.rotation);
+                else
+                {
+                    int no = Random.Range(0, singleKeySounds.Count);
+                    Instantiate(
+                        singleKeySounds[no], GOText.transform.position, transform.rotation);
+                }
+            }
 
             GOText.AddComponent<FadeOut>();
 

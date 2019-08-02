@@ -10,6 +10,7 @@ public class RorschachManager : MonoBehaviour
     public Renderer rorschachQuad;
     public TextMeshPro titleText;
     public ParticleSystem particles;
+    public AudioSource music;
     [Space(10)]
     public float speed;
 
@@ -65,6 +66,10 @@ public class RorschachManager : MonoBehaviour
             stage = -1;
             transitionOver = true;
         }
+
+        if (music != null)
+            music.volume = Mathf.Lerp(
+                music.volume, 0, Time.deltaTime / speed / 2);
     }
 
     /// <summary>
