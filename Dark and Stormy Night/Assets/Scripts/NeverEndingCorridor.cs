@@ -24,7 +24,7 @@ public class NeverEndingCorridor : MonoBehaviour
     {
         if (collision.collider.tag == "Player")
         {
-            float verSpeed = collision.collider.GetComponent<Movement>().desiredVelocity.x;
+            float verSpeed = collision.collider.GetComponent<Movement>().m_v2DesiredVelocity.x;
 
             if (verSpeed > 0)
                 transform.GetChild(0).transform.position += new Vector3(
