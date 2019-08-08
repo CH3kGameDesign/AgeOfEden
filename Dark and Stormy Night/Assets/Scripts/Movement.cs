@@ -6,51 +6,70 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     public static bool canMove;
-    public bool legacyMovement = false;
     [HideInInspector]
     public bool m_bIsSprinting = false;
+    [HideInInspector]
+    public bool m_bGrounded;
 
-    [Header("Variables")]
-    public bool m_bCanMoveOnStart = true;
-    [Space(5)]
-    public float m_fForwardSpeed = 3;
-    public float m_fStrafeSpeed = 2.5f;
-    public float m_fBackwardSpeed = 2;
-    public float m_fSpeedScalar = 100;
+    [Header("Booleans")]
+    [Tooltip("Enable this if not at typewriter")]
+    [SerializeField]
+    private bool m_bCanMoveOnStart = true;
+    [SerializeField]
+    [Tooltip("Uses the old movement system based around translation" +
+        "\nWARNING: Allows the player to force themselves through walls and other objects")]
+    private bool m_bLegacyMovement = false;
+    [SerializeField]
+    private bool m_bAllowJumping = false;
+    
+    [Header("Movement variables")]
+    [SerializeField]
+    private float m_fForwardSpeed = 3;
+    [SerializeField]
+    private float m_fStrafeSpeed = 2.5f;
+    [SerializeField]
+    private float m_fBackwardSpeed = 2;
+    [SerializeField]
+    private float m_fSpeedScalar = 500;
 
-    private float m_fSizeScalar;
+    [Header("Aerial Stuff")]
+    [Tooltip("Only used if jumping is enabled")]
+    [SerializeField]
+    private float m_fJumpForce = 30;
+    [Tooltip("Scales the movement speed while airborne")]
+    [SerializeField]
+    private float m_fAerialManuverability = 0.1f;
 
-    [Space(5)]
-    public float m_fSprintMultiplier = 1.5f;
-
-    [Space(5)]
+    [Header("Tweeks")]
+    [Tooltip("How much faster the player is while sprinting compared to normal movement")]
+    public float m_fSprintMultiplier = 2;
+    [Tooltip("The first scaling done to the input")]
     public float m_fSpeedMultiplier = 1;
 
+    private float m_fSizeScalar;
     private float m_fStepDelay;
     private float m_fStepTimer;
 
     [HideInInspector]
-    // x is forward, y is sideways
-    public Vector2 desiredVelocity;
+    private float m_fSprint = 1f;
 
-    //[HideInInspector]
-    //public float m_fSprint;
-    
+    [HideInInspector]
+    // x is forward, y is sideways
+    public Vector2 m_v2DesiredVelocity;
+
     private Rigidbody m_rbRigidbody;
     [HideInInspector]
     public Animator m_aModelAnimator;
-
     //public FootStepManager footStepManager;
-    private float m_fSprint = 1f;
 
     // What is this???
     public static GameObject m_goPlayerObject;
 
-	// Called once before the first frame
-	private void Start ()
+    // Called once before the first frame
+    private void Start ()
     {
         canMove = m_bCanMoveOnStart;
-        desiredVelocity = new Vector2();
+        m_v2DesiredVelocity = new Vector2();
         m_fStepDelay = m_fForwardSpeed / 4;
         m_fSizeScalar = transform.localScale.y;
 
@@ -58,14 +77,25 @@ public class Movement : MonoBehaviour
         m_aModelAnimator = gameObject.GetComponentInChildren<Animator>();
 
         m_goPlayerObject = gameObject;
-	}
-	
-	// Update is called once per frame
-	private void Update ()
+    }
+
+    // Update is called once per frame
+    private void Update ()
     {
         if (canMove)
         {
-            if (!legacyMovement)
+            // Test for ground below the player
+            RaycastHit groundRay;
+            Debug.DrawRay(transform.position + new Vector3(0, -0.95f, 0),
+                new Vector3(0, -0.1f, 0), Color.red);
+
+            if (Physics.Raycast(transform.position + new Vector3(0, -0.95f, 0),
+                Vector3.down, out groundRay, 0.1f))
+                m_bGrounded = true;
+            else
+                m_bGrounded = false;
+
+            if (!m_bLegacyMovement)
                 DoMovement();
             else
                 DoMovementLegacy();
@@ -86,30 +116,30 @@ public class Movement : MonoBehaviour
     {
         m_aModelAnimator.SetBool("Standing", true);
 
-        desiredVelocity.x = Input.GetAxis("Vertical");
-        desiredVelocity.y = Input.GetAxis("Horizontal");
+        m_v2DesiredVelocity.x = Input.GetAxis("Vertical");
+        m_v2DesiredVelocity.y = Input.GetAxis("Horizontal");
 
         // Converts the unit square to a unit circle as to maintain constant magnitude
-        desiredVelocity.x = desiredVelocity.x
-            * Mathf.Sqrt(1 - 0.5f * desiredVelocity.y * desiredVelocity.y);
-        desiredVelocity.y = desiredVelocity.y
-            * Mathf.Sqrt(1 - 0.5f * desiredVelocity.x * desiredVelocity.x);
+        m_v2DesiredVelocity.x = m_v2DesiredVelocity.x
+            * Mathf.Sqrt(1 - 0.5f * m_v2DesiredVelocity.y * m_v2DesiredVelocity.y);
+        m_v2DesiredVelocity.y = m_v2DesiredVelocity.y
+            * Mathf.Sqrt(1 - 0.5f * m_v2DesiredVelocity.x * m_v2DesiredVelocity.x);
 
         // Scales the unit circle
-        if (desiredVelocity.x > 0)
-            desiredVelocity.x *= m_fForwardSpeed;
+        if (m_v2DesiredVelocity.x > 0)
+            m_v2DesiredVelocity.x *= m_fForwardSpeed;
         else
-            desiredVelocity.x *= m_fBackwardSpeed;
+            m_v2DesiredVelocity.x *= m_fBackwardSpeed;
 
-        desiredVelocity.y *= m_fStrafeSpeed;
+        m_v2DesiredVelocity.y *= m_fStrafeSpeed;
 
-        desiredVelocity *= m_fSizeScalar;
+        m_v2DesiredVelocity *= m_fSizeScalar;
 
         // Apply a speed multiplier
-        desiredVelocity *= m_fSpeedMultiplier;
+        m_v2DesiredVelocity *= m_fSpeedMultiplier;
 
         // Test for movement
-        if (desiredVelocity == Vector2.zero)
+        if (m_v2DesiredVelocity == Vector2.zero)
         {
             m_aModelAnimator.SetBool("Moving", false);
             if (m_fStepTimer != 0)
@@ -121,7 +151,7 @@ public class Movement : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 m_aModelAnimator.SetBool("Sprinting", true);
-                desiredVelocity *= m_fSprintMultiplier;
+                m_v2DesiredVelocity *= m_fSprintMultiplier;
                 m_bIsSprinting = true;
             }
             else
@@ -134,22 +164,34 @@ public class Movement : MonoBehaviour
             m_fStepTimer += Time.deltaTime;
         }
 
-        Vector3 rotatedVelocity = transform.forward * desiredVelocity.x;
-        rotatedVelocity += transform.right * desiredVelocity.y;
+        Vector3 rotatedVelocity = transform.forward * m_v2DesiredVelocity.x;
+        rotatedVelocity += transform.right * m_v2DesiredVelocity.y;
 
         Vector3 appliedForce;
 
         // Finds the difference between desired velocity and current
         appliedForce.x = rotatedVelocity.x - m_rbRigidbody.velocity.x;
-        appliedForce.y = 0;
         appliedForce.z = rotatedVelocity.z - m_rbRigidbody.velocity.z;
 
-        appliedForce *= m_fSpeedScalar;
+        if (m_bAllowJumping && m_bGrounded && Input.GetKeyDown(KeyCode.Space))
+            appliedForce.y = m_fJumpForce;
+        else
+            appliedForce.y = 0;
+
+        // If the player is in the air, their movement control is extremely limited
+        if (m_bGrounded)
+            appliedForce *= m_fSpeedScalar;
+        else
+            appliedForce *= m_fSpeedScalar * m_fAerialManuverability;
 
         // Pushes to in-engine physics
         m_rbRigidbody.AddForce(appliedForce);
     }
 
+    /// <summary>
+    /// Call to do movement based calculations
+    /// Note: This is the old version that uses direct translation
+    /// </summary>
     private void DoMovementLegacy ()
     {
         //----------vvv OLD SYSTEM vvv----------
@@ -168,20 +210,20 @@ public class Movement : MonoBehaviour
         }
 
         if (Input.GetAxis("Vertical") > 0)
-            desiredVelocity.x = m_fForwardSpeed * m_fSprint;
+            m_v2DesiredVelocity.x = m_fForwardSpeed * m_fSprint;
         if (Input.GetAxis("Vertical") < 0)
-            desiredVelocity.x = -m_fBackwardSpeed * m_fSprint;
+            m_v2DesiredVelocity.x = -m_fBackwardSpeed * m_fSprint;
         if (Input.GetAxis("Vertical") == 0)
-            desiredVelocity.x = 0;
+            m_v2DesiredVelocity.x = 0;
 
-        desiredVelocity.y = Input.GetAxis("Horizontal") * m_fStrafeSpeed * m_fSprint;
+        m_v2DesiredVelocity.y = Input.GetAxis("Horizontal") * m_fStrafeSpeed * m_fSprint;
 
-        if (desiredVelocity == Vector2.zero)
+        if (m_v2DesiredVelocity == Vector2.zero)
         {
             m_aModelAnimator.SetBool("Moving", false);
             if (m_fStepTimer != 0)
             {
-            //   footStepManager.MakeSound();
+                //footStepManager.MakeSound();
                 m_fStepTimer = 0;
             }
         }
@@ -192,7 +234,7 @@ public class Movement : MonoBehaviour
         }
 
         Vector3 desiredPosition = Vector3.ClampMagnitude(
-            new Vector3(desiredVelocity.x, 0, desiredVelocity.y),
+            new Vector3(m_v2DesiredVelocity.x, 0, m_v2DesiredVelocity.y),
             m_fForwardSpeed * Time.deltaTime * m_fSprint);
 
         transform.position += transform.forward * desiredPosition.x * m_fSpeedMultiplier;
@@ -200,7 +242,7 @@ public class Movement : MonoBehaviour
 
         if (m_fStepTimer > m_fStepDelay / m_fSprint)
         {
-        //    footStepManager.MakeSound();
+            //footStepManager.MakeSound();
             m_fStepTimer = 0;
         }
 
