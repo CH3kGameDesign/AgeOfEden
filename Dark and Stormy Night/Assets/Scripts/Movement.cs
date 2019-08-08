@@ -12,9 +12,12 @@ public class Movement : MonoBehaviour
     public bool m_bGrounded;
 
     [Header("Booleans")]
+    [Tooltip("Enable this if not at typewriter")]
     [SerializeField]
     private bool m_bCanMoveOnStart = true;
     [SerializeField]
+    [Tooltip("Uses the old movement system based around translation" +
+        "\nWARNING: Allows the player to force themselves through walls and other objects")]
     private bool m_bLegacyMovement = false;
     [SerializeField]
     private bool m_bAllowJumping = false;
@@ -186,7 +189,7 @@ public class Movement : MonoBehaviour
     }
 
     /// <summary>
-    /// Call do do movement based calculations
+    /// Call to do movement based calculations
     /// Note: This is the old version that uses direct translation
     /// </summary>
     private void DoMovementLegacy ()
