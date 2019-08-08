@@ -6,8 +6,10 @@ public class EnableWithEnding : MonoBehaviour {
 
     public List<GameObject> enableObjects = new List<GameObject>();
     public List<GameObject> disableObjects = new List<GameObject>();
-
+    [Space (10)]
     public int endingCompleted;
+    [Space(10)]
+    public List<GameObject> enableIfNotObjects = new List<GameObject>();
 
 	// Use this for initialization
 	void Start () {
@@ -18,7 +20,10 @@ public class EnableWithEnding : MonoBehaviour {
             for (int i = 0; i < disableObjects.Count; i++)
                 disableObjects[i].SetActive(false);
         }
-	}
+        else
+            for (int i = 0; i < enableIfNotObjects.Count; i++)
+                enableIfNotObjects[i].SetActive(true);
+    }
 	
 	// Update is called once per frame
 	void Update () {

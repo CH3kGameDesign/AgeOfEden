@@ -2093,7 +2093,7 @@ GameObject:
   - component: {fileID: 389662317}
   - component: {fileID: 389662318}
   m_Layer: 0
-  m_Name: RorschachManager
+  m_Name: RorschachManager_Beginning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2109,8 +2109,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 564958583}
-  m_RootOrder: 4
+  m_Father: {fileID: 1875281633}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &389662318
 MonoBehaviour:
@@ -2128,7 +2128,7 @@ MonoBehaviour:
   particles: {fileID: 1029077721}
   music: {fileID: 2078354738}
   speed: 0.5
-  sceneToLoad: 2
+  sceneToLoad: 1
   titlePlayerObject: {fileID: 677604554}
 --- !u!1 &399910667
 GameObject:
@@ -2790,7 +2790,7 @@ Transform:
   - {fileID: 2052223389}
   - {fileID: 666667674}
   - {fileID: 70435301}
-  - {fileID: 389662317}
+  - {fileID: 1875281633}
   - {fileID: 1496555328}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -2936,16 +2936,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17a2ea94070d62840985155d4118f6da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  legacyMovement: 0
   m_bIsSprinting: 0
+  m_bGrounded: 0
   m_bCanMoveOnStart: 1
+  m_bLegacyMovement: 0
+  m_bAllowJumping: 0
   m_fForwardSpeed: 3
   m_fStrafeSpeed: 2.5
   m_fBackwardSpeed: 2
   m_fSpeedScalar: 100
+  m_fJumpForce: 30
+  m_fAerialManuverability: 0.1
   m_fSprintMultiplier: 1.5
   m_fSpeedMultiplier: 1
-  desiredVelocity: {x: 0, y: 0}
+  m_v2DesiredVelocity: {x: 0, y: 0}
   m_aModelAnimator: {fileID: 0}
 --- !u!114 &616285312
 MonoBehaviour:
@@ -3190,7 +3194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyPress: ' '
   enableObjects:
-  - {fileID: 389662316}
+  - {fileID: 1875281632}
   toggle: 0
 --- !u!1 &677604554
 GameObject:
@@ -11293,6 +11297,54 @@ Transform:
   m_Father: {fileID: 126521548}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -8.591393, y: 0.16143692, z: -0.42259693}
+--- !u!1 &1875281632
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1875281633}
+  - component: {fileID: 1875281634}
+  m_Layer: 0
+  m_Name: ChangeOpening
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1875281633
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1875281632}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 389662317}
+  - {fileID: 1929376046}
+  m_Father: {fileID: 564958583}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1875281634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1875281632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccd935a3b0d54c24aa2d9bdb59a10bd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableObjects:
+  - {fileID: 1929376045}
+  disableObjects: []
+  endingCompleted: 0
+  enableIfNotObjects:
+  - {fileID: 389662316}
 --- !u!1 &1903947787
 GameObject:
   m_ObjectHideFlags: 0
@@ -11383,6 +11435,53 @@ Transform:
   m_Father: {fileID: 1032126894}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0.26573998, y: -3.053621, z: -3.5996888}
+--- !u!1 &1929376045
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1929376046}
+  - component: {fileID: 1929376047}
+  m_Layer: 0
+  m_Name: RorschachManager_Normal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1929376046
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1929376045}
+  m_LocalRotation: {x: -0, y: -0.000000059604638, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1875281633}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1929376047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1929376045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3f9171e5a3848e4880c9a8b9506e952, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rorschachQuad: {fileID: 2129844604}
+  titleText: {fileID: 1612616162}
+  particles: {fileID: 1029077721}
+  music: {fileID: 2078354738}
+  speed: 0.5
+  sceneToLoad: 2
+  titlePlayerObject: {fileID: 677604554}
 --- !u!1 &1983656184
 GameObject:
   m_ObjectHideFlags: 0
