@@ -6,12 +6,18 @@ using UnityEngine.SceneManagement;
 public class SceneUnloader : MonoBehaviour
 {
     public GameObject playerManagerObjects;
+    public bool justAudio;
 
 	// Called once before the first frame
 	private void Start ()
     {
         if (Movement.m_goPlayerObject)
-            playerManagerObjects = Movement.m_goPlayerObject.transform.parent.parent.gameObject;
+        {
+            if (justAudio)
+                playerManagerObjects = CameraMovement.cameraObject.transform.parent.GetChild(1).gameObject;
+            else
+                playerManagerObjects = Movement.m_goPlayerObject.transform.parent.parent.gameObject;
+        }
 
         StartCoroutine(UnloadScene());
 	}

@@ -16,8 +16,10 @@ public class SceneChanger : MonoBehaviour
     private bool added;
     private Scene tarScene;
 
-	// Called once before the first frame
-	private void Start ()
+    public UnityEngine.Events.UnityEvent eventOnStart = new UnityEngine.Events.UnityEvent();
+
+    // Called once before the first frame
+    private void Start ()
     {
         if (sceneToLoad == -2)
             sceneToLoad = SceneManager.GetActiveScene().buildIndex;
@@ -47,6 +49,7 @@ public class SceneChanger : MonoBehaviour
 
     public void StartLoad()
     {
+        eventOnStart.Invoke();
         if (added == false)
         {
             added = true;

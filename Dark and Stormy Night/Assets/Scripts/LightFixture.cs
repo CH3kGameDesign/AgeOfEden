@@ -11,8 +11,9 @@ public class LightFixture : MonoBehaviour
     public List<GameObject> LightObjects = new List<GameObject>();
     public List<GameObject> DarkObjects = new List<GameObject>();
     public bool randomDarkObject = false;
+    [Space(10)]
+    public List<GameObject> RandomDarkSounds = new List<GameObject>();
     [Space (10)]
-
     [Header ("Variables")]
 
     public Vector2 flashOffTimesBounds;
@@ -136,7 +137,11 @@ public class LightFixture : MonoBehaviour
                 else
                 {
                     if (on == false)
+                    {
                         DarkObjects[darkObject].SetActive(true);
+                        if (RandomDarkSounds.Count != 0)
+                            Instantiate(RandomDarkSounds[Random.Range(0, RandomDarkSounds.Count)]);
+                    }
                     else
                         for (int i = 0; i < DarkObjects.Count; i++)
                             DarkObjects[i].SetActive(false);
