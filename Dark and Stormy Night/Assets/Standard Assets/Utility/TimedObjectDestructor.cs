@@ -8,12 +8,10 @@ namespace UnityStandardAssets.Utility
         [SerializeField] private float m_TimeOut = 1.0f;
         [SerializeField] private bool m_DetachChildren = false;
 
-
         private void Awake()
         {
             Invoke("DestroyNow", m_TimeOut);
         }
-
 
         private void DestroyNow()
         {
@@ -21,7 +19,7 @@ namespace UnityStandardAssets.Utility
             {
                 transform.DetachChildren();
             }
-            DestroyObject(gameObject);
+            Destroy(gameObject);
         }
     }
 }
