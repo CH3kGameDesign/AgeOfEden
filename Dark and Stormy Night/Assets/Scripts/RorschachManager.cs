@@ -27,13 +27,13 @@ public class RorschachManager : MonoBehaviour
     private bool transitionOver = false;
 
 	// Called once before the first frame
-	private void Start ()
+	private void Start()
     {
         StartCoroutine(LoadNewScene());
     }
 	
 	// Update is called once per frame
-	private void Update ()
+	private void Update()
     {
         if (stage == 0)
             Change();
@@ -44,7 +44,7 @@ public class RorschachManager : MonoBehaviour
     /// <summary>
     /// Changes the current rorschach image
     /// </summary>
-    private void Change ()
+    private void Change()
     {
         titleText.alpha = Mathf.Lerp(titleText.alpha, 0, Time.deltaTime / speed);
 
@@ -75,7 +75,7 @@ public class RorschachManager : MonoBehaviour
     /// <summary>
     /// Finishes the load sequence
     /// </summary>
-    private void FinishLoad ()
+    private void FinishLoad()
     {
         var tarCG = Camera.main.GetComponent
             <PostProcessingBehaviour>().profile.colorGrading.settings;
