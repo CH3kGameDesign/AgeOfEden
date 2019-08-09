@@ -46,7 +46,7 @@ public class InteractableObject : MonoBehaviour
                 GetComponent<SpriteRenderer>().color, defaultColor, Time.deltaTime);
             transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, Time.deltaTime);
         }
-
+        
         if (inUse)
         {
             transform.localScale = Vector3.Lerp(

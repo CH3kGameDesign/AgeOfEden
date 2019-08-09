@@ -86,8 +86,8 @@ public class Movement : MonoBehaviour
         {
             // Test for ground below the player
             RaycastHit groundRay;
-            Debug.DrawRay(transform.position + new Vector3(0, -0.95f, 0),
-                new Vector3(0, -0.1f, 0), Color.red);
+            //Debug.DrawRay(transform.position + new Vector3(0, -0.95f, 0),
+            //    new Vector3(0, -0.1f, 0), Color.red);
 
             if (Physics.Raycast(transform.position + new Vector3(0, -0.95f, 0),
                 Vector3.down, out groundRay, 0.1f))

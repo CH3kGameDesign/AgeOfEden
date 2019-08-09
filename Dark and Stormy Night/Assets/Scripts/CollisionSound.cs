@@ -21,7 +21,7 @@ public class CollisionSound : MonoBehaviour {
     private void LateUpdate()
     {
         velocity = GetComponent<Rigidbody>().velocity.magnitude;
-        Debug.Log(velocity);
+        //Debug.Log(velocity);
     }
 
     private void OnCollisionEnter(Collision collision)
