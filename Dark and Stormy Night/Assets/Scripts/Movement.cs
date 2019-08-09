@@ -66,7 +66,7 @@ public class Movement : MonoBehaviour
     public static GameObject m_goPlayerObject;
 
     // Called once before the first frame
-    private void Start ()
+    private void Start()
     {
         canMove = m_bCanMoveOnStart;
         m_v2DesiredVelocity = new Vector2();
@@ -80,7 +80,7 @@ public class Movement : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void Update ()
+    private void Update()
     {
         if (canMove)
         {
@@ -112,7 +112,7 @@ public class Movement : MonoBehaviour
     /// <summary>
     /// Call to do movement based calculations
     /// </summary>
-    private void DoMovement ()
+    private void DoMovement()
     {
         m_aModelAnimator.SetBool("Standing", true);
 
@@ -192,7 +192,7 @@ public class Movement : MonoBehaviour
     /// Call to do movement based calculations
     /// Note: This is the old version that uses direct translation
     /// </summary>
-    private void DoMovementLegacy ()
+    private void DoMovementLegacy()
     {
         //----------vvv OLD SYSTEM vvv----------
 
