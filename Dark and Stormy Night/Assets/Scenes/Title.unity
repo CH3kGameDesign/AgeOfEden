@@ -1105,7 +1105,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &138370326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1122,6 +1122,7 @@ MonoBehaviour:
   - {fileID: 1527748718}
   - {fileID: 1028455111}
   lastEnding: {fileID: 372086009}
+  trainPresent: 1
 --- !u!224 &138370327
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1268,7 +1269,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &217171283
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1821,7 +1822,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &372086008
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1977,7 +1978,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &374447009
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2363,7 +2364,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &502747084
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2947,6 +2948,9 @@ MonoBehaviour:
   m_fSpeedScalar: 100
   m_fJumpForce: 30
   m_fAerialManuverability: 0.1
+  m_fRayOrigin: -0.5
+  m_fRaylength: 0.52
+  m_fRaySpread: 0.25
   m_fSprintMultiplier: 1.5
   m_fSpeedMultiplier: 1
   m_v2DesiredVelocity: {x: 0, y: 0}
@@ -3882,7 +3886,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1022509699
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8930,7 +8934,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1269521694
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9125,7 +9129,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: ALPHA.8-8a
+  m_text: ALPHA.8-14a
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 028c896bed41043408be11a2228d84f2, type: 2}
   m_sharedMaterial: {fileID: 21113873226524262, guid: 028c896bed41043408be11a2228d84f2,
@@ -9194,7 +9198,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1286706528}
-    characterCount: 10
+    characterCount: 11
     spriteCount: 0
     spaceCount: 0
     wordCount: 2
@@ -9342,7 +9346,7 @@ Prefab:
     - target: {fileID: 82245232538029754, guid: 20448098766bea349ac35eba74e0fdf6,
         type: 2}
       propertyPath: m_Volume
-      value: 0.4
+      value: 0.15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20448098766bea349ac35eba74e0fdf6, type: 2}
@@ -9363,7 +9367,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1318359536
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9555,7 +9559,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1371357202
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9874,6 +9878,7 @@ MonoBehaviour:
   rotateOffset: 0
   frameCounter: 15
   reset: 0
+  noShake: 0
 --- !u!114 &1525873631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10309,7 +10314,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1659422947
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10560,7 +10565,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1745440496
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11129,7 +11134,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1778362437
 RectTransform:
   m_ObjectHideFlags: 0
