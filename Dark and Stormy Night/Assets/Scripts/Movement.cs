@@ -39,8 +39,20 @@ public class Movement : MonoBehaviour
     [Tooltip("Scales the movement speed while airborne")]
     [SerializeField]
     private float m_fAerialManuverability = 0.1f;
+    [Tooltip("The y heigh of the ray origin")]
+    [SerializeField]
+    private float m_fRayOrigin = -0.5f;
+    [Tooltip("How long down the raw stretches" +
+        "\nWARNING: If ray length does not reach below the players hitbox" +
+        "the player will have difficulty moving")]
+    [SerializeField]
+    private float m_fRaylength = 0.52f;
+    [Tooltip("The ground check uses 4 rays to avoid pothole problems," +
+        "this is how far from the center these rays are positioned")]
+    [SerializeField]
+    private float m_fRaySpread = 0.25f;
 
-    [Header("Tweeks")]
+    [Header("Tweaks")]
     [Tooltip("How much faster the player is while sprinting compared to normal movement")]
     public float m_fSprintMultiplier = 2;
     [Tooltip("The first scaling done to the input")]
@@ -49,8 +61,7 @@ public class Movement : MonoBehaviour
     private float m_fSizeScalar;
     private float m_fStepDelay;
     private float m_fStepTimer;
-
-    [HideInInspector]
+    
     private float m_fSprint = 1f;
 
     [HideInInspector]
@@ -66,7 +77,7 @@ public class Movement : MonoBehaviour
     public static GameObject m_goPlayerObject;
 
     // Called once before the first frame
-    private void Start ()
+    private void Start()
     {
         canMove = m_bCanMoveOnStart;
         m_v2DesiredVelocity = new Vector2();
@@ -80,17 +91,30 @@ public class Movement : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void Update ()
+    private void Update()
     {
         if (canMove)
         {
             // Test for ground below the player
             RaycastHit groundRay;
-            //Debug.DrawRay(transform.position + new Vector3(0, -0.95f, 0),
-            //    new Vector3(0, -0.1f, 0), Color.red);
 
-            if (Physics.Raycast(transform.position + new Vector3(0, -0.95f, 0),
-                Vector3.down, out groundRay, 0.1f))
+            //Debug.DrawRay(transform.position + new Vector3(0, m_fRayOrigin, m_fRaySpread),
+            //    new Vector3(0, -m_fRaylength, 0), Color.red);
+            //Debug.DrawRay(transform.position + new Vector3(m_fRaySpread, m_fRayOrigin, 0),
+            //    new Vector3(0, -m_fRaylength, 0), Color.red);
+            //Debug.DrawRay(transform.position + new Vector3(0, m_fRayOrigin, -m_fRaySpread),
+            //    new Vector3(0, -m_fRaylength, 0), Color.red);
+            //Debug.DrawRay(transform.position + new Vector3(-m_fRaySpread, m_fRayOrigin, 0),
+            //    new Vector3(0, -m_fRaylength, 0), Color.red);
+
+            if (Physics.Raycast(transform.position + new Vector3(0, m_fRayOrigin, m_fRaySpread),
+                Vector3.down, out groundRay, m_fRaylength) ||
+                Physics.Raycast(transform.position + new Vector3(m_fRaySpread, m_fRayOrigin, 0),
+                Vector3.down, out groundRay, m_fRaylength) ||
+                Physics.Raycast(transform.position + new Vector3(0, m_fRayOrigin, -m_fRaySpread),
+                Vector3.down, out groundRay, m_fRaylength) ||
+                Physics.Raycast(transform.position + new Vector3(-m_fRaySpread, m_fRayOrigin, 0),
+                Vector3.down, out groundRay, m_fRaylength))
                 m_bGrounded = true;
             else
                 m_bGrounded = false;
@@ -112,7 +136,7 @@ public class Movement : MonoBehaviour
     /// <summary>
     /// Call to do movement based calculations
     /// </summary>
-    private void DoMovement ()
+    private void DoMovement()
     {
         m_aModelAnimator.SetBool("Standing", true);
 
@@ -164,6 +188,7 @@ public class Movement : MonoBehaviour
             m_fStepTimer += Time.deltaTime;
         }
 
+        // Rotates the velocity to face the player's "forward" direction
         Vector3 rotatedVelocity = transform.forward * m_v2DesiredVelocity.x;
         rotatedVelocity += transform.right * m_v2DesiredVelocity.y;
 
@@ -192,7 +217,7 @@ public class Movement : MonoBehaviour
     /// Call to do movement based calculations
     /// Note: This is the old version that uses direct translation
     /// </summary>
-    private void DoMovementLegacy ()
+    private void DoMovementLegacy()
     {
         //----------vvv OLD SYSTEM vvv----------
 

@@ -5,42 +5,64 @@ using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour
 {
-    public int sceneToLoad;
+    [Tooltip("Loads the new scene automatically with no trigger")]
+    [SerializeField]
+    private bool m_bActivateOnStart = false;
+    [Tooltip("Loads the new scene into the current scene")]
+    [SerializeField]
+    private bool m_bAdditive;
+    [Tooltip("Loads the new scene in the background")]
+    [SerializeField]
+    private bool m_bAsync = true;
+    [Tooltip("The desired scene index to be loaded")]
+    [SerializeField]
+    private sbyte m_sbSceneToLoad;
 
-    public bool additive;
-    public bool async = true;
-    public bool activateOnStart = false;
-    public bool fadeOut = false;
-    public float fadeSpeed = 4;
+    [Space(8)]
+    [Tooltip("")]
+    [SerializeField]
+    private bool m_bFadeOut = false;
+    [Tooltip("Only used if fade out is enabled")]
+    [SerializeField]
+    private float m_fFadeSpeed = 4;
 
-    private bool added;
-    private Scene tarScene;
+    private bool m_bAdded;
+    private Scene m_sTargetScene;
 
+    [Space(8)]
     public UnityEngine.Events.UnityEvent eventOnStart = new UnityEngine.Events.UnityEvent();
 
     // Called once before the first frame
-    private void Start ()
+    private void Start()
     {
-        if (sceneToLoad == -2)
-            sceneToLoad = SceneManager.GetActiveScene().buildIndex;
+        if (m_sbSceneToLoad == -2)
+            m_sbSceneToLoad = (sbyte)SceneManager.GetActiveScene().buildIndex;
 
-        if (activateOnStart)
+        if (m_bActivateOnStart)
             StartLoad();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        if (fadeOut == true && added == true)
+	private void Update()
+    {
+        if (m_bFadeOut && m_bAdded)
         {
-            var tarCG = Camera.main.GetComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>().profile.colorGrading.settings;
-            tarCG.basic.postExposure = Mathf.Lerp(tarCG.basic.postExposure, -10f, Time.deltaTime /fadeSpeed);
+            var tarCG = Camera.main.GetComponent<
+                UnityEngine.PostProcessing.PostProcessingBehaviour>().
+                profile.colorGrading.settings;
+
+            tarCG.basic.postExposure = Mathf.Lerp(
+                tarCG.basic.postExposure, -10f, Time.deltaTime /m_fFadeSpeed);
             
             if (tarCG.basic.postExposure <= -8f)
             {
                 tarCG.basic.postExposure = -10f;
-                Camera.main.GetComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>().profile.colorGrading.settings = tarCG;
+                Camera.main.GetComponent<
+                    UnityEngine.PostProcessing.PostProcessingBehaviour>().
+                    profile.colorGrading.settings = tarCG;
+
                 MidLoad();
-                fadeOut = false;
+                m_bFadeOut = false;
             }
             else
                 Camera.main.GetComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>().profile.colorGrading.settings = tarCG;
@@ -50,40 +72,39 @@ public class SceneChanger : MonoBehaviour
     public void StartLoad()
     {
         eventOnStart.Invoke();
-        if (added == false)
+        if (!m_bAdded)
         {
-            added = true;
-            if (fadeOut == false)
+            m_bAdded = true;
+            if (!m_bFadeOut)
                 MidLoad();
         }
-        
     }
 
-    void MidLoad ()
+    private void MidLoad()
     {
-        if (sceneToLoad == -1)
+        if (m_sbSceneToLoad == -1)
             Application.Quit();
         else
         {
-            if (async)
+            if (m_bAsync)
             {
-                if (additive == true)
+                if (m_bAdditive)
                     StartCoroutine(LoadNewSceneAdditive());
                 else
                     StartCoroutine(LoadNewScene());
             }
             else
-                SceneManager.LoadScene(sceneToLoad);
+                SceneManager.LoadScene(m_sbSceneToLoad);
         }
     }
 
     /// <summary>
     /// Finishes the loading sequence
     /// </summary>
-    private void FinishLoad ()
+    private void FinishLoad()
     {
-        tarScene = SceneManager.GetSceneByBuildIndex(sceneToLoad);
-        SceneManager.SetActiveScene(tarScene);
+        m_sTargetScene = SceneManager.GetSceneByBuildIndex(m_sbSceneToLoad);
+        SceneManager.SetActiveScene(m_sTargetScene);
         if (GetComponent<MoveTo>())
             GetComponent<MoveTo>().moveOnStart = true;
     }
@@ -95,7 +116,7 @@ public class SceneChanger : MonoBehaviour
     IEnumerator LoadNewScene()
     {
         AsyncOperation async = SceneManager.LoadSceneAsync(
-            sceneToLoad, LoadSceneMode.Single);
+            m_sbSceneToLoad, LoadSceneMode.Single);
 
         while (!async.isDone)
         {
@@ -110,7 +131,7 @@ public class SceneChanger : MonoBehaviour
     IEnumerator LoadNewSceneAdditive()
     {
         AsyncOperation async = SceneManager.LoadSceneAsync(
-            sceneToLoad, LoadSceneMode.Additive);
+            m_sbSceneToLoad, LoadSceneMode.Additive);
 
         while (!async.isDone)
         {
