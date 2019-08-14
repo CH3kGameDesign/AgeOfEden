@@ -42,7 +42,7 @@ public class Movement : MonoBehaviour
     [Tooltip("The y heigh of the ray origin")]
     [SerializeField]
     private float m_fRayOrigin = -0.5f;
-    [Tooltip("How long down the raw stretches" +
+    [Tooltip("How long down the ray stretches" +
         "\nWARNING: If ray length does not reach below the players hitbox" +
         "the player will have difficulty moving")]
     [SerializeField]

@@ -15,7 +15,7 @@ public class OptionManager : MonoBehaviour
     public TextMeshProUGUI fullscreenText;
 
 	// Called once before the first frame
-	private void Start ()
+	private void Start()
     {
         Invoke("LateStart", 0.01f);
         if (!Screen.fullScreen)
@@ -33,7 +33,7 @@ public class OptionManager : MonoBehaviour
     /// <summary>
     /// A delayed start function
     /// </summary>
-    private void LateStart ()
+    private void LateStart()
     {
         float camSensitivity = CameraMovement.cameraObject.
             GetComponent<SmoothCameraMovement>().sensitivityX;
@@ -46,7 +46,7 @@ public class OptionManager : MonoBehaviour
     /// Adds a value to camera sensitivity
     /// </summary>
     /// <param name="pAddedValue">The value added to the current value</param>
-    public void CamSensitivityValueChange (int pAddedValue)
+    public void CamSensitivityValueChange(int pAddedValue)
     {
         CameraMovement.cameraObject.GetComponent
             <SmoothCameraMovement>().sensitivityX += pAddedValue;
@@ -62,7 +62,7 @@ public class OptionManager : MonoBehaviour
     /// Changes the current window state
     /// </summary>
     /// <param name="pWindowStyle"></param>
-    public void ScreenChange (int pWindowStyle)
+    public void ScreenChange(int pWindowStyle)
     {
         if (pWindowStyle == 0)
         {
