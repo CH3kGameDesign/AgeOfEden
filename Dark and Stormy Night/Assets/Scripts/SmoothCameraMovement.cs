@@ -34,6 +34,7 @@ public class SmoothCameraMovement : MonoBehaviour
     public float frameCounter = 20;
 
     public bool reset = false;
+    public bool noShake = false;
 
     public static Quaternion originalRotation;
 
@@ -42,10 +43,8 @@ public class SmoothCameraMovement : MonoBehaviour
     public static float turnAroundValue = 0;
 
     // Called once before the first frame
-    private void Start ()
+    private void Awake ()
     {
-        CameraMovement.camShakeDirection.y = 0;
-        CameraMovement.camShakeDirection.x = 0;
         sittingMaxRotation = publicSittingMaxRotation;
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb)
@@ -83,8 +82,11 @@ public class SmoothCameraMovement : MonoBehaviour
                 rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
                 rotationX += Input.GetAxis("Mouse X") * sensitivityX;
 
-                rotationY += CameraMovement.camShakeDirection.y;
-                rotationX += CameraMovement.camShakeDirection.x;
+                if (noShake == false)
+                {
+                    rotationY += CameraMovement.camShakeDirection.y;
+                    rotationX += CameraMovement.camShakeDirection.x;
+                }
 
                 rotationY = ClampAngle(rotationY, minimumY, maximumY);
 
@@ -209,5 +211,6 @@ public class SmoothCameraMovement : MonoBehaviour
         rotationY = 0;
         rotArrayX.Clear();
         rotArrayY.Clear();
+        CameraMovement.camShakeDirection = Vector2.zero;
     }
 }
