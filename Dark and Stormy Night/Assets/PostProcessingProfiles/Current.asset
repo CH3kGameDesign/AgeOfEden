@@ -120,23 +120,23 @@ MonoBehaviour:
         neutralWhiteLevel: 20
         neutralWhiteClip: 10
       basic:
-        postExposure: -0.15718481
-        temperature: -21.999998
-        tint: 7.9999995
-        hueShift: -8.999999
-        saturation: 0.96000004
-        contrast: 0.75400007
+        postExposure: -0.6400011
+        temperature: -16.000015
+        tint: 1.8334399e-28
+        hueShift: -2.062621e-28
+        saturation: 0.9999997
+        contrast: 1.4100238
       channelMixer:
-        red: {x: 0.87000006, y: 0.41999996, z: -0.12999998}
+        red: {x: 0.9999995, y: 9.625543e-30, z: -2.979332e-30}
         green: {x: 0, y: 1, z: 0}
         blue: {x: 0, y: 0, z: 1}
         currentEditingChannel: 0
       colorWheels:
         mode: 1
         log:
-          slope: {r: 0.9677452, g: 0.99999994, b: 0.9900898, a: -0.026578072}
-          power: {r: 0.9960831, g: 0.9315767, b: 0.99999994, a: 0}
-          offset: {r: 1, g: 0.8954815, b: 0.87591237, a: 0}
+          slope: {r: 0.30021524, g: 0.97735673, b: 1, a: -0.026578072}
+          power: {r: 1, g: 0.54587454, b: 0.26687467, a: 0}
+          offset: {r: 1, g: 0.67700374, b: 0.53891456, a: 0}
         linear:
           lift: {r: 0, g: 0, b: 0, a: 0}
           gamma: {r: 0, g: 0, b: 0, a: 0}
