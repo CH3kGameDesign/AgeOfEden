@@ -43,7 +43,7 @@ public class SmoothCameraMovement : MonoBehaviour
     public static float turnAroundValue = 0;
 
     // Called once before the first frame
-    private void Awake ()
+    private void Awake()
     {
         sittingMaxRotation = publicSittingMaxRotation;
         Rigidbody rb = GetComponent<Rigidbody>();
@@ -57,7 +57,7 @@ public class SmoothCameraMovement : MonoBehaviour
     }
 
     // Called once per frame
-    private void Update ()
+    private void Update()
     {
         if (!GravityTunnel.inGravTunnel)
             originalRotation = Quaternion.Euler(
@@ -70,7 +70,7 @@ public class SmoothCameraMovement : MonoBehaviour
     /// <summary>
     /// Updates the camera movement
     /// </summary>
-    public void CameraUpdate ()
+    private void CameraUpdate()
     {
         if (CameraMovement.canMove)
         {
