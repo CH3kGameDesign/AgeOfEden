@@ -146,14 +146,14 @@ public class CameraMovement : MonoBehaviour
 			camRunShakeAmount = verSpeed;
 		
 		if (isSprinting)
-            sprintMult = (sprintMult + 0.3f) / 2;
+            sprintMult = (sprintMult + 0.2f) / 2;
 		
 		float cameraRunBound = camRunShakeMax * sprintMult;
 
-		if (camRunShake > cameraRunBound && camRunShakeSpeed > 0)
-			camRunShakeSpeed = -camRunShakeSpeed;
-		if (camRunShake < -cameraRunBound && camRunShakeSpeed < 0)
-			camRunShakeSpeed = -camRunShakeSpeed;
+		if ((camRunShake > cameraRunBound && camRunShakeSpeed > 0) ||
+            (camRunShake < -cameraRunBound && camRunShakeSpeed < 0))
+            camRunShakeSpeed = -camRunShakeSpeed;
+
 		if (camRunShakeAmount != 0)
 			camRunShake += camRunShakeAmount * camRunShakeSpeed;
 		else
