@@ -43,7 +43,7 @@ public class SmoothCameraMovement : MonoBehaviour
     public static float turnAroundValue = 0;
 
     // Called once before the first frame
-    private void Awake ()
+    private void Awake()
     {
         sittingMaxRotation = publicSittingMaxRotation;
         Rigidbody rb = GetComponent<Rigidbody>();
@@ -57,7 +57,7 @@ public class SmoothCameraMovement : MonoBehaviour
     }
 
     // Called once per frame
-    private void Update ()
+    private void Update()
     {
         if (!GravityTunnel.inGravTunnel)
             originalRotation = Quaternion.Euler(
@@ -70,7 +70,7 @@ public class SmoothCameraMovement : MonoBehaviour
     /// <summary>
     /// Updates the camera movement
     /// </summary>
-    public void CameraUpdate ()
+    private void CameraUpdate()
     {
         if (CameraMovement.canMove)
         {
@@ -82,7 +82,7 @@ public class SmoothCameraMovement : MonoBehaviour
                 rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
                 rotationX += Input.GetAxis("Mouse X") * sensitivityX;
 
-                if (noShake == false)
+                if (!noShake)
                 {
                     rotationY += CameraMovement.camShakeDirection.y;
                     rotationX += CameraMovement.camShakeDirection.x;
@@ -92,9 +92,7 @@ public class SmoothCameraMovement : MonoBehaviour
 
                 if (!Movement.canMove)
                     rotationX = ClampAngle(rotationX, sittingMaxRotation.x, sittingMaxRotation.y);
-
                 
-
                 rotArrayY.Add(rotationY);
                 rotArrayX.Add(rotationX);
 
@@ -175,8 +173,8 @@ public class SmoothCameraMovement : MonoBehaviour
     /// <param name="pAngle">The value to be clamped</param>
     /// <param name="pMin">The minimum value allowed</param>
     /// <param name="pMax">The maximum value allowed</param>
-    /// <returns></returns>
-    public static float ClampAngle (float pAngle, float pMin, float pMax)
+    /// <returns>The clamped angle</returns>
+    public static float ClampAngle(float pAngle, float pMin, float pMax)
     {
         pAngle = pAngle % 360;
 
@@ -195,8 +193,8 @@ public class SmoothCameraMovement : MonoBehaviour
     /// <summary>
     /// Snaps the gravity to a set direction
     /// </summary>
-    /// <param name="pGravSnapDirection"></param>
-    public static void gravSnap (float pGravSnapDirection)
+    /// <param name="pGravSnapDirection">The desired gravity direction</param>
+    public static void GravSnap(float pGravSnapDirection)
     {
         originalRotation = Quaternion.Euler(0, 0, pGravSnapDirection);
         gravDirection = pGravSnapDirection;
@@ -205,7 +203,7 @@ public class SmoothCameraMovement : MonoBehaviour
     /// <summary>
     /// Resets the rotation variables
     /// </summary>
-    public void resetRotation ()
+    public void resetRotation()
     {
         rotationX = 0;
         rotationY = 0;

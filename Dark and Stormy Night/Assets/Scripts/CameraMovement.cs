@@ -45,7 +45,7 @@ public class CameraMovement : MonoBehaviour
     public static Vector2 camShakeDirection;
 
 	// Use this for initialization
-	private void Start ()
+	private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -57,7 +57,7 @@ public class CameraMovement : MonoBehaviour
     }
 	
 	// Update is called once per frame
-	private void Update ()
+	private void Update()
     {
         if (snapToPlayer)
             transform.position = cameraHook.position;
@@ -68,7 +68,7 @@ public class CameraMovement : MonoBehaviour
             IdleShake();
         }
         
-        if (aimPoint != null)
+        if (aimPoint)
         {
             RaycastHit hit2;
             if (Physics.Raycast(transform.position, transform.forward, out hit2, 100))
@@ -128,7 +128,7 @@ public class CameraMovement : MonoBehaviour
     /// <summary>
     /// Applies a shake to the camera when you run
     /// </summary>
-	private void RunShake ()
+	private void RunShake()
 	{
 		float verSpeed = PlayerModel.player.GetComponent<Movement> ().m_v2DesiredVelocity.x;
 		float horSpeed = PlayerModel.player.GetComponent<Movement> ().m_v2DesiredVelocity.y;
@@ -146,14 +146,14 @@ public class CameraMovement : MonoBehaviour
 			camRunShakeAmount = verSpeed;
 		
 		if (isSprinting)
-            sprintMult = (sprintMult + 0.3f) / 2;
+            sprintMult = (sprintMult + 0.2f) / 2;
 		
 		float cameraRunBound = camRunShakeMax * sprintMult;
 
-		if (camRunShake > cameraRunBound && camRunShakeSpeed > 0)
-			camRunShakeSpeed = -camRunShakeSpeed;
-		if (camRunShake < -cameraRunBound && camRunShakeSpeed < 0)
-			camRunShakeSpeed = -camRunShakeSpeed;
+		if ((camRunShake > cameraRunBound && camRunShakeSpeed > 0) ||
+            (camRunShake < -cameraRunBound && camRunShakeSpeed < 0))
+            camRunShakeSpeed = -camRunShakeSpeed;
+
 		if (camRunShakeAmount != 0)
 			camRunShake += camRunShakeAmount * camRunShakeSpeed;
 		else
@@ -163,7 +163,7 @@ public class CameraMovement : MonoBehaviour
     /// <summary>
     /// Adds an idle shake to the camera
     /// </summary>
-    private void IdleShake ()
+    private void IdleShake()
     {
         if (camIdleShake > camIdleShakeMax && camIdleShakeSpeed > 0)
             camIdleShakeSpeed = -camIdleShakeSpeed;
@@ -184,8 +184,8 @@ public class CameraMovement : MonoBehaviour
     /// <summary>
     /// Changes the shake status
     /// </summary>
-    /// <param name="pShaking"></param>
-    public void ChangeShakeStatus (bool pShaking)
+    /// <param name="pShaking">The desired shaking state</param>
+    public void ChangeShakeStatus(bool pShaking)
     {
         shake = pShaking;
         camShakeDirection = Vector2.zero;

@@ -11,6 +11,11 @@ public class Movement : MonoBehaviour
     [HideInInspector]
     public bool m_bGrounded;
 
+    [Space(5)]
+    [Tooltip("Button will automatically close the game")]
+    [SerializeField]
+    private KeyCode m_kcQuitButton = KeyCode.End;
+
     [Header("Booleans")]
     [Tooltip("Enable this if not at typewriter")]
     [SerializeField]
@@ -24,11 +29,11 @@ public class Movement : MonoBehaviour
     
     [Header("Movement variables")]
     [SerializeField]
-    private float m_fForwardSpeed = 3;
+    private float m_fForwardSpeed = 1.3f;
     [SerializeField]
-    private float m_fStrafeSpeed = 2.5f;
+    private float m_fStrafeSpeed = 1.2f;
     [SerializeField]
-    private float m_fBackwardSpeed = 2;
+    private float m_fBackwardSpeed = 1.15f;
     [SerializeField]
     private float m_fSpeedScalar = 500;
 
@@ -130,6 +135,18 @@ public class Movement : MonoBehaviour
             m_aModelAnimator.SetBool("Moving", false);
             m_aModelAnimator.SetBool("Standing", false);
             m_fStepTimer = 0;
+        }
+
+        // Snuck in a quick quit button
+        if (Input.GetKeyDown(m_kcQuitButton))
+        {
+#if UNITY_STANDALONE
+            Application.Quit();
+#endif
+
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#endif
         }
     }
 
