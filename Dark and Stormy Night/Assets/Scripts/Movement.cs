@@ -188,6 +188,7 @@ public class Movement : MonoBehaviour
         }
         else
         {
+            m_aModelAnimator.SetBool("Moving", true);
             // Test for sprint
             if (Input.GetKey(KeyCode.LeftShift))
             {
@@ -198,7 +199,6 @@ public class Movement : MonoBehaviour
             else
             {
                 m_aModelAnimator.SetBool("Sprinting", false);
-                m_aModelAnimator.SetBool("Moving", true);
                 m_bIsSprinting = false;
             }
 

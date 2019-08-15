@@ -13,11 +13,11 @@ public class ChangeParent : MonoBehaviour
 	// Use this for initialization
 	private void Start()
     {
-        //if (!child && playerChild)
-        //    child = Movement.m_goPlayerObject.transform;
+        if (!child && playerChild)
+            child = Movement.m_goPlayerObject.transform;
 
         // This does the same as the above, it just looks cooler
-        child = child ?? playerChild ? Movement.m_goPlayerObject.transform : child;
+        //child = child ?? playerChild ? Movement.m_goPlayerObject.transform : child;
 
         if (activateOnStart)
             Activate();

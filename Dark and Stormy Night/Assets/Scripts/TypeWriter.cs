@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
 using System;
+using UnityEngine.SceneManagement;
 
 public class TypeWriter : MonoBehaviour
 {
@@ -89,7 +90,7 @@ public class TypeWriter : MonoBehaviour
     // Update is called once per frame
     private void Update ()
     {
-        if (startTyping)
+        if (startTyping && SceneManager.sceneCount == 1)
         {
             updateLetter = null;
 

@@ -6,6 +6,7 @@ public class KeyEnable : MonoBehaviour
 {
     public string keyPress;
     public List<GameObject> enableObjects = new List<GameObject>();
+    public List<GameObject> disableObjects = new List<GameObject>();
     public bool toggle = false;
 
 
@@ -26,11 +27,16 @@ public class KeyEnable : MonoBehaviour
             for (int i = 0; i < enableObjects.Count; i++)
             {
                 enableObjects[i].SetActive(!enableObjects[i].activeSelf);
+                disableObjects[i].SetActive(!disableObjects[i].activeSelf);
             }
         }
         else
+        {
             for (int i = 0; i < enableObjects.Count; i++)
-            enableObjects[i].SetActive(true);
+                enableObjects[i].SetActive(true);
+            for (int i = 0; i < disableObjects.Count; i++)
+                disableObjects[i].SetActive(false);
+        }
     }
 
     void CheckPress()
