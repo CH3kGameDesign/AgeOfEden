@@ -8,6 +8,7 @@ TagManager:
   - Movable
   - WoodArea
   - CarpetArea
+  - Bathroom
   layers:
   - Default
   - TransparentFX
