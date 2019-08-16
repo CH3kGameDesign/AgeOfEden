@@ -20,6 +20,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField]
     private bool m_bSnapToPlayerOnStart = true;
 
+    public Transform underWaterQuad;
     [Header("Camera Shake")]
     [SerializeField]
     private int m_fCamIdleTickAmount = 10;
