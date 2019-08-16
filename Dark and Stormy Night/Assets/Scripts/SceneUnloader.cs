@@ -15,7 +15,7 @@ public class SceneUnloader : MonoBehaviour
         {
             if (justAudio)
             {
-                GameObject GO = CameraMovement.cameraObject.transform.parent.GetChild(1).gameObject;
+                GameObject GO = CameraMovement.s_CameraObject.transform.parent.GetChild(1).gameObject;
                 GO.transform.parent = null;
                 playerManagerObjects = GO;
             }

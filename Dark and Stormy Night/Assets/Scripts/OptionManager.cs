@@ -35,7 +35,7 @@ public class OptionManager : MonoBehaviour
     /// </summary>
     private void LateStart()
     {
-        float camSensitivity = CameraMovement.cameraObject.
+        float camSensitivity = CameraMovement.s_CameraObject.
             GetComponent<SmoothCameraMovement>().sensitivityX;
 
         camSensitivitySlider.value = camSensitivity;
@@ -48,10 +48,10 @@ public class OptionManager : MonoBehaviour
     /// <param name="pAddedValue">The value added to the current value</param>
     public void CamSensitivityValueChange(int pAddedValue)
     {
-        CameraMovement.cameraObject.GetComponent
+        CameraMovement.s_CameraObject.GetComponent
             <SmoothCameraMovement>().sensitivityX += pAddedValue;
 
-        CameraMovement.cameraObject.GetComponent
+        CameraMovement.s_CameraObject.GetComponent
             <SmoothCameraMovement>().sensitivityY += pAddedValue;
 
         camSensitivitySlider.value += pAddedValue;

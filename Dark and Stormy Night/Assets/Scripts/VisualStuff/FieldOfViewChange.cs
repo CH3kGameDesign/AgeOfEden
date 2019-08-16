@@ -34,7 +34,7 @@ public class FieldOfViewChange : MonoBehaviour {
 
     void ZoomOut ()
     {
-        CameraMovement.canZoom = false;
+        CameraMovement.s_CanZoom = false;
         mainCam.fieldOfView = Mathf.Lerp(mainCam.fieldOfView, tarFOV, lerpSpeedActual * Time.deltaTime);
         if (Mathf.Abs(mainCam.fieldOfView - tarFOV) < 0.5f)
         {
@@ -58,7 +58,7 @@ public class FieldOfViewChange : MonoBehaviour {
         {
             mainCam.fieldOfView = startFOV;
             FOVChange = FOVVar.none;
-            CameraMovement.canZoom = true;
+            CameraMovement.s_CanZoom = true;
         }
     }
 }

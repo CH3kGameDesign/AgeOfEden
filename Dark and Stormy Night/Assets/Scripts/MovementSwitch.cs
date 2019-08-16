@@ -29,7 +29,7 @@ public class MovementSwitch : MonoBehaviour
     public void Switch ()
     {
         if (rotateOffset != 0)
-            CameraMovement.cameraObject.GetComponent
+            CameraMovement.s_CameraObject.GetComponent
                 <SmoothCameraMovement>().rotateOffset = rotateOffset;
 
         if (sittingMaxRotation != Vector2.zero)
@@ -40,8 +40,8 @@ public class MovementSwitch : MonoBehaviour
 
         if (choice != choices.movement)
         {
-            CameraMovement.canMove = enable;
-            CameraMovement.cameraObject.GetComponent<SmoothCameraMovement>().resetRotation();
+            CameraMovement.s_CanMove = enable;
+            CameraMovement.s_CameraObject.GetComponent<SmoothCameraMovement>().resetRotation();
         }
 
         if (rigidBodyState == choices2.disable)

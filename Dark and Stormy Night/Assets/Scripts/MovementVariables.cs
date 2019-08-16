@@ -13,14 +13,14 @@ public class MovementVariables : MonoBehaviour
         switch (pChoice)
         {
             case 0:
-                CameraMovement.canMove = true;
+                CameraMovement.s_CanMove = true;
                 break;
             case 1:
                 Movement.canMove = true;
                 break;
             case 2:
                 Movement.canMove = true;
-                CameraMovement.canMove = true;
+                CameraMovement.s_CanMove = true;
                 break;
             default:
                 break;

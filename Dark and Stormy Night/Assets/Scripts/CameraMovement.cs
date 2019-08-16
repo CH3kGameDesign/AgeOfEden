@@ -5,15 +5,30 @@ using UnityEngine.PostProcessing;
 
 public class CameraMovement : MonoBehaviour
 {
-    [Header("CameraSpeed")]
-	public float camRunShakeSpeed;
-	public float zoomSpeed = 4;
-    public float camIdleShakeSpeed = 2;
+    // Static variables
+    public static bool s_bSnapToPlayer;
+    public static bool s_bGoToPlayer;
+    public static bool s_CanMove = true;
+    public static bool s_CanZoom = true;
+    public static bool s_Shake = true;
+    public static Vector2 s_CamShakeDirection;
+    public static GameObject s_CameraObject;
 
-    [Header("CameraLimits")]
-	public float camRunShakeMax;
-    public float camIdleShakeMax;
-    public int camIdleTickAmount;
+    [SerializeField]
+    [Tooltip("Allows the player to look around immediately")]
+    private bool m_bCanMoveOnStart = true;
+    [SerializeField]
+    private bool m_bSnapToPlayerOnStart = true;
+
+    [Header("Camera Speed")]
+	public float camRunShakeSpeed = 0.04f;
+	public float zoomSpeed = 4;
+    public float camIdleShakeSpeed = 0.04f;
+
+    [Header("Camera Limits")]
+	public float camRunShakeMax = 1;
+    public float camIdleShakeMax = 0.2f;
+    public int camIdleTickAmount = 10;
     public float fovNormal = 60;
 	public float fovMin = 25;
 
@@ -28,7 +43,7 @@ public class CameraMovement : MonoBehaviour
     private Transform m_tReticle;
 
     [Header("GameObjects")]
-    public List<GameObject> enableObjects;
+    public List<GameObject> m_LgoEnableObjects;
 
 	private float camRunShakeAmount;
 	private float camRunShake;
@@ -37,80 +52,67 @@ public class CameraMovement : MonoBehaviour
     private int camIdleTicker;
     private Vector2 camRandomShakeDirection;
 
-    public bool canMoveOnStart = true;
-    public bool snapToPlayerOnStart = true;
-    public static bool snapToPlayer;
-    public static bool goToPlayer;
-    public static bool canMove = true;
-    public static bool canZoom = true;
-    public static bool shake = true;
-
-    public static GameObject cameraObject;
-
-    public static Vector2 camShakeDirection;
-
 	// Use this for initialization
 	private void Start()
     {
+        // Seizes control of the cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        snapToPlayer = snapToPlayerOnStart;
-        goToPlayer = snapToPlayerOnStart;
-        cameraObject = this.gameObject;
-		canMove = canMoveOnStart;
+
+        s_CameraObject = gameObject;
+        s_bSnapToPlayer = m_bSnapToPlayerOnStart;
+        s_bGoToPlayer = m_bSnapToPlayerOnStart;
+		s_CanMove = m_bCanMoveOnStart;
+
+        // Starts the camera shake in a random direction
         camRandomShakeDirection = Random.insideUnitCircle;
     }
 	
 	// Update is called once per frame
 	private void Update()
     {
-        if (snapToPlayer)
+        // Keeps the camera snapped to the characters face
+        if (s_bSnapToPlayer)
             transform.position = m_tCameraHook.position;
 
-        if (shake)
+        if (s_Shake)
         {
             RunShake();
             IdleShake();
         }
-        
+
         if (m_tAimPoint)
         {
-            RaycastHit hit2;
-            if (Physics.Raycast(transform.position, transform.forward, out hit2, 100))
-                m_tAimPoint.position = hit2.point;
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
+                m_tAimPoint.position = hit.point;
             else
                 m_tAimPoint.position = transform.position + (transform.forward * 100);
         }
 
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
-            m_tAimPoint.position = hit.point;
-        else
-            m_tAimPoint.position = transform.position + (transform.forward * 100);
-
         transform.GetChild(0).localPosition = Vector3.Lerp(
             transform.GetChild(0).localPosition, Vector3.zero, 0.3f);
 
-        if (goToPlayer)
+        if (s_bGoToPlayer)
         {
             transform.position = Vector3.Lerp(
                 transform.position, m_tCameraHook.position, 1.5f * Time.deltaTime);
 
             if (Vector3.Distance(transform.position, m_tCameraHook.position) < 0.3f)
             {
-                snapToPlayer = true;
+                s_bSnapToPlayer = true;
                 //Movement.canMove = true;
-                goToPlayer = false;
-                for (int i = 0; i < enableObjects.Count; i++)
+                s_bGoToPlayer = false;
+                for (int i = 0; i < m_LgoEnableObjects.Count; i++)
                 {
-                    enableObjects[i].SetActive(true);
+                    m_LgoEnableObjects[i].SetActive(true);
                 }
             }
         }
 
-        if (canZoom)
+        if (s_CanZoom)
         {
-            if (canMove)
+            if (s_CanMove)
             {
                 if (Input.GetMouseButton(1))
                     transform.GetChild(0).GetComponent<Camera>().fieldOfView =
@@ -176,7 +178,7 @@ public class CameraMovement : MonoBehaviour
             camIdleShakeSpeed = -camIdleShakeSpeed;
         camIdleShake +=  camIdleShakeSpeed;
 
-        camShakeDirection = camRandomShakeDirection * camIdleShake;
+        s_CamShakeDirection = camRandomShakeDirection * camIdleShake;
 
         if (camIdleTickAmount <= camIdleTicker)
         {
@@ -192,7 +194,7 @@ public class CameraMovement : MonoBehaviour
     /// <param name="pShaking">The desired shaking state</param>
     public void ChangeShakeStatus(bool pShaking)
     {
-        shake = pShaking;
-        camShakeDirection = Vector2.zero;
+        s_Shake = pShaking;
+        s_CamShakeDirection = Vector2.zero;
     }
 }

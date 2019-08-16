@@ -18,6 +18,6 @@ public class MirrorCamera : MonoBehaviour {
 		Vector3 newCameraDirection = (portalRotationalDifference * playerCamera.forward);
         transform.rotation = Quaternion.LookRotation(newCameraDirection, Vector3.up);
         
-		GetComponent<Camera> ().fieldOfView = CameraMovement.cameraObject.transform.GetChild (0).GetComponent<Camera> ().fieldOfView;
+		GetComponent<Camera> ().fieldOfView = CameraMovement.s_CameraObject.transform.GetChild (0).GetComponent<Camera> ().fieldOfView;
 	}
 }

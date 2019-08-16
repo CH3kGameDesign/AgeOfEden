@@ -57,8 +57,8 @@ public class InteractableObject : MonoBehaviour
                 Movement.m_goPlayerObject.transform.position, transform.parent.GetChild(1).position,
                 Time.deltaTime);
 
-            CameraMovement.canMove = false;
-            CameraMovement.cameraObject.transform.LookAt(grabObject.transform);
+            CameraMovement.s_CanMove = false;
+            CameraMovement.s_CameraObject.transform.LookAt(grabObject.transform);
         }
     }
 }

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnableWithEnding : MonoBehaviour {
-
+public class EnableWithEnding : MonoBehaviour
+{
     public List<GameObject> enableObjects = new List<GameObject>();
     public List<GameObject> disableObjects = new List<GameObject>();
     [Space (10)]
@@ -12,8 +12,9 @@ public class EnableWithEnding : MonoBehaviour {
     public List<GameObject> enableIfNotObjects = new List<GameObject>();
 
 	// Use this for initialization
-	void Start () {
-		if (PermanentData.saveInfo.endingsAchieved[endingCompleted])
+	private void Start()
+    {
+        if (PermanentData.saveInfo.endingsAchieved[endingCompleted])
         {
             for (int i = 0; i < enableObjects.Count; i++)
                 enableObjects[i].SetActive(true);
@@ -21,12 +22,9 @@ public class EnableWithEnding : MonoBehaviour {
                 disableObjects[i].SetActive(false);
         }
         else
+        {
             for (int i = 0; i < enableIfNotObjects.Count; i++)
                 enableIfNotObjects[i].SetActive(true);
+        }
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

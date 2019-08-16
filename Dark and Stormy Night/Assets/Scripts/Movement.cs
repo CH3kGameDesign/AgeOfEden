@@ -27,7 +27,7 @@ public class Movement : MonoBehaviour
     [SerializeField]
     private bool m_bAllowJumping = false;
     
-    [Header("Movement variables")]
+    [Header("Movement Variables")]
     [SerializeField]
     private float m_fForwardSpeed = 1.3f;
     [SerializeField]

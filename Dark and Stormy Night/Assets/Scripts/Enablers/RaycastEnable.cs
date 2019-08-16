@@ -110,14 +110,14 @@ public class RaycastEnable : MonoBehaviour
         if (CameraLookAt != null)
         {
             Debug.Log("Raycast Enabled");
-            CameraMovement.canMove = false;
+            CameraMovement.s_CanMove = false;
             Vector3 relPos = CameraLookAt.position
-                - CameraMovement.cameraObject.transform.position;
+                - CameraMovement.s_CameraObject.transform.position;
 
             Quaternion tarRot = Quaternion.LookRotation(relPos, -Vector3.up);
 
-            CameraMovement.cameraObject.transform.rotation = Quaternion.Slerp(
-                CameraMovement.cameraObject.transform.rotation, tarRot, Time.deltaTime * 0.5f);
+            CameraMovement.s_CameraObject.transform.rotation = Quaternion.Slerp(
+                CameraMovement.s_CameraObject.transform.rotation, tarRot, Time.deltaTime * 0.5f);
 
             Movement.canMove = false;
         }

@@ -24,7 +24,7 @@ public class BathroomManager : MonoBehaviour {
                 float dist = 100;
                 for (int i = 0; i < bathroomDoorPivots.Count; i++)
                 {
-                    float dist2 = Vector3.Distance(bathroomDoorPivots[i].position, CameraMovement.cameraObject.transform.position);
+                    float dist2 = Vector3.Distance(bathroomDoorPivots[i].position, CameraMovement.s_CameraObject.transform.position);
                     if (dist2 < dist)
                     {
                         dist = dist2;

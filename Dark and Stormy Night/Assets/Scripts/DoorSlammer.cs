@@ -23,7 +23,7 @@ public class DoorSlammer : MonoBehaviour {
         counter++;
         if (counter > 5)
         {
-            float dist2 = Vector3.Distance(transform.position, CameraMovement.cameraObject.transform.position);
+            float dist2 = Vector3.Distance(transform.position, CameraMovement.s_CameraObject.transform.position);
             if (dist2 > 4)
             {
                 //transform.GetChild(0).GetComponent<Rigidbody>().isKinematic = true;

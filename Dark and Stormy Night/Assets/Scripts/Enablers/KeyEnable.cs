@@ -9,18 +9,17 @@ public class KeyEnable : MonoBehaviour
     public List<GameObject> disableObjects = new List<GameObject>();
     public bool toggle = false;
 
-
-
     // Update is called once per frame
     private void Update()
     {
         if (Input.anyKeyDown)
-        {
             CheckPress();
-        }
     }
 
-    void DoThing()
+    /// <summary>
+    /// Enables or disables a list of objects when called based on bool state
+    /// </summary>
+    private void DoThing()
     {
         if (toggle)
         {
@@ -39,7 +38,10 @@ public class KeyEnable : MonoBehaviour
         }
     }
 
-    void CheckPress()
+    /// <summary>
+    /// Oh god oh fuck
+    /// </summary>
+    private void CheckPress()
     {
         if (keyPress == "")
             DoThing();
