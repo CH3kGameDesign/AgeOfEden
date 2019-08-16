@@ -18,9 +18,14 @@ public class CameraMovement : MonoBehaviour
 	public float fovMin = 25;
 
     [Header("Transforms")]
-    public Transform cameraHook;
-    public Transform aimPoint;
-    public Transform reticle;
+    [SerializeField]
+    [Tooltip("The an object on the players face the camera is attached to")]
+    private Transform m_tCameraHook;
+    [SerializeField]
+    [Tooltip("An object placed on the side of the object a player is looking at")]
+    private Transform m_tAimPoint;
+    [SerializeField]
+    private Transform m_tReticle;
 
     [Header("GameObjects")]
     public List<GameObject> enableObjects;
@@ -60,7 +65,7 @@ public class CameraMovement : MonoBehaviour
 	private void Update()
     {
         if (snapToPlayer)
-            transform.position = cameraHook.position;
+            transform.position = m_tCameraHook.position;
 
         if (shake)
         {
@@ -68,20 +73,20 @@ public class CameraMovement : MonoBehaviour
             IdleShake();
         }
         
-        if (aimPoint)
+        if (m_tAimPoint)
         {
             RaycastHit hit2;
             if (Physics.Raycast(transform.position, transform.forward, out hit2, 100))
-                aimPoint.position = hit2.point;
+                m_tAimPoint.position = hit2.point;
             else
-                aimPoint.position = transform.position + (transform.forward * 100);
+                m_tAimPoint.position = transform.position + (transform.forward * 100);
         }
 
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
-            aimPoint.position = hit.point;
+            m_tAimPoint.position = hit.point;
         else
-            aimPoint.position = transform.position + (transform.forward * 100);
+            m_tAimPoint.position = transform.position + (transform.forward * 100);
 
         transform.GetChild(0).localPosition = Vector3.Lerp(
             transform.GetChild(0).localPosition, Vector3.zero, 0.3f);
@@ -89,9 +94,9 @@ public class CameraMovement : MonoBehaviour
         if (goToPlayer)
         {
             transform.position = Vector3.Lerp(
-                transform.position, cameraHook.position, 1.5f * Time.deltaTime);
+                transform.position, m_tCameraHook.position, 1.5f * Time.deltaTime);
 
-            if (Vector3.Distance(transform.position, cameraHook.position) < 0.3f)
+            if (Vector3.Distance(transform.position, m_tCameraHook.position) < 0.3f)
             {
                 snapToPlayer = true;
                 //Movement.canMove = true;
