@@ -26,8 +26,8 @@ public class RotateTo : MonoBehaviour
 
         if (!Movee && moveCamera)
         {
-            Movee = CameraMovement.cameraObject.transform;
-            CameraMovement.cameraObject.GetComponent
+            Movee = CameraMovement.s_CameraObject.transform;
+            CameraMovement.s_CameraObject.GetComponent
                 <SmoothCameraMovement>().resetRotation();
         }
 

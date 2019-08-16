@@ -27,7 +27,7 @@ public class Movement : MonoBehaviour
     [SerializeField]
     private bool m_bAllowJumping = false;
     
-    [Header("Movement variables")]
+    [Header("Movement Variables")]
     [SerializeField]
     private float m_fForwardSpeed = 1.3f;
     [SerializeField]
@@ -113,12 +113,12 @@ public class Movement : MonoBehaviour
             //    new Vector3(0, -m_fRaylength, 0), Color.red);
 
             if (Physics.Raycast(transform.position + new Vector3(0, m_fRayOrigin, m_fRaySpread),
-                Vector3.down, out groundRay, m_fRaylength) ||
-                Physics.Raycast(transform.position + new Vector3(m_fRaySpread, m_fRayOrigin, 0),
-                Vector3.down, out groundRay, m_fRaylength) ||
-                Physics.Raycast(transform.position + new Vector3(0, m_fRayOrigin, -m_fRaySpread),
-                Vector3.down, out groundRay, m_fRaylength) ||
-                Physics.Raycast(transform.position + new Vector3(-m_fRaySpread, m_fRayOrigin, 0),
+                Vector3.down, out groundRay, m_fRaylength)
+                || Physics.Raycast(transform.position + new Vector3(m_fRaySpread, m_fRayOrigin, 0),
+                Vector3.down, out groundRay, m_fRaylength)
+                || Physics.Raycast(transform.position + new Vector3(0, m_fRayOrigin, -m_fRaySpread),
+                Vector3.down, out groundRay, m_fRaylength)
+                || Physics.Raycast(transform.position + new Vector3(-m_fRaySpread, m_fRayOrigin, 0),
                 Vector3.down, out groundRay, m_fRaylength))
                 m_bGrounded = true;
             else

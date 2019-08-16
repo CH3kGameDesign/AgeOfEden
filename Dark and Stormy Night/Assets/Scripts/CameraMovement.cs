@@ -1,126 +1,141 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.PostProcessing;
 
 public class CameraMovement : MonoBehaviour
 {
-    [Header("CameraSpeed")]
-	public float camRunShakeSpeed;
-	public float zoomSpeed = 4;
-    public float camIdleShakeSpeed = 2;
+    // Static variables
+    public static bool s_bSnapToPlayer;
+    public static bool s_bGoToPlayer;
+    public static bool s_CanMove = true;
+    public static bool s_CanZoom = true;
+    public static bool s_Shake = true;
+    public static Vector2 s_CamShakeDirection;
+    public static GameObject s_CameraObject;
 
-    [Header("CameraLimits")]
-	public float camRunShakeMax;
-    public float camIdleShakeMax;
-    public int camIdleTickAmount;
-    public float fovNormal = 60;
-	public float fovMin = 25;
+    [Header("Booleans")]
+    [SerializeField]
+    [Tooltip("Allows the player to look around immediately")]
+    private bool m_bCanMoveOnStart = true;
+    [SerializeField]
+    private bool m_bSnapToPlayerOnStart = true;
+
+    [Header("Camera Shake")]
+    [SerializeField]
+    private int m_fCamIdleTickAmount = 10;
+    [SerializeField]
+	private float m_fCamRunShakeSpeed = 0.04f;
+    [SerializeField]
+    private float m_fCamIdleShakeSpeed = 0.04f;
+    [SerializeField]
+    private float m_fCamRunShakeMax = 1;
+    [SerializeField]
+    private float m_fCamIdleShakeMax = 0.2f;
+
+    [Header("Camera Zoom")]
+    [SerializeField]
+	private float m_fZoomSpeed = 4;
+    [SerializeField]
+    private float m_fFovNormal = 60;
+    [SerializeField]
+    private float m_fFovMin = 25;
+
+    private int m_iCamIdleTicker;
+    private float m_fCamIdleShake;
+	private float m_fCamRunShakeAmount;
+	private float m_fCamRunShake;
+    private Vector2 m_v2CamRandomShakeDirection;
 
     [Header("Transforms")]
-    public Transform cameraHook;
-    public Transform aimPoint;
-    public Transform reticle;
+    [Tooltip("The an object on the players face the camera is attached to")]
+    public Transform m_tCameraHook;
+    [SerializeField]
+    [Tooltip("An object placed on the side of the object a player is looking at")]
+    private Transform m_tAimPoint;
+    // Unused
+    //[SerializeField]
+    //private Transform m_tReticle;
 
     [Header("GameObjects")]
-    public List<GameObject> enableObjects;
+    [SerializeField]
+    private List<GameObject> m_LgoEnableObjects;
 
-	private float camRunShakeAmount;
-	private float camRunShake;
-    
-    private float camIdleShake;
-    private int camIdleTicker;
-    private Vector2 camRandomShakeDirection;
-
-    public bool canMoveOnStart = true;
-    public bool snapToPlayerOnStart = true;
-    public static bool snapToPlayer;
-    public static bool goToPlayer;
-    public static bool canMove = true;
-    public static bool canZoom = true;
-    public static bool shake = true;
-
-    public static GameObject cameraObject;
-
-    public static Vector2 camShakeDirection;
-
-	// Use this for initialization
+	// Called once before the first frame
 	private void Start()
     {
+        // Seizes control of the cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        snapToPlayer = snapToPlayerOnStart;
-        goToPlayer = snapToPlayerOnStart;
-        cameraObject = this.gameObject;
-		canMove = canMoveOnStart;
-        camRandomShakeDirection = Random.insideUnitCircle;
+
+        s_CameraObject = gameObject;
+        s_bSnapToPlayer = m_bSnapToPlayerOnStart;
+        s_bGoToPlayer = m_bSnapToPlayerOnStart;
+		s_CanMove = m_bCanMoveOnStart;
+
+        // Starts the camera shake in a random direction
+        m_v2CamRandomShakeDirection = Random.insideUnitCircle;
     }
 	
 	// Update is called once per frame
 	private void Update()
     {
-        if (snapToPlayer)
-            transform.position = cameraHook.position;
+        // Keeps the camera snapped to the characters face
+        if (s_bSnapToPlayer && m_tCameraHook)
+            transform.position = m_tCameraHook.position;
 
-        if (shake)
+        if (s_Shake)
         {
             RunShake();
             IdleShake();
         }
-        
-        if (aimPoint)
-        {
-            RaycastHit hit2;
-            if (Physics.Raycast(transform.position, transform.forward, out hit2, 100))
-                aimPoint.position = hit2.point;
-            else
-                aimPoint.position = transform.position + (transform.forward * 100);
-        }
 
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
-            aimPoint.position = hit.point;
-        else
-            aimPoint.position = transform.position + (transform.forward * 100);
+        if (m_tAimPoint)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
+                m_tAimPoint.position = hit.point;
+            else
+                m_tAimPoint.position = transform.position + (transform.forward * 100);
+        }
 
         transform.GetChild(0).localPosition = Vector3.Lerp(
             transform.GetChild(0).localPosition, Vector3.zero, 0.3f);
 
-        if (goToPlayer)
+        if (s_bGoToPlayer)
         {
             transform.position = Vector3.Lerp(
-                transform.position, cameraHook.position, 1.5f * Time.deltaTime);
+                transform.position, m_tCameraHook.position, 1.5f * Time.deltaTime);
 
-            if (Vector3.Distance(transform.position, cameraHook.position) < 0.3f)
+            if (Vector3.Distance(transform.position, m_tCameraHook.position) < 0.3f)
             {
-                snapToPlayer = true;
+                s_bSnapToPlayer = true;
                 //Movement.canMove = true;
-                goToPlayer = false;
-                for (int i = 0; i < enableObjects.Count; i++)
+                s_bGoToPlayer = false;
+                for (int i = 0; i < m_LgoEnableObjects.Count; i++)
                 {
-                    enableObjects[i].SetActive(true);
+                    m_LgoEnableObjects[i].SetActive(true);
                 }
             }
         }
 
-        if (canZoom)
+        if (s_CanZoom)
         {
-            if (canMove)
+            if (s_CanMove)
             {
                 if (Input.GetMouseButton(1))
                     transform.GetChild(0).GetComponent<Camera>().fieldOfView =
                         Mathf.Lerp(transform.GetChild(0).GetComponent<Camera>().fieldOfView,
-                        fovMin, Time.deltaTime * zoomSpeed);
+                        m_fFovMin, Time.deltaTime * m_fZoomSpeed);
                 else
                     transform.GetChild(0).GetComponent<Camera>().fieldOfView =
                         Mathf.Lerp(transform.GetChild(0).GetComponent<Camera>().fieldOfView,
-                        fovNormal, Time.deltaTime * zoomSpeed * 2);
+                        m_fFovNormal, Time.deltaTime * m_fZoomSpeed * 2);
             }
             else
             {
                 transform.GetChild(0).GetComponent<Camera>().fieldOfView =
                     Mathf.Lerp(transform.GetChild(0).GetComponent<Camera>().fieldOfView,
-                    fovNormal, Time.deltaTime * zoomSpeed * 2);
+                    m_fFovNormal, Time.deltaTime * m_fZoomSpeed * 2);
             }
         }
     }
@@ -141,23 +156,23 @@ public class CameraMovement : MonoBehaviour
 			horSpeed = -horSpeed;
 
 		if (horSpeed > verSpeed)
-			camRunShakeAmount = horSpeed;
+			m_fCamRunShakeAmount = horSpeed;
 		else
-			camRunShakeAmount = verSpeed;
+			m_fCamRunShakeAmount = verSpeed;
 		
 		if (isSprinting)
             sprintMult = (sprintMult + 0.2f) / 2;
 		
-		float cameraRunBound = camRunShakeMax * sprintMult;
+		float cameraRunBound = m_fCamRunShakeMax * sprintMult;
 
-		if ((camRunShake > cameraRunBound && camRunShakeSpeed > 0) ||
-            (camRunShake < -cameraRunBound && camRunShakeSpeed < 0))
-            camRunShakeSpeed = -camRunShakeSpeed;
+		if ((m_fCamRunShake > cameraRunBound && m_fCamRunShakeSpeed > 0)
+            || (m_fCamRunShake < -cameraRunBound && m_fCamRunShakeSpeed < 0))
+            m_fCamRunShakeSpeed = -m_fCamRunShakeSpeed;
 
-		if (camRunShakeAmount != 0)
-			camRunShake += camRunShakeAmount * camRunShakeSpeed;
+		if (m_fCamRunShakeAmount != 0)
+			m_fCamRunShake += m_fCamRunShakeAmount * m_fCamRunShakeSpeed;
 		else
-			camRunShake = 0;
+			m_fCamRunShake = 0;
 	}
 
     /// <summary>
@@ -165,20 +180,20 @@ public class CameraMovement : MonoBehaviour
     /// </summary>
     private void IdleShake()
     {
-        if (camIdleShake > camIdleShakeMax && camIdleShakeSpeed > 0)
-            camIdleShakeSpeed = -camIdleShakeSpeed;
-        if (camIdleShake < -camIdleShakeMax && camIdleShakeSpeed < 0)
-            camIdleShakeSpeed = -camIdleShakeSpeed;
-        camIdleShake +=  camIdleShakeSpeed;
+        if (m_fCamIdleShake > m_fCamIdleShakeMax && m_fCamIdleShakeSpeed > 0)
+            m_fCamIdleShakeSpeed = -m_fCamIdleShakeSpeed;
+        if (m_fCamIdleShake < -m_fCamIdleShakeMax && m_fCamIdleShakeSpeed < 0)
+            m_fCamIdleShakeSpeed = -m_fCamIdleShakeSpeed;
+        m_fCamIdleShake +=  m_fCamIdleShakeSpeed;
 
-        camShakeDirection = camRandomShakeDirection * camIdleShake;
+        s_CamShakeDirection = m_v2CamRandomShakeDirection * m_fCamIdleShake;
 
-        if (camIdleTickAmount <= camIdleTicker)
+        if (m_fCamIdleTickAmount <= m_iCamIdleTicker)
         {
-            camRandomShakeDirection = Random.insideUnitCircle;
-            camIdleTicker = 0;
+            m_v2CamRandomShakeDirection = Random.insideUnitCircle;
+            m_iCamIdleTicker = 0;
         }
-        camIdleTicker++;
+        m_iCamIdleTicker++;
     }
     
     /// <summary>
@@ -187,7 +202,7 @@ public class CameraMovement : MonoBehaviour
     /// <param name="pShaking">The desired shaking state</param>
     public void ChangeShakeStatus(bool pShaking)
     {
-        shake = pShaking;
-        camShakeDirection = Vector2.zero;
+        s_Shake = pShaking;
+        s_CamShakeDirection = Vector2.zero;
     }
 }

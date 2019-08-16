@@ -72,7 +72,7 @@ public class SmoothCameraMovement : MonoBehaviour
     /// </summary>
     private void CameraUpdate()
     {
-        if (CameraMovement.canMove)
+        if (CameraMovement.s_CanMove)
         {
             if (axes == RotationAxes.MouseXAndY)
             {
@@ -84,8 +84,8 @@ public class SmoothCameraMovement : MonoBehaviour
 
                 if (!noShake)
                 {
-                    rotationY += CameraMovement.camShakeDirection.y;
-                    rotationX += CameraMovement.camShakeDirection.x;
+                    rotationY += CameraMovement.s_CamShakeDirection.y;
+                    rotationX += CameraMovement.s_CamShakeDirection.x;
                 }
 
                 rotationY = ClampAngle(rotationY, minimumY, maximumY);
@@ -209,6 +209,6 @@ public class SmoothCameraMovement : MonoBehaviour
         rotationY = 0;
         rotArrayX.Clear();
         rotArrayY.Clear();
-        CameraMovement.camShakeDirection = Vector2.zero;
+        CameraMovement.s_CamShakeDirection = Vector2.zero;
     }
 }

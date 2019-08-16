@@ -30,7 +30,7 @@ public class VisibilityEnabler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(CameraMovement.cameraObject.transform.GetChild(0).GetComponent<Camera>());
+        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(CameraMovement.s_CameraObject.transform.GetChild(0).GetComponent<Camera>());
 
         if (GeometryUtility.TestPlanesAABB(planes, GetComponent<Renderer>().bounds))
         {
