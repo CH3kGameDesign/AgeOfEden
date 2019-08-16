@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.PostProcessing;
 
 public class CameraMovement : MonoBehaviour
 {
@@ -14,45 +13,54 @@ public class CameraMovement : MonoBehaviour
     public static Vector2 s_CamShakeDirection;
     public static GameObject s_CameraObject;
 
+    [Header("Booleans")]
     [SerializeField]
     [Tooltip("Allows the player to look around immediately")]
     private bool m_bCanMoveOnStart = true;
     [SerializeField]
     private bool m_bSnapToPlayerOnStart = true;
 
-    [Header("Camera Speed")]
-	public float camRunShakeSpeed = 0.04f;
-	public float zoomSpeed = 4;
-    public float camIdleShakeSpeed = 0.04f;
+    [Header("Camera Shake")]
+    [SerializeField]
+    private int m_fCamIdleTickAmount = 10;
+    [SerializeField]
+	private float m_fCamRunShakeSpeed = 0.04f;
+    [SerializeField]
+    private float m_fCamIdleShakeSpeed = 0.04f;
+    [SerializeField]
+    private float m_fCamRunShakeMax = 1;
+    [SerializeField]
+    private float m_fCamIdleShakeMax = 0.2f;
 
-    [Header("Camera Limits")]
-	public float camRunShakeMax = 1;
-    public float camIdleShakeMax = 0.2f;
-    public int camIdleTickAmount = 10;
-    public float fovNormal = 60;
-	public float fovMin = 25;
+    [Header("Camera Zoom")]
+    [SerializeField]
+	private float m_fZoomSpeed = 4;
+    [SerializeField]
+    private float m_fFovNormal = 60;
+    [SerializeField]
+    private float m_fFovMin = 25;
+
+    private int m_iCamIdleTicker;
+    private float m_fCamIdleShake;
+	private float m_fCamRunShakeAmount;
+	private float m_fCamRunShake;
+    private Vector2 m_v2CamRandomShakeDirection;
 
     [Header("Transforms")]
-    [SerializeField]
     [Tooltip("The an object on the players face the camera is attached to")]
-    private Transform m_tCameraHook;
+    public Transform m_tCameraHook;
     [SerializeField]
     [Tooltip("An object placed on the side of the object a player is looking at")]
     private Transform m_tAimPoint;
-    [SerializeField]
-    private Transform m_tReticle;
+    // Unused
+    //[SerializeField]
+    //private Transform m_tReticle;
 
     [Header("GameObjects")]
-    public List<GameObject> m_LgoEnableObjects;
+    [SerializeField]
+    private List<GameObject> m_LgoEnableObjects;
 
-	private float camRunShakeAmount;
-	private float camRunShake;
-    
-    private float camIdleShake;
-    private int camIdleTicker;
-    private Vector2 camRandomShakeDirection;
-
-	// Use this for initialization
+	// Called once before the first frame
 	private void Start()
     {
         // Seizes control of the cursor
@@ -65,7 +73,7 @@ public class CameraMovement : MonoBehaviour
 		s_CanMove = m_bCanMoveOnStart;
 
         // Starts the camera shake in a random direction
-        camRandomShakeDirection = Random.insideUnitCircle;
+        m_v2CamRandomShakeDirection = Random.insideUnitCircle;
     }
 	
 	// Update is called once per frame
@@ -117,17 +125,17 @@ public class CameraMovement : MonoBehaviour
                 if (Input.GetMouseButton(1))
                     transform.GetChild(0).GetComponent<Camera>().fieldOfView =
                         Mathf.Lerp(transform.GetChild(0).GetComponent<Camera>().fieldOfView,
-                        fovMin, Time.deltaTime * zoomSpeed);
+                        m_fFovMin, Time.deltaTime * m_fZoomSpeed);
                 else
                     transform.GetChild(0).GetComponent<Camera>().fieldOfView =
                         Mathf.Lerp(transform.GetChild(0).GetComponent<Camera>().fieldOfView,
-                        fovNormal, Time.deltaTime * zoomSpeed * 2);
+                        m_fFovNormal, Time.deltaTime * m_fZoomSpeed * 2);
             }
             else
             {
                 transform.GetChild(0).GetComponent<Camera>().fieldOfView =
                     Mathf.Lerp(transform.GetChild(0).GetComponent<Camera>().fieldOfView,
-                    fovNormal, Time.deltaTime * zoomSpeed * 2);
+                    m_fFovNormal, Time.deltaTime * m_fZoomSpeed * 2);
             }
         }
     }
@@ -148,23 +156,23 @@ public class CameraMovement : MonoBehaviour
 			horSpeed = -horSpeed;
 
 		if (horSpeed > verSpeed)
-			camRunShakeAmount = horSpeed;
+			m_fCamRunShakeAmount = horSpeed;
 		else
-			camRunShakeAmount = verSpeed;
+			m_fCamRunShakeAmount = verSpeed;
 		
 		if (isSprinting)
             sprintMult = (sprintMult + 0.2f) / 2;
 		
-		float cameraRunBound = camRunShakeMax * sprintMult;
+		float cameraRunBound = m_fCamRunShakeMax * sprintMult;
 
-		if ((camRunShake > cameraRunBound && camRunShakeSpeed > 0) ||
-            (camRunShake < -cameraRunBound && camRunShakeSpeed < 0))
-            camRunShakeSpeed = -camRunShakeSpeed;
+		if ((m_fCamRunShake > cameraRunBound && m_fCamRunShakeSpeed > 0) ||
+            (m_fCamRunShake < -cameraRunBound && m_fCamRunShakeSpeed < 0))
+            m_fCamRunShakeSpeed = -m_fCamRunShakeSpeed;
 
-		if (camRunShakeAmount != 0)
-			camRunShake += camRunShakeAmount * camRunShakeSpeed;
+		if (m_fCamRunShakeAmount != 0)
+			m_fCamRunShake += m_fCamRunShakeAmount * m_fCamRunShakeSpeed;
 		else
-			camRunShake = 0;
+			m_fCamRunShake = 0;
 	}
 
     /// <summary>
@@ -172,20 +180,20 @@ public class CameraMovement : MonoBehaviour
     /// </summary>
     private void IdleShake()
     {
-        if (camIdleShake > camIdleShakeMax && camIdleShakeSpeed > 0)
-            camIdleShakeSpeed = -camIdleShakeSpeed;
-        if (camIdleShake < -camIdleShakeMax && camIdleShakeSpeed < 0)
-            camIdleShakeSpeed = -camIdleShakeSpeed;
-        camIdleShake +=  camIdleShakeSpeed;
+        if (m_fCamIdleShake > m_fCamIdleShakeMax && m_fCamIdleShakeSpeed > 0)
+            m_fCamIdleShakeSpeed = -m_fCamIdleShakeSpeed;
+        if (m_fCamIdleShake < -m_fCamIdleShakeMax && m_fCamIdleShakeSpeed < 0)
+            m_fCamIdleShakeSpeed = -m_fCamIdleShakeSpeed;
+        m_fCamIdleShake +=  m_fCamIdleShakeSpeed;
 
-        s_CamShakeDirection = camRandomShakeDirection * camIdleShake;
+        s_CamShakeDirection = m_v2CamRandomShakeDirection * m_fCamIdleShake;
 
-        if (camIdleTickAmount <= camIdleTicker)
+        if (m_fCamIdleTickAmount <= m_iCamIdleTicker)
         {
-            camRandomShakeDirection = Random.insideUnitCircle;
-            camIdleTicker = 0;
+            m_v2CamRandomShakeDirection = Random.insideUnitCircle;
+            m_iCamIdleTicker = 0;
         }
-        camIdleTicker++;
+        m_iCamIdleTicker++;
     }
     
     /// <summary>
