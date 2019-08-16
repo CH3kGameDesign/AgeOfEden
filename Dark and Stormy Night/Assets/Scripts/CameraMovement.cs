@@ -80,7 +80,7 @@ public class CameraMovement : MonoBehaviour
 	private void Update()
     {
         // Keeps the camera snapped to the characters face
-        if (s_bSnapToPlayer)
+        if (s_bSnapToPlayer && m_tCameraHook)
             transform.position = m_tCameraHook.position;
 
         if (s_Shake)
@@ -165,8 +165,8 @@ public class CameraMovement : MonoBehaviour
 		
 		float cameraRunBound = m_fCamRunShakeMax * sprintMult;
 
-		if ((m_fCamRunShake > cameraRunBound && m_fCamRunShakeSpeed > 0) ||
-            (m_fCamRunShake < -cameraRunBound && m_fCamRunShakeSpeed < 0))
+		if ((m_fCamRunShake > cameraRunBound && m_fCamRunShakeSpeed > 0)
+            || (m_fCamRunShake < -cameraRunBound && m_fCamRunShakeSpeed < 0))
             m_fCamRunShakeSpeed = -m_fCamRunShakeSpeed;
 
 		if (m_fCamRunShakeAmount != 0)
