@@ -21,6 +21,7 @@ public class CameraMovement : MonoBehaviour
     public Transform cameraHook;
     public Transform aimPoint;
     public Transform reticle;
+    public Transform underWaterQuad;
 
     [Header("GameObjects")]
     public List<GameObject> enableObjects;
