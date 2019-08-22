@@ -16,6 +16,6 @@ public class UnderWaterEnabler : MonoBehaviour {
 
     public void Change (bool value)
     {
-        CameraMovement.cameraObject.GetComponent<CameraMovement>().underWaterQuad.gameObject.SetActive(value);
+        CameraMovement.s_CameraObject.GetComponent<CameraMovement>().underWaterQuad.gameObject.SetActive(value);
     }
 }

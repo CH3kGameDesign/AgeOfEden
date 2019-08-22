@@ -10,17 +10,14 @@ public class ObjectPickup : MonoBehaviour
     private float m_fPickupDistance = 1.75f;
     public float m_fHoldSpeedMult = 5;
     [SerializeField]
-    private Vector3 m_v3ObjectOffsetFromPlayer = new Vector3(0, -0.1f, 0.25f);
+    private Vector2 m_v3ObjectOffsetFromPlayer = new Vector2(0.75f, -0.1f);
 
     private CameraMovement m_cmCameraMovement;
 
     // Variables for the held object
     private bool m_bObjectGravityState;
-    [SerializeField]
     private Vector3 m_v3ObjectRelativePos;
-    [SerializeField]
     private Transform m_tObjectTransform;
-    [SerializeField]
     private Rigidbody m_rbObjectRb;
 
     private void Start()
@@ -45,8 +42,9 @@ public class ObjectPickup : MonoBehaviour
                 // Moves the object towards the desired position
                 // Gets the relative position of the object from the desired position
 
-                Vector3 translatedPosition = transform.forward * m_fPickupDistance +
-                    m_cmCameraMovement.transform.position;
+                Vector3 translatedPosition = transform.forward * m_v3ObjectOffsetFromPlayer.x
+                    + new Vector3(0, m_v3ObjectOffsetFromPlayer.y)
+                    + m_cmCameraMovement.transform.position;
 
                 Vector3 relPos = translatedPosition - m_tObjectTransform.position
                      - m_rbObjectRb.velocity * 0.5f;
