@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorSlammer : MonoBehaviour {
-
+public class DoorSlammer : MonoBehaviour
+{
     public Vector3 tarEuler;
     private Quaternion tarRot;
     public Vector3 releaseForce;
@@ -14,16 +14,20 @@ public class DoorSlammer : MonoBehaviour {
     private bool closed;
 
 	// Use this for initialization
-	void Start () {
+	private void Start()
+    {
         tarRot = Quaternion.Euler(tarEuler);
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    private void Update()
+    {
         counter++;
         if (counter > 5)
         {
-            float dist2 = Vector3.Distance(transform.position, CameraMovement.s_CameraObject.transform.position);
+            float dist2 = Vector3.Distance(transform.position,
+                CameraMovement.s_CameraObject.transform.position);
+
             if (dist2 > 4)
             {
                 //transform.GetChild(0).GetComponent<Rigidbody>().isKinematic = true;
@@ -31,12 +35,12 @@ public class DoorSlammer : MonoBehaviour {
                     move = true;
                 closed = true;
             }
-            else
-                if (closed == true)
+            else if (closed)
             {
                 closed = false;
                 //transform.GetChild(0).GetComponent<Rigidbody>().isKinematic = false;
-                transform.GetChild(0).GetComponent<Rigidbody>().AddForce(releaseForce, ForceMode.Impulse);
+                transform.GetChild(0).GetComponent<Rigidbody>().AddForce(
+                    releaseForce, ForceMode.Impulse);
             }
             counter = 0;
         }

@@ -24,7 +24,9 @@ public class PushObjectsRandom : MonoBehaviour
     {
         for (int i = 0; i < pushee.Count; i++)
             if (pushee[i].GetComponent<Rigidbody>())
-                pushee[i].GetComponent<Rigidbody>().AddForce(Random.insideUnitSphere * pushForce, ForceMode.Impulse);
+                pushee[i].GetComponent<Rigidbody>().AddForce(
+                    Random.insideUnitSphere * pushForce, ForceMode.Impulse);
+
         GetComponent<PushObjectsRandom>().enabled = false;
     }
 }

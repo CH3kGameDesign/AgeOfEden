@@ -9,18 +9,23 @@ public class SceneUnloader : MonoBehaviour
     public bool justAudio;
 
 	// Called once before the first frame
-	private void Start ()
+	private void Start()
     {
         if (Movement.m_goPlayerObject)
         {
             if (justAudio)
             {
-                GameObject GO = CameraMovement.s_CameraObject.transform.parent.GetChild(1).gameObject;
+                GameObject GO = CameraMovement.s_CameraObject.transform
+                    .parent.GetChild(1).gameObject;
+
                 GO.transform.parent = null;
                 playerManagerObjects = GO;
             }
             else
-                playerManagerObjects = Movement.m_goPlayerObject.transform.parent.parent.gameObject;
+            {
+                playerManagerObjects = Movement.m_goPlayerObject.transform
+                    .parent.parent.gameObject;
+            }
         }
 
         StartCoroutine(UnloadScene());

@@ -17,7 +17,7 @@ public class MovementSwitch : MonoBehaviour
     public Vector2 sittingMaxRotation;
 
     // Called once before the first frame
-    private void Start ()
+    private void Start()
     {
         if (changeOnStart)
             Switch();
@@ -26,7 +26,7 @@ public class MovementSwitch : MonoBehaviour
     /// <summary>
     /// Updates movement options based on variable states
     /// </summary>
-    public void Switch ()
+    public void Switch()
     {
         if (rotateOffset != 0)
             CameraMovement.s_CameraObject.GetComponent
@@ -41,7 +41,8 @@ public class MovementSwitch : MonoBehaviour
         if (choice != choices.movement)
         {
             CameraMovement.s_CanMove = enable;
-            CameraMovement.s_CameraObject.GetComponent<SmoothCameraMovement>().resetRotation();
+            CameraMovement.s_CameraObject.GetComponent<SmoothCameraMovement>()
+                .resetRotation();
         }
 
         if (rigidBodyState == choices2.disable)

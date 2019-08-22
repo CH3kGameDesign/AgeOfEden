@@ -14,7 +14,7 @@ public class InvisibleEnable : MonoBehaviour
 
     public float Timer;
     
-    public void OnBecameInvisible ()
+    public void OnBecameInvisible()
     {
         Invoke("EnableObjects", Timer);
         Debug.Log("WAJHDSK");
@@ -23,7 +23,7 @@ public class InvisibleEnable : MonoBehaviour
     /// <summary>
     /// Called to enable and disable set objects
     /// </summary>
-    private void EnableObjects ()
+    private void EnableObjects()
     {
         for (int i = 0; i < GO.Count; i++)
             GO[i].SetActive(true);

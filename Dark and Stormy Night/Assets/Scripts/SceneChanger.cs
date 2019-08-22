@@ -55,7 +55,7 @@ public class SceneChanger : MonoBehaviour
 
             tarCG.basic.postExposure = Mathf.Lerp(
                 tarCG.basic.postExposure, -10f, Time.deltaTime /m_fFadeSpeed);
-            
+
             if (tarCG.basic.postExposure <= -8f)
             {
                 tarCG.basic.postExposure = -10f;
@@ -67,7 +67,10 @@ public class SceneChanger : MonoBehaviour
                 m_bFadeOut = false;
             }
             else
-                Camera.main.GetComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>().profile.colorGrading.settings = tarCG;
+            {
+                Camera.main.GetComponent<UnityEngine.PostProcessing.
+                    PostProcessingBehaviour>().profile.colorGrading.settings = tarCG;
+            }
         }
     }
 

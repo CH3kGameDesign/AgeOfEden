@@ -8,7 +8,7 @@ public class MovementVariables : MonoBehaviour
     /// Enables variables based on input
     /// </summary>
     /// <param name="pChoice">Controls what variables are enabled</param>
-    public void ChangeVariables (int pChoice)
+    public void ChangeVariables(int pChoice)
     {
         switch (pChoice)
         {

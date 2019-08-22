@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ParticleFollowCurve : MonoBehaviour {
-
+public class ParticleFollowCurve : MonoBehaviour
+{
     public ParticleSystem parSystem;
 
     public BezierCurve bezier;
@@ -12,10 +12,12 @@ public class ParticleFollowCurve : MonoBehaviour {
 
     private ParticleSystem.Particle[] particles;
 
-	// Use this for initialization
-	void Start () {
-        if (parSystem == null)
+    // Use this for initialization
+    private void Start()
+    {
+        if (!parSystem)
             parSystem = GetComponent<ParticleSystem>();
+
         if (particles == null || particles.Length < parSystem.main.maxParticles)
             particles = new ParticleSystem.Particle[parSystem.main.maxParticles];
     }
@@ -23,7 +25,7 @@ public class ParticleFollowCurve : MonoBehaviour {
     /// <summary>
     /// A delayed update function
     /// </summary>
-    private void LateUpdate ()
+    private void LateUpdate()
     {
         int numParticlesAlive = parSystem.GetParticles(particles);
         for (int i = 0; i < numParticlesAlive; i++)

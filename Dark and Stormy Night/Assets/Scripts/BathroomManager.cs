@@ -2,19 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BathroomManager : MonoBehaviour {
+public class BathroomManager : MonoBehaviour
+{
     public List<Transform> bathroomDoorPivots = new List<Transform>();
-    [HideInInspector]
-    public Transform bathroom;
+
+    private Transform bathroom;
 
     private int counter;
-	// Use this for initialization
-	void Start () {
-		
-	}
 	
 	// Update is called once per frame
-	void Update () {
+	private void Update()
+    {
         counter++;
         if (counter > 5)
         {
@@ -24,7 +22,8 @@ public class BathroomManager : MonoBehaviour {
                 float dist = 100;
                 for (int i = 0; i < bathroomDoorPivots.Count; i++)
                 {
-                    float dist2 = Vector3.Distance(bathroomDoorPivots[i].position, CameraMovement.s_CameraObject.transform.position);
+                    float dist2 = Vector3.Distance(bathroomDoorPivots[i].position,
+                        CameraMovement.s_CameraObject.transform.position);
                     if (dist2 < dist)
                     {
                         dist = dist2;
@@ -34,8 +33,14 @@ public class BathroomManager : MonoBehaviour {
                 bathroom.position = bathroomDoorPivots[choice].position;
             }
             else
-                if (GameObject.FindGameObjectWithTag("Bathroom") != null)
-                    bathroom = GameObject.FindGameObjectWithTag("Bathroom").transform;
+            {
+                // Attempts to assign the bathroom transform to the bathroom object's
+                try { bathroom = GameObject.FindGameObjectWithTag("Bathroom").transform; }
+                catch { bathroom = null; }
+
+                //if (GameObject.FindGameObjectWithTag("Bathroom"))
+                //    bathroom = GameObject.FindGameObjectWithTag("Bathroom").transform;
+            }
             counter = 0;
         }
     }

@@ -10,7 +10,7 @@ public class MenuManager : MonoBehaviour
     public static bool inRoom = false;
     
 	// Update is called once per frame
-	private void Update ()
+	private void Update()
     {
 		if (Input.GetKeyDown(KeyCode.Alpha1) && !inRoom)
         {

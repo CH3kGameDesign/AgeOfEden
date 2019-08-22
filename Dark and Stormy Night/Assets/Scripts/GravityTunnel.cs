@@ -23,12 +23,12 @@ public class GravityTunnel : MonoBehaviour
     public List<GameObject> movableObjects = new List<GameObject>();
 
 	// Use this for initialization
-	private void Start ()
+	private void Start()
     { 
         pointDistance = Vector3.Distance(pointA.position, pointB.position);
 	}
 	
-    private void OnTriggerEnter (Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
@@ -48,7 +48,7 @@ public class GravityTunnel : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay (Collider other)
+    private void OnTriggerStay(Collider other)
     {
         
         if (other.tag == "Player")

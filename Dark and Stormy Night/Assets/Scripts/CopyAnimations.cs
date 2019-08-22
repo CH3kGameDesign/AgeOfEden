@@ -23,11 +23,8 @@ public class CopyAnimations : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        
-
         GetComponent<Animator>().SetBool("Standing", target.GetBool("Standing"));
         GetComponent<Animator>().SetBool("Moving", target.GetBool("Moving"));
         GetComponent<Animator>().SetBool("Sprinting", target.GetBool("Sprinting"));
-        
     }
 }

@@ -59,7 +59,7 @@ public class TypeWriter : MonoBehaviour
     private string updateLetter;
 
 	// Called once before the first frame
-	private void Start ()
+	private void Start()
     {
         endingNo = PermanentData.saveInfo.lastEndingAchieved;
 
@@ -88,7 +88,7 @@ public class TypeWriter : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void Update ()
+    private void Update()
     {
         if (startTyping && SceneManager.sceneCount == 1)
         {
@@ -129,14 +129,14 @@ public class TypeWriter : MonoBehaviour
             if (updateLetter != null)
                 Type(updateLetter);
         }
-        if (armMove == true)
+        if (armMove)
             ArmMoveBack();
     }
     
     /// <summary>
     /// Moves over to the next row of the paper
     /// </summary>
-    private void NextRow ()
+    private void NextRow()
     {
         row++;
         if (row != text.childCount)
@@ -146,7 +146,7 @@ public class TypeWriter : MonoBehaviour
     /// <summary>
     /// Function for when the script takes control of whats being typed
     /// </summary>
-    private void AnyKeyScript ()
+    private void AnyKeyScript()
     {
         text.GetChild(row).GetComponent<TextMeshPro>().text +=
             scriptLines[scriptLineCounter][scriptCharCounter];
@@ -195,8 +195,8 @@ public class TypeWriter : MonoBehaviour
     /// <summary>
     /// Enters the desired letter onto the paper in game
     /// </summary>
-    /// <param name="pLetter"></param>
-    private void Type (string pLetter)
+    /// <param name="pLetter">The letter used</param>
+    private void Type(string pLetter)
     {
         string textSound = "";
         if (scriptTyping == true)
@@ -229,8 +229,8 @@ public class TypeWriter : MonoBehaviour
     /// <summary>
     /// Moves the correct arm into place based on what key was pressed
     /// </summary>
-    /// <param name="pLetter"></param>
-    private void ArmMove (string pLetter)
+    /// <param name="pLetter">The letter used</param>
+    private void ArmMove(string pLetter)
     {
         int choice = -1;
 
@@ -321,7 +321,7 @@ public class TypeWriter : MonoBehaviour
     /// <summary>
     /// Returns the arm to its idle state
     /// </summary>
-    private void ArmMoveBack ()
+    private void ArmMoveBack()
     {
         armMove = false;
         for (int i = 0; i < armMoveRotation.Count; i++)
@@ -338,7 +338,7 @@ public class TypeWriter : MonoBehaviour
     /// <summary>
     /// Loads the most recently pressed key into memory
     /// </summary>
-    private void KeyPress ()
+    private void KeyPress()
     {
         if (Input.GetKeyDown(KeyCode.Space))
             updateLetter = " ";
@@ -450,6 +450,5 @@ public class TypeWriter : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Alpha0))
             updateLetter = "0";
-        
     }
 }

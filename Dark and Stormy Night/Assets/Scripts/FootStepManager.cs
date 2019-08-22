@@ -25,13 +25,13 @@ public class FootStepManager : MonoBehaviour
     /// <summary>
     /// Called to make a footstep sound
     /// </summary>
-    public void MakeSound ()
+    public void MakeSound()
     {
-        if (makeNoises == true)
+        if (makeNoises)
         {
             int stepNo = 0;
 
-            if (leftStepNext == false)
+            if (!leftStepNext)
                 stepNo = Random.Range(0, 1);
 
             leftStepNext = !leftStepNext;
@@ -55,7 +55,7 @@ public class FootStepManager : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay (Collider other)
+    private void OnTriggerStay(Collider other)
     {
         int stepArea = 100;
 

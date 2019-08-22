@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ActivateScriptInParent : MonoBehaviour
 {
-    private void OnTriggerEnter (Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {

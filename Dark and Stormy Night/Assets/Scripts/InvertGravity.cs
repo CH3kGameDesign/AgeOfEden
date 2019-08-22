@@ -12,7 +12,7 @@ public class InvertGravity : MonoBehaviour
     public static bool invertedGravity = false;
 
     // Use this for initialization
-    private void Start ()
+    private void Start()
     {
         normalGravity = Physics.gravity;
 
@@ -20,7 +20,7 @@ public class InvertGravity : MonoBehaviour
             Flip();
 	}
 	
-    private void OnTriggerEnter (Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
             Flip();
@@ -29,7 +29,7 @@ public class InvertGravity : MonoBehaviour
     /// <summary>
     /// Sets the current gravity to an inverted version
     /// </summary>
-    private void Flip ()
+    private void Flip()
     {
         Physics.gravity = alteredGravity;
         invertedGravity = true;
@@ -38,7 +38,7 @@ public class InvertGravity : MonoBehaviour
         ///Debug.Log("Flip");
     }
 
-    private void OnDisable ()
+    private void OnDisable()
     {
         Physics.gravity = normalGravity;
         invertedGravity = false;

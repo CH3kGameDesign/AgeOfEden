@@ -16,13 +16,13 @@ public class PlayerModel : MonoBehaviour
     private float desiredYRotation;
 
     // Use this for initialization
-    private void Start ()
+    private void Start()
     {
         player = gameObject;
 	}
 	
 	// Update is called once per frame
-	private void Update ()
+	private void Update()
     {
         //desiredYRotation = Mathf.Lerp(desiredYRotation,
         //    cameraHolder.transform.rotation.eulerAngles.y, rotSpeed);
