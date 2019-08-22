@@ -12,7 +12,7 @@ public class FootStepManager : MonoBehaviour
     }
 
     [SerializeField]
-    [Help("FOOTSTEP ORGANISATION\n\n   Element0: Carpet Steps\n   Element1: Wood Steps")]
+    [Help("FOOTSTEP ORGANISATION\n\n   Element0: Carpet Steps\n   Element1: Wood Steps\n   Element2: Tile Steps")]
     public int defaultSound;
 
     public bool makeNoises = true;
@@ -63,6 +63,8 @@ public class FootStepManager : MonoBehaviour
             stepArea = 0;
         if (other.tag == "WoodArea")
             stepArea = 1;
+        if (other.tag == "TileArea")
+            stepArea = 2;
 
         if (stepArea < area)
             area = stepArea;

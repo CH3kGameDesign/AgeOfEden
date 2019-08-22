@@ -25,6 +25,7 @@ public class MoveTo : MonoBehaviour
 
     public bool disableAfterFinish = false;
     public GameObject activateOnFinish;
+    public GameObject deActivateOnFinish;
 
 	// Called once before the first frame
 	private void Start()
@@ -155,6 +156,8 @@ public class MoveTo : MonoBehaviour
 
         if (activateOnFinish)
             activateOnFinish.SetActive(true);
+        if (deActivateOnFinish)
+            deActivateOnFinish.SetActive(false);
     }
 
     public void ChangeTransPos(Transform pTransform)

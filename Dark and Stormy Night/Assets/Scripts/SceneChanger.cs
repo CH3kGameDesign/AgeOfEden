@@ -26,6 +26,8 @@ public class SceneChanger : MonoBehaviour
     [SerializeField]
     private float m_fFadeSpeed = 4;
 
+    public bool flipOnReset = false;
+
     private bool m_bAdded;
     private Scene m_sTargetScene;
 
@@ -74,6 +76,7 @@ public class SceneChanger : MonoBehaviour
 
     public void StartLoad()
     {
+        SmoothCameraMovement.flipOnReset = flipOnReset;
         eventOnStart.Invoke();
         if (!m_bAdded)
         {
