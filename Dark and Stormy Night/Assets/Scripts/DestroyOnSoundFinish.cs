@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class DestroyOnSoundFinish : MonoBehaviour
 {
+    public bool disable = false;
+    public GameObject enableOnFinish;
     private bool hasPlayed = false;
-    
-	// Update is called once per frame
-	private void Update ()
+
+    private void Start()
+    {
+        hasPlayed = false;
+    }
+
+    // Update is called once per frame
+    private void Update ()
     {
         if (GetComponent<AudioSource>().isPlaying == true)
             hasPlayed = true;
 
         if (GetComponent<AudioSource>().isPlaying == false && hasPlayed == true)
-            Destroy(this.gameObject);
+        {
+            if (disable == false)
+                Destroy(this.gameObject);
+            else
+                gameObject.SetActive(false);
+            if (enableOnFinish != null)
+                enableOnFinish.SetActive(true);
+        }
 	}
 }

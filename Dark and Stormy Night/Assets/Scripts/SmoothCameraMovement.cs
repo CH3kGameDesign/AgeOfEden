@@ -41,6 +41,7 @@ public class SmoothCameraMovement : MonoBehaviour
     public static float gravDirection = 0;
 
     public static float turnAroundValue = 0;
+    public static bool flipOnReset = false;
 
     // Called once before the first frame
     private void Awake()
@@ -50,10 +51,18 @@ public class SmoothCameraMovement : MonoBehaviour
         if (rb)
             rb.freezeRotation = true;
         originalRotation = Quaternion.Euler(Vector3.zero);
-        rotationX = startRotY;
-        rotationY = startRotX;
+        
         if (reset)
             resetRotation();
+        if (flipOnReset == true)
+        {
+            flipOnReset = false;
+            turnAroundValue = 180;
+        }
+        else
+            turnAroundValue = 0;
+        rotationX = startRotY;
+        rotationY = startRotX;
     }
 
     // Called once per frame
@@ -205,8 +214,8 @@ public class SmoothCameraMovement : MonoBehaviour
     /// </summary>
     public void resetRotation()
     {
-        rotationX = 0;
-        rotationY = 0;
+        rotationX = startRotX;
+        rotationY = startRotY;
         rotArrayX.Clear();
         rotArrayY.Clear();
         CameraMovement.s_CamShakeDirection = Vector2.zero;
