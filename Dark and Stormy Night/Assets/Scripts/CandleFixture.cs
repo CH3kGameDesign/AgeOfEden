@@ -18,7 +18,7 @@ public class CandleFixture : MonoBehaviour
     private List<Color> emissionStart = new List<Color>();
 
     // Use this for initialization
-    private void Start ()
+    private void Start()
     {
         if (Lights.Count >= 1)
             for (int i = 0; i < Lights.Count; i++)
@@ -34,9 +34,9 @@ public class CandleFixture : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void Update ()
+    private void Update()
     {
-        if (GetComponent<LightFixture>() == null || GetComponent<LightFixture>().on == true)
+        if (!GetComponent<LightFixture>() || GetComponent<LightFixture>().on)
         {
             if (Lights[0].intensity < 0.1f)
             {

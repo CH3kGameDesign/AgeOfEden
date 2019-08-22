@@ -10,7 +10,7 @@ public class NeverEndingCorridor : MonoBehaviour
     public GameObject corridorSegmentLight;
 
 	// Called once before the first frame
-	private void Start ()
+	private void Start()
     {
         if (!corridorSegment)
             corridorSegment = transform.GetChild(0).GetChild(0).gameObject;
@@ -20,7 +20,7 @@ public class NeverEndingCorridor : MonoBehaviour
                 + new Vector3(-i * 3, 0, 0), transform.rotation, transform.GetChild(0));
 	}
 	
-    private void OnCollisionStay (Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         if (collision.collider.tag == "Player")
         {
@@ -38,7 +38,7 @@ public class NeverEndingCorridor : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter (Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.transform.parent.parent == transform.GetChild(0))
         {

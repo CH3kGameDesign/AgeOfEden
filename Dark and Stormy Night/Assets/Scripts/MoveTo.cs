@@ -27,7 +27,7 @@ public class MoveTo : MonoBehaviour
     public GameObject activateOnFinish;
 
 	// Called once before the first frame
-	private void Start ()
+	private void Start()
     {
         if (TarTransPos)
             tarPos = TarTransPos.position;
@@ -53,7 +53,7 @@ public class MoveTo : MonoBehaviour
 	}
 	
     // Called once per frame
-    private void Update ()
+    private void Update()
     {
         if (TarTransPos)
             tarPos = TarTransPos.position;
@@ -68,7 +68,7 @@ public class MoveTo : MonoBehaviour
     /// <summary>
     /// Moves the object at a constant speed
     /// </summary>
-    private void MoveByMetre ()
+    private void MoveByMetre()
     {
         float speed = metresPerSecond * Time.deltaTime;
 
@@ -112,7 +112,7 @@ public class MoveTo : MonoBehaviour
     /// <summary>
     /// Moves the object with the use of linear interpolation
     /// </summary>
-    private void MoveByLerp ()
+    private void MoveByLerp()
     {
         lerpSpeedActual = Mathf.Lerp(lerpSpeedActual, lerpSpeed, Time.deltaTime);
 
@@ -149,7 +149,7 @@ public class MoveTo : MonoBehaviour
     /// <summary>
     /// Called when an action is completed
     /// </summary>
-    private void Finish ()
+    private void Finish()
     {
         moveOnStart = false;
 
@@ -157,7 +157,7 @@ public class MoveTo : MonoBehaviour
             activateOnFinish.SetActive(true);
     }
 
-    public void ChangeTransPos (Transform pTransform)
+    public void ChangeTransPos(Transform pTransform)
     {
         TarTransPos = pTransform;
     }
@@ -166,7 +166,7 @@ public class MoveTo : MonoBehaviour
     /// Changes the target position
     /// </summary>
     /// <param name="pTarget">The desired target position</param>
-    public void ChangeTarPos (Vector3 pTarget)
+    public void ChangeTarPos(Vector3 pTarget)
     {
         tarPos = pTarget;
         TarTransPos = null;

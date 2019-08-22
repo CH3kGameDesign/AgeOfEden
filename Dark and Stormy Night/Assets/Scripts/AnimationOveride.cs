@@ -16,9 +16,9 @@ public class AnimationOveride : MonoBehaviour
     private float timer;
 
 	// Use this for initialization
-	private void Start ()
+	private void Start()
     {
-        if (tarAnimator == false && player == true)
+        if (!tarAnimator && player)
             tarAnimator = Movement.m_goPlayerObject.GetComponent<Movement>().
                 m_aModelAnimator;
         /*
@@ -28,7 +28,7 @@ public class AnimationOveride : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	private void Update()
     {
         if (timer >= waitTime)
             Change();

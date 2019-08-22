@@ -18,7 +18,7 @@ public class InteractableObject : MonoBehaviour
     public bool inUse = false;
     
 	// Update is called once per frame
-	private void Update ()
+	private void Update()
     {
         if (Vector3.Distance(transform.position, Movement.m_goPlayerObject.transform.position) < 2)
         {

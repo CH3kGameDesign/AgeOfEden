@@ -17,11 +17,12 @@ public class FadeToScene : MonoBehaviour
 	private float startVignetteStrength = -1;
     
 	// Update is called once per frame
-	private void Update ()
+	private void Update()
     {
 		if (startVignetteStrength == -1)
         {
-			PostProcessingProfile mainCamProfile = CameraMovement.s_CameraObject.GetComponentInChildren<PostProcessingBehaviour>().profile;
+			PostProcessingProfile mainCamProfile = CameraMovement.s_CameraObject.
+                GetComponentInChildren<PostProcessingBehaviour>().profile;
 			startVignetteStrength = mainCamProfile.vignette.settings.intensity;
 		}
 
@@ -29,7 +30,7 @@ public class FadeToScene : MonoBehaviour
             Fade();
 	}
 
-    private void OnTriggerEnter (Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
             fadeTrue = true;
@@ -38,7 +39,7 @@ public class FadeToScene : MonoBehaviour
     /// <summary>
     /// Initiates a fade
     /// </summary>
-    private void Fade ()
+    private void Fade()
     {
         if (RenderSettings.fogDensity < tarFogStrength)
         {
@@ -61,8 +62,11 @@ public class FadeToScene : MonoBehaviour
 
 			vignette.intensity = startVignetteStrength;
 			mainCamProfile.vignette.settings = vignette;
-            if (restartScene == true)
+
+            if (restartScene)
+            {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
             else
             {
                 if (tarSceneNumber == -1)

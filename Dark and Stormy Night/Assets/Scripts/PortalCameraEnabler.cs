@@ -7,7 +7,7 @@ public class PortalCameraEnabler : MonoBehaviour
 	public Renderer[] RenderPlanes;
 	public GameObject[] Cameras;
 
-	private void Update ()
+	private void Update()
     {
         // NOTE: Look into - potential fps drain
 

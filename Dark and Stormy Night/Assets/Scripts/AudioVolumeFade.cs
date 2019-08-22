@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioVolumeFade : MonoBehaviour {
-
+public class AudioVolumeFade : MonoBehaviour
+{
     public AudioSource tarSource;
     public float tarVolume;
     public float seconds;
     public bool play;
 
 	// Use this for initialization
-	void Start () {
-        if (tarSource == null)
+	private void Start()
+    {
+        if (!tarSource)
             tarSource = GetComponent<AudioSource>();
-        
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	private void Update()
+    {
         if (play)
         {
             Invoke("Disable", seconds * 5);
@@ -25,7 +26,10 @@ public class AudioVolumeFade : MonoBehaviour {
         }
 	}
 
-    void Disable()
+    /// <summary>
+    /// Stops playing the audio
+    /// </summary>
+    private void Disable()
     {
         play = false;
     }

@@ -19,7 +19,7 @@ public class MoveRelativeOnTrain : MonoBehaviour
     public List<GameObject> GODisable = new List<GameObject>();
 
 	// Update is called once per frame
-	private void Update ()
+	private void Update()
     {
         if (currentTar < tarPos.Count)
         {
@@ -61,9 +61,9 @@ public class MoveRelativeOnTrain : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Called for finalisation
     /// </summary>
-    private void Finish ()
+    private void Finish()
     {
         onFinishEvents.Invoke();
 

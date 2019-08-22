@@ -11,16 +11,17 @@ public class ReflectObject : MonoBehaviour
     public Transform reflectingThing;
 
 	// Called once before the first frame
-	private void Start ()
+	private void Start()
     {
         if (!reflectPoint)
             reflectPoint = transform;
         if (reflectPlayer)
-            reflectableObject = Movement.m_goPlayerObject.GetComponent<Movement>().m_aModelAnimator.transform;
+            reflectableObject = Movement.m_goPlayerObject.GetComponent<Movement>()
+                .m_aModelAnimator.transform;
 	}
 	
 	// Update is called once per frame
-	private void Update ()
+	private void Update()
     {
         Vector3 DistanceBetween = reflectPoint.position - reflectableObject.position;
 

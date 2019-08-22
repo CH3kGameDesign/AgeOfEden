@@ -5,7 +5,7 @@ using UnityEngine;
 public class OffsetAnimations : MonoBehaviour
 {
 	// Use this for initialization
-	private void Awake ()
+	private void Awake()
     {
         Animator anim = GetComponent<Animator>();
 

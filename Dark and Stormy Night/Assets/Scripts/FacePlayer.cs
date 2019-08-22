@@ -13,7 +13,7 @@ public class FacePlayer : MonoBehaviour
     public float delay = 1;
     
 	// Update is called once per frame
-	private void Update ()
+	private void Update()
     {
         if (tilt)
         {
@@ -24,10 +24,12 @@ public class FacePlayer : MonoBehaviour
         }
         else
         {
-            Vector3 lookPos = transform.position - (Movement.m_goPlayerObject.transform.position + offset);
+            Vector3 lookPos = transform.position
+                - (Movement.m_goPlayerObject.transform.position + offset);
             lookPos.y = 0;
             Quaternion rotation = Quaternion.LookRotation(lookPos);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * delay);
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation, rotation, Time.deltaTime * delay);
         }
 	}
 }

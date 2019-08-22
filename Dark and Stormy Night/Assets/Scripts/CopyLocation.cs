@@ -8,7 +8,7 @@ public class CopyLocation : MonoBehaviour
     public Vector3 direction;
     
 	// Update is called once per frame
-	private void Update ()
+	private void Update()
     {
         if (direction.x != 0)
             transform.position = new Vector3(

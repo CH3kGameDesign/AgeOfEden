@@ -10,7 +10,7 @@ public class FadeIn : MonoBehaviour
     public float fadeOutTimer;
 
 	// Use this for initialization
-	private void Start ()
+	private void Start()
     {
         if (GetComponent<FadeOut>() != null)
             GetComponent<FadeOut>().enabled = false;
@@ -26,7 +26,7 @@ public class FadeIn : MonoBehaviour
     }
 	
 	// Update is called once per frame
-	private void Update ()
+	private void Update()
     {
         if (GetComponent<SpriteRenderer>() != null)
             GetComponent<SpriteRenderer>().color = Color.Lerp(
@@ -45,7 +45,7 @@ public class FadeIn : MonoBehaviour
     /// <summary>
     /// Activates fade out
     /// </summary>
-    private void FadeOutActivate ()
+    private void FadeOutActivate()
     {
         if (GetComponent<FadeOut>())
             GetComponent<FadeOut>().enabled = true;

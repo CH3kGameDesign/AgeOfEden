@@ -8,12 +8,12 @@ public class FakeFall : MonoBehaviour
 
     public NeverEndingCorridor NECorridor;
     
-    private void OnTriggerEnter (Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
             other.transform.position = PlayerResetPos;
-            if (NECorridor != null)
+            if (NECorridor)
                 NECorridor.transform.GetChild(0).transform.position += new Vector3(10000, 0, 0);
         }
     }

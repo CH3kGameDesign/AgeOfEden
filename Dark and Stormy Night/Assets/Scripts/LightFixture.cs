@@ -45,7 +45,7 @@ public class LightFixture : MonoBehaviour
     public bool active;
 
     // Use this for initialization
-    private void Start ()
+    private void Start()
     {
         on = true;
         if (Lights.Count > 0)
@@ -70,7 +70,7 @@ public class LightFixture : MonoBehaviour
     }
 	
 	// Update is called once per frame
-	private void Update ()
+	private void Update()
     {
         if (active)
         {
@@ -158,8 +158,8 @@ public class LightFixture : MonoBehaviour
     /// <summary>
     /// Sets the active state
     /// </summary>
-    /// <param name="truth"></param>
-    public void Activate (bool truth)
+    /// <param name="truth">The desired state</param>
+    public void Activate(bool truth)
     {
         on = true;
         active = truth;

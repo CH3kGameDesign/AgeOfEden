@@ -10,12 +10,14 @@ public class BreathingObject : MonoBehaviour
     private bool inflate = true;
     
 	// Update is called once per frame
-	void Update ()
+	private void Update()
     {
-        if (inflate == true)
-            transform.localScale = Vector3.Lerp(transform.localScale, breathMax, breathSpeed * Time.deltaTime);
+        if (inflate)
+            transform.localScale = Vector3.Lerp(transform.localScale,
+                breathMax, breathSpeed * Time.deltaTime);
         else
-            transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one, breathSpeed * Time.deltaTime);
+            transform.localScale = Vector3.Lerp(transform.localScale,
+                Vector3.one, breathSpeed * Time.deltaTime);
 
         if (Vector3.Distance(transform.localScale, breathMax) <= 0.01f)
             inflate = false;

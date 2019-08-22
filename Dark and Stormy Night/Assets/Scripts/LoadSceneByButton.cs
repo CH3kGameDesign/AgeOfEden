@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class LoadSceneByButton : MonoBehaviour
 {
 	// Update is called once per frame
-	private void Update ()
+	private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Keypad0))
             SceneManager.LoadScene(0);

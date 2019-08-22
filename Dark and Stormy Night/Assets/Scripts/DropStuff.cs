@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DropStuff : MonoBehaviour {
-
+public class DropStuff : MonoBehaviour
+{
     public List<Transform> objectsToDrop = new List<Transform>();
     private List<float> waitTime = new List<float>();
 
@@ -12,8 +12,9 @@ public class DropStuff : MonoBehaviour {
 
     private float timer;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    private void Start()
+    {
         waitTime.Add(waitStart);
         
         for (int i = 1; i < objectsToDrop.Count; i++)
@@ -22,9 +23,10 @@ public class DropStuff : MonoBehaviour {
             waitTime.Add(waitCurrent);
         }
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    private void Update()
+    {
         for (int i = 0; i < objectsToDrop.Count; i++)
         {
             if (timer >= waitTime[i])
@@ -39,12 +41,14 @@ public class DropStuff : MonoBehaviour {
         timer += Time.deltaTime;
 	}
 
-    void Finish ()
+    /// <summary>
+    /// Called for finalisation
+    /// </summary>
+    private void Finish()
     {
         for (int i = 0; i < objectsToDrop.Count; i++)
-        {
             objectsToDrop[i].gameObject.SetActive(false);
-        }
+
         ActivateOnFinish.SetActive(true);
         GetComponent<DropStuff>().enabled = false;
     }

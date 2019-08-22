@@ -37,7 +37,7 @@ public class TextGeneration : MonoBehaviour
     public string textString;
 
     // Called once before the first frame
-    private void Start ()
+    private void Start()
     {
         textString = textObject.GetComponent<TextMeshPro>().text;
         textObject.GetComponent<TextMeshPro>().text = "";
@@ -50,7 +50,7 @@ public class TextGeneration : MonoBehaviour
     }
 
     // Called once per frame
-    private void Update ()
+    private void Update()
     {
         if (transform.childCount == textString.Length + 1)
         {
@@ -79,7 +79,7 @@ public class TextGeneration : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter (Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player" && !played)
         {
@@ -91,9 +91,9 @@ public class TextGeneration : MonoBehaviour
     /// <summary>
     /// Generates text after a delay
     /// </summary>
-    /// <param name="pWaitTime"></param>
+    /// <param name="pWaitTime">The delay before generating</param>
     /// <returns></returns>
-    private IEnumerator TextGenerate (float pWaitTime)
+    private IEnumerator TextGenerate(float pWaitTime)
     {
         while (textCount < textString.Length)
         {
@@ -134,9 +134,9 @@ public class TextGeneration : MonoBehaviour
     /// <summary>
     /// Destroys the text after a delay
     /// </summary>
-    /// <param name="pWaitTime"></param>
+    /// <param name="pWaitTime">The delay before destroying</param>
     /// <returns></returns>
-    private IEnumerator TextDestroy (float pWaitTime)
+    private IEnumerator TextDestroy(float pWaitTime)
     {
         while (textCount < textString.Length)
         {
@@ -153,9 +153,9 @@ public class TextGeneration : MonoBehaviour
     /// <summary>
     /// Blows the text away
     /// </summary>
-    /// <param name="pWaitTime"></param>
+    /// <param name="pWaitTime">The delay before animating</param>
     /// <returns></returns>
-    private IEnumerator BlowUsAllAway (float pWaitTime)
+    private IEnumerator BlowUsAllAway(float pWaitTime)
     {
         while (textCount < textString.Length)
         {

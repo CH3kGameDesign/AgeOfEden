@@ -19,14 +19,14 @@ public class SpawnInsideArea : MonoBehaviour
     public List<GameObject> spawnObjects = new List<GameObject>();
 
 	// Called once before the first frame
-	private void Start ()
+	private void Start()
     {
         spawnRate = Random.Range(spawnRateMax.x, spawnRateMax.y);
         spawnRateCounter = 0;
 	}
 	
 	// Called once per frame
-	private void Update ()
+	private void Update()
     {
         if (spawnRateCounter > spawnRate)
         {
@@ -35,7 +35,8 @@ public class SpawnInsideArea : MonoBehaviour
             if (areaType == area.sphere)
             {
                 Vector3 pos = Random.insideUnitSphere * radius;
-                Instantiate(spawnObjects[sel], point.position + pos, spawnObjects[sel].transform.rotation);
+                Instantiate(spawnObjects[sel], point.position + pos,
+                    spawnObjects[sel].transform.rotation);
             }
 
             if (areaType == area.box)
@@ -44,7 +45,8 @@ public class SpawnInsideArea : MonoBehaviour
                 float y = Random.Range(pointMin.y, pointMax.y);
                 float z = Random.Range(pointMin.z, pointMax.z);
 
-                Instantiate(spawnObjects[sel], new Vector3(x,y,z), spawnObjects[sel].transform.rotation);
+                Instantiate(spawnObjects[sel], new Vector3(x,y,z),
+                    spawnObjects[sel].transform.rotation);
             }
             spawnRate = Random.Range(spawnRateMax.x, spawnRateMax.y);
             spawnRateCounter = 0;

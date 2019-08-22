@@ -16,7 +16,7 @@ public class SoftRotation : MonoBehaviour
     private int direction = 0;
 
 	// Called once before the first frame
-	private void Start ()
+	private void Start()
     {
         if (!Movee)
             Movee = transform;
@@ -24,7 +24,7 @@ public class SoftRotation : MonoBehaviour
 	}
 	
 	// Called once per frame
-	private void FixedUpdate ()
+	private void FixedUpdate()
     {
         if (direction == 0)
             Movee.localRotation = Quaternion.Lerp(

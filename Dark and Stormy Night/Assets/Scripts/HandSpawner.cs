@@ -19,7 +19,7 @@ public class HandSpawner : MonoBehaviour
     public bool spawnHands;
     
 	// Update is called once per frame
-	private void Update ()
+	private void Update()
     {
 		if (spawnHands)
         {
@@ -49,8 +49,8 @@ public class HandSpawner : MonoBehaviour
     /// <summary>
     /// Assigns a value to a variable
     /// </summary>
-    /// <param name="pTruth"></param>
-    public void SpawnHands (bool pTruth)
+    /// <param name="pTruth">The desired state of the hand spawning</param>
+    public void SpawnHands(bool pTruth)
     {
         spawnHands = pTruth;
     }

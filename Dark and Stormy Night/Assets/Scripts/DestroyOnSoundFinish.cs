@@ -7,12 +7,12 @@ public class DestroyOnSoundFinish : MonoBehaviour
     private bool hasPlayed = false;
     
 	// Update is called once per frame
-	private void Update ()
+	private void Update()
     {
-        if (GetComponent<AudioSource>().isPlaying == true)
+        if (GetComponent<AudioSource>().isPlaying)
             hasPlayed = true;
 
-        if (GetComponent<AudioSource>().isPlaying == false && hasPlayed == true)
-            Destroy(this.gameObject);
+        if (!GetComponent<AudioSource>().isPlaying && hasPlayed)
+            Destroy(gameObject);
 	}
 }
