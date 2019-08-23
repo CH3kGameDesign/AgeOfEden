@@ -4,23 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class SaveEditor : MonoBehaviour {
-
+public class SaveEditor : MonoBehaviour
+{
     public List<Text> buttons = new List<Text>();
     public TextMeshProUGUI lastEnding;
 
     public bool trainPresent;
 
 	// Use this for initialization
-	void Start () {
+	private void Start()
+    {
         UpdateDisplay();
-        if (trainPresent == true)
+        if (trainPresent)
             TrainDisplay();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        if (trainPresent == false)
+	private void Update()
+    {
+        if (!trainPresent)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -33,7 +35,7 @@ public class SaveEditor : MonoBehaviour {
         Cursor.visible = false;
     }
 
-    void UpdateDisplay ()
+    private void UpdateDisplay()
     {
         for (int i = 0; i < PermanentData.saveInfo.endingsAchieved.Count; i++)
         {
@@ -45,7 +47,7 @@ public class SaveEditor : MonoBehaviour {
         lastEnding.text = PermanentData.saveInfo.lastEndingAchieved.ToString();
     }
 
-    public void ChangeValues (int choice)
+    public void ChangeValues(int choice)
     {
         if (choice == -1)
         {
@@ -79,13 +81,13 @@ public class SaveEditor : MonoBehaviour {
         SaveLoad.Save();
     }
 
-    public void TrainDisplay ()
+    public void TrainDisplay()
     {
         if (PermanentData.saveInfo.endingsAchieved.Count < 3)
+        {
             for (int i = PermanentData.saveInfo.endingsAchieved.Count; i < 3; i++)
-            {
                 PermanentData.saveInfo.endingsAchieved.Add(false);
-            }
+        }
         PermanentData.saveInfo.endingsAchieved[0] = true;
         PermanentData.saveInfo.endingsAchieved[1] = false;
         PermanentData.saveInfo.endingsAchieved[2] = false;

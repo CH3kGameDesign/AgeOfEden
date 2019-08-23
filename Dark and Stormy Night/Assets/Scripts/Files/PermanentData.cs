@@ -5,11 +5,13 @@ using UnityEngine;
 public class PermanentData
 {
     [System.Serializable]
-    public class info
+    public class Info
     {
         public List<bool> endingsAchieved = new List<bool>();
         public int lastEndingAchieved;
+        public bool firstTime = true;
     }
+
     [SerializeField]
-    public static info saveInfo = new info();
+    public static Info saveInfo = new Info();
 }

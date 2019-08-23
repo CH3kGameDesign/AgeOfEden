@@ -15,6 +15,8 @@ public class Movement : MonoBehaviour
     [Tooltip("Button will automatically close the game")]
     [SerializeField]
     private KeyCode m_kcQuitButton = KeyCode.End;
+    private KeyCode m_kcSpeedUp = KeyCode.Equals;
+    private KeyCode m_kcSpeedDown = KeyCode.Minus;
 
     [Header("Booleans")]
     [Tooltip("Enable this if not at typewriter")]
@@ -123,6 +125,11 @@ public class Movement : MonoBehaviour
                 m_bGrounded = true;
             else
                 m_bGrounded = false;
+
+            if (Input.GetKeyDown(m_kcSpeedUp))
+                m_fSprintMultiplier += 3;
+            if (Input.GetKeyDown(m_kcSpeedDown))
+                m_fSprintMultiplier -= 3;
 
             if (!m_bLegacyMovement)
                 DoMovement();
