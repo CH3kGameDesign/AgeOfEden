@@ -65,6 +65,14 @@ public class PostProcessingChange : MonoBehaviour {
         
 
         tarCamera.profile.colorGrading.settings = tarCG;
+
+        //////////
+
+        var tarGrain = tarCamera.profile.grain.settings;
+
+        tarGrain.intensity = Mathf.Lerp(tarGrain.intensity, tarProfile.grain.settings.intensity, lerpTime);
+
+        tarCamera.profile.grain.settings = tarGrain;
     }
 
     void Disable ()

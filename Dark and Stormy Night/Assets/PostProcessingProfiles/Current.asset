@@ -120,23 +120,23 @@ MonoBehaviour:
         neutralWhiteLevel: 20
         neutralWhiteClip: 10
       basic:
-        postExposure: -1.5
-        temperature: -22
-        tint: 7.9999948
-        hueShift: -8.9999895
-        saturation: 0.9600005
-        contrast: 0.477
+        postExposure: -0.6400002
+        temperature: -16.000008
+        tint: 6e-45
+        hueShift: -6e-45
+        saturation: 0.99999976
+        contrast: 1.4099995
       channelMixer:
-        red: {x: 0.87000054, y: 0.41999966, z: -0.12999983}
+        red: {x: 0.99999976, y: 6e-45, z: -6e-45}
         green: {x: 0, y: 1, z: 0}
         blue: {x: 0, y: 0, z: 1}
         currentEditingChannel: 0
       colorWheels:
         mode: 1
         log:
-          slope: {r: 0.9677451, g: 1, b: 0.99009115, a: -0.026578072}
-          power: {r: 0.9960846, g: 0.9315767, b: 1, a: 0}
-          offset: {r: 1, g: 0.89548093, b: 0.8759118, a: 0}
+          slope: {r: 0.300215, g: 0.97735655, b: 1, a: -0.026578072}
+          power: {r: 1, g: 0.54587424, b: 0.26687443, a: 0}
+          offset: {r: 1, g: 0.6770035, b: 0.5389143, a: 0}
         linear:
           lift: {r: 0, g: 0, b: 0, a: 0}
           gamma: {r: 0, g: 0, b: 0, a: 0}
@@ -310,12 +310,12 @@ MonoBehaviour:
       spectralTexture: {fileID: 2800000, guid: 57d717af6a4012f41a777ab8dc276ea0, type: 3}
       intensity: 0.594
   grain:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
       colored: 0
-      intensity: 0.558
-      size: 0.3
-      luminanceContribution: 0.715
+      intensity: 0.5641061
+      size: 1.47
+      luminanceContribution: 0
   vignette:
     m_Enabled: 1
     m_Settings:

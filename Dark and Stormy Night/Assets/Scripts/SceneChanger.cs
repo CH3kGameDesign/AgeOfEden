@@ -89,7 +89,10 @@ public class SceneChanger : MonoBehaviour
     private void MidLoad()
     {
         if (m_sbSceneToLoad == -1)
+        {
             Application.Quit();
+            Debug.Log("QUITTT");
+        }
         else
         {
             if (m_bAsync)
