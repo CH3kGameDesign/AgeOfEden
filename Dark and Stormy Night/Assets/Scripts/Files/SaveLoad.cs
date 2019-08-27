@@ -22,12 +22,12 @@ public static class SaveLoad
             Directory.CreateDirectory(Application.persistentDataPath + "/SaveData");
         }
         //Inventory
-        FileStream fs = new FileStream(Application.persistentDataPath + "/SaveData/SuperSecretSaveData.dat", FileMode.Create);
+        FileStream fs = new FileStream(Application.persistentDataPath
+            + "/SaveData/SuperSecretSaveData.dat", FileMode.Create);
         BinaryFormatter bf = new BinaryFormatter();
         bf.Serialize(fs, PermanentData.saveInfo);
         fs.Close();
     }
-
 
     //LOAD
     public static void Load()
@@ -39,15 +39,15 @@ public static class SaveLoad
 
         if (File.Exists(Application.persistentDataPath + "/SaveData/SuperSecretSaveData.dat"))
         {
-            using (Stream stream = File.Open(Application.persistentDataPath + "/SaveData/SuperSecretSaveData.dat", FileMode.Open))
+            using (Stream stream = File.Open(Application.persistentDataPath
+                + "/SaveData/SuperSecretSaveData.dat", FileMode.Open))
             {
-                var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-
-                PermanentData.saveInfo = (PermanentData.info)bformatter.Deserialize(stream);
+                Debug.Log(Application.persistentDataPath);
+                BinaryFormatter bformatter = new BinaryFormatter();
+                PermanentData.saveInfo = (PermanentData.Info)bformatter.Deserialize(stream);
             }
         }
     }
-
 
     //RESET PROGRESS
     public static void ResetProgress()

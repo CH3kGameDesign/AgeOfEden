@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SaveEnding : MonoBehaviour {
-
+public class SaveEnding : MonoBehaviour
+{
     public bool onAwake;
     public int endingNo;
 
@@ -12,17 +12,13 @@ public class SaveEnding : MonoBehaviour {
     public option choice;
 
 	// Use this for initialization
-	void Awake () {
+	private void Awake()
+    {
         if (onAwake)
             DoThing();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
-    public void DoThing ()
+    public void DoThing()
     {
         if (PermanentData.saveInfo.endingsAchieved.Count < endingNo + 1)
         {
