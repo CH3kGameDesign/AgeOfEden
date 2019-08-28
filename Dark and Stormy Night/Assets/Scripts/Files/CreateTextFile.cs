@@ -47,6 +47,7 @@ public class CreateTextFile : MonoBehaviour
             PermanentData.saveInfo.firstTime = true;
     }
 
+    // Checks if a certain file paht returns valid
     private bool DoesFileExist(string pPath)
     {
         // Tries to open the file and returns the success
@@ -65,6 +66,7 @@ public class CreateTextFile : MonoBehaviour
         }
     }
 	
+    // Writes a message into a file
     private void WriteMessage(string pPath, string pMessage)
     {
         // Rewrites the file with new message
@@ -73,6 +75,7 @@ public class CreateTextFile : MonoBehaviour
         writer.Close();
     }
 
+    // Writes a message onto the next line of a file
     private void WriteOnNewLine(string pPath, string pMessage)
     {
         // Rewrites the file with new message

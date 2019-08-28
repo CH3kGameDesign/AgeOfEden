@@ -10,8 +10,15 @@ public class PermanentData
         public List<bool> endingsAchieved = new List<bool>();
         public int lastEndingAchieved;
         public bool firstTime = true;
-    }
 
-    [SerializeField]
+        // Constructor
+        public Info()
+        {
+            int endingCount = 5;
+            for (int i = 0; i <= endingCount; i++)
+                endingsAchieved.Add(false);
+        }
+    }
+    
     public static Info saveInfo = new Info();
 }
