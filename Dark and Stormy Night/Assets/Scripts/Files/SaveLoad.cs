@@ -47,6 +47,18 @@ public static class SaveLoad
                 PermanentData.saveInfo = (PermanentData.Info)bformatter.Deserialize(stream);
             }
         }
+        else
+        {
+            Debug.Log("CreatedNew");
+            FileStream fs = new FileStream(Application.persistentDataPath
+            + "/SaveData/SuperSecretSaveData.dat", FileMode.Create);
+            PermanentData.saveInfo.endingsAchieved.Add(false);
+            PermanentData.saveInfo.lastEndingAchieved = 0;
+            PermanentData.saveInfo.firstTime = true;
+            BinaryFormatter bf = new BinaryFormatter();
+            bf.Serialize(fs, PermanentData.saveInfo);
+            fs.Close();
+        }
     }
 
     //RESET PROGRESS

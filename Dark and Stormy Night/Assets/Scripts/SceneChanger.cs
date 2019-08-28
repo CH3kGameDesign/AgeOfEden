@@ -90,8 +90,13 @@ public class SceneChanger : MonoBehaviour
     {
         if (m_sbSceneToLoad == -1)
         {
+#if UNITY_STANDALONE
             Application.Quit();
-            Debug.Log("QUITTT");
+#endif
+
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#endif
         }
         else
         {

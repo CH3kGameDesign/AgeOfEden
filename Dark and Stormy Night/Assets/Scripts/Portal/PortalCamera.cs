@@ -12,7 +12,7 @@ public class PortalCamera : MonoBehaviour {
 
     private void Start()
     {
-        if (CameraMovement.s_CameraObject != null)
+        if (CameraMovement.s_CameraObject != null && playerCamera == null)
             playerCamera = CameraMovement.s_CameraObject.transform.GetChild(0);
     }
 

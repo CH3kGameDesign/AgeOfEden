@@ -24,10 +24,9 @@ public class KeyEnable : MonoBehaviour
         if (toggle)
         {
             for (int i = 0; i < enableObjects.Count; i++)
-            {
                 enableObjects[i].SetActive(!enableObjects[i].activeSelf);
+            for (int i = 0; i < disableObjects.Count; i++)
                 disableObjects[i].SetActive(!disableObjects[i].activeSelf);
-            }
         }
         else
         {

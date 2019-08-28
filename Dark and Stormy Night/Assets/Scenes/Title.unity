@@ -3532,6 +3532,8 @@ MonoBehaviour:
   - {fileID: 1875281632}
   disableObjects:
   - {fileID: 103697107}
+  - {fileID: 138370325}
+  - {fileID: 70435300}
   toggle: 0
 --- !u!1 &677604554
 GameObject:
@@ -3544,7 +3546,7 @@ GameObject:
   - component: {fileID: 677604555}
   m_Layer: 11
   m_Name: PlayerHolder
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9903,7 +9905,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: ALPHA.8-22a
+  m_text: ALPHA.8-28a
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 028c896bed41043408be11a2228d84f2, type: 2}
   m_sharedMaterial: {fileID: 21113873226524262, guid: 028c896bed41043408be11a2228d84f2,
@@ -10580,6 +10582,7 @@ GameObject:
   - component: {fileID: 1496555328}
   - component: {fileID: 1496555329}
   - component: {fileID: 1496555330}
+  - component: {fileID: 1496555331}
   m_Layer: 0
   m_Name: LoadData
   m_TagString: Untagged
@@ -10635,6 +10638,18 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   time: 0
+--- !u!114 &1496555331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1496555327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 833a85a82a0bb6b409ebc9b65a50a07d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SE: {fileID: 138370326}
 --- !u!1 &1525873629
 GameObject:
   m_ObjectHideFlags: 0
