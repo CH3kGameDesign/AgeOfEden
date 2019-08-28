@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PermanentData
+public sealed class PermanentData
 {
     [System.Serializable]
-    public class Info
+    public sealed class Info
     {
         public List<bool> endingsAchieved = new List<bool>();
         public int lastEndingAchieved;

@@ -18,11 +18,11 @@ public class CreateTextFile : MonoBehaviour
             + "/" + m_sFileName +".txt";
 
         
-        if (PermanentData.saveInfo.firstTime)
+        if (GetPermanentStorage())
         {
             //Debug.Log("First message");
             WriteMessage(path, m_sMessage);
-            PermanentData.saveInfo.firstTime = false;
+            SetPermanentStorage(false);
         }
         else
         {
@@ -35,7 +35,8 @@ public class CreateTextFile : MonoBehaviour
             {
                 //Debug.Log("File doesnt exist");
                 //Debug.Log("Deleted message");
-                WriteMessage(path, "You cannot get rid of me\n\n" + m_sMessage);
+                WriteMessage(path, "You cannot get rid of me");
+                WriteOnNewLine(path, m_sMessage);
             }
         }
     }
@@ -44,7 +45,7 @@ public class CreateTextFile : MonoBehaviour
     {
         // Resets the first time bool
         if (Input.GetKeyDown(m_kcResetFirstTime))
-            PermanentData.saveInfo.firstTime = true;
+            SetPermanentStorage(true);
     }
 
     // Checks if a certain file paht returns valid
@@ -78,17 +79,26 @@ public class CreateTextFile : MonoBehaviour
     // Writes a message onto the next line of a file
     private void WriteOnNewLine(string pPath, string pMessage)
     {
-        // Rewrites the file with new message
+        // Writes the message on a new file line
         StreamWriter writer = new StreamWriter(pPath, true);
         writer.WriteLine(writer.NewLine + pMessage);
         writer.Close();
     }
 
-    private void SetPermanentStorage()
+    /// <summary>
+    /// Sets the desired state of the permanent storage for firstTime
+    /// </summary>
+    /// <param name="pState">The desired state of the bool</param>
+    private void SetPermanentStorage(bool pState)
     {
+        PermanentData.saveInfo.firstTime = pState;
     }
 
-    private void GetPermanentStorage()
+    /// <summary>
+    /// Returns the saved data of firstTime
+    /// </summary>
+    private bool GetPermanentStorage()
     {
+        return PermanentData.saveInfo.firstTime;
     }
 }
