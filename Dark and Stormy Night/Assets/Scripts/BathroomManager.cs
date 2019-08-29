@@ -6,7 +6,11 @@ public class BathroomManager : MonoBehaviour
 {
     public List<Transform> bathroomDoorPivots = new List<Transform>();
 
-    private Transform bathroom;
+    public Transform bathroom;
+
+    public enum choices { bathroom, houseroom}
+    [Space(20)]
+    public choices Room;
 
     private int counter;
 	
@@ -34,9 +38,18 @@ public class BathroomManager : MonoBehaviour
             }
             else
             {
-                // Attempts to assign the bathroom transform to the bathroom object's
-                try { bathroom = GameObject.FindGameObjectWithTag("Bathroom").transform; }
-                catch { bathroom = null; }
+                if (Room == choices.bathroom)
+                {
+                    // Attempts to assign the bathroom transform to the bathroom object's
+                    try { bathroom = GameObject.FindGameObjectWithTag("Bathroom").transform; }
+                    catch { bathroom = null; }
+                }
+                if (Room == choices.houseroom)
+                {
+                    // Attempts to assign the bathroom transform to the bathroom object's
+                    try { bathroom = GameObject.FindGameObjectWithTag("Houseroom").transform; }
+                    catch { bathroom = null; }
+                }
 
                 //if (GameObject.FindGameObjectWithTag("Bathroom"))
                 //    bathroom = GameObject.FindGameObjectWithTag("Bathroom").transform;

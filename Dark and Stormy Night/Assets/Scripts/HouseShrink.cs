@@ -13,27 +13,34 @@ public class HouseShrink : MonoBehaviour {
     public Vector3 endPos;
     
     private float endTimer;
+    private Camera playerCamera;
+    private float tarClipPlane = 0;
 
 	// Use this for initialization
 	void Start () {
+        if (playerCamera == null)
+            playerCamera = CameraMovement.s_CameraObject.GetComponentInChildren<Camera>();
+        if (tarClipPlane ==0)
+            tarClipPlane = playerCamera.nearClipPlane;
         startPos += transform.position;
         endPos += transform.position;
         playerTrans = Movement.m_goPlayerObject.transform;
-        extents = Mathf.Abs(startPos.x - endPos.x);
+        extents = Mathf.Abs(startPos.z - endPos.z);
 	}
 
     // Update is called once per frame
     void Update()
     {
         float tarPos = 0;
-        if (playerTrans.position.x > startPos.x && playerTrans.position.x < endPos.x)
-            tarPos = Mathf.Abs(playerTrans.position.x - startPos.x) / extents;
-        if (playerTrans.position.x > endPos.x)
+        if (playerTrans.position.z > startPos.z && playerTrans.position.z < endPos.z)
+            tarPos = Mathf.Abs(playerTrans.position.z - startPos.z) / extents;
+        if (playerTrans.position.z > endPos.z || tarPos >= 0.9f)
             tarPos = 0.9f;
 
         //playerTrans.localScale = ((extents * tarPos) + minMaxSizes.x) * Vector3.one;
         playerTrans.localScale = Vector3.Lerp(playerTrans.localScale, (tarPos + minMaxSizes.x) * Vector3.one, Time.deltaTime * 2);
         if (playerTrans.localScale.x >= 1)
             playerTrans.localScale = Vector3.one;
+        playerCamera.nearClipPlane = tarClipPlane * (tarPos + minMaxSizes.x);
     }
 }

@@ -71,6 +71,9 @@ public class Movement : MonoBehaviour
     
     private float m_fSprint = 1f;
 
+    public GameObject fallSound;
+    private float fallTimer;
+
     [HideInInspector]
     // x is forward, y is sideways
     public Vector2 m_v2DesiredVelocity;
@@ -116,7 +119,7 @@ public class Movement : MonoBehaviour
             //Debug.DrawRay(transform.position + new Vector3(-m_fRaySpread, m_fRayOrigin, 0),
             //    new Vector3(0, -m_fRaylength, 0), Color.red);
 
-            if (Physics.Raycast(transform.position + new Vector3(0, m_fRayOrigin, m_fRaySpread)* transform.localScale.y,
+            if (Physics.Raycast(transform.position + new Vector3(0, m_fRayOrigin, m_fRaySpread) * transform.localScale.y,
                 Vector3.down, out groundRay, m_fRaylength * transform.localScale.y)
                 || Physics.Raycast(transform.position + new Vector3(m_fRaySpread, m_fRayOrigin, 0) * transform.localScale.y,
                 Vector3.down, out groundRay, m_fRaylength * transform.localScale.y)
@@ -124,9 +127,19 @@ public class Movement : MonoBehaviour
                 Vector3.down, out groundRay, m_fRaylength * transform.localScale.y)
                 || Physics.Raycast(transform.position + new Vector3(-m_fRaySpread, m_fRayOrigin, 0) * transform.localScale.y,
                 Vector3.down, out groundRay, m_fRaylength * transform.localScale.y))
+            {
                 m_bGrounded = true;
+                m_aModelAnimator.GetComponent<FootStepManager>().makeNoises = true;
+                if (fallTimer >= 0.3f && fallSound != null)
+                    Instantiate(fallSound);
+                fallTimer = 0;
+            }
             else
+            {
+                m_aModelAnimator.GetComponent<FootStepManager>().makeNoises = false;
                 m_bGrounded = false;
+                fallTimer += Time.deltaTime;
+            }
 
             if (Input.GetKeyDown(m_kcSpeedUp))
                 m_fSprintMultiplier += 3;
