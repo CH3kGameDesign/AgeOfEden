@@ -116,14 +116,14 @@ public class Movement : MonoBehaviour
             //Debug.DrawRay(transform.position + new Vector3(-m_fRaySpread, m_fRayOrigin, 0),
             //    new Vector3(0, -m_fRaylength, 0), Color.red);
 
-            if (Physics.Raycast(transform.position + new Vector3(0, m_fRayOrigin, m_fRaySpread),
-                Vector3.down, out groundRay, m_fRaylength)
-                || Physics.Raycast(transform.position + new Vector3(m_fRaySpread, m_fRayOrigin, 0),
-                Vector3.down, out groundRay, m_fRaylength)
-                || Physics.Raycast(transform.position + new Vector3(0, m_fRayOrigin, -m_fRaySpread),
-                Vector3.down, out groundRay, m_fRaylength)
-                || Physics.Raycast(transform.position + new Vector3(-m_fRaySpread, m_fRayOrigin, 0),
-                Vector3.down, out groundRay, m_fRaylength))
+            if (Physics.Raycast(transform.position + new Vector3(0, m_fRayOrigin, m_fRaySpread)* transform.localScale.y,
+                Vector3.down, out groundRay, m_fRaylength * transform.localScale.y)
+                || Physics.Raycast(transform.position + new Vector3(m_fRaySpread, m_fRayOrigin, 0) * transform.localScale.y,
+                Vector3.down, out groundRay, m_fRaylength * transform.localScale.y)
+                || Physics.Raycast(transform.position + new Vector3(0, m_fRayOrigin, -m_fRaySpread) * transform.localScale.y,
+                Vector3.down, out groundRay, m_fRaylength * transform.localScale.y)
+                || Physics.Raycast(transform.position + new Vector3(-m_fRaySpread, m_fRayOrigin, 0) * transform.localScale.y,
+                Vector3.down, out groundRay, m_fRaylength * transform.localScale.y))
                 m_bGrounded = true;
             else
                 m_bGrounded = false;
@@ -164,6 +164,7 @@ public class Movement : MonoBehaviour
     /// </summary>
     private void DoMovement()
     {
+        m_fSizeScalar = transform.localScale.y;
         m_aModelAnimator.SetBool("Standing", true);
 
         m_v2DesiredVelocity.x = Input.GetAxis("Vertical");
@@ -199,20 +200,11 @@ public class Movement : MonoBehaviour
         {
             m_aModelAnimator.SetBool("Moving", true);
             // Test for sprint
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                m_aModelAnimator.SetBool("Sprinting", true);
-                m_v2DesiredVelocity *= m_fSprintMultiplier;
-                m_bIsSprinting = true;
-            }
-            else
-            {
-                m_aModelAnimator.SetBool("Sprinting", false);
-                m_bIsSprinting = false;
-            }
+            
 
             m_fStepTimer += Time.deltaTime;
         }
+        AnimUpdate();
 
         // Rotates the velocity to face the player's "forward" direction
         Vector3 rotatedVelocity = transform.forward * m_v2DesiredVelocity.x;
@@ -234,7 +226,7 @@ public class Movement : MonoBehaviour
             appliedForce *= m_fSpeedScalar;
         else
             appliedForce *= m_fSpeedScalar * m_fAerialManuverability;
-        AnimUpdate();
+        
         // Pushes to in-engine physics
         m_rbRigidbody.AddForce(appliedForce);
     }
@@ -315,12 +307,29 @@ public class Movement : MonoBehaviour
         float verSpeed = Input.GetAxis("Vertical");
         float horSpeed = Input.GetAxis("Horizontal");
 
-        if (Mathf.Abs(verSpeed) > Mathf.Abs(horSpeed))
+        if (Mathf.Abs(verSpeed) >= Mathf.Abs(horSpeed))
         {
             if (verSpeed > 0)
+            {
                 m_aModelAnimator.SetInteger("WalkDirection", 0);
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    m_aModelAnimator.SetBool("Sprinting", true);
+                    m_v2DesiredVelocity *= m_fSprintMultiplier;
+                    m_bIsSprinting = true;
+                }
+                else
+                {
+                    m_aModelAnimator.SetBool("Sprinting", false);
+                    m_bIsSprinting = false;
+                }
+            }
             else
+            {
                 m_aModelAnimator.SetInteger("WalkDirection", 3);
+                m_aModelAnimator.SetBool("Sprinting", false);
+                m_bIsSprinting = false;
+            }
         }
         else
         {
@@ -330,6 +339,8 @@ public class Movement : MonoBehaviour
                     m_aModelAnimator.SetInteger("WalkDirection", 2);
                 else
                     m_aModelAnimator.SetInteger("WalkDirection", 1);
+                m_aModelAnimator.SetBool("Sprinting", false);
+                m_bIsSprinting = false;
             }
         }
     }
