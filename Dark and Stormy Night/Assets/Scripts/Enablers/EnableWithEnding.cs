@@ -15,7 +15,7 @@ public class EnableWithEnding : MonoBehaviour
 	// Use this for initialization
 	private void Start()
     {
-        if (lastCompleted == false)
+        if (!lastCompleted)
         {
             if (PermanentData.saveInfo.endingsAchieved[endingCompleted])
             {

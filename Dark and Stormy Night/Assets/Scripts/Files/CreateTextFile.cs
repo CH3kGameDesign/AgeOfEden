@@ -5,48 +5,118 @@ using System.IO;
 
 public class CreateTextFile : MonoBehaviour
 {
-    private KeyCode m_kcResetFirstTime = KeyCode.PageDown;
-    [SerializeField]
-    private string m_sFileName = "Surprise";
-    [SerializeField]
-    private string m_sMessage = "You're the one that broke";
+    private readonly KeyCode m_kcResetFirstTime = KeyCode.PageDown;
 
-	// Use this for initialization
-	private void Start()
+    public enum Location
     {
-        string path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop)
-            + "/" + m_sFileName +".txt";
+        Desktop,
+        Documents,
+        Music,
+        Pictures
+    }
 
-        
-        if (PermanentData.saveInfo.firstTime)
+    public enum State
+    {
+        First,
+        Standard,
+        Create
+    }
+
+    [System.Serializable]
+    public class Outputs
+    {
+        [Tooltip("The output location")]
+        public Location m_olOutputLocation = Location.Desktop;
+        [Tooltip("How the file will be created and dealt with")]
+        public State m_osOutputState = State.Standard;
+        [Tooltip("Only has an impact on standard outputs")]
+        public bool m_bOverwrite = true;
+        [Tooltip("The desired file name (file will always be a text document)")]
+        public string m_sFileName = "I forgot a file name";
+        [Tooltip("The message printed into the text file")]
+        [TextArea]
+        public string m_sMessage = "I forgot a message";
+    }
+
+    [Tooltip("A resizable list of outputs editable in the inspector")]
+    public Outputs[] m_oOutputs;
+
+    // Titty streamer
+    //
+    //   OwO
+    // ( . Y . )
+    //   |   |
+    //  (  Y  )
+    //
+    // This is the ideal female body,
+    // you may not like it but this is what
+    // peak sexual performance looks like
+
+    // Called once before the first frame
+    private void Start()
+    {
+        // Verifys the list is not emtpy
+        if (m_oOutputs.Length == 0)
+            return;
+
+        // Initialises the file path
+        string path = "";
+
+        for (int i = 0; i < m_oOutputs.Length; i++)
         {
-            //Debug.Log("First message");
-            WriteMessage(path, m_sMessage);
-            PermanentData.saveInfo.firstTime = false;
-        }
-        else
-        {
-            if (DoesFileExist(path))
+            // Sorts the message to a desired location
+            if (m_oOutputs[i].m_olOutputLocation == Location.Desktop)
+                path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop)
+                    + "/" + m_oOutputs[i].m_sFileName + ".txt";
+            else if (m_oOutputs[i].m_olOutputLocation == Location.Documents)
+                path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments)
+                    + "/" + m_oOutputs[i].m_sFileName + ".txt";
+            else if (m_oOutputs[i].m_olOutputLocation == Location.Music)
+                path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic)
+                    + "/" + m_oOutputs[i].m_sFileName + ".txt";
+            else if (m_oOutputs[i].m_olOutputLocation == Location.Pictures)
+                path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyPictures)
+                    + "/" + m_oOutputs[i].m_sFileName + ".txt";
+            
+            // 1. A message displayed the first time the game is run and a certain ending is reached
+            // 2. A message displayed as a standard output
+            // 3. A message displayed when no message file is found, either deleted or never created
+            
+            if (m_oOutputs[i].m_osOutputState == State.First && GetPermanentStorage())
             {
-                //Debug.Log("Regular message");
-                WriteMessage(path, m_sMessage);
+                Debug.Log("First message");
+                WriteMessage(path, m_oOutputs[i].m_sMessage);
+                SetPermanentStorage(false);
             }
-            else
+            else if (m_oOutputs[i].m_osOutputState == State.Create && !DoesFileExist(path))
             {
-                //Debug.Log("File doesnt exist");
-                //Debug.Log("Deleted message");
-                WriteMessage(path, "You cannot get rid of me\n\n" + m_sMessage);
+                Debug.Log("Deleted message");
+                if (m_oOutputs[i].m_bOverwrite)
+                    WriteMessage(path, m_oOutputs[i].m_sMessage);
+                else
+                    WriteOnNewLine(path, m_oOutputs[i].m_sMessage);
+            }
+            else if (m_oOutputs[i].m_osOutputState == State.Standard)
+            {
+                Debug.Log("Regular message");
+                WriteMessage(path, m_oOutputs[i].m_sMessage);
             }
         }
     }
 
+    // Called once per frame
     private void Update()
     {
         // Resets the first time bool
         if (Input.GetKeyDown(m_kcResetFirstTime))
-            PermanentData.saveInfo.firstTime = true;
+            SetPermanentStorage(true);
     }
 
+    /// <summary>
+    /// Checks if a certain file path returns valid
+    /// </summary>
+    /// <param name="pPath">The file path checked</param>
+    /// <returns>The status of the file path</returns>
     private bool DoesFileExist(string pPath)
     {
         // Tries to open the file and returns the success
@@ -64,28 +134,47 @@ public class CreateTextFile : MonoBehaviour
             return false;
         }
     }
-	
+
+    /// <summary>
+    /// Writes a message into a file
+    /// </summary>
+    /// <param name="pPath">The location written to</param>
+    /// <param name="pMessage">The message written to the file</param>
     private void WriteMessage(string pPath, string pMessage)
     {
         // Rewrites the file with new message
-        StreamWriter writer = new StreamWriter(pPath);
+        StreamWriter writer = new StreamWriter(pPath, false);
         writer.WriteLine(pMessage);
         writer.Close();
     }
 
+    /// <summary>
+    /// Writes a message onto the next line of a file
+    /// </summary>
+    /// <param name="pPath">The location written to</param>
+    /// <param name="pMessage">The message appended to the file</param>
     private void WriteOnNewLine(string pPath, string pMessage)
     {
-        // Rewrites the file with new message
+        // Writes the message on a new file line
         StreamWriter writer = new StreamWriter(pPath, true);
-        writer.WriteLine(writer.NewLine + pMessage);
+        writer.WriteLine(pMessage);
         writer.Close();
     }
 
-    private void SetPermanentStorage()
+    /// <summary>
+    /// Sets the desired state of the permanent storage for firstTime
+    /// </summary>
+    /// <param name="pState">The desired state of the bool</param>
+    private void SetPermanentStorage(bool pState)
     {
+        PermanentData.saveInfo.firstTime = pState;
     }
 
-    private void GetPermanentStorage()
+    /// <summary>
+    /// Returns the saved data of firstTime
+    /// </summary>
+    private bool GetPermanentStorage()
     {
+        return PermanentData.saveInfo.firstTime;
     }
 }
