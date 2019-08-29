@@ -71,6 +71,9 @@ public class Movement : MonoBehaviour
     
     private float m_fSprint = 1f;
 
+    public GameObject fallSound;
+    private float fallTimer;
+
     [HideInInspector]
     // x is forward, y is sideways
     public Vector2 m_v2DesiredVelocity;
@@ -83,6 +86,13 @@ public class Movement : MonoBehaviour
     // What is this???
     public static GameObject m_goPlayerObject;
 
+    private void Awake()
+    {
+        m_goPlayerObject = gameObject;
+        m_rbRigidbody = GetComponent<Rigidbody>();
+        m_aModelAnimator = gameObject.GetComponentInChildren<Animator>();
+    }
+
     // Called once before the first frame
     private void Start()
     {
@@ -90,11 +100,6 @@ public class Movement : MonoBehaviour
         m_v2DesiredVelocity = new Vector2();
         m_fStepDelay = m_fForwardSpeed / 4;
         m_fSizeScalar = transform.localScale.y;
-
-        m_rbRigidbody = GetComponent<Rigidbody>();
-        m_aModelAnimator = gameObject.GetComponentInChildren<Animator>();
-
-        m_goPlayerObject = gameObject;
     }
 
     // Update is called once per frame
@@ -114,17 +119,27 @@ public class Movement : MonoBehaviour
             //Debug.DrawRay(transform.position + new Vector3(-m_fRaySpread, m_fRayOrigin, 0),
             //    new Vector3(0, -m_fRaylength, 0), Color.red);
 
-            if (Physics.Raycast(transform.position + new Vector3(0, m_fRayOrigin, m_fRaySpread),
-                Vector3.down, out groundRay, m_fRaylength)
-                || Physics.Raycast(transform.position + new Vector3(m_fRaySpread, m_fRayOrigin, 0),
-                Vector3.down, out groundRay, m_fRaylength)
-                || Physics.Raycast(transform.position + new Vector3(0, m_fRayOrigin, -m_fRaySpread),
-                Vector3.down, out groundRay, m_fRaylength)
-                || Physics.Raycast(transform.position + new Vector3(-m_fRaySpread, m_fRayOrigin, 0),
-                Vector3.down, out groundRay, m_fRaylength))
+            if (Physics.Raycast(transform.position + new Vector3(0, m_fRayOrigin, m_fRaySpread) * transform.localScale.y,
+                Vector3.down, out groundRay, m_fRaylength * transform.localScale.y)
+                || Physics.Raycast(transform.position + new Vector3(m_fRaySpread, m_fRayOrigin, 0) * transform.localScale.y,
+                Vector3.down, out groundRay, m_fRaylength * transform.localScale.y)
+                || Physics.Raycast(transform.position + new Vector3(0, m_fRayOrigin, -m_fRaySpread) * transform.localScale.y,
+                Vector3.down, out groundRay, m_fRaylength * transform.localScale.y)
+                || Physics.Raycast(transform.position + new Vector3(-m_fRaySpread, m_fRayOrigin, 0) * transform.localScale.y,
+                Vector3.down, out groundRay, m_fRaylength * transform.localScale.y))
+            {
                 m_bGrounded = true;
+                m_aModelAnimator.GetComponent<FootStepManager>().makeNoises = true;
+                if (fallTimer >= 0.3f && fallSound != null)
+                    Instantiate(fallSound);
+                fallTimer = 0;
+            }
             else
+            {
+                m_aModelAnimator.GetComponent<FootStepManager>().makeNoises = false;
                 m_bGrounded = false;
+                fallTimer += Time.deltaTime;
+            }
 
             if (Input.GetKeyDown(m_kcSpeedUp))
                 m_fSprintMultiplier += 3;
@@ -162,6 +177,7 @@ public class Movement : MonoBehaviour
     /// </summary>
     private void DoMovement()
     {
+        m_fSizeScalar = transform.localScale.y;
         m_aModelAnimator.SetBool("Standing", true);
 
         m_v2DesiredVelocity.x = Input.GetAxis("Vertical");
@@ -197,20 +213,11 @@ public class Movement : MonoBehaviour
         {
             m_aModelAnimator.SetBool("Moving", true);
             // Test for sprint
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                m_aModelAnimator.SetBool("Sprinting", true);
-                m_v2DesiredVelocity *= m_fSprintMultiplier;
-                m_bIsSprinting = true;
-            }
-            else
-            {
-                m_aModelAnimator.SetBool("Sprinting", false);
-                m_bIsSprinting = false;
-            }
+            
 
             m_fStepTimer += Time.deltaTime;
         }
+        AnimUpdate();
 
         // Rotates the velocity to face the player's "forward" direction
         Vector3 rotatedVelocity = transform.forward * m_v2DesiredVelocity.x;
@@ -232,7 +239,7 @@ public class Movement : MonoBehaviour
             appliedForce *= m_fSpeedScalar;
         else
             appliedForce *= m_fSpeedScalar * m_fAerialManuverability;
-
+        
         // Pushes to in-engine physics
         m_rbRigidbody.AddForce(appliedForce);
     }
@@ -269,6 +276,7 @@ public class Movement : MonoBehaviour
 
         if (m_v2DesiredVelocity == Vector2.zero)
         {
+            m_aModelAnimator.SetInteger("WalkDirection", 0);
             m_aModelAnimator.SetBool("Moving", false);
             if (m_fStepTimer != 0)
             {
@@ -280,6 +288,7 @@ public class Movement : MonoBehaviour
         {
             m_aModelAnimator.SetBool("Moving", true);
             m_fStepTimer += Time.deltaTime;
+            AnimUpdate();
         }
 
         Vector3 desiredPosition = Vector3.ClampMagnitude(
@@ -304,5 +313,48 @@ public class Movement : MonoBehaviour
         //{
         //    GetComponent<Rigidbody>().AddForce(Vector3.up * 600, ForceMode.Impulse);
         //}
+    }
+
+    private void AnimUpdate ()
+    {
+        float verSpeed = Input.GetAxis("Vertical");
+        float horSpeed = Input.GetAxis("Horizontal");
+
+        if (Mathf.Abs(verSpeed) >= Mathf.Abs(horSpeed))
+        {
+            if (verSpeed > 0)
+            {
+                m_aModelAnimator.SetInteger("WalkDirection", 0);
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    m_aModelAnimator.SetBool("Sprinting", true);
+                    m_v2DesiredVelocity *= m_fSprintMultiplier;
+                    m_bIsSprinting = true;
+                }
+                else
+                {
+                    m_aModelAnimator.SetBool("Sprinting", false);
+                    m_bIsSprinting = false;
+                }
+            }
+            else
+            {
+                m_aModelAnimator.SetInteger("WalkDirection", 3);
+                m_aModelAnimator.SetBool("Sprinting", false);
+                m_bIsSprinting = false;
+            }
+        }
+        else
+        {
+            if (Mathf.Abs(horSpeed) > 0.01f)
+            {
+                if (horSpeed > 0)
+                    m_aModelAnimator.SetInteger("WalkDirection", 2);
+                else
+                    m_aModelAnimator.SetInteger("WalkDirection", 1);
+                m_aModelAnimator.SetBool("Sprinting", false);
+                m_bIsSprinting = false;
+            }
+        }
     }
 }

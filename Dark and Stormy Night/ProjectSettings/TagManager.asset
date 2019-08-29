@@ -10,6 +10,7 @@ TagManager:
   - CarpetArea
   - Bathroom
   - TileArea
+  - Houseroom
   layers:
   - Default
   - TransparentFX

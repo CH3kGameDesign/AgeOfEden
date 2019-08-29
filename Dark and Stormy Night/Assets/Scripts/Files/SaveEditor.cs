@@ -63,14 +63,6 @@ public class SaveEditor : MonoBehaviour
         }
         if (choice >= 0)
         {
-            if (PermanentData.saveInfo.endingsAchieved.Count < choice + 1)
-            {
-                for (int i = 0; i < (choice + 1) - PermanentData.saveInfo.endingsAchieved.Count; i++)
-                {
-                    PermanentData.saveInfo.endingsAchieved.Add(false);
-                }
-            }
-
             PermanentData.saveInfo.endingsAchieved[choice] = !PermanentData.saveInfo.endingsAchieved[choice];
             if (PermanentData.saveInfo.endingsAchieved[choice] == true)
                 PermanentData.saveInfo.lastEndingAchieved = choice;
