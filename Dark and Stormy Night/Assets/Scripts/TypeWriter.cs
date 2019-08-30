@@ -161,32 +161,29 @@ public class TypeWriter : MonoBehaviour
                 scriptTyping = false;
                 charScriptTakesOverCounter = 0;
             }
+            else if (returnToTyping == true)
+            {
+                charScriptTakesOverCounter = -1000;
+                scriptTyping = false;
+            }
             else
             {
-                if (returnToTyping == true)
+                if (activateOnFinish.Count != 0)
                 {
-                    charScriptTakesOverCounter = -1000;
-                    scriptTyping = false;
+                    for (int i = 0; i < activateOnFinish.Count; i++)
+                        activateOnFinish[i].SetActive(true);
                 }
-                else
+                if (deActivateOnFinish.Count != 0)
                 {
-                    if (activateOnFinish.Count != 0)
-                    {
-                        for (int i = 0; i < activateOnFinish.Count; i++)
-                            activateOnFinish[i].SetActive(true);
-                    }
-                    if (deActivateOnFinish.Count != 0)
-                    {
-                        for (int i = 0; i < deActivateOnFinish.Count; i++)
-                            deActivateOnFinish[i].SetActive(false);
-                    }
-                    NextRow();
-                    NextRow();
-                    text.GetChild(row).GetComponent<TextMeshPro>().text += lastLine;
-                    voidOnFinish.Invoke();
-                    startTyping = false;
-                    Instantiate(exitSound, transform.position, transform.rotation);
+                    for (int i = 0; i < deActivateOnFinish.Count; i++)
+                        deActivateOnFinish[i].SetActive(false);
                 }
+                NextRow();
+                NextRow();
+                text.GetChild(row).GetComponent<TextMeshPro>().text += lastLine;
+                voidOnFinish.Invoke();
+                startTyping = false;
+                Instantiate(exitSound, transform.position, transform.rotation);
             }
         }
     }

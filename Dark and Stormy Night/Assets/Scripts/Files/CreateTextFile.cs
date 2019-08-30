@@ -48,15 +48,6 @@ public class CreateTextFile : MonoBehaviour
     [Tooltip("A resizable list of outputs editable in the inspector")]
     public Outputs[] m_oOutputs;
 
-    // Titty streamer
-    //
-    //   OwO
-    // ( . Y . )
-    //   |   |
-    //  (  Y  )
-    //
-    // This is the ideal female body, you may not like it but this is what peak performance looks like
-
     // Called once before the first frame
     private void Start()
     {
@@ -94,19 +85,19 @@ public class CreateTextFile : MonoBehaviour
             
             if (m_oOutputs[i].m_osOutputState == State.First && GetPermanentStorage())
             {
-                Debug.Log("First message");
+                //Debug.Log("First message");
                 WriteMessage(path, m_oOutputs[i].m_sMessage);
                 SetPermanentStorage(false);
             }
             else if (m_oOutputs[i].m_osOutputState == State.Create && !DoesFileExist(path))
             {
-                Debug.Log("Created message");
+                //Debug.Log("Created message");
                 WriteMessage(path, m_oOutputs[i].m_sMessage);
                 m_bRecreated = true;
             }
             else if (m_oOutputs[i].m_osOutputState == State.Standard && !m_bRecreated)
             {
-                Debug.Log("Regular message");
+                //Debug.Log("Regular message");
                 if (m_oOutputs[i].m_bOverwrite)
                     WriteMessage(path, m_oOutputs[i].m_sMessage);
                 else
