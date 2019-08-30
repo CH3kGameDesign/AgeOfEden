@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
-using System;
 using UnityEngine.SceneManagement;
 
 public class TypeWriter : MonoBehaviour
@@ -29,8 +28,8 @@ public class TypeWriter : MonoBehaviour
 
     private int endingNo;
     
-    [Serializable]
-    public class ending
+    [System.Serializable]
+    public class Ending
     {
         public List<string> startLines = new List<string>();
         public List<string> scriptLines = new List<string>();
@@ -40,7 +39,7 @@ public class TypeWriter : MonoBehaviour
     }
 
     [SerializeField]
-    public List<ending> EndingChanges = new List<ending>();
+    public List<Ending> EndingChanges = new List<Ending>();
 
     private List<string> scriptLines = new List<string>();
     private string lastLine;
@@ -215,7 +214,7 @@ public class TypeWriter : MonoBehaviour
             charScriptTakesOverCounter++;
         }
 
-        int ranInt = UnityEngine.Random.Range(0, clickSounds.Count);
+        int ranInt = Random.Range(0, clickSounds.Count);
 
         if (textSound != " ")
         {

@@ -18,8 +18,8 @@ public class CreateTextFile : MonoBehaviour
     public enum State
     {
         First,
-        Standard,
-        Create
+        Create,
+        Standard
     }
 
     [System.Serializable]
@@ -27,7 +27,7 @@ public class CreateTextFile : MonoBehaviour
     {
         [Tooltip("The output location")]
         public Location m_olOutputLocation = Location.Desktop;
-        [Tooltip("How the file will be created and dealt with")]
+        [Tooltip("How the file will be created and dealt with, ordering must be: First, Create, Standard")]
         public State m_osOutputState = State.Standard;
         [Tooltip("Only has an impact on standard outputs")]
         public bool m_bOverwrite = true;
@@ -35,8 +35,15 @@ public class CreateTextFile : MonoBehaviour
         public string m_sFileName = "I forgot a file name";
         [Tooltip("The message printed into the text file")]
         [TextArea]
-        public string m_sMessage = "I forgot a message";
+        public string m_sMessage = @"I forgot a message";
     }
+
+    // Prevents standard output from overwriting create output in same generation
+    private bool m_bRecreated = false;
+
+    [Tooltip("The char that will be used to signify an enter press")]
+    [SerializeField]
+    private char m_cEnterChar = '|';
 
     [Tooltip("A resizable list of outputs editable in the inspector")]
     public Outputs[] m_oOutputs;
@@ -48,9 +55,7 @@ public class CreateTextFile : MonoBehaviour
     //   |   |
     //  (  Y  )
     //
-    // This is the ideal female body,
-    // you may not like it but this is what
-    // peak sexual performance looks like
+    // This is the ideal female body, you may not like it but this is what peak performance looks like
 
     // Called once before the first frame
     private void Start()
@@ -64,23 +69,28 @@ public class CreateTextFile : MonoBehaviour
 
         for (int i = 0; i < m_oOutputs.Length; i++)
         {
+            m_oOutputs[i].m_sMessage = m_oOutputs[i].m_sMessage.Replace(m_cEnterChar.ToString(),
+                System.Environment.NewLine);
+
             // Sorts the message to a desired location
             if (m_oOutputs[i].m_olOutputLocation == Location.Desktop)
                 path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop)
-                    + "/" + m_oOutputs[i].m_sFileName + ".txt";
+                    + "\\" + m_oOutputs[i].m_sFileName + ".txt";
             else if (m_oOutputs[i].m_olOutputLocation == Location.Documents)
                 path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments)
-                    + "/" + m_oOutputs[i].m_sFileName + ".txt";
+                    + "\\" + m_oOutputs[i].m_sFileName + ".txt";
             else if (m_oOutputs[i].m_olOutputLocation == Location.Music)
                 path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic)
-                    + "/" + m_oOutputs[i].m_sFileName + ".txt";
+                    + "\\" + m_oOutputs[i].m_sFileName + ".txt";
             else if (m_oOutputs[i].m_olOutputLocation == Location.Pictures)
                 path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyPictures)
-                    + "/" + m_oOutputs[i].m_sFileName + ".txt";
-            
+                    + "\\" + m_oOutputs[i].m_sFileName + ".txt";
+
             // 1. A message displayed the first time the game is run and a certain ending is reached
             // 2. A message displayed as a standard output
             // 3. A message displayed when no message file is found, either deleted or never created
+            // The 'create' message should overwrite and prevent any messages from being written to
+            // that file
             
             if (m_oOutputs[i].m_osOutputState == State.First && GetPermanentStorage())
             {
@@ -90,16 +100,17 @@ public class CreateTextFile : MonoBehaviour
             }
             else if (m_oOutputs[i].m_osOutputState == State.Create && !DoesFileExist(path))
             {
-                Debug.Log("Deleted message");
+                Debug.Log("Created message");
+                WriteMessage(path, m_oOutputs[i].m_sMessage);
+                m_bRecreated = true;
+            }
+            else if (m_oOutputs[i].m_osOutputState == State.Standard && !m_bRecreated)
+            {
+                Debug.Log("Regular message");
                 if (m_oOutputs[i].m_bOverwrite)
                     WriteMessage(path, m_oOutputs[i].m_sMessage);
                 else
                     WriteOnNewLine(path, m_oOutputs[i].m_sMessage);
-            }
-            else if (m_oOutputs[i].m_osOutputState == State.Standard)
-            {
-                Debug.Log("Regular message");
-                WriteMessage(path, m_oOutputs[i].m_sMessage);
             }
         }
     }
