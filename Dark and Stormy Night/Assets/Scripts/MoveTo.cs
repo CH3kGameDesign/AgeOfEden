@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MoveTo : MonoBehaviour
 {
     public float metresPerSecond;
+    public bool scaleSpeed;
     public float lerpSpeed;
     private float lerpSpeedActual = 0;
 
@@ -26,6 +28,7 @@ public class MoveTo : MonoBehaviour
     public bool disableAfterFinish = false;
     public GameObject activateOnFinish;
     public GameObject deActivateOnFinish;
+    public UnityEvent eventOnFinish = new UnityEvent();
 
 	// Called once before the first frame
 	private void Start()
@@ -51,6 +54,8 @@ public class MoveTo : MonoBehaviour
             else
                 tarPos += Movee.position;
         }
+        if (scaleSpeed == true)
+            metresPerSecond *= Movee.lossyScale.x;
 	}
 	
     // Called once per frame
@@ -77,7 +82,7 @@ public class MoveTo : MonoBehaviour
         {
             Vector3 finalPos = localTo.parent.position + tarPos;
 
-            if (Vector3.Distance(Movee.position, finalPos) < speed)
+            if (Vector3.Distance(Movee.position, finalPos) < speed * Movee.lossyScale.x)
             {
                 Movee.position = finalPos;
                 if (disableAfterFinish)
@@ -93,7 +98,7 @@ public class MoveTo : MonoBehaviour
         }
         else
         {
-            if (Vector3.Distance(Movee.position, tarPos) < speed)
+            if (Vector3.Distance(Movee.position, tarPos) < speed * Movee.lossyScale.x)
             {
                 Movee.position = tarPos;
                 if (disableAfterFinish)
@@ -158,6 +163,7 @@ public class MoveTo : MonoBehaviour
             activateOnFinish.SetActive(true);
         if (deActivateOnFinish)
             deActivateOnFinish.SetActive(false);
+        eventOnFinish.Invoke();
     }
 
     public void ChangeTransPos(Transform pTransform)
