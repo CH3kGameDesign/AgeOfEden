@@ -43,4 +43,10 @@ public class HouseShrink : MonoBehaviour {
             playerTrans.localScale = Vector3.one;
         playerCamera.nearClipPlane = tarClipPlane * (tarPos + minMaxSizes.x);
     }
+
+    private void OnDisable()
+    {
+        playerTrans.localScale = Vector3.one;
+        playerCamera.nearClipPlane = tarClipPlane;
+    }
 }

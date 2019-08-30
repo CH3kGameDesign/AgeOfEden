@@ -7,6 +7,7 @@ public class SceneUnloader : MonoBehaviour
 {
     public GameObject playerManagerObjects;
     public bool justAudio;
+    public GameObject enableOnFinish;
 
 	// Called once before the first frame
 	private void Start()
@@ -30,7 +31,7 @@ public class SceneUnloader : MonoBehaviour
 
         StartCoroutine(UnloadScene());
 	}
-	
+
     /// <summary>
     /// Unloads a scene in the background
     /// </summary>
@@ -47,5 +48,7 @@ public class SceneUnloader : MonoBehaviour
         {
             yield return null;
         }
+        if (enableOnFinish != null)
+            enableOnFinish.SetActive(true);
     }
 }

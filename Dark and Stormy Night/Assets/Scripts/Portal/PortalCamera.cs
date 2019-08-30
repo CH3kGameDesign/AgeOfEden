@@ -19,6 +19,8 @@ public class PortalCamera : MonoBehaviour {
     // Update is called once per frame
     void LateUpdate () {
 		Vector3 playerOffsetFromPortal = playerCamera.position - otherPortal.position;
+        playerOffsetFromPortal *= portal.localScale.x;
+        playerOffsetFromPortal /= otherPortal.localScale.x;
         if (turnAround == false)
         {
             transform.position = portal.position + playerOffsetFromPortal;
