@@ -38,6 +38,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/InnerHouse.unity
     guid: cb8eb3ed6e27291499093185b3823c13
+  - enabled: 1
+    path: Assets/Scenes/ExitStage.unity
+    guid: 3af3a4466a9a87a46890a1893921501b
   - enabled: 0
     path: Assets/Scenes/PresentationSlides.unity
     guid: e80acf4a61f857a4b9d3d5c3e84fc200
