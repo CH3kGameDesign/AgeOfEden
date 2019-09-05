@@ -5,6 +5,7 @@ using UnityEngine;
 public class KeyEnable : MonoBehaviour
 {
     public string keyPress;
+    public bool anyKey = false;
     public List<GameObject> enableObjects = new List<GameObject>();
     public List<GameObject> disableObjects = new List<GameObject>();
     public bool toggle = false;
@@ -42,6 +43,8 @@ public class KeyEnable : MonoBehaviour
     /// </summary>
     private void CheckPress()
     {
+        if (anyKey)
+            DoThing();
         if (keyPress == "")
             DoThing();
         if (Input.GetKeyDown(KeyCode.A) && keyPress.ToUpper() == "A")
