@@ -5,8 +5,10 @@ using UnityEngine;
 public class LightFixture : MonoBehaviour
 {
     [Header("GameObjects")]
-    public List<Light> Lights = new List<Light>();
-    public List<MeshRenderer> Fixtures = new List<MeshRenderer>();
+    [SerializeField]
+    private List<Light> m_lLights = new List<Light>();
+    [SerializeField]
+    private List<MeshRenderer> m_mrFixtures = new List<MeshRenderer>();
 
     public List<GameObject> LightObjects = new List<GameObject>();
     public List<GameObject> DarkObjects = new List<GameObject>();
@@ -36,8 +38,8 @@ public class LightFixture : MonoBehaviour
     public Material onMat;
     public Material offMat;
     [Space(10)]
-    public float onAmount;
-    public float offAmount;
+    public float m_fOnAmount;
+    public float m_fOffAmount;
     
 
     [HideInInspector]
@@ -48,13 +50,13 @@ public class LightFixture : MonoBehaviour
     private void Start()
     {
         on = true;
-        if (Lights.Count > 0)
+        if (m_lLights.Count > 0)
         {
-            for (int i = 0; i < Lights.Count; i++)
-                Lights[i].intensity = onAmount;
+            for (int i = 0; i < m_lLights.Count; i++)
+                m_lLights[i].intensity = m_fOnAmount;
 
-            for (int i = 0; i < Fixtures.Count; i++)
-                Fixtures[i].material = onMat;
+            for (int i = 0; i < m_mrFixtures.Count; i++)
+                m_mrFixtures[i].material = onMat;
         }
 
         flashOffTimes = Random.Range(flashOffTimesBounds.x, flashOffTimesBounds.y);
@@ -81,13 +83,13 @@ public class LightFixture : MonoBehaviour
                     on = false;
                     if (!GetComponent<CandleFixture>())
                     {
-                        if (Lights.Count > 0)
+                        if (m_lLights.Count > 0)
                         {
-                            for (int i = 0; i < Lights.Count; i++)
-                                Lights[i].intensity = offAmount;
+                            for (int i = 0; i < m_lLights.Count; i++)
+                                m_lLights[i].intensity = m_fOffAmount;
 
-                            for (int i = 0; i < Fixtures.Count; i++)
-                                Fixtures[i].material = offMat;
+                            for (int i = 0; i < m_mrFixtures.Count; i++)
+                                m_mrFixtures[i].material = offMat;
                         }
                     }
                 }
@@ -96,13 +98,13 @@ public class LightFixture : MonoBehaviour
                     on = true;
                     if (!GetComponent<CandleFixture>())
                     {
-                        if (Lights.Count > 0)
+                        if (m_lLights.Count > 0)
                         {
-                            for (int i = 0; i < Lights.Count; i++)
-                                Lights[i].intensity = onAmount;
+                            for (int i = 0; i < m_lLights.Count; i++)
+                                m_lLights[i].intensity = m_fOnAmount;
 
-                            for (int i = 0; i < Fixtures.Count; i++)
-                                Fixtures[i].material = onMat;
+                            for (int i = 0; i < m_mrFixtures.Count; i++)
+                                m_mrFixtures[i].material = onMat;
                         }
                     }
 
