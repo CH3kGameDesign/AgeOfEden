@@ -14,7 +14,7 @@ public sealed class PermanentData
         // Constructor
         public Info()
         {
-            int endingCount = 5;
+            int endingCount = 10;
             for (int i = 0; i <= endingCount; i++)
                 endingsAchieved.Add(false);
         }
