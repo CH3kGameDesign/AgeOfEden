@@ -4,51 +4,64 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class TypeWriter : MonoBehaviour
 {
-    public Transform paper;
-    public Transform text;
-    public List<Transform> arms = new List<Transform>();
-    private List<float> armMoveRotation = new List<float>();
-    private bool armMove = false;
-
-    public float halfLength;
-    private float letterWidth;
-
-    public int row;
-
-    public bool startTyping = true;
-    public bool returnToTyping = false;
-    public List<GameObject> activateOnFinish = new List<GameObject>();
-    public List<GameObject> deActivateOnFinish = new List<GameObject>();
-    public UnityEvent voidOnFinish;
-
-    private int letterPerRow;
-
-    private int endingNo;
-    
     [System.Serializable]
-    public class Ending
+    internal class EndingData
     {
-        public List<string> startLines = new List<string>();
-        public List<string> scriptLines = new List<string>();
-        public List<int> freeCharsBeforeScript = new List<int>();
-        public GameObject activateOnStart;
-        public string lastLine;
+        [Tooltip("Each list item is the amount of characters the player can type" +
+            " before the script writes in the next line item")]
+        [FormerlySerializedAs("freeCharsBeforeScript")]
+        public List<int> m_iCharsUntilScript = new List<int>();
+        [Tooltip("Text already printed onto the typewriter when the player loads in")]
+        [FormerlySerializedAs("startLines")]
+        public List<string> m_sStartLines = new List<string>();
+        [Tooltip("What the script will write into the text when it takes control")]
+        [FormerlySerializedAs("scriptLines")]
+        public List<string> m_sScriptLines = new List<string>();
+        [Tooltip("Final line printed onto the text as the player is kicked back")]
+        [FormerlySerializedAs("lastLine")]
+        public string m_sLastLine;
+        [Tooltip("A gameobject activated along with a specific ending")]
+        [FormerlySerializedAs("activateOnStart")]
+        public GameObject m_goActivateOnStart;
     }
 
+    [Tooltip("Whether or not the player is currently typing")]
+    [FormerlySerializedAs("startTyping")]
+    public bool m_bIsTyping = true;
+
+    [Tooltip("Allows the player to type independant of the script")]
+    [FormerlySerializedAs("returnToTyping")]
     [SerializeField]
-    public List<Ending> EndingChanges = new List<Ending>();
+    private bool m_bNoScriptInterference = false;
 
+    [Tooltip("Half the width of the paper")]
+    [FormerlySerializedAs("halfLength")]
+    [SerializeField]
+    private float halfLength;
+    // The length per character
+    private float letterWidth;
+    private int letterPerRow;
+    // The current row the typewriter is on
+    private int row;
+
+    // Whether the script should attempt to animate arms to their idle position
+    private bool armMove = false;
+    // List of arm rotation angles used to animate them to idle position
+    private List<float> armMoveRotation = new List<float>();
+
+    // The most recent ending completed
+    private int endingNo;
+    // The script lines from the currently selected ending
     private List<string> scriptLines = new List<string>();
+    // The final line written as the player is kicked off the typewriter
     private string lastLine;
+    // Each list item is the amount of characters the player can type before the
+    // script takes control
     private List<int> freeCharsBeforeScript;
-
-    [Space(20)]
-    public List<GameObject> clickSounds = new List<GameObject>();
-    public GameObject spaceSound;
-    public GameObject exitSound;
 
     private int scriptLineCounter = 0;
     private int charScriptTakesOverCounter;
@@ -57,97 +70,191 @@ public class TypeWriter : MonoBehaviour
     private int scriptCharCounter = 0;
     private string updateLetter;
 
+    [Header("References")]
+
+    [Tooltip("The different scritps written to the paper")]
+    [FormerlySerializedAs("EndingChanges")]
+    [SerializeField]
+    private List<EndingData> m_edEndingChanges = new List<EndingData>();
+    [Tooltip("A list of all the typewriter arm objects")]
+    [FormerlySerializedAs("arms")]
+    [SerializeField]
+    private List<Transform> m_tTypeWriterArms = new List<Transform>();
+    [Tooltip("A list of sounds for when keys are pressed")]
+    [FormerlySerializedAs("clickSounds")]
+    [SerializeField]
+    private List<GameObject> m_goClickSounds = new List<GameObject>();
+    [Tooltip("The sound played when the spacebar is pressed")]
+    [FormerlySerializedAs("spaceSound")]
+    [SerializeField]
+    private GameObject m_goSpaceSound;
+    [Tooltip("The sound played when a line ends")]
+    [FormerlySerializedAs("exitSound")]
+    [SerializeField]
+    private GameObject m_goExitSound;
+
+    [Space(5)]
+    [Tooltip("A reference to the transform of the paper")]
+    [FormerlySerializedAs("paper")]
+    [SerializeField]
+    private Transform m_tPaper;
+    [Tooltip("A reference to the transform of the text object")]
+    [FormerlySerializedAs("text")]
+    [SerializeField]
+    private Transform m_tText;
+
+    [Space(10)]
+    [Tooltip("A list of gameobejcts to be enabled when the sequence ends")]
+    [FormerlySerializedAs("activateOnFinish")]
+    [SerializeField]
+    private List<GameObject> m_goActivateOnFinish = new List<GameObject>();
+    [Tooltip("A list of gameobjects to be disabled when the sequence ends")]
+    [FormerlySerializedAs("deActivateOnFinish")]
+    [SerializeField]
+    private List<GameObject> m_goDeactivateOnFinish = new List<GameObject>();
+
+    [Space(10)]
+    [Tooltip("Used to call certain scripts when the typewriter sequence ends")]
+    [FormerlySerializedAs("voidOnFinish")]
+    [SerializeField]
+    private UnityEvent m_ueVoidOnFinish;
+
 	// Called once before the first frame
 	private void Start()
     {
+        // Gets the most recent ending completed
         endingNo = PermanentData.saveInfo.lastEndingAchieved;
 
-        for (int i = 0; i < EndingChanges[endingNo].startLines.Count; i++)
-            text.GetChild(i).GetComponent<TextMeshPro>().text =
-                EndingChanges[endingNo].startLines[i];
+        // Loads the start text onto the typewriter
+        for (int i = 0; i < m_edEndingChanges[endingNo].m_sStartLines.Count; i++)
+            m_tText.GetChild(i).GetComponent<TextMeshPro>().text =
+                m_edEndingChanges[endingNo].m_sStartLines[i];
 
-        row = EndingChanges[endingNo].startLines.Count;
+        // Sets the row to be after the start text
+        row = m_edEndingChanges[endingNo].m_sStartLines.Count;
 
-        scriptLines = EndingChanges[endingNo].scriptLines;
-        lastLine = EndingChanges[endingNo].lastLine;
-        freeCharsBeforeScript = EndingChanges[endingNo].freeCharsBeforeScript;
+        // Loads all the text data
+        scriptLines = m_edEndingChanges[endingNo].m_sScriptLines;
+        lastLine = m_edEndingChanges[endingNo].m_sLastLine;
+        freeCharsBeforeScript = m_edEndingChanges[endingNo].m_iCharsUntilScript;
 
-        if (EndingChanges[endingNo].activateOnStart)
-            EndingChanges[endingNo].activateOnStart.SetActive(true);
+        // Sets a desired gameobject as active if there is one
+        if (m_edEndingChanges[endingNo].m_goActivateOnStart)
+            m_edEndingChanges[endingNo].m_goActivateOnStart.SetActive(true);
 
+        // Sets all the arms to their idle position
         for (int i = 0; i < 36; i++)
             armMoveRotation.Add(-300);
 
+        // Gets the total amount of characters that can fit on one line
         letterPerRow = Mathf.RoundToInt(0.166f *
-            (text.GetChild(0).GetComponent<RectTransform>().rect.width * 100)
-            / text.GetChild(0).GetComponent<TextMeshPro>().fontSize);
-
-        paper.transform.localPosition = new Vector3(halfLength, 0.025f * (row + 1), 0);
+            (m_tText.GetChild(0).GetComponent<RectTransform>().rect.width * 100)
+            / m_tText.GetChild(0).GetComponent<TextMeshPro>().fontSize);
+        // Uses the paper width and the letters per row to find the letter width
         letterWidth = (halfLength * 2) / letterPerRow;
+        // Offsets the paper so the first character lines up with the arm
+        m_tPaper.transform.localPosition = new Vector3(halfLength, 0.025f * (row + 1), 0);
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (startTyping && SceneManager.sceneCount == 1)
+        if (m_bIsTyping && SceneManager.sceneCount == 1)
         {
+            // Resets the update letter
             updateLetter = null;
 
-            if (row >= text.childCount)
-                return;
-
-            if (text.GetChild(row).GetComponent<TextMeshPro>().text.Length >= letterPerRow)
+            // Moves to the next row if the max letters per row is reached
+            if (m_tText.GetChild(row).GetComponent<TextMeshPro>().text.Length >= letterPerRow)
                 NextRow();
 
             // Once max rows have been reached, end typewriter sequence
-            if (row >= text.childCount)
+            if (row >= m_tText.childCount)
             {
-                if (activateOnFinish.Count != 0)
+                // Finalisation stuff
+                if (m_goActivateOnFinish.Count != 0)
                 {
-                    for (int i = 0; i < activateOnFinish.Count; i++)
-                        activateOnFinish[i].SetActive(true);
+                    for (int i = 0; i < m_goActivateOnFinish.Count; i++)
+                        m_goActivateOnFinish[i].SetActive(true);
                 }
-                if (deActivateOnFinish.Count != 0)
+
+                if (m_goDeactivateOnFinish.Count != 0)
                 {
-                    for (int i = 0; i < deActivateOnFinish.Count; i++)
-                        deActivateOnFinish[i].SetActive(false);
+                    for (int i = 0; i < m_goDeactivateOnFinish.Count; i++)
+                        m_goDeactivateOnFinish[i].SetActive(false);
                 }
-                voidOnFinish.Invoke();
-                startTyping = false;
+
+                m_ueVoidOnFinish.Invoke();
+                m_bIsTyping = false;
                 return;
             }
 
+            // Initiates script typing once the conditions are met
             if (charScriptTakesOverCounter >= freeCharsBeforeScript[scriptLineCounter])
                 scriptTyping = true;
 
+            // Loads a valid key press into update letter
             KeyPress();
-            paper.transform.localPosition = new Vector3(halfLength - (letterWidth *
-                text.GetChild(row).GetComponent<TextMeshPro>().text.Length),
+
+            // Moves the paper to the new position
+            m_tPaper.transform.localPosition = new Vector3(halfLength - (letterWidth *
+                m_tText.GetChild(row).GetComponent<TextMeshPro>().text.Length),
                 0.025f * (row + 1), 0);
 
+            // As long as a valid key was pressed, attempt to type onto the paper
             if (updateLetter != null)
                 Type(updateLetter);
         }
+
+        // Calls the arm animation function
         if (armMove)
             ArmMoveBack();
     }
-    
+
     /// <summary>
-    /// Moves over to the next row of the paper
+    /// Either types the pressed letter or uses the one from the script, also makes a noise
     /// </summary>
-    private void NextRow()
+    /// <param name="pLetter">The letter used</param>
+    private void Type(string pLetter)
     {
-        row++;
-        if (row != text.childCount)
-            paper.transform.localPosition = new Vector3(halfLength, 0.025f * (row + 1), 0);
+        // String used to test if the character inputted was a space
+        string textSound = "";
+        if (scriptTyping)
+        {
+            textSound = scriptLines[scriptLineCounter][scriptCharCounter].ToString().ToLower();
+            ScriptType();
+        }
+        else
+        {
+            textSound = pLetter;
+
+            // Shifts the letter
+            if (!(!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift)))
+                pLetter = pLetter.ToUpper();
+
+            // Applies the letter to the paper text
+            m_tText.GetChild(row).GetComponent<TextMeshPro>().text += pLetter;
+            charScriptTakesOverCounter++;
+        }
+
+        // Random click noise
+        int ranInt = Random.Range(0, m_goClickSounds.Count);
+
+        if (textSound != " ")
+        {
+            ArmMove(textSound);
+            Instantiate(m_goClickSounds[ranInt], transform.position, transform.rotation);
+        }
+        else
+            Instantiate(m_goSpaceSound, transform.position, transform.rotation);
     }
 
     /// <summary>
     /// Function for when the script takes control of whats being typed
     /// </summary>
-    private void AnyKeyScript()
+    private void ScriptType()
     {
-        text.GetChild(row).GetComponent<TextMeshPro>().text +=
+        m_tText.GetChild(row).GetComponent<TextMeshPro>().text +=
             scriptLines[scriptLineCounter][scriptCharCounter];
 
         scriptCharCounter++;
@@ -161,65 +268,46 @@ public class TypeWriter : MonoBehaviour
                 scriptTyping = false;
                 charScriptTakesOverCounter = 0;
             }
-            else if (returnToTyping == true)
+            else if (m_bNoScriptInterference == true)
             {
                 charScriptTakesOverCounter = -1000;
                 scriptTyping = false;
             }
             else
             {
-                if (activateOnFinish.Count != 0)
-                {
-                    for (int i = 0; i < activateOnFinish.Count; i++)
-                        activateOnFinish[i].SetActive(true);
-                }
-                if (deActivateOnFinish.Count != 0)
-                {
-                    for (int i = 0; i < deActivateOnFinish.Count; i++)
-                        deActivateOnFinish[i].SetActive(false);
-                }
+                // Leaves some room and enters the final line down
                 NextRow();
                 NextRow();
-                text.GetChild(row).GetComponent<TextMeshPro>().text += lastLine;
-                voidOnFinish.Invoke();
-                startTyping = false;
-                Instantiate(exitSound, transform.position, transform.rotation);
+                m_tText.GetChild(row).GetComponent<TextMeshPro>().text += lastLine;
+
+                // Finalisation stuff
+                if (m_goActivateOnFinish.Count != 0)
+                {
+                    for (int i = 0; i < m_goActivateOnFinish.Count; i++)
+                        m_goActivateOnFinish[i].SetActive(true);
+                }
+
+                if (m_goDeactivateOnFinish.Count != 0)
+                {
+                    for (int i = 0; i < m_goDeactivateOnFinish.Count; i++)
+                        m_goDeactivateOnFinish[i].SetActive(false);
+                }
+
+                m_ueVoidOnFinish.Invoke();
+                m_bIsTyping = false;
+                Instantiate(m_goExitSound, transform.position, transform.rotation);
             }
         }
     }
-
+    
     /// <summary>
-    /// Enters the desired letter onto the paper in game
+    /// Increments the row counter and translates the paper
     /// </summary>
-    /// <param name="pLetter">The letter used</param>
-    private void Type(string pLetter)
+    private void NextRow()
     {
-        string textSound = "";
-        if (scriptTyping == true)
-        {
-            textSound = scriptLines[scriptLineCounter][scriptCharCounter].ToString().ToLower();
-            AnyKeyScript();
-        }
-        else
-        {
-            textSound = pLetter;
-
-            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-                pLetter = pLetter.ToUpper();
-
-            text.GetChild(row).GetComponent<TextMeshPro>().text += pLetter;
-            charScriptTakesOverCounter++;
-        }
-
-        int ranInt = Random.Range(0, clickSounds.Count);
-
-        if (textSound != " ")
-        {
-            ArmMove(textSound);
-            Instantiate(clickSounds[ranInt], transform.position, transform.rotation);
-        }
-        else
-            Instantiate(spaceSound, transform.position, transform.rotation);
+        row++;
+        if (row != m_tText.childCount)
+            m_tPaper.transform.localPosition = new Vector3(halfLength, 0.025f * (row + 1), 0);
     }
 
     /// <summary>
@@ -308,7 +396,7 @@ public class TypeWriter : MonoBehaviour
         // As long as a valid key is pressed, the typewriter arm is moved into position
         if (choice != -1)
         {
-            arms[choice].GetChild(0).localEulerAngles = new Vector3(0, 0, -130);
+            m_tTypeWriterArms[choice].GetChild(0).localEulerAngles = new Vector3(0, 0, -130);
             armMove = true;
             armMoveRotation[choice] = -130;
         }
@@ -326,7 +414,7 @@ public class TypeWriter : MonoBehaviour
             {
                 armMove = true;
                 armMoveRotation[i] -= 10;
-                arms[i].GetChild(0).localEulerAngles = new Vector3(0, 0, armMoveRotation[i]);
+                m_tTypeWriterArms[i].GetChild(0).localEulerAngles = new Vector3(0, 0, armMoveRotation[i]);
             }
         }
     }
@@ -338,112 +426,76 @@ public class TypeWriter : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
             updateLetter = " ";
-        
         if (Input.GetKeyDown(KeyCode.A))
             updateLetter = "a";
-        
         if (Input.GetKeyDown(KeyCode.B))
             updateLetter = "b";
-        
         if (Input.GetKeyDown(KeyCode.C))
             updateLetter = "c";
-        
         if (Input.GetKeyDown(KeyCode.D))
             updateLetter = "d";
-        
         if (Input.GetKeyDown(KeyCode.E))
             updateLetter = "e";
-        
         if (Input.GetKeyDown(KeyCode.F))
             updateLetter = "f";
-        
         if (Input.GetKeyDown(KeyCode.G))
             updateLetter = "g";
-        
         if (Input.GetKeyDown(KeyCode.H))
             updateLetter = "h";
-        
         if (Input.GetKeyDown(KeyCode.I))
             updateLetter = "i";
-        
         if (Input.GetKeyDown(KeyCode.J))
             updateLetter = "j";
-        
         if (Input.GetKeyDown(KeyCode.K))
             updateLetter = "k";
-        
         if (Input.GetKeyDown(KeyCode.L))
             updateLetter = "l";
-        
         if (Input.GetKeyDown(KeyCode.M))
             updateLetter = "m";
-        
         if (Input.GetKeyDown(KeyCode.N))
             updateLetter = "n";
-        
         if (Input.GetKeyDown(KeyCode.O))
             updateLetter = "o";
-        
         if (Input.GetKeyDown(KeyCode.P))
             updateLetter = "p";
-        
         if (Input.GetKeyDown(KeyCode.Q))
             updateLetter = "q";
-        
         if (Input.GetKeyDown(KeyCode.R))
             updateLetter = "r";
-        
         if (Input.GetKeyDown(KeyCode.S))
             updateLetter = "s";
-        
         if (Input.GetKeyDown(KeyCode.T))
             updateLetter = "t";
-        
         if (Input.GetKeyDown(KeyCode.U))
             updateLetter = "u";
-        
         if (Input.GetKeyDown(KeyCode.V))
             updateLetter = "v";
-        
         if (Input.GetKeyDown(KeyCode.W))
             updateLetter = "w";
-        
         if (Input.GetKeyDown(KeyCode.X))
             updateLetter = "x";
-        
         if (Input.GetKeyDown(KeyCode.Y))
             updateLetter = "y";
-        
         if (Input.GetKeyDown(KeyCode.Z))
             updateLetter = "z";
-        
         if (Input.GetKeyDown(KeyCode.Alpha1))
             updateLetter = "1";
-        
         if (Input.GetKeyDown(KeyCode.Alpha2))
             updateLetter = "2";
-        
         if (Input.GetKeyDown(KeyCode.Alpha3))
             updateLetter = "3";
-        
         if (Input.GetKeyDown(KeyCode.Alpha4))
             updateLetter = "4";
-        
         if (Input.GetKeyDown(KeyCode.Alpha5))
             updateLetter = "5";
-        
         if (Input.GetKeyDown(KeyCode.Alpha6))
             updateLetter = "6";
-        
         if (Input.GetKeyDown(KeyCode.Alpha7))
             updateLetter = "7";
-        
         if (Input.GetKeyDown(KeyCode.Alpha8))
             updateLetter = "8";
-        
         if (Input.GetKeyDown(KeyCode.Alpha9))
             updateLetter = "9";
-        
         if (Input.GetKeyDown(KeyCode.Alpha0))
             updateLetter = "0";
     }
