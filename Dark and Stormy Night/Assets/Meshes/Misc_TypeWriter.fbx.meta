@@ -1,0 +1,515 @@
+fileFormatVersion: 2
+guid: 21af2d80e21b59d45a63566c61ac458e
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: BottomKeys
+    100002: ChitChit_1
+    100004: ChitChit_10
+    100006: ChitChit_11
+    100008: ChitChit_12
+    100010: ChitChit_13
+    100012: ChitChit_14
+    100014: ChitChit_15
+    100016: ChitChit_16
+    100018: ChitChit_17
+    100020: ChitChit_18
+    100022: ChitChit_19
+    100024: ChitChit_2
+    100026: ChitChit_20
+    100028: ChitChit_21
+    100030: ChitChit_22
+    100032: ChitChit_23
+    100034: ChitChit_24
+    100036: ChitChit_25
+    100038: ChitChit_26
+    100040: ChitChit_27
+    100042: ChitChit_28
+    100044: ChitChit_29
+    100046: ChitChit_3
+    100048: ChitChit_30
+    100050: ChitChit_31
+    100052: ChitChit_32
+    100054: ChitChit_33
+    100056: ChitChit_34
+    100058: ChitChit_35
+    100060: ChitChit_36
+    100062: ChitChit_37
+    100064: ChitChit_38
+    100066: ChitChit_39
+    100068: ChitChit_4
+    100070: ChitChit_5
+    100072: ChitChit_6
+    100074: ChitChit_7
+    100076: ChitChit_8
+    100078: ChitChit_9
+    100080: MiddleBOTTOMKeys
+    100082: MiddleUPKeys
+    100084: //RootNode
+    100086: PaperSlider
+    100088: pCube10
+    100090: pCube11
+    100092: pCube12
+    100094: pCube13
+    100096: pCube14
+    100098: pCube15
+    100100: pCube16
+    100102: pCube16 1
+    100104: pCube17
+    100106: pCube17 1
+    100108: pCube17 2
+    100110: pCube18
+    100112: pCube18 1
+    100114: pCube18 2
+    100116: pCube19
+    100118: pCube19 1
+    100120: pCube19 2
+    100122: pCube20
+    100124: pCube20 1
+    100126: pCube20 2
+    100128: pCube21
+    100130: pCube21 1
+    100132: pCube21 2
+    100134: pCube22
+    100136: pCube22 1
+    100138: pCube22 2
+    100140: pCube23
+    100142: pCube23 1
+    100144: pCube23 2
+    100146: pCube24
+    100148: pCube24 1
+    100150: pCube24 2
+    100152: pCube25
+    100154: pCube25 1
+    100156: pCube6
+    100158: pCube7
+    100160: pCube8
+    100162: pCube9
+    100164: polySurface40
+    100166: polySurface41
+    100168: SpaceBar
+    100170: TopKeys
+    100172: TypeWriter_Base
+    100174: TypeWriter_ChitterChatters
+    100176: TypeWriter_Keys
+    400000: BottomKeys
+    400002: ChitChit_1
+    400004: ChitChit_10
+    400006: ChitChit_11
+    400008: ChitChit_12
+    400010: ChitChit_13
+    400012: ChitChit_14
+    400014: ChitChit_15
+    400016: ChitChit_16
+    400018: ChitChit_17
+    400020: ChitChit_18
+    400022: ChitChit_19
+    400024: ChitChit_2
+    400026: ChitChit_20
+    400028: ChitChit_21
+    400030: ChitChit_22
+    400032: ChitChit_23
+    400034: ChitChit_24
+    400036: ChitChit_25
+    400038: ChitChit_26
+    400040: ChitChit_27
+    400042: ChitChit_28
+    400044: ChitChit_29
+    400046: ChitChit_3
+    400048: ChitChit_30
+    400050: ChitChit_31
+    400052: ChitChit_32
+    400054: ChitChit_33
+    400056: ChitChit_34
+    400058: ChitChit_35
+    400060: ChitChit_36
+    400062: ChitChit_37
+    400064: ChitChit_38
+    400066: ChitChit_39
+    400068: ChitChit_4
+    400070: ChitChit_5
+    400072: ChitChit_6
+    400074: ChitChit_7
+    400076: ChitChit_8
+    400078: ChitChit_9
+    400080: MiddleBOTTOMKeys
+    400082: MiddleUPKeys
+    400084: //RootNode
+    400086: PaperSlider
+    400088: pCube10
+    400090: pCube11
+    400092: pCube12
+    400094: pCube13
+    400096: pCube14
+    400098: pCube15
+    400100: pCube16
+    400102: pCube16 1
+    400104: pCube17
+    400106: pCube17 1
+    400108: pCube17 2
+    400110: pCube18
+    400112: pCube18 1
+    400114: pCube18 2
+    400116: pCube19
+    400118: pCube19 1
+    400120: pCube19 2
+    400122: pCube20
+    400124: pCube20 1
+    400126: pCube20 2
+    400128: pCube21
+    400130: pCube21 1
+    400132: pCube21 2
+    400134: pCube22
+    400136: pCube22 1
+    400138: pCube22 2
+    400140: pCube23
+    400142: pCube23 1
+    400144: pCube23 2
+    400146: pCube24
+    400148: pCube24 1
+    400150: pCube24 2
+    400152: pCube25
+    400154: pCube25 1
+    400156: pCube6
+    400158: pCube7
+    400160: pCube8
+    400162: pCube9
+    400164: polySurface40
+    400166: polySurface41
+    400168: SpaceBar
+    400170: TopKeys
+    400172: TypeWriter_Base
+    400174: TypeWriter_ChitterChatters
+    400176: TypeWriter_Keys
+    2100000: lambert1
+    2300000: ChitChit_1
+    2300002: ChitChit_10
+    2300004: ChitChit_11
+    2300006: ChitChit_12
+    2300008: ChitChit_13
+    2300010: ChitChit_14
+    2300012: ChitChit_15
+    2300014: ChitChit_16
+    2300016: ChitChit_17
+    2300018: ChitChit_18
+    2300020: ChitChit_19
+    2300022: ChitChit_2
+    2300024: ChitChit_20
+    2300026: ChitChit_21
+    2300028: ChitChit_22
+    2300030: ChitChit_23
+    2300032: ChitChit_24
+    2300034: ChitChit_25
+    2300036: ChitChit_26
+    2300038: ChitChit_27
+    2300040: ChitChit_28
+    2300042: ChitChit_29
+    2300044: ChitChit_3
+    2300046: ChitChit_30
+    2300048: ChitChit_31
+    2300050: ChitChit_32
+    2300052: ChitChit_33
+    2300054: ChitChit_34
+    2300056: ChitChit_35
+    2300058: ChitChit_36
+    2300060: ChitChit_37
+    2300062: ChitChit_38
+    2300064: ChitChit_39
+    2300066: ChitChit_4
+    2300068: ChitChit_5
+    2300070: ChitChit_6
+    2300072: ChitChit_7
+    2300074: ChitChit_8
+    2300076: ChitChit_9
+    2300078: PaperSlider
+    2300080: pCube10
+    2300082: pCube11
+    2300084: pCube12
+    2300086: pCube13
+    2300088: pCube14
+    2300090: pCube15
+    2300092: pCube16
+    2300094: pCube16 1
+    2300096: pCube17
+    2300098: pCube17 1
+    2300100: pCube17 2
+    2300102: pCube18
+    2300104: pCube18 1
+    2300106: pCube18 2
+    2300108: pCube19
+    2300110: pCube19 1
+    2300112: pCube19 2
+    2300114: pCube20
+    2300116: pCube20 1
+    2300118: pCube20 2
+    2300120: pCube21
+    2300122: pCube21 1
+    2300124: pCube21 2
+    2300126: pCube22
+    2300128: pCube22 1
+    2300130: pCube22 2
+    2300132: pCube23
+    2300134: pCube23 1
+    2300136: pCube23 2
+    2300138: pCube24
+    2300140: pCube24 1
+    2300142: pCube24 2
+    2300144: pCube25
+    2300146: pCube25 1
+    2300148: pCube6
+    2300150: pCube7
+    2300152: pCube8
+    2300154: pCube9
+    2300156: polySurface40
+    2300158: polySurface41
+    2300160: SpaceBar
+    2300162: TypeWriter_Base
+    3300000: ChitChit_1
+    3300002: ChitChit_10
+    3300004: ChitChit_11
+    3300006: ChitChit_12
+    3300008: ChitChit_13
+    3300010: ChitChit_14
+    3300012: ChitChit_15
+    3300014: ChitChit_16
+    3300016: ChitChit_17
+    3300018: ChitChit_18
+    3300020: ChitChit_19
+    3300022: ChitChit_2
+    3300024: ChitChit_20
+    3300026: ChitChit_21
+    3300028: ChitChit_22
+    3300030: ChitChit_23
+    3300032: ChitChit_24
+    3300034: ChitChit_25
+    3300036: ChitChit_26
+    3300038: ChitChit_27
+    3300040: ChitChit_28
+    3300042: ChitChit_29
+    3300044: ChitChit_3
+    3300046: ChitChit_30
+    3300048: ChitChit_31
+    3300050: ChitChit_32
+    3300052: ChitChit_33
+    3300054: ChitChit_34
+    3300056: ChitChit_35
+    3300058: ChitChit_36
+    3300060: ChitChit_37
+    3300062: ChitChit_38
+    3300064: ChitChit_39
+    3300066: ChitChit_4
+    3300068: ChitChit_5
+    3300070: ChitChit_6
+    3300072: ChitChit_7
+    3300074: ChitChit_8
+    3300076: ChitChit_9
+    3300078: PaperSlider
+    3300080: pCube10
+    3300082: pCube11
+    3300084: pCube12
+    3300086: pCube13
+    3300088: pCube14
+    3300090: pCube15
+    3300092: pCube16
+    3300094: pCube16 1
+    3300096: pCube17
+    3300098: pCube17 1
+    3300100: pCube17 2
+    3300102: pCube18
+    3300104: pCube18 1
+    3300106: pCube18 2
+    3300108: pCube19
+    3300110: pCube19 1
+    3300112: pCube19 2
+    3300114: pCube20
+    3300116: pCube20 1
+    3300118: pCube20 2
+    3300120: pCube21
+    3300122: pCube21 1
+    3300124: pCube21 2
+    3300126: pCube22
+    3300128: pCube22 1
+    3300130: pCube22 2
+    3300132: pCube23
+    3300134: pCube23 1
+    3300136: pCube23 2
+    3300138: pCube24
+    3300140: pCube24 1
+    3300142: pCube24 2
+    3300144: pCube25
+    3300146: pCube25 1
+    3300148: pCube6
+    3300150: pCube7
+    3300152: pCube8
+    3300154: pCube9
+    3300156: polySurface40
+    3300158: polySurface41
+    3300160: SpaceBar
+    3300162: TypeWriter_Base
+    4300000: PaperSlider
+    4300002: TypeWriter_Base
+    4300004: pCube6
+    4300006: pCube7
+    4300008: pCube8
+    4300010: pCube9
+    4300012: pCube10
+    4300014: pCube11
+    4300016: pCube12
+    4300018: pCube13
+    4300020: pCube14
+    4300022: pCube15
+    4300024: pCube16
+    4300026: pCube17
+    4300028: pCube18
+    4300030: pCube19
+    4300032: pCube20
+    4300034: pCube21
+    4300036: pCube22
+    4300038: pCube23
+    4300040: pCube24
+    4300042: pCube25
+    4300044: pCube16
+    4300046: pCube17
+    4300048: pCube18
+    4300050: pCube19
+    4300052: pCube20
+    4300054: pCube21
+    4300056: pCube22
+    4300058: pCube23
+    4300060: pCube24
+    4300062: pCube25
+    4300064: pCube17
+    4300066: pCube18
+    4300068: pCube19
+    4300070: pCube20
+    4300072: pCube21
+    4300074: pCube22
+    4300076: pCube23
+    4300078: pCube24
+    4300080: polySurface40
+    4300082: polySurface41
+    4300084: SpaceBar
+    4300086: ChitChit_1
+    4300088: ChitChit_2
+    4300090: ChitChit_3
+    4300092: ChitChit_4
+    4300094: ChitChit_5
+    4300096: ChitChit_6
+    4300098: ChitChit_7
+    4300100: ChitChit_8
+    4300102: ChitChit_9
+    4300104: ChitChit_10
+    4300106: ChitChit_11
+    4300108: ChitChit_12
+    4300110: ChitChit_13
+    4300112: ChitChit_14
+    4300114: ChitChit_15
+    4300116: ChitChit_16
+    4300118: ChitChit_17
+    4300120: ChitChit_18
+    4300122: ChitChit_19
+    4300124: ChitChit_20
+    4300126: ChitChit_21
+    4300128: ChitChit_22
+    4300130: ChitChit_23
+    4300132: ChitChit_24
+    4300134: ChitChit_25
+    4300136: ChitChit_26
+    4300138: ChitChit_27
+    4300140: ChitChit_28
+    4300142: ChitChit_29
+    4300144: ChitChit_30
+    4300146: ChitChit_31
+    4300148: ChitChit_32
+    4300150: ChitChit_33
+    4300152: ChitChit_34
+    4300154: ChitChit_35
+    4300156: ChitChit_36
+    4300158: ChitChit_37
+    4300160: ChitChit_38
+    4300162: ChitChit_39
+    7400000: Take 001
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
