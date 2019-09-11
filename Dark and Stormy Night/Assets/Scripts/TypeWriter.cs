@@ -70,8 +70,11 @@ public class TypeWriter : MonoBehaviour
     private int scriptCharCounter = 0;
     private string updateLetter;
 
-    [Header("References")]
+    private List<string> m_sFullMessage = new List<string>();
+    private string m_sMessageLine;
 
+    [Header("References")]
+    
     [Tooltip("The different scritps written to the paper")]
     [FormerlySerializedAs("EndingChanges")]
     [SerializeField]
@@ -184,6 +187,7 @@ public class TypeWriter : MonoBehaviour
                         m_goDeactivateOnFinish[i].SetActive(false);
                 }
 
+                CreateTextFile.SetMessage(m_sFullMessage);
                 m_ueVoidOnFinish.Invoke();
                 m_bIsTyping = false;
                 return;
@@ -234,6 +238,7 @@ public class TypeWriter : MonoBehaviour
 
             // Applies the letter to the paper text
             m_tText.GetChild(row).GetComponent<TextMeshPro>().text += pLetter;
+            m_sMessageLine += pLetter;
             charScriptTakesOverCounter++;
         }
 
@@ -254,8 +259,10 @@ public class TypeWriter : MonoBehaviour
     /// </summary>
     private void ScriptType()
     {
+        // Enters the letter into the typewriter text
         m_tText.GetChild(row).GetComponent<TextMeshPro>().text +=
             scriptLines[scriptLineCounter][scriptCharCounter];
+        m_sMessageLine += scriptLines[scriptLineCounter][scriptCharCounter];
 
         scriptCharCounter++;
 
@@ -279,6 +286,8 @@ public class TypeWriter : MonoBehaviour
                 NextRow();
                 NextRow();
                 m_tText.GetChild(row).GetComponent<TextMeshPro>().text += lastLine;
+                m_sMessageLine += lastLine;
+                m_sFullMessage.Add(m_sMessageLine);
 
                 // Finalisation stuff
                 if (m_goActivateOnFinish.Count != 0)
@@ -293,6 +302,7 @@ public class TypeWriter : MonoBehaviour
                         m_goDeactivateOnFinish[i].SetActive(false);
                 }
 
+                CreateTextFile.SetMessage(m_sFullMessage);
                 m_ueVoidOnFinish.Invoke();
                 m_bIsTyping = false;
                 Instantiate(m_goExitSound, transform.position, transform.rotation);
@@ -308,6 +318,8 @@ public class TypeWriter : MonoBehaviour
         row++;
         if (row != m_tText.childCount)
             m_tPaper.transform.localPosition = new Vector3(halfLength, 0.025f * (row + 1), 0);
+        m_sFullMessage.Add(m_sMessageLine);
+        m_sMessageLine = "";
     }
 
     /// <summary>

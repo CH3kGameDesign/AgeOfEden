@@ -29,8 +29,12 @@ public class CreateTextFile : MonoBehaviour
         public Location m_olOutputLocation = Location.Desktop;
         [Tooltip("How the file will be created and dealt with, ordering must be: First, Create, Standard")]
         public State m_osOutputState = State.Standard;
+        [Space(3)]
         [Tooltip("Only has an impact on standard outputs")]
         public bool m_bOverwrite = true;
+        [Tooltip("Whether the message is replaced with the typewritter text")]
+        public bool m_bUseTypeWriter = false;
+        [Space(3)]
         [Tooltip("The desired file name (file will always be a text document)")]
         public string m_sFileName = "I forgot a file name";
         [Tooltip("The message printed into the text file")]
@@ -45,8 +49,18 @@ public class CreateTextFile : MonoBehaviour
     [SerializeField]
     private char m_cEnterChar = '|';
 
-    [Tooltip("A resizable list of outputs editable in the inspector")]
+    [Tooltip("A resizable list of outputs editable in the inspector, outputs are done in ascending order")]
     public Outputs[] m_oOutputs;
+
+    private static string m_sTypeWritterMessage;
+
+    public static void SetMessage(List<string> pLines)
+    {
+        for (int j = 0; j < pLines.Count; j++)
+        {
+            m_sTypeWritterMessage += pLines[j] + "|";
+        }
+    }
 
     // Called once before the first frame
     private void Start()
@@ -60,6 +74,9 @@ public class CreateTextFile : MonoBehaviour
 
         for (int i = 0; i < m_oOutputs.Length; i++)
         {
+            if (m_oOutputs[i].m_bUseTypeWriter)
+                m_oOutputs[i].m_sMessage = m_sTypeWritterMessage;
+
             m_oOutputs[i].m_sMessage = m_oOutputs[i].m_sMessage.Replace(m_cEnterChar.ToString(),
                 System.Environment.NewLine);
 
@@ -78,10 +95,8 @@ public class CreateTextFile : MonoBehaviour
                     + "\\" + m_oOutputs[i].m_sFileName + ".txt";
 
             // 1. A message displayed the first time the game is run and a certain ending is reached
-            // 2. A message displayed as a standard output
-            // 3. A message displayed when no message file is found, either deleted or never created
-            // The 'create' message should overwrite and prevent any messages from being written to
-            // that file
+            // 2. A message displayed when no message file is found, either deleted or never created
+            // 3. A message displayed as a standard output
             
             if (m_oOutputs[i].m_osOutputState == State.First && GetPermanentStorage())
             {
