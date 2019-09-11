@@ -39,10 +39,13 @@ public class SaveEditor : MonoBehaviour
     {
         for (int i = 0; i < PermanentData.saveInfo.endingsAchieved.Count; i++)
         {
-            if (PermanentData.saveInfo.endingsAchieved[i])
-                buttons[i].text = "O";
-            else
-                buttons[i].text = "";
+            if (i < buttons.Count)
+            {
+                if (PermanentData.saveInfo.endingsAchieved[i])
+                    buttons[i].text = "O";
+                else
+                    buttons[i].text = "";
+            }
         }
         lastEnding.text = PermanentData.saveInfo.lastEndingAchieved.ToString();
     }

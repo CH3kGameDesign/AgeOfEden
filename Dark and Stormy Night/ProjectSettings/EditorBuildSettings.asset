@@ -44,6 +44,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Attic.unity
     guid: cccbe7caf6e818544a0398db69f729f0
+  - enabled: 1
+    path: Assets/Scenes/Hallway.unity
+    guid: c37e5cceb8ea3b140a0c73d1305ada1f
   - enabled: 0
     path: Assets/Scenes/PresentationSlides.unity
     guid: e80acf4a61f857a4b9d3d5c3e84fc200

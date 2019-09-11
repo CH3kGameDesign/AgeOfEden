@@ -52,6 +52,7 @@ public class TypeWriter : MonoBehaviour
     private bool armMove = false;
     // List of arm rotation angles used to animate them to idle position
     private List<float> armMoveRotation = new List<float>();
+    private float spaceKeyRotation;
 
     // The most recent ending completed
     private int endingNo;
@@ -83,6 +84,12 @@ public class TypeWriter : MonoBehaviour
     [FormerlySerializedAs("arms")]
     [SerializeField]
     private List<Transform> m_tTypeWriterArms = new List<Transform>();
+    [Tooltip("A list of all the typewriter key objects")]
+    [FormerlySerializedAs("arms")]
+    [SerializeField]
+    private List<Transform> m_tTypeWriterKeys = new List<Transform>();
+    [SerializeField]
+    private Transform m_tSpaceKey;
     [Tooltip("A list of sounds for when keys are pressed")]
     [FormerlySerializedAs("clickSounds")]
     [SerializeField]
@@ -97,6 +104,10 @@ public class TypeWriter : MonoBehaviour
     private GameObject m_goExitSound;
 
     [Space(5)]
+    [Tooltip("A reference to the transform of the paperHolder")]
+    [FormerlySerializedAs("paperHolder")]
+    [SerializeField]
+    private Transform m_tPaperHolder;
     [Tooltip("A reference to the transform of the paper")]
     [FormerlySerializedAs("paper")]
     [SerializeField]
@@ -105,6 +116,10 @@ public class TypeWriter : MonoBehaviour
     [FormerlySerializedAs("text")]
     [SerializeField]
     private Transform m_tText;
+    [Tooltip("A reference to the transforms of the paper meshes")]
+    [FormerlySerializedAs("paperMeshes")]
+    [SerializeField]
+    private List<GameObject> m_tPaperMeshes = new List<GameObject>();
 
     [Space(10)]
     [Tooltip("A list of gameobejcts to be enabled when the sequence ends")]
@@ -130,11 +145,12 @@ public class TypeWriter : MonoBehaviour
 
         // Loads the start text onto the typewriter
         for (int i = 0; i < m_edEndingChanges[endingNo].m_sStartLines.Count; i++)
-            m_tText.GetChild(i).GetComponent<TextMeshPro>().text =
+        {
+            m_tText.GetChild(0).GetComponent<TextMeshPro>().text =
                 m_edEndingChanges[endingNo].m_sStartLines[i];
-
-        // Sets the row to be after the start text
-        row = m_edEndingChanges[endingNo].m_sStartLines.Count;
+            NextRow();
+        }
+        
 
         // Loads all the text data
         scriptLines = m_edEndingChanges[endingNo].m_sScriptLines;
@@ -168,7 +184,7 @@ public class TypeWriter : MonoBehaviour
             updateLetter = null;
 
             // Moves to the next row if the max letters per row is reached
-            if (m_tText.GetChild(row).GetComponent<TextMeshPro>().text.Length >= letterPerRow)
+            if (m_tText.GetChild(0).GetComponent<TextMeshPro>().text.Length >= letterPerRow)
                 NextRow();
 
             // Once max rows have been reached, end typewriter sequence
@@ -190,6 +206,7 @@ public class TypeWriter : MonoBehaviour
                 CreateTextFile.SetMessage(m_sFullMessage);
                 m_ueVoidOnFinish.Invoke();
                 m_bIsTyping = false;
+                OnHopefullyDisable();
                 return;
             }
 
@@ -201,9 +218,14 @@ public class TypeWriter : MonoBehaviour
             KeyPress();
 
             // Moves the paper to the new position
-            m_tPaper.transform.localPosition = new Vector3(halfLength - (letterWidth *
-                m_tText.GetChild(row).GetComponent<TextMeshPro>().text.Length),
-                0.025f * (row + 1), 0);
+            m_tPaperHolder.transform.localPosition = new Vector3(-0.121f,
+                0.247f,
+                halfLength - (letterWidth * m_tText.GetChild(0).GetComponent<TextMeshPro>().text.Length))
+                / 100;
+            m_tPaper.transform.localPosition = new Vector3(0,
+                0.025f * (row + 1), 
+                0)
+                /100;
 
             // As long as a valid key was pressed, attempt to type onto the paper
             if (updateLetter != null)
@@ -213,6 +235,11 @@ public class TypeWriter : MonoBehaviour
         // Calls the arm animation function
         if (armMove)
             ArmMoveBack();
+        if (spaceKeyRotation < 0)
+        {
+            spaceKeyRotation += 2;
+            m_tSpaceKey.localEulerAngles = new Vector3(0, 0, spaceKeyRotation);
+        }
     }
 
     /// <summary>
@@ -237,7 +264,7 @@ public class TypeWriter : MonoBehaviour
                 pLetter = pLetter.ToUpper();
 
             // Applies the letter to the paper text
-            m_tText.GetChild(row).GetComponent<TextMeshPro>().text += pLetter;
+            m_tText.GetChild(0).GetComponent<TextMeshPro>().text += pLetter;
             m_sMessageLine += pLetter;
             charScriptTakesOverCounter++;
         }
@@ -251,7 +278,11 @@ public class TypeWriter : MonoBehaviour
             Instantiate(m_goClickSounds[ranInt], transform.position, transform.rotation);
         }
         else
+        {
             Instantiate(m_goSpaceSound, transform.position, transform.rotation);
+            spaceKeyRotation = -10;
+            m_tSpaceKey.localEulerAngles = new Vector3(0, 0, -20);
+        }
     }
 
     /// <summary>
@@ -260,7 +291,7 @@ public class TypeWriter : MonoBehaviour
     private void ScriptType()
     {
         // Enters the letter into the typewriter text
-        m_tText.GetChild(row).GetComponent<TextMeshPro>().text +=
+        m_tText.GetChild(0).GetComponent<TextMeshPro>().text +=
             scriptLines[scriptLineCounter][scriptCharCounter];
         m_sMessageLine += scriptLines[scriptLineCounter][scriptCharCounter];
 
@@ -285,7 +316,7 @@ public class TypeWriter : MonoBehaviour
                 // Leaves some room and enters the final line down
                 NextRow();
                 NextRow();
-                m_tText.GetChild(row).GetComponent<TextMeshPro>().text += lastLine;
+                m_tText.GetChild(0).GetComponent<TextMeshPro>().text += lastLine;
                 m_sMessageLine += lastLine;
                 m_sFullMessage.Add(m_sMessageLine);
 
@@ -306,6 +337,7 @@ public class TypeWriter : MonoBehaviour
                 m_ueVoidOnFinish.Invoke();
                 m_bIsTyping = false;
                 Instantiate(m_goExitSound, transform.position, transform.rotation);
+                OnHopefullyDisable();
             }
         }
     }
@@ -317,9 +349,21 @@ public class TypeWriter : MonoBehaviour
     {
         row++;
         if (row != m_tText.childCount)
-            m_tPaper.transform.localPosition = new Vector3(halfLength, 0.025f * (row + 1), 0);
+            m_tPaper.transform.localPosition = new Vector3(0, 0.025f * (row + 1), 0) / 100;
         m_sFullMessage.Add(m_sMessageLine);
         m_sMessageLine = "";
+        for (int i = 0; i < m_tPaperMeshes.Count; i++)
+        {
+            if (i == row)
+                m_tPaperMeshes[i].SetActive(true);
+            else
+                m_tPaperMeshes[i].SetActive(false);
+        }
+        for (int i = m_tText.childCount - 1; i > 0; i--)
+        {
+            m_tText.GetChild(i).GetComponent<TextMeshPro>().text = m_tText.GetChild(i - 1).GetComponent<TextMeshPro>().text;
+        }
+        m_tText.GetChild(0).GetComponent<TextMeshPro>().text = "";
     }
 
     /// <summary>
@@ -404,14 +448,15 @@ public class TypeWriter : MonoBehaviour
             choice = 35;
         if (pLetter == ".")
             choice = 28;
-
         // As long as a valid key is pressed, the typewriter arm is moved into position
         if (choice != -1)
         {
-            m_tTypeWriterArms[choice].GetChild(0).localEulerAngles = new Vector3(0, 0, -130);
+            m_tTypeWriterArms[choice].localEulerAngles = new Vector3(0, 0, 90);
+            m_tTypeWriterKeys[choice].localEulerAngles = new Vector3(0, 0, -30);
             armMove = true;
-            armMoveRotation[choice] = -130;
+            armMoveRotation[choice] = 90;
         }
+            
     }
 
     /// <summary>
@@ -422,11 +467,18 @@ public class TypeWriter : MonoBehaviour
         armMove = false;
         for (int i = 0; i < armMoveRotation.Count; i++)
         {
-            if (armMoveRotation[i] != -300)
+            if (armMoveRotation[i] > 0)
             {
                 armMove = true;
-                armMoveRotation[i] -= 10;
-                m_tTypeWriterArms[i].GetChild(0).localEulerAngles = new Vector3(0, 0, armMoveRotation[i]);
+                armMoveRotation[i] -= 5;
+                m_tTypeWriterArms[i].localEulerAngles = new Vector3(0, m_tTypeWriterArms[i].localEulerAngles.y, armMoveRotation[i]);
+                m_tTypeWriterKeys[i].localEulerAngles = new Vector3(0, 0, -armMoveRotation[i] / 3);
+            }
+            else
+            {
+                armMoveRotation[i] = 0;
+                m_tTypeWriterArms[i].localEulerAngles = new Vector3(0, m_tTypeWriterArms[i].localEulerAngles.y, 0);
+                m_tTypeWriterKeys[i].localEulerAngles = new Vector3(0, 0, 0);
             }
         }
     }
@@ -510,5 +562,18 @@ public class TypeWriter : MonoBehaviour
             updateLetter = "9";
         if (Input.GetKeyDown(KeyCode.Alpha0))
             updateLetter = "0";
+    }
+
+    private void OnHopefullyDisable()
+    {
+        bool doThing = true;
+        for (int i = 0; i < m_tPaperMeshes.Count; i++)
+        {
+            if (m_tPaperMeshes[i].activeInHierarchy == true)
+                doThing = false;
+        }
+        if (doThing)
+            m_tPaperMeshes[8].SetActive(true);
+        Debug.Log(doThing);
     }
 }
