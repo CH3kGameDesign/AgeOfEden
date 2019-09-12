@@ -18,6 +18,9 @@ public class TypeWriter : MonoBehaviour
         [Tooltip("Text already printed onto the typewriter when the player loads in")]
         [FormerlySerializedAs("startLines")]
         public List<string> m_sStartLines = new List<string>();
+
+        public List<bool> m_bStrikeThrough = new List<bool>();
+
         [Tooltip("What the script will write into the text when it takes control")]
         [FormerlySerializedAs("scriptLines")]
         public List<string> m_sScriptLines = new List<string>();
@@ -58,6 +61,7 @@ public class TypeWriter : MonoBehaviour
     private int endingNo;
     // The script lines from the currently selected ending
     private List<string> scriptLines = new List<string>();
+    private List<bool> strikeThrough = new List<bool>();
     // The final line written as the player is kicked off the typewriter
     private string lastLine;
     // Each list item is the amount of characters the player can type before the
@@ -143,6 +147,12 @@ public class TypeWriter : MonoBehaviour
         // Gets the most recent ending completed
         endingNo = PermanentData.saveInfo.lastEndingAchieved;
 
+        // Loads all the text data
+        scriptLines = m_edEndingChanges[endingNo].m_sScriptLines;
+        strikeThrough = m_edEndingChanges[endingNo].m_bStrikeThrough;
+        lastLine = m_edEndingChanges[endingNo].m_sLastLine;
+        freeCharsBeforeScript = m_edEndingChanges[endingNo].m_iCharsUntilScript;
+
         // Loads the start text onto the typewriter
         for (int i = 0; i < m_edEndingChanges[endingNo].m_sStartLines.Count; i++)
         {
@@ -151,11 +161,6 @@ public class TypeWriter : MonoBehaviour
             NextRow();
         }
         
-
-        // Loads all the text data
-        scriptLines = m_edEndingChanges[endingNo].m_sScriptLines;
-        lastLine = m_edEndingChanges[endingNo].m_sLastLine;
-        freeCharsBeforeScript = m_edEndingChanges[endingNo].m_iCharsUntilScript;
 
         // Sets a desired gameobject as active if there is one
         if (m_edEndingChanges[endingNo].m_goActivateOnStart)
@@ -237,7 +242,7 @@ public class TypeWriter : MonoBehaviour
             ArmMoveBack();
         if (spaceKeyRotation < 0)
         {
-            spaceKeyRotation += 2;
+            spaceKeyRotation += 0.5f;
             m_tSpaceKey.localEulerAngles = new Vector3(0, 0, spaceKeyRotation);
         }
     }
@@ -280,8 +285,8 @@ public class TypeWriter : MonoBehaviour
         else
         {
             Instantiate(m_goSpaceSound, transform.position, transform.rotation);
-            spaceKeyRotation = -10;
-            m_tSpaceKey.localEulerAngles = new Vector3(0, 0, -20);
+            spaceKeyRotation = -5;
+            m_tSpaceKey.localEulerAngles = new Vector3(0, 0, -5);
         }
     }
 
@@ -347,6 +352,18 @@ public class TypeWriter : MonoBehaviour
     /// </summary>
     private void NextRow()
     {
+        for (int i = 0; i < m_tText.childCount; i++)
+            m_tText.GetChild(i).GetComponent<TextMeshPro>().fontStyle = FontStyles.Normal;
+        for (int i = 0; i < strikeThrough.Count; i++)
+        {
+            int choice = row - i + 1;
+            if (choice >= 0)
+            {
+                if (strikeThrough[i] && choice < m_tText.childCount)
+                    m_tText.GetChild(choice).GetComponent<TextMeshPro>().fontStyle = FontStyles.Strikethrough;
+                
+            }
+        }
         row++;
         if (row != m_tText.childCount)
             m_tPaper.transform.localPosition = new Vector3(0, 0.025f * (row + 1), 0) / 100;
@@ -574,6 +591,5 @@ public class TypeWriter : MonoBehaviour
         }
         if (doThing)
             m_tPaperMeshes[8].SetActive(true);
-        Debug.Log(doThing);
     }
 }
