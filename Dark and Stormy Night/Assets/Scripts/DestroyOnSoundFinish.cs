@@ -21,12 +21,13 @@ public class DestroyOnSoundFinish : MonoBehaviour
 
         if (GetComponent<AudioSource>().isPlaying == false && hasPlayed == true)
         {
+            if (enableOnFinish != null)
+                enableOnFinish.SetActive(true);
             if (disable == false)
                 Destroy(this.gameObject);
             else
                 gameObject.SetActive(false);
-            if (enableOnFinish != null)
-                enableOnFinish.SetActive(true);
+            
         }
 	}
 }

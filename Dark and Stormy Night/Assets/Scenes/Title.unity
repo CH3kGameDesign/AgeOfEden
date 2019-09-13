@@ -10114,7 +10114,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: ALPHA.8-28a
+  m_text: ALPHA.9-12a
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 028c896bed41043408be11a2228d84f2, type: 2}
   m_sharedMaterial: {fileID: 21113873226524262, guid: 028c896bed41043408be11a2228d84f2,
@@ -11448,7 +11448,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1612616162
 MonoBehaviour:
   m_ObjectHideFlags: 0

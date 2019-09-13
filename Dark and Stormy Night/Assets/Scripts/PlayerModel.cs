@@ -6,6 +6,7 @@ public class PlayerModel : MonoBehaviour
 {
     [HideInInspector]
     public static GameObject player;
+    public static Vector3 faceDirection;
 
     [Header("GameObjects")]
     public GameObject cameraHolder;
@@ -18,6 +19,7 @@ public class PlayerModel : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        faceDirection = Vector3.zero;
         player = gameObject;
 	}
 	
@@ -29,8 +31,11 @@ public class PlayerModel : MonoBehaviour
 
         if (Movement.canMove)
         {
-            transform.rotation = Quaternion.Euler(0, cameraHolder.transform.rotation.eulerAngles.y,
-                cameraHolder.transform.rotation.eulerAngles.z);
+            if (faceDirection == Vector3.zero)
+                transform.rotation = Quaternion.Euler(0, cameraHolder.transform.rotation.eulerAngles.y,
+                    cameraHolder.transform.rotation.eulerAngles.z);
+            else
+                transform.LookAt(new Vector3(transform.position.x + faceDirection.x, transform.position.y, transform.position.z + faceDirection.z));
         }
 	}
 }

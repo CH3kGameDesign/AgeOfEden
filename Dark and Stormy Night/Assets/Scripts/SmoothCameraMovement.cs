@@ -23,6 +23,7 @@ public class SmoothCameraMovement : MonoBehaviour
 
     public Vector2 publicSittingMaxRotation = new Vector2 (-60, 60);
     public static Vector2 sittingMaxRotation;
+    public static bool ignoreSittingRotation = false;
     public float rotateOffset;
 
     private List<float> rotArrayX = new List<float>();
@@ -46,6 +47,7 @@ public class SmoothCameraMovement : MonoBehaviour
     // Called once before the first frame
     private void Awake()
     {
+        ignoreSittingRotation = true;
         sittingMaxRotation = publicSittingMaxRotation;
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb)
@@ -99,7 +101,7 @@ public class SmoothCameraMovement : MonoBehaviour
 
                 rotationY = ClampAngle(rotationY, minimumY, maximumY);
 
-                if (!Movement.canMove)
+                if (!Movement.canMove && !ignoreSittingRotation)
                     rotationX = ClampAngle(rotationX, sittingMaxRotation.x, sittingMaxRotation.y);
                 
                 rotArrayY.Add(rotationY);
