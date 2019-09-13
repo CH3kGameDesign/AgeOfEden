@@ -738,7 +738,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-194470
+  m_Name: pb_Mesh-8266
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -1970,7 +1970,6 @@ MonoBehaviour:
   m_bRequiresPlayer: 1
   m_bClockwise: 1
   m_fTelomeres: 2
-  m_fCurrentRotation: 0
   m_LgoPhysicsObjects:
   - {fileID: 16925924}
   - {fileID: 1088330955}
@@ -1978,6 +1977,7 @@ MonoBehaviour:
   - {fileID: 1754923580}
   - {fileID: 583380042}
   - {fileID: 902075530}
+  m_LgoObjectStandby: []
 --- !u!1 &435671994
 GameObject:
   m_ObjectHideFlags: 0
@@ -2044,7 +2044,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-194472
+  m_Name: pb_Mesh-8268
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -3012,7 +3012,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &642613953
 Transform:
   m_ObjectHideFlags: 0
@@ -5681,7 +5681,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-194462
+  m_Name: pb_Mesh-8258
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -5897,7 +5897,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-194474
+  m_Name: pb_Mesh-8270
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -6765,7 +6765,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-194476
+  m_Name: pb_Mesh-8272
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -7519,7 +7519,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-194466
+  m_Name: pb_Mesh-8262
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -7705,7 +7705,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-194464
+  m_Name: pb_Mesh-8260
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -8401,7 +8401,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-194456
+  m_Name: pb_Mesh-8252
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -8586,7 +8586,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-194468
+  m_Name: pb_Mesh-8264
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
