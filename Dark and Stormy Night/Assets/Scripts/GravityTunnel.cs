@@ -10,7 +10,7 @@ public class GravityTunnel : MonoBehaviour
     [Tooltip("The rotation of the room requires the player inside it, works better with no telomeres")]
     [SerializeField]
     private bool m_bRequiresPlayer = true;
-    [Tooltip("The direction the rotation will occur in when walking through (based on facing positive x)")]
+    [Tooltip("The direction the world will rotate around the player")]
     [SerializeField]
     private bool m_bClockwise = true;
     
@@ -22,7 +22,6 @@ public class GravityTunnel : MonoBehaviour
     private float m_fTunnelLength;
     // How far in the tunnel the player is
     private float m_fProgress;
-    [SerializeField]
     // The current rotation around the z axis of the room
     private float m_fCurrentRotation = 0f;
 
@@ -32,6 +31,17 @@ public class GravityTunnel : MonoBehaviour
     [FormerlySerializedAs("m_LgoPhysicsObjects")]
     [SerializeField]
     private List<GameObject> m_LgoPhysicsObjects = new List<GameObject>();
+
+    [System.Serializable]
+    private struct ObjectGroup
+    {
+        [SerializeField]
+        private List<GameObject> m_LgoObjects;
+    };
+
+    [Tooltip("A list of gameobjects that can be use to add them to the physics objects list")]
+    [SerializeField]
+    private List<ObjectGroup> m_LgoObjectStandby = new List<ObjectGroup>();
 
     // Use this for initialization
     private void Start()
