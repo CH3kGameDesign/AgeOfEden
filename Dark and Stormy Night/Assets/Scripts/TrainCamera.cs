@@ -66,4 +66,9 @@ public class TrainCamera : MonoBehaviour {
         if (endTimer > 0.9f)
             PlayerModel.player.GetComponentInChildren<Animator>().enabled = false;
     }
+
+    void OnDisable ()
+    {
+        SmoothCameraMovement.ignoreSittingRotation = false;
+    }
 }
