@@ -47,7 +47,7 @@ public class SmoothCameraMovement : MonoBehaviour
     // Called once before the first frame
     private void Awake()
     {
-        ignoreSittingRotation = true;
+        ignoreSittingRotation = false;
         sittingMaxRotation = publicSittingMaxRotation;
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb)
