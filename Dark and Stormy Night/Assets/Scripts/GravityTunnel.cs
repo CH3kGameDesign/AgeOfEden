@@ -5,6 +5,13 @@ using UnityEngine.Serialization;
 
 public class GravityTunnel : MonoBehaviour
 {
+    /*
+     * TODO:
+     * Smoothing, currently entering the hitbox immediately starts the rotation, try easing into it
+     * Half rotation, currently the room rotates a full 360 throughout the length, add option to reduce
+     * Have objects be able to enter and exit 
+     */
+
     public static bool s_bInGravityTunnel = false;
 
     [Tooltip("The rotation of the room requires the player inside it, works better with no telomeres")]
@@ -26,7 +33,11 @@ public class GravityTunnel : MonoBehaviour
     private float m_fCurrentRotation = 0f;
 
     [Space(5)]
-    
+    [Header("References")]
+
+    [Tooltip("The tiggerbox used to lerp rotation over the Z axis")]
+    [SerializeField]
+    private BoxCollider m_bcTriggerBox = null;
     [Tooltip("A list of loose gameobjects with physics that rotate with the room")]
     [FormerlySerializedAs("m_LgoPhysicsObjects")]
     [SerializeField]
@@ -49,8 +60,14 @@ public class GravityTunnel : MonoBehaviour
         if (m_fTelomeres > m_fTunnelLength * 0.5)
             m_fTelomeres = 0;
 
+        // If no triggerbox is found, try to assign any attached or throw an error
+        if (!m_bcTriggerBox)
+            m_bcTriggerBox = gameObject.GetComponent<BoxCollider>();
+        else
+            Debug.LogWarning("No BoxCollider found");
+
         // Starts the tunnel length as the length of the hitbox minus the telomeres at each end
-        m_fTunnelLength = gameObject.GetComponent<BoxCollider>().size.z;
+        m_fTunnelLength = m_bcTriggerBox.size.z;
 
         m_fTunnelLength -= m_fTelomeres * 2;
 	}
@@ -59,10 +76,12 @@ public class GravityTunnel : MonoBehaviour
     {
         if (!(m_bRequiresPlayer && !s_bInGravityTunnel))
         {
+            Vector3 triggerBoxGlobalPos = gameObject.transform.position + m_bcTriggerBox.center;
+
             // Calculates the players progression through the tunnel between 0 and 1 (extendeds outside)
             m_fProgress = (Movement.m_goPlayerObject.transform.position.z
-                - gameObject.transform.position.z + (m_fTunnelLength * 0.5f)) / m_fTunnelLength;
-
+                - triggerBoxGlobalPos.z + (m_fTunnelLength * 0.5f)) / m_fTunnelLength;
+            
             // Clamps the players progress
             if (m_bRequiresPlayer)
             {
