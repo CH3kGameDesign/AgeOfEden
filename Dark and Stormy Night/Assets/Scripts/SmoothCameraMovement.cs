@@ -70,10 +70,12 @@ public class SmoothCameraMovement : MonoBehaviour
     // Called once per frame
     private void Update()
     {
-        if (!GravityTunnel.s_bInGravityTunnel)
-            originalRotation = Quaternion.Euler(
-                0, turnAroundValue, Mathf.Lerp(
-                    originalRotation.eulerAngles.z, gravDirection, Time.deltaTime * 2));
+        //if (!GravityTunnel.s_bInGravityTunnel)
+        //    originalRotation = Quaternion.Euler(0, turnAroundValue, Mathf.Lerp(
+        //        originalRotation.eulerAngles.z, gravDirection, Time.deltaTime * 2));
+
+        originalRotation = Quaternion.Euler(0, turnAroundValue, Mathf.Lerp(
+            originalRotation.eulerAngles.z, gravDirection, Time.deltaTime * 2));
 
         CameraUpdate();
     }

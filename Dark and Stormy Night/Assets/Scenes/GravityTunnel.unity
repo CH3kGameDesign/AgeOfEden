@@ -1967,14 +1967,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43fecdbb1ce43634d989937bc8b46340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  s_bInGravityTunnel: 0
   m_bRequiresPlayer: 1
   m_bClockwise: 1
   m_bSmoothing: 0
-  m_fRotationAmount: 180
+  m_fRotationAmount: 360
   m_fTelomeres: 0.5
   m_fSmoothStrength: 10
   m_bcTriggerBox: {fileID: 416277824}
-  m_LgoPhysicsObjects:
+  m_LgoPhysicsChildren:
   - {fileID: 16925924}
   - {fileID: 1088330955}
   - {fileID: 1841325356}
