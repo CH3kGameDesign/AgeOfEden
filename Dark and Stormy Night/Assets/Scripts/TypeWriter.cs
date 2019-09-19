@@ -175,7 +175,7 @@ public class TypeWriter : MonoBehaviour
         // Sets all the arms to their idle position
         for (int i = 0; i < 36; i++)
         {
-            armMoveRotation.Add(-300);
+            armMoveRotation.Add(0);
             armMoveUpNow.Add(false);
         }
 
