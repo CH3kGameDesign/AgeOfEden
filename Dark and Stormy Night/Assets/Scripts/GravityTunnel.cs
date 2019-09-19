@@ -7,10 +7,18 @@ public class GravityTunnel : MonoBehaviour
 {
     /*
      * TODO:
-     * Have objects be able to enter and exit 
+     * Flesh out objects entering and exiting
      */
 
-    public static bool s_bInGravityTunnel = false;
+    [System.Serializable]
+    private class ObjectGroup
+    {
+        [SerializeField]
+        internal List<GameObject> m_LgoObjects;
+    };
+
+    [HideInInspector]
+    public bool s_bInGravityTunnel = false;
 
     [Tooltip("The rotation of the room requires the player inside it, works better with no telomeres")]
     [SerializeField]
@@ -39,6 +47,7 @@ public class GravityTunnel : MonoBehaviour
     private float m_fProgress;
     // The current rotation around the z axis of the room
     private float m_fCurrentRotation = 0f;
+    // Smooths out the rotation
     private float m_fSmoothing;
     
     [Header("References")]
@@ -46,17 +55,11 @@ public class GravityTunnel : MonoBehaviour
     [Tooltip("The tiggerbox used to lerp rotation over the Z axis")]
     [SerializeField]
     private BoxCollider m_bcTriggerBox = null;
+
     [Tooltip("A list of loose gameobjects with physics that rotate with the room")]
     [FormerlySerializedAs("m_LgoPhysicsObjects")]
     [SerializeField]
-    private List<GameObject> m_LgoPhysicsObjects = new List<GameObject>();
-
-    [System.Serializable]
-    private struct ObjectGroup
-    {
-        [SerializeField]
-        private List<GameObject> m_LgoObjects;
-    };
+    private List<GameObject> m_LgoPhysicsChildren = new List<GameObject>();
 
     [Tooltip("A list of gameobjects that can be use to add them to the physics objects list")]
     [SerializeField]
@@ -129,11 +132,11 @@ public class GravityTunnel : MonoBehaviour
             }
 
             // Applies a fake gravity to the list of gameobjects
-            for (int i = 0; i < m_LgoPhysicsObjects.Count; i++)
+            for (int i = 0; i < m_LgoPhysicsChildren.Count; i++)
             {
                 if (m_bClockwise)
                 {
-                    m_LgoPhysicsObjects[i].GetComponent<Rigidbody>().AddForce(
+                    m_LgoPhysicsChildren[i].GetComponent<Rigidbody>().AddForce(
                         Mathf.Sin(2 * Mathf.PI * m_fProgress)
                         * Physics.gravity.y,
                         Mathf.Cos(2 * Mathf.PI * m_fProgress)
@@ -142,7 +145,7 @@ public class GravityTunnel : MonoBehaviour
                 }
                 else
                 {
-                    m_LgoPhysicsObjects[i].GetComponent<Rigidbody>().AddForce(
+                    m_LgoPhysicsChildren[i].GetComponent<Rigidbody>().AddForce(
                         Mathf.Sin(2 * Mathf.PI * m_fProgress)
                         * -Physics.gravity.y,
                         Mathf.Cos(2 * Mathf.PI * m_fProgress)
@@ -163,8 +166,8 @@ public class GravityTunnel : MonoBehaviour
         {
             s_bInGravityTunnel = true;
 
-            for (int i = 0; i < m_LgoPhysicsObjects.Count; i++)
-                m_LgoPhysicsObjects[i].GetComponent<Rigidbody>().useGravity = false;
+            for (int i = 0; i < m_LgoPhysicsChildren.Count; i++)
+                m_LgoPhysicsChildren[i].GetComponent<Rigidbody>().useGravity = false;
         }
 
         //if (other.tag == "Movable" && other.GetComponent<Rigidbody>())
@@ -177,11 +180,57 @@ public class GravityTunnel : MonoBehaviour
         {
             s_bInGravityTunnel = false;
 
-            for (int i = 0; i < m_LgoPhysicsObjects.Count; i++)
-                m_LgoPhysicsObjects[i].GetComponent<Rigidbody>().useGravity = true;
+            for (int i = 0; i < m_LgoPhysicsChildren.Count; i++)
+                m_LgoPhysicsChildren[i].GetComponent<Rigidbody>().useGravity = true;
         }
 
         //if (other.tag == "Movable")
         //    m_LgoPhysicsObjects.Remove(other.gameObject);
+    }
+
+    /// <summary>
+    /// Adds a gameobject to the list of physics children
+    /// </summary>
+    /// <param name="pNewChild">The object to be added</param>
+    private void AddToChildren(GameObject pNewChild)
+    {
+        m_LgoPhysicsChildren.Add(pNewChild);
+    }
+
+    /// <summary>
+    /// Adds a group of gameobjects to the list of physics children
+    /// </summary>
+    /// <param name="pObjectGroup">The group of gameobjects to be added</param>
+    private void AddBlockToChildren(ObjectGroup pObjectGroup)
+    {
+        for (int i = 0; i < pObjectGroup.m_LgoObjects.Count; i++)
+        {
+            m_LgoPhysicsChildren.Add(pObjectGroup.m_LgoObjects[i]);
+        }
+    }
+
+    /// <summary>
+    /// Removes a specific object from the list of physics objects
+    /// </summary>
+    /// <param name="pGo">The object you want removed</param>
+    private void RemoveFromChildren(GameObject pGo)
+    {
+        m_LgoPhysicsChildren.Remove(pGo);
+    }
+
+    /// <summary>
+    /// Removes an object from the beginning of the list
+    /// </summary>
+    private void RemoveFirstFromChildren()
+    {
+        m_LgoPhysicsChildren.RemoveAt(0);
+    }
+
+    /// <summary>
+    /// Yeets every single object from the list of physics children
+    /// </summary>
+    private void ClearPhysicsChildrenList()
+    {
+        m_LgoPhysicsChildren.Clear();
     }
 }
