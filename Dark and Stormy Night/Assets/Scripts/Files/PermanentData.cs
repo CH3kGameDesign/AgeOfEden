@@ -10,6 +10,7 @@ public sealed class PermanentData
         public List<bool> endingsAchieved = new List<bool>();
         public int lastEndingAchieved;
         public bool firstTime = true;
+        public string name = "";
 
         // Constructor
         public Info()
