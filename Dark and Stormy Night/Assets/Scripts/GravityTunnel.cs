@@ -7,8 +7,6 @@ public class GravityTunnel : MonoBehaviour
 {
     /*
      * TODO:
-     * Smoothing, currently entering the hitbox immediately starts the rotation, try easing into it
-     * Half rotation, currently the room rotates a full 360 throughout the length, add option to reduce
      * Have objects be able to enter and exit 
      */
 
@@ -20,10 +18,20 @@ public class GravityTunnel : MonoBehaviour
     [Tooltip("The direction the world will rotate around the player")]
     [SerializeField]
     private bool m_bClockwise = true;
-    
+    [Tooltip("Applies a small amount of smoothing to the rotation")]
+    [SerializeField]
+    private bool m_bSmoothing;
+
+    [Space(5)]
+    [Tooltip("How much the object rotates by at the end of the tunnel (0-360)")]
+    [SerializeField]
+    private float m_fRotationAmount = 360;
     [Tooltip("A small grace period in the hitbox where small adjustments can be made")]
     [SerializeField]
     private float m_fTelomeres = 0.5f;
+    [Tooltip("How gradual the rotation is applied to the gameobjects")]
+    [SerializeField]
+    private float m_fSmoothStrength = 10;
     
     // The total length of the tunnel
     private float m_fTunnelLength;
@@ -31,8 +39,8 @@ public class GravityTunnel : MonoBehaviour
     private float m_fProgress;
     // The current rotation around the z axis of the room
     private float m_fCurrentRotation = 0f;
-
-    [Space(5)]
+    private float m_fSmoothing;
+    
     [Header("References")]
 
     [Tooltip("The tiggerbox used to lerp rotation over the Z axis")]
@@ -57,19 +65,28 @@ public class GravityTunnel : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
-        if (m_fTelomeres > m_fTunnelLength * 0.5)
-            m_fTelomeres = 0;
-
         // If no triggerbox is found, try to assign any attached or throw an error
         if (!m_bcTriggerBox)
             m_bcTriggerBox = gameObject.GetComponent<BoxCollider>();
-        else
-            Debug.LogWarning("No BoxCollider found");
+
+        if (!m_bcTriggerBox)
+            Debug.LogError("No BoxCollider found");
 
         // Starts the tunnel length as the length of the hitbox minus the telomeres at each end
         m_fTunnelLength = m_bcTriggerBox.size.z;
 
+        if (m_fTelomeres > m_fTunnelLength * 0.5)
+            m_fTelomeres = 0;
+
         m_fTunnelLength -= m_fTelomeres * 2;
+
+        // Clamps the rotation amount between 0 and 360 then scales to 0-1
+        if (m_fRotationAmount < 0)
+            m_fRotationAmount = 0;
+        if (m_fRotationAmount > 360)
+            m_fRotationAmount = 360;
+
+        m_fRotationAmount /= 360;
 	}
 
     private void Update()
@@ -90,6 +107,9 @@ public class GravityTunnel : MonoBehaviour
                 if (m_fProgress > 1)
                     m_fProgress = 1;
             }
+            
+            // Scales the progress to suit the desired end rotation
+            m_fProgress *= m_fRotationAmount;
 
             // Uses the progression to test the expected rotation to the current rotation
             if (m_fCurrentRotation != (2 * Mathf.PI * m_fProgress))
@@ -100,9 +120,10 @@ public class GravityTunnel : MonoBehaviour
                 float rotDifference = anticipatedRotation - m_fCurrentRotation;
                 // Rotates by the difference (why is it in deg??)
                 if (m_bClockwise)
-                    transform.Rotate(new Vector3(0, 0, -rotDifference * Mathf.Rad2Deg));
+                    m_fSmoothing -= rotDifference * Mathf.Rad2Deg;
                 else
-                    transform.Rotate(new Vector3(0, 0, rotDifference * Mathf.Rad2Deg));
+                    m_fSmoothing += rotDifference * Mathf.Rad2Deg;
+                
                 // Logs the rotation for the next frame
                 m_fCurrentRotation = anticipatedRotation;
             }
@@ -130,6 +151,10 @@ public class GravityTunnel : MonoBehaviour
                 }
             }
         }
+
+        // Do smoothing
+        transform.Rotate(new Vector3(0, 0, m_fSmoothing / m_fSmoothStrength));
+        m_fSmoothing -= m_fSmoothing / m_fSmoothStrength;
     }
 
     private void OnTriggerEnter(Collider other)

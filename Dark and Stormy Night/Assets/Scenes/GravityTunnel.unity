@@ -1969,8 +1969,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_bRequiresPlayer: 1
   m_bClockwise: 1
-  m_fTelomeres: 2
-  m_bcTriggerBox: {fileID: 0}
+  m_bSmoothing: 0
+  m_fRotationAmount: 180
+  m_fTelomeres: 0.5
+  m_fSmoothStrength: 10
+  m_bcTriggerBox: {fileID: 416277824}
   m_LgoPhysicsObjects:
   - {fileID: 16925924}
   - {fileID: 1088330955}
