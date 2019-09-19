@@ -10,6 +10,11 @@ public class RaycastEnable : MonoBehaviour
 
     [Space(10)]
 
+    public List<GameObject> GOOnNotView = new List<GameObject>();
+    public List<GameObject> GODisableOnNotView = new List<GameObject>();
+
+    [Space(20)]
+
     public List<GameObject> Collider = new List<GameObject>();
     public List<GameObject> ColliderDisable = new List<GameObject>();
 
@@ -66,12 +71,14 @@ public class RaycastEnable : MonoBehaviour
                 {
                     if (MoveToHitPoint)
                         MoveToHitPoint.gameObject.SetActive(false);
+                    DisableObjects();
                 }
             }
             else
             {
                 if (MoveToHitPoint)
                     MoveToHitPoint.gameObject.SetActive(false);
+                DisableObjects();
             }
         }
         else
@@ -94,12 +101,14 @@ public class RaycastEnable : MonoBehaviour
                 {
                     if (MoveToHitPoint)
                         MoveToHitPoint.gameObject.SetActive(false);
+                    DisableObjects();
                 }
             }
             else
             {
                 if (MoveToHitPoint)
                     MoveToHitPoint.gameObject.SetActive(false);
+                DisableObjects();
             }
         }
     }
@@ -139,5 +148,14 @@ public class RaycastEnable : MonoBehaviour
             for (int j = 0; j < ColliderDisable[i].GetComponentsInChildren<Collider>().Length; j++)
                 ColliderDisable[i].GetComponentsInChildren<Collider>()[j].enabled = false;
         }
+    }
+
+    private void DisableObjects()
+    {
+        for (int i = 0; i < GOOnNotView.Count; i++)
+            GOOnNotView[i].SetActive(true);
+
+        for (int i = 0; i < GODisableOnNotView.Count; i++)
+            GODisableOnNotView[i].SetActive(false);
     }
 }

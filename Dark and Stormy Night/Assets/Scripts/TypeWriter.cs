@@ -20,6 +20,8 @@ public class TypeWriter : MonoBehaviour
         public List<string> m_sStartLines = new List<string>();
 
         public List<bool> m_bStrikeThrough = new List<bool>();
+        public List<bool> m_bPlayerType = new List<bool>();
+        public List<bool> m_bNewLineAfter = new List<bool>();
 
         [Tooltip("What the script will write into the text when it takes control")]
         [FormerlySerializedAs("scriptLines")]
@@ -64,6 +66,8 @@ public class TypeWriter : MonoBehaviour
     // The script lines from the currently selected ending
     private List<string> scriptLines = new List<string>();
     private List<bool> strikeThrough = new List<bool>();
+    private List<bool> playerType = new List<bool>();
+    private List<bool> newLineAfter = new List<bool>();
     // The final line written as the player is kicked off the typewriter
     private string lastLine;
     // Each list item is the amount of characters the player can type before the
@@ -147,6 +151,11 @@ public class TypeWriter : MonoBehaviour
     [SerializeField]
     private UnityEvent m_ueVoidOnFinish;
 
+    private float selfTypeTimer;
+    public Vector2 selfTypeBounds;
+
+    private float enterTimer = 1000;
+
 	// Called once before the first frame
 	private void Start()
     {
@@ -156,8 +165,12 @@ public class TypeWriter : MonoBehaviour
         // Loads all the text data
         scriptLines = m_edEndingChanges[endingNo].m_sScriptLines;
         strikeThrough = m_edEndingChanges[endingNo].m_bStrikeThrough;
+        playerType = m_edEndingChanges[endingNo].m_bPlayerType;
+        newLineAfter = m_edEndingChanges[endingNo].m_bNewLineAfter;
         lastLine = m_edEndingChanges[endingNo].m_sLastLine;
         freeCharsBeforeScript = m_edEndingChanges[endingNo].m_iCharsUntilScript;
+        if (endingNo == 0)
+            PermanentData.saveInfo.name = "";
 
         // Loads the start text onto the typewriter
         for (int i = 0; i < m_edEndingChanges[endingNo].m_sStartLines.Count; i++)
@@ -165,6 +178,13 @@ public class TypeWriter : MonoBehaviour
             m_tText.GetChild(0).GetComponent<TextMeshPro>().text =
                 m_edEndingChanges[endingNo].m_sStartLines[i];
             NextRow();
+        }
+        for (int i = 0; i < scriptLines.Count; i++)
+        {
+            if (playerType.Count == i)
+                playerType.Add(true);
+            if (newLineAfter.Count == i)
+                newLineAfter.Add(false);
         }
         
 
@@ -187,6 +207,7 @@ public class TypeWriter : MonoBehaviour
         letterWidth = (halfLength * 2) / letterPerRow;
         // Offsets the paper so the first character lines up with the arm
         m_tPaper.transform.localPosition = new Vector3(halfLength, 0.025f * (row + 1), 0);
+        selfTypeTimer = Random.Range(selfTypeBounds.x, selfTypeBounds.y);
     }
 
     // Update is called once per frame
@@ -225,21 +246,43 @@ public class TypeWriter : MonoBehaviour
             }
 
             // Initiates script typing once the conditions are met
-            if (charScriptTakesOverCounter >= freeCharsBeforeScript[scriptLineCounter])
+            if (charScriptTakesOverCounter >= freeCharsBeforeScript[scriptLineCounter] && freeCharsBeforeScript[scriptLineCounter] != -1)
                 scriptTyping = true;
 
-            // Loads a valid key press into update letter
-            KeyPress();
-
+            ///////////////////////////// MOVED UP A BIT
             // Moves the paper to the new position
             m_tPaperHolder.transform.localPosition = Vector3.Lerp(m_tPaperHolder.transform.localPosition, new Vector3(-0.121f,
                 0.247f,
                 halfLength - (letterWidth * m_tText.GetChild(0).GetComponent<TextMeshPro>().text.Length))
                 / 100, Time.deltaTime * 8);
             m_tPaper.transform.localPosition = new Vector3(0,
-                0.025f * (row + 1), 
+                0.025f * (row + 1),
                 0)
-                /100;
+                / 100;
+            /////////////////////////////
+
+            if (playerType[scriptLineCounter] == true || scriptTyping == false)
+            {
+                KeyPress();
+                if (freeCharsBeforeScript[scriptLineCounter] == -1)
+                {
+                    if (Input.GetKeyDown(KeyCode.Return) || enterTimer <= 0 || charScriptTakesOverCounter > 10)
+                    {
+                        scriptTyping = true;
+                        Type("");
+                    }
+                    enterTimer -= Time.deltaTime;
+                }
+            }
+            else
+            {
+                if (selfTypeTimer < 0)
+                {
+                    selfTypeTimer = Random.Range(selfTypeBounds.x, selfTypeBounds.y);
+                    Type("");
+                }
+                selfTypeTimer -= Time.deltaTime;
+            }
 
             // As long as a valid key was pressed, attempt to type onto the paper
             if (updateLetter != null)
@@ -265,6 +308,11 @@ public class TypeWriter : MonoBehaviour
     /// <param name="pLetter">The letter used</param>
     private void Type(string pLetter)
     {
+        if (freeCharsBeforeScript[scriptLineCounter] == -1)
+        {
+            PermanentData.saveInfo.name += pLetter;
+            enterTimer = 2;
+        }
         // String used to test if the character inputted was a space
         string textSound = "";
         if (scriptTyping)
@@ -318,6 +366,8 @@ public class TypeWriter : MonoBehaviour
         {
             if (scriptLineCounter < scriptLines.Count - 1)
             {
+                if (newLineAfter[scriptLineCounter] == true)
+                    NextRow();
                 scriptLineCounter++;
                 scriptCharCounter = 0;
                 scriptTyping = false;
@@ -332,11 +382,14 @@ public class TypeWriter : MonoBehaviour
             {
                 makeRowSound = false;
                 // Leaves some room and enters the final line down
-                NextRow();
-                NextRow();
-                m_tText.GetChild(0).GetComponent<TextMeshPro>().text += lastLine;
-                m_sMessageLine += lastLine;
-                m_sFullMessage.Add(m_sMessageLine);
+                if (lastLine != "")
+                {
+                    NextRow();
+                    NextRow();
+                    m_tText.GetChild(0).GetComponent<TextMeshPro>().text += lastLine;
+                    m_sMessageLine += lastLine;
+                }
+                    m_sFullMessage.Add(m_sMessageLine);
 
                 // Finalisation stuff
                 if (m_goActivateOnFinish.Count != 0)
