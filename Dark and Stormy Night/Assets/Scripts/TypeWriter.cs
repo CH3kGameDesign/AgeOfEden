@@ -488,28 +488,46 @@ public class TypeWriter : MonoBehaviour
             choice = 24;
         if (pLetter == "z")
             choice = 25;
-        if (pLetter == "0")
+        if (pLetter == "0" || pLetter == ")")
             choice = 26;
-        if (pLetter == "1")
+        if (pLetter == "1" || pLetter == "!")
             choice = 27;
-        if (pLetter == "2")
+        if (pLetter == "2" || pLetter == "@")
             choice = 28;
-        if (pLetter == "3")
+        if (pLetter == "3" || pLetter == "#")
             choice = 29;
-        if (pLetter == "4")
+        if (pLetter == "4" || pLetter == "$")
             choice = 30;
-        if (pLetter == "5")
+        if (pLetter == "5" || pLetter == "%")
             choice = 31;
-        if (pLetter == "6")
+        if (pLetter == "6" || pLetter == "^")
             choice = 32;
-        if (pLetter == "7")
+        if (pLetter == "7" || pLetter == "&")
             choice = 33;
-        if (pLetter == "8")
+        if (pLetter == "8" || pLetter == "*")
             choice = 34;
-        if (pLetter == "9")
+        if (pLetter == "9" || pLetter == "(")
             choice = 35;
-        if (pLetter == ".")
-            choice = 28;
+
+        if (pLetter == "[" || pLetter == "{")
+            choice = 15;
+        if (pLetter == "]" || pLetter == "}")
+            choice = 15;
+        if (pLetter == "\\" || pLetter == "|")
+            choice = 15;
+
+        if (pLetter == ";" || pLetter == ":")
+            choice = 11;
+        if (pLetter == "'" || pLetter == "\"")
+            choice = 11;
+
+        if (pLetter == "," || pLetter == "<")
+            choice = 12;
+        if (pLetter == "." || pLetter == ">")
+            choice = 12;
+        if (pLetter == "/" || pLetter == "?")
+            choice = 12;
+
         // As long as a valid key is pressed, the typewriter arm is moved into position
         if (choice != -1)
         {
@@ -655,6 +673,64 @@ public class TypeWriter : MonoBehaviour
             updateLetter = "9";
         if (Input.GetKeyDown(KeyCode.Alpha0))
             updateLetter = "0";
+
+        if (Input.GetKeyDown(KeyCode.LeftBracket))
+            updateLetter = "[";
+        if (Input.GetKeyDown(KeyCode.RightBracket))
+            updateLetter = "]";
+        if (Input.GetKeyDown(KeyCode.Backslash))
+            updateLetter = "\\";
+        if (Input.GetKeyDown(KeyCode.Semicolon))
+            updateLetter = ";";
+        if (Input.GetKeyDown(KeyCode.Quote))
+            updateLetter = "'";
+        if (Input.GetKeyDown(KeyCode.Comma))
+            updateLetter = ",";
+        if (Input.GetKeyDown(KeyCode.Period))
+            updateLetter = ".";
+        if (Input.GetKeyDown(KeyCode.Slash))
+            updateLetter = "/";
+
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+                updateLetter = "!";
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+                updateLetter = "@";
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+                updateLetter = "#";
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+                updateLetter = "$";
+            if (Input.GetKeyDown(KeyCode.Alpha5))
+                updateLetter = "%";
+            if (Input.GetKeyDown(KeyCode.Alpha6))
+                updateLetter = "^";
+            if (Input.GetKeyDown(KeyCode.Alpha7))
+                updateLetter = "&";
+            if (Input.GetKeyDown(KeyCode.Alpha8))
+                updateLetter = "*";
+            if (Input.GetKeyDown(KeyCode.Alpha9))
+                updateLetter = "(";
+            if (Input.GetKeyDown(KeyCode.Alpha0))
+                updateLetter = ")";
+
+            if (Input.GetKeyDown(KeyCode.LeftBracket))
+                updateLetter = "{";
+            if (Input.GetKeyDown(KeyCode.RightBracket))
+                updateLetter = "}";
+            if (Input.GetKeyDown(KeyCode.Backslash))
+                updateLetter = "|";
+            if (Input.GetKeyDown(KeyCode.Semicolon))
+                updateLetter = ":";
+            if (Input.GetKeyDown(KeyCode.Quote))
+                updateLetter = "\"";
+            if (Input.GetKeyDown(KeyCode.Comma))
+                updateLetter = "<";
+            if (Input.GetKeyDown(KeyCode.Period))
+                updateLetter = ">";
+            if (Input.GetKeyDown(KeyCode.Slash))
+                updateLetter = "?";
+        }
     }
 
     private void OnHopefullyDisable()
