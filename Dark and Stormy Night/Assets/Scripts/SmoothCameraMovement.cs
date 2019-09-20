@@ -35,7 +35,7 @@ public class SmoothCameraMovement : MonoBehaviour
     private float m_fSmoothingDelay = 15;
     
     [Tooltip("Applies an offset to the look direction in the X axis")]
-    public float m_fRotateOffset = 69;
+    public float m_fRotateOffset = 0;
 
     [Space(5)]
 
