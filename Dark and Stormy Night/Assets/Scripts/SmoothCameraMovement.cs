@@ -92,8 +92,17 @@ public class SmoothCameraMovement : MonoBehaviour
                 rotAverageY = 0f;
                 rotAverageX = 0f;
 
-                rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
-                rotationX += Input.GetAxis("Mouse X") * sensitivityX;
+                // Slows down camera movement if you're zoomed
+                if (CameraMovement.s_bIsZoomed)
+                {
+                    rotationY += Input.GetAxis("Mouse Y") * sensitivityY * 0.5f;
+                    rotationX += Input.GetAxis("Mouse X") * sensitivityX * 0.5f;
+                }
+                else
+                {
+                    rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
+                    rotationX += Input.GetAxis("Mouse X") * sensitivityX;
+                }
 
                 if (!noShake)
                 {
@@ -125,9 +134,9 @@ public class SmoothCameraMovement : MonoBehaviour
                 rotAverageX /= rotArrayX.Count;
 
                 rotAverageX += rotateOffset;
-
+                
                 //if (Movement.canMove == false)
-                  //  rotAverageY = ClampAngle(rotAverageY, sittingMaxRotation.x, sittingMaxRotation.y);
+                //  rotAverageY = ClampAngle(rotAverageY, sittingMaxRotation.x, sittingMaxRotation.y);
                 rotAverageX = ClampAngle(rotAverageX, minimumX, maximumX);
 
                 Quaternion yQuaternion = Quaternion.AngleAxis(rotAverageY, Vector3.left);

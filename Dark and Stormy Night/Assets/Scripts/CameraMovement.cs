@@ -10,6 +10,7 @@ public class CameraMovement : MonoBehaviour
     public static bool s_CanMove = true;
     public static bool s_CanZoom = true;
     public static bool s_Shake = true;
+    public static bool s_bIsZoomed = false;
     public static Vector2 s_CamShakeDirection;
     public static GameObject s_CameraObject;
 
@@ -119,18 +120,25 @@ public class CameraMovement : MonoBehaviour
             }
         }
 
+        // Do camera zoom
         if (s_CanZoom)
         {
             if (s_CanMove)
             {
-                if (Input.GetMouseButton(1))
+                if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
+                {
                     transform.GetChild(0).GetComponent<Camera>().fieldOfView =
                         Mathf.Lerp(transform.GetChild(0).GetComponent<Camera>().fieldOfView,
                         m_fFovMin, Time.deltaTime * m_fZoomSpeed);
+                    s_bIsZoomed = true;
+                }
                 else
+                {
                     transform.GetChild(0).GetComponent<Camera>().fieldOfView =
                         Mathf.Lerp(transform.GetChild(0).GetComponent<Camera>().fieldOfView,
                         m_fFovNormal, Time.deltaTime * m_fZoomSpeed * 2);
+                    s_bIsZoomed = false;
+                }
             }
             else
             {
