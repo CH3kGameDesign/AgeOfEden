@@ -28,7 +28,7 @@ public class TrainCamera : MonoBehaviour {
         if (cameraTrans.GetComponent<CameraMovement>().m_tCameraHook.GetComponentInParent<FacePlayer>() != null)
             FP = cameraTrans.GetComponent<CameraMovement>().m_tCameraHook.GetComponentInParent<FacePlayer>();
         cameraTrans.GetComponent<CameraMovement>().m_tCameraHook = null;
-        SmoothCameraMovement.ignoreSittingRotation = true;
+        SmoothCameraMovement.s_bIgnoreSittingRotation = true;
 	}
 	
 	// Update is called once per frame
@@ -69,6 +69,6 @@ public class TrainCamera : MonoBehaviour {
 
     void OnDisable ()
     {
-        SmoothCameraMovement.ignoreSittingRotation = false;
+        SmoothCameraMovement.s_bIgnoreSittingRotation = false;
     }
 }
