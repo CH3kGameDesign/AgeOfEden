@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnableWithEnding : MonoBehaviour
 {
     public List<GameObject> enableObjects = new List<GameObject>();
     public List<GameObject> disableObjects = new List<GameObject>();
+    public UnityEvent activateEvent;
     [Space (10)]
     public int endingCompleted;
     [Space(10)]
@@ -23,6 +25,7 @@ public class EnableWithEnding : MonoBehaviour
                     enableObjects[i].SetActive(true);
                 for (int i = 0; i < disableObjects.Count; i++)
                     disableObjects[i].SetActive(false);
+                activateEvent.Invoke();
             }
             else
             {
@@ -38,6 +41,7 @@ public class EnableWithEnding : MonoBehaviour
                     enableObjects[i].SetActive(true);
                 for (int i = 0; i < disableObjects.Count; i++)
                     disableObjects[i].SetActive(false);
+                activateEvent.Invoke();
             }
             else
             {
