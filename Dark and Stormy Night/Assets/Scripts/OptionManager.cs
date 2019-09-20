@@ -36,7 +36,7 @@ public class OptionManager : MonoBehaviour
     private void LateStart()
     {
         float camSensitivity = CameraMovement.s_CameraObject.
-            GetComponent<SmoothCameraMovement>().m_fSensitivityX;
+            GetComponent<SmoothCameraMovement>().m_v2Sensitivity.x;
 
         camSensitivitySlider.value = camSensitivity;
         camSensitivityText.text = camSensitivitySlider.value.ToString();
@@ -49,10 +49,10 @@ public class OptionManager : MonoBehaviour
     public void CamSensitivityValueChange(int pAddedValue)
     {
         CameraMovement.s_CameraObject.GetComponent
-            <SmoothCameraMovement>().m_fSensitivityX += pAddedValue;
+            <SmoothCameraMovement>().m_v2Sensitivity.x += pAddedValue;
 
         CameraMovement.s_CameraObject.GetComponent
-            <SmoothCameraMovement>().m_fSensitivityY += pAddedValue;
+            <SmoothCameraMovement>().m_v2Sensitivity.y += pAddedValue;
 
         camSensitivitySlider.value += pAddedValue;
         camSensitivityText.text = camSensitivitySlider.value.ToString();

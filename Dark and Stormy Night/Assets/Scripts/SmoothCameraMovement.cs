@@ -18,69 +18,50 @@ public class SmoothCameraMovement : MonoBehaviour
     [SerializeField]
     private RotationAxes m_raAxes = RotationAxes.MouseXAndY;
 
-    [Space(3)]
+    [Space(5)]
 
-    [FormerlySerializedAs("m_bReset")]
     [Tooltip("Resets the players rotation to default when they awake")]
     [SerializeField]
     private bool m_bResetRotation = false;
     [Tooltip("Applies no shake effect to the camera")]
     [SerializeField]
     private bool m_bNoShake = false;
+    
+    [Space(5)]
 
-    [Space(3)]
-
-    [Tooltip("The mouse sensitivity in the X direction")]
-    public float m_fSensitivityX = 2;
-    [Tooltip("The mouse sensitivity in the Y direction")]
-    public float m_fSensitivityY = 2;
-
-    [Space(3)]
-
-    [Tooltip("The X direction the player faces when the spawn in")]
+    [FormerlySerializedAs("m_fSmoothDelay")]
+    [Tooltip("How many frames until a mouse movement is removed from the list")]
     [SerializeField]
-    private float m_fStartRotX = 0;
-    [Tooltip("The Y direction the player faces when the spawn in")]
-    [SerializeField]
-    private float m_fStartRotY= 85;
+    private float m_fSmoothingDelay = 15;
+    
+    [Tooltip("Applies an offset to the look direction in the X axis")]
+    public float m_fRotateOffset = 69;
 
-    [Space(3)]
-
-    [Tooltip("The minimum the player can rotate in the X direction in one frame")]
-    [SerializeField]
-    private float m_fMinimumX = -360;
-    [Tooltip("The maximum the player can rotate in the X direction in one frame")]
-    [SerializeField]
-    private float m_fMaximumX = 360;
-
-    [Space(3)]
-
-    [Tooltip("The minimum the player can rotate in the Y direction in one frame")]
-    [SerializeField]
-    private float m_fMinimumY = -75;
-    [Tooltip("The maximum the player can rotate in the Y direction in one frame")]
-    [SerializeField]
-    private float m_fMaximumY = 75;
-
-    [Space(3)]
+    [Space(5)]
 
     [Tooltip("The maximum the player can rotate while sitting down")]
     [SerializeField]
     private Vector2 m_v2PublicSittingMaxRotation = new Vector2 (1, 179);
-    [Tooltip("")]
-    public float m_fRotateOffset;
+
+    [Tooltip("The mouse sensitivity in both the horizontal and vertical directions")]
+    public Vector2 m_v2Sensitivity = new Vector2(2, 2);
+
+    [Tooltip("The direction the player faces when the spawn in")]
+    [SerializeField]
+    private Vector2 m_v2StartRotation = new Vector2(85, 0);
 
     [Space(3)]
 
-    [FormerlySerializedAs("frameCounter")]
-    [Tooltip("How many frames until a mouse movement is removed from the list")]
+    [Tooltip("The minimum and maximum angle the player can look in the X direction in one frame")]
     [SerializeField]
-    private float m_fSmoothDelay = 15;
+    private Vector2 m_v2RotationRangeX = new Vector2(-360, 360);
+    
+    [Tooltip("The minimum and maximum angle the player can look in the Y direction in one frame")]
+    [SerializeField]
+    private Vector2 m_v2RotationRangeY = new Vector2(-75, 75);
 
-    // The current rotation of the player in the X direction
-    private float m_fRotationX = 0F;
-    // The current rotation of the player in the Y direction
-    private float m_fRotationY = 0F;
+    // The current X and Y rotation of the player
+    private Vector2 m_v2Rotation;
     
     private List<float> rotArrayX = new List<float>();
     private float rotAverageX = 0F;
@@ -110,8 +91,8 @@ public class SmoothCameraMovement : MonoBehaviour
         else
             s_fTurnAroundValue = 0;
 
-        m_fRotationX = m_fStartRotY;
-        m_fRotationY = m_fStartRotX;
+        m_v2Rotation.x = m_v2StartRotation.x;
+        m_v2Rotation.y = m_v2StartRotation.y;
     }
 
     // Called once per frame
@@ -136,39 +117,43 @@ public class SmoothCameraMovement : MonoBehaviour
         {
             if (m_raAxes == RotationAxes.MouseXAndY)
             {
-                rotAverageY = 0f;
                 rotAverageX = 0f;
+                rotAverageY = 0f;
 
                 // Slows down camera movement if you're zoomed
                 if (CameraMovement.s_bIsZoomed)
                 {
-                    m_fRotationY += Input.GetAxis("Mouse Y") * m_fSensitivityY * 0.5f;
-                    m_fRotationX += Input.GetAxis("Mouse X") * m_fSensitivityX * 0.5f;
+                    m_v2Rotation.x += Input.GetAxis("Mouse X") * m_v2Sensitivity.x * 0.5f;
+                    m_v2Rotation.y += Input.GetAxis("Mouse Y") * m_v2Sensitivity.y * 0.5f;
                 }
                 else
                 {
-                    m_fRotationY += Input.GetAxis("Mouse Y") * m_fSensitivityY;
-                    m_fRotationX += Input.GetAxis("Mouse X") * m_fSensitivityX;
+                    m_v2Rotation.x += Input.GetAxis("Mouse X") * m_v2Sensitivity.x;
+                    m_v2Rotation.y += Input.GetAxis("Mouse Y") * m_v2Sensitivity.y;
                 }
 
                 if (!m_bNoShake)
                 {
-                    m_fRotationY += CameraMovement.s_CamShakeDirection.y;
-                    m_fRotationX += CameraMovement.s_CamShakeDirection.x;
+                    m_v2Rotation.y += CameraMovement.s_CamShakeDirection.y;
+                    m_v2Rotation.x += CameraMovement.s_CamShakeDirection.x;
                 }
 
-                m_fRotationY = ClampAngle(m_fRotationY, m_fMinimumY, m_fMaximumY);
+                // Clamps the y look to the range extents
+                m_v2Rotation.y = ClampAngle(
+                    m_v2Rotation.y, m_v2RotationRangeY.x, m_v2RotationRangeY.y);
 
+                // Clamps by the chairs extents
                 if (!Movement.canMove && !s_bIgnoreSittingRotation)
-                    m_fRotationX = ClampAngle(m_fRotationX, s_v2SittingMaxRotation.x, s_v2SittingMaxRotation.y);
+                    m_v2Rotation.x = ClampAngle(
+                        m_v2Rotation.x, s_v2SittingMaxRotation.x, s_v2SittingMaxRotation.y);
                 
-                rotArrayY.Add(m_fRotationY);
-                rotArrayX.Add(m_fRotationX);
+                rotArrayX.Add(m_v2Rotation.x);
+                rotArrayY.Add(m_v2Rotation.y);
 
-                if (rotArrayY.Count >= m_fSmoothDelay)
+                if (rotArrayY.Count >= m_fSmoothingDelay)
                     rotArrayY.RemoveAt(0);
 
-                if (rotArrayX.Count >= m_fSmoothDelay)
+                if (rotArrayX.Count >= m_fSmoothingDelay)
                     rotArrayX.RemoveAt(0);
 
                 for (int j = 0; j < rotArrayY.Count; j++)
@@ -181,13 +166,15 @@ public class SmoothCameraMovement : MonoBehaviour
                 rotAverageX /= rotArrayX.Count;
 
                 rotAverageX += m_fRotateOffset;
-                
+
                 //if (Movement.canMove == false)
                 //  rotAverageY = ClampAngle(rotAverageY, sittingMaxRotation.x, sittingMaxRotation.y);
-                rotAverageX = ClampAngle(rotAverageX, m_fMinimumX, m_fMaximumX);
 
-                Quaternion yQuaternion = Quaternion.AngleAxis(rotAverageY, Vector3.left);
+                // Clamps the x look to the range extents
+                rotAverageX = ClampAngle(rotAverageX, m_v2RotationRangeX.x, m_v2RotationRangeX.y);
+
                 Quaternion xQuaternion = Quaternion.AngleAxis(rotAverageX, Vector3.up);
+                Quaternion yQuaternion = Quaternion.AngleAxis(rotAverageY, Vector3.left);
 
                 transform.localRotation = s_qOriginalRotation * xQuaternion * yQuaternion;
             }
@@ -195,11 +182,11 @@ public class SmoothCameraMovement : MonoBehaviour
             {
                 rotAverageX = 0f;
 
-                m_fRotationX += Input.GetAxis("Mouse X") * m_fSensitivityX;
+                m_v2Rotation.x += Input.GetAxis("Mouse X") * m_v2Sensitivity.x;
 
-                rotArrayX.Add(m_fRotationX);
+                rotArrayX.Add(m_v2Rotation.x);
 
-                if (rotArrayX.Count >= m_fSmoothDelay)
+                if (rotArrayX.Count >= m_fSmoothingDelay)
                     rotArrayX.RemoveAt(0);
 
                 for (int i = 0; i < rotArrayX.Count; i++)
@@ -207,7 +194,7 @@ public class SmoothCameraMovement : MonoBehaviour
 
                 rotAverageX /= rotArrayX.Count;
 
-                rotAverageX = ClampAngle(rotAverageX, m_fMinimumX, m_fMaximumX);
+                rotAverageX = ClampAngle(rotAverageX, m_v2RotationRangeX.x, m_v2RotationRangeX.y);
 
                 Quaternion xQuaternion = Quaternion.AngleAxis(rotAverageX, Vector3.up);
                 transform.localRotation = s_qOriginalRotation * xQuaternion;
@@ -216,11 +203,11 @@ public class SmoothCameraMovement : MonoBehaviour
             {
                 rotAverageY = 0f;
 
-                m_fRotationY += Input.GetAxis("Mouse Y") * m_fSensitivityY;
+                m_v2Rotation.y += Input.GetAxis("Mouse Y") * m_v2Sensitivity.y;
 
-                rotArrayY.Add(m_fRotationY);
+                rotArrayY.Add(m_v2Rotation.y);
 
-                if (rotArrayY.Count >= m_fSmoothDelay)
+                if (rotArrayY.Count >= m_fSmoothingDelay)
                     rotArrayY.RemoveAt(0);
 
                 for (int j = 0; j < rotArrayY.Count; j++)
@@ -228,7 +215,7 @@ public class SmoothCameraMovement : MonoBehaviour
 
                 rotAverageY /= rotArrayY.Count;
 
-                rotAverageY = ClampAngle(rotAverageY, m_fMinimumY, m_fMaximumY);
+                rotAverageY = ClampAngle(rotAverageY, m_v2RotationRangeY.x, m_v2RotationRangeY.y);
 
                 Quaternion yQuaternion = Quaternion.AngleAxis(rotAverageY, Vector3.left);
                 transform.localRotation = s_qOriginalRotation * yQuaternion;
@@ -274,8 +261,8 @@ public class SmoothCameraMovement : MonoBehaviour
     /// </summary>
     public void resetRotation()
     {
-        m_fRotationX = m_fStartRotX;
-        m_fRotationY = m_fStartRotY;
+        m_v2Rotation.x = m_v2StartRotation.x;
+        m_v2Rotation.y = m_v2StartRotation.y;
         rotArrayX.Clear();
         rotArrayY.Clear();
         CameraMovement.s_CamShakeDirection = Vector2.zero;
