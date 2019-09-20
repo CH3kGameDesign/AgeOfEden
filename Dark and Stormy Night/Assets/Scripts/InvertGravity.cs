@@ -33,7 +33,7 @@ public class InvertGravity : MonoBehaviour
     {
         Physics.gravity = alteredGravity;
         invertedGravity = true;
-        SmoothCameraMovement.gravDirection = 180;
+        SmoothCameraMovement.s_fGravDirection = 180;
 
         ///Debug.Log("Flip");
     }
@@ -42,6 +42,6 @@ public class InvertGravity : MonoBehaviour
     {
         Physics.gravity = normalGravity;
         invertedGravity = false;
-        SmoothCameraMovement.gravDirection = 0;
+        SmoothCameraMovement.s_fGravDirection = 0;
     }
 }

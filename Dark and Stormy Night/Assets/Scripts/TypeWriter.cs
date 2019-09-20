@@ -4,7 +4,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 public class TypeWriter : MonoBehaviour
 {
@@ -13,10 +12,8 @@ public class TypeWriter : MonoBehaviour
     {
         [Tooltip("Each list item is the amount of characters the player can type" +
             " before the script writes in the next line item")]
-        [FormerlySerializedAs("freeCharsBeforeScript")]
         public List<int> m_iCharsUntilScript = new List<int>();
         [Tooltip("Text already printed onto the typewriter when the player loads in")]
-        [FormerlySerializedAs("startLines")]
         public List<string> m_sStartLines = new List<string>();
 
         public List<bool> m_bStrikeThrough = new List<bool>();
@@ -24,27 +21,21 @@ public class TypeWriter : MonoBehaviour
         public List<bool> m_bNewLineAfter = new List<bool>();
 
         [Tooltip("What the script will write into the text when it takes control")]
-        [FormerlySerializedAs("scriptLines")]
         public List<string> m_sScriptLines = new List<string>();
         [Tooltip("Final line printed onto the text as the player is kicked back")]
-        [FormerlySerializedAs("lastLine")]
         public string m_sLastLine;
         [Tooltip("A gameobject activated along with a specific ending")]
-        [FormerlySerializedAs("activateOnStart")]
         public GameObject m_goActivateOnStart;
     }
 
     [Tooltip("Whether or not the player is currently typing")]
-    [FormerlySerializedAs("startTyping")]
     public bool m_bIsTyping = true;
 
     [Tooltip("Allows the player to type independant of the script")]
-    [FormerlySerializedAs("returnToTyping")]
     [SerializeField]
     private bool m_bNoScriptInterference = false;
 
     [Tooltip("Half the width of the paper")]
-    [FormerlySerializedAs("halfLength")]
     [SerializeField]
     private float halfLength;
     // The length per character
@@ -87,67 +78,53 @@ public class TypeWriter : MonoBehaviour
     [Header("References")]
     
     [Tooltip("The different scritps written to the paper")]
-    [FormerlySerializedAs("EndingChanges")]
     [SerializeField]
     private List<EndingData> m_edEndingChanges = new List<EndingData>();
     [Tooltip("A list of all the typewriter arm objects")]
-    [FormerlySerializedAs("arms")]
     [SerializeField]
     private List<Transform> m_tTypeWriterArms = new List<Transform>();
     [Tooltip("A list of all the typewriter key objects")]
-    [FormerlySerializedAs("arms")]
     [SerializeField]
     private List<Transform> m_tTypeWriterKeys = new List<Transform>();
     [SerializeField]
     private Transform m_tSpaceKey;
     [Tooltip("A list of sounds for when keys are pressed")]
-    [FormerlySerializedAs("clickSounds")]
     [SerializeField]
     private List<GameObject> m_goClickSounds = new List<GameObject>();
     [Tooltip("The sound played when the spacebar is pressed")]
-    [FormerlySerializedAs("spaceSound")]
     [SerializeField]
     private GameObject m_goSpaceSound;
     [Tooltip("The sound played when a line ends")]
-    [FormerlySerializedAs("enterSound")]
     [SerializeField]
     private GameObject m_goEnterSound;
     [Tooltip("The sound played when the event ends")]
-    [FormerlySerializedAs("exitSound")]
     [SerializeField]
     private GameObject m_goExitSound;
 
     [Space(5)]
     [Tooltip("A reference to the transform of the paperHolder")]
-    [FormerlySerializedAs("paperHolder")]
     [SerializeField]
     private Transform m_tPaperHolder;
     [Tooltip("A reference to the transform of the paper")]
-    [FormerlySerializedAs("paper")]
     [SerializeField]
     private Transform m_tPaper;
     [Tooltip("A reference to the transform of the text object")]
-    [FormerlySerializedAs("text")]
     [SerializeField]
     private Transform m_tText;
     [Tooltip("A reference to the transforms of the paper meshes")]
-    [FormerlySerializedAs("paperMeshes")]
     [SerializeField]
     private List<GameObject> m_tPaperMeshes = new List<GameObject>();
 
     [Space(10)]
     [Tooltip("A list of gameobejcts to be enabled when the sequence ends")]
-    [FormerlySerializedAs("activateOnFinish")]
     [SerializeField]
     private List<GameObject> m_goActivateOnFinish = new List<GameObject>();
     [Tooltip("A list of gameobjects to be disabled when the sequence ends")]
-    [FormerlySerializedAs("deActivateOnFinish")]
     [SerializeField]
     private List<GameObject> m_goDeactivateOnFinish = new List<GameObject>();
 
     [Space(10)]
     [Tooltip("Used to call certain scripts when the typewriter sequence ends")]
-    [FormerlySerializedAs("voidOnFinish")]
     [SerializeField]
     private UnityEvent m_ueVoidOnFinish;
 

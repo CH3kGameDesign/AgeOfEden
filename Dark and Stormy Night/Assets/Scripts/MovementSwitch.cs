@@ -30,10 +30,10 @@ public class MovementSwitch : MonoBehaviour
     {
         if (rotateOffset != 0)
             CameraMovement.s_CameraObject.GetComponent
-                <SmoothCameraMovement>().rotateOffset = rotateOffset;
+                <SmoothCameraMovement>().m_fRotateOffset = rotateOffset;
 
         if (sittingMaxRotation != Vector2.zero)
-            SmoothCameraMovement.sittingMaxRotation = sittingMaxRotation;
+            SmoothCameraMovement.s_v2SittingMaxRotation = sittingMaxRotation;
 
         if (choice != choices.camera)
             Movement.canMove = enable;

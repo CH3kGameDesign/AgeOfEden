@@ -77,7 +77,7 @@ public class SceneChanger : MonoBehaviour
     public void StartLoad()
     {
         if (m_bAdditive == false)
-            SmoothCameraMovement.flipOnReset = flipOnReset;
+            SmoothCameraMovement.s_bFlipOnReset = flipOnReset;
         eventOnStart.Invoke();
         if (!m_bAdded)
         {

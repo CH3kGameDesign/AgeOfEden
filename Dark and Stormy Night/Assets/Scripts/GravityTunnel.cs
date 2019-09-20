@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class GravityTunnel : MonoBehaviour
 {
@@ -57,7 +56,6 @@ public class GravityTunnel : MonoBehaviour
     private BoxCollider m_bcTriggerBox = null;
 
     [Tooltip("A list of loose gameobjects with physics that rotate with the room")]
-    [FormerlySerializedAs("m_LgoPhysicsObjects")]
     [SerializeField]
     private List<GameObject> m_LgoPhysicsChildren = new List<GameObject>();
 
