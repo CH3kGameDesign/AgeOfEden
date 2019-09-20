@@ -212,9 +212,6 @@ public class Movement : MonoBehaviour
         else
         {
             m_aModelAnimator.SetBool("Moving", true);
-            // Test for sprint
-            
-
             m_fStepTimer += Time.deltaTime;
         }
         AnimUpdate();
