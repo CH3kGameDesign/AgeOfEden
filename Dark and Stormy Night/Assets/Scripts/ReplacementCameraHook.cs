@@ -13,7 +13,7 @@ public class ReplacementCameraHook : MonoBehaviour {
         cameraHook = cameraTrans.GetComponent<CameraMovement>().m_tCameraHook;
 
         cameraTrans.GetComponent<CameraMovement>().m_tCameraHook = this.transform;
-        SmoothCameraMovement.turnAroundValue = 180;
+        SmoothCameraMovement.s_fTurnAroundValue = 180;
     }
 	
 	// Update is called once per frame
@@ -23,6 +23,6 @@ public class ReplacementCameraHook : MonoBehaviour {
     private void OnDisable()
     {
         cameraTrans.GetComponent<CameraMovement>().m_tCameraHook = cameraHook;
-        SmoothCameraMovement.turnAroundValue = 0;
+        SmoothCameraMovement.s_fTurnAroundValue = 0;
     }
 }
