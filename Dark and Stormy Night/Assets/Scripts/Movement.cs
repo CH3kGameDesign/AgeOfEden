@@ -5,7 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Movement : MonoBehaviour
 {
-    public static bool canMove;
+    // A static reference to the players GameObject
+    public static GameObject s_goPlayerObject;
+    public static bool s_bCanMove;
+
     [HideInInspector]
     public bool m_bIsSprinting = false;
     [HideInInspector]
@@ -73,22 +76,20 @@ public class Movement : MonoBehaviour
 
     public GameObject fallSound;
     private float fallTimer;
-
+    
     [HideInInspector]
     // x is forward, y is sideways
-    public Vector2 m_v2DesiredVelocity;
+    public Vector2 m_v2InputVec2;
+    private Vector3 m_v3MovementVec3;
 
     private Rigidbody m_rbRigidbody;
     [HideInInspector]
     public Animator m_aModelAnimator;
     //public FootStepManager footStepManager;
 
-    // What is this???
-    public static GameObject m_goPlayerObject;
-
     private void Awake()
     {
-        m_goPlayerObject = gameObject;
+        s_goPlayerObject = gameObject;
         m_rbRigidbody = GetComponent<Rigidbody>();
         m_aModelAnimator = gameObject.GetComponentInChildren<Animator>();
     }
@@ -96,8 +97,8 @@ public class Movement : MonoBehaviour
     // Called once before the first frame
     private void Start()
     {
-        canMove = m_bCanMoveOnStart;
-        m_v2DesiredVelocity = new Vector2();
+        s_bCanMove = m_bCanMoveOnStart;
+        m_v2InputVec2 = new Vector2();
         m_fStepDelay = m_fForwardSpeed / 4;
         m_fSizeScalar = transform.localScale.y;
     }
@@ -105,47 +106,50 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (canMove)
+        //Debug.DrawRay(transform.position + new Vector3(0, m_fRayOrigin, m_fRaySpread),
+        //    new Vector3(0, -m_fRaylength, 0), Color.red);
+        //Debug.DrawRay(transform.position + new Vector3(m_fRaySpread, m_fRayOrigin, 0),
+        //    new Vector3(0, -m_fRaylength, 0), Color.red);
+        //Debug.DrawRay(transform.position + new Vector3(0, m_fRayOrigin, -m_fRaySpread),
+        //    new Vector3(0, -m_fRaylength, 0), Color.red);
+        //Debug.DrawRay(transform.position + new Vector3(-m_fRaySpread, m_fRayOrigin, 0),
+        //    new Vector3(0, -m_fRaylength, 0), Color.red);
+
+        // Test for ground below the player
+        RaycastHit groundRay1;
+        RaycastHit groundRay2;
+        RaycastHit groundRay3;
+        RaycastHit groundRay4;
+
+        if (Physics.Raycast(transform.position + new Vector3(0, m_fRayOrigin, m_fRaySpread) * transform.localScale.y,
+            Vector3.down, out groundRay1, m_fRaylength * transform.localScale.y)
+            || Physics.Raycast(transform.position + new Vector3(m_fRaySpread, m_fRayOrigin, 0) * transform.localScale.y,
+            Vector3.down, out groundRay2, m_fRaylength * transform.localScale.y)
+            || Physics.Raycast(transform.position + new Vector3(0, m_fRayOrigin, -m_fRaySpread) * transform.localScale.y,
+            Vector3.down, out groundRay3, m_fRaylength * transform.localScale.y)
+            || Physics.Raycast(transform.position + new Vector3(-m_fRaySpread, m_fRayOrigin, 0) * transform.localScale.y,
+            Vector3.down, out groundRay4, m_fRaylength * transform.localScale.y))
         {
-            // Test for ground below the player
-            RaycastHit groundRay;
+            m_bGrounded = true;
+            m_aModelAnimator.GetComponent<FootStepManager>().makeNoises = true;
+            if (fallTimer >= 0.3f && fallSound != null)
+                Instantiate(fallSound);
+            fallTimer = 0;
+        }
+        else
+        {
+            m_aModelAnimator.GetComponent<FootStepManager>().makeNoises = false;
+            m_bGrounded = false;
+            fallTimer += Time.deltaTime;
+        }
 
-            //Debug.DrawRay(transform.position + new Vector3(0, m_fRayOrigin, m_fRaySpread),
-            //    new Vector3(0, -m_fRaylength, 0), Color.red);
-            //Debug.DrawRay(transform.position + new Vector3(m_fRaySpread, m_fRayOrigin, 0),
-            //    new Vector3(0, -m_fRaylength, 0), Color.red);
-            //Debug.DrawRay(transform.position + new Vector3(0, m_fRayOrigin, -m_fRaySpread),
-            //    new Vector3(0, -m_fRaylength, 0), Color.red);
-            //Debug.DrawRay(transform.position + new Vector3(-m_fRaySpread, m_fRayOrigin, 0),
-            //    new Vector3(0, -m_fRaylength, 0), Color.red);
+        if (Input.GetKeyDown(m_kcSpeedUp))
+            m_fSprintMultiplier += 3;
+        if (Input.GetKeyDown(m_kcSpeedDown))
+            m_fSprintMultiplier -= 3;
 
-            if (Physics.Raycast(transform.position + new Vector3(0, m_fRayOrigin, m_fRaySpread) * transform.localScale.y,
-                Vector3.down, out groundRay, m_fRaylength * transform.localScale.y)
-                || Physics.Raycast(transform.position + new Vector3(m_fRaySpread, m_fRayOrigin, 0) * transform.localScale.y,
-                Vector3.down, out groundRay, m_fRaylength * transform.localScale.y)
-                || Physics.Raycast(transform.position + new Vector3(0, m_fRayOrigin, -m_fRaySpread) * transform.localScale.y,
-                Vector3.down, out groundRay, m_fRaylength * transform.localScale.y)
-                || Physics.Raycast(transform.position + new Vector3(-m_fRaySpread, m_fRayOrigin, 0) * transform.localScale.y,
-                Vector3.down, out groundRay, m_fRaylength * transform.localScale.y))
-            {
-                m_bGrounded = true;
-                m_aModelAnimator.GetComponent<FootStepManager>().makeNoises = true;
-                if (fallTimer >= 0.3f && fallSound != null)
-                    Instantiate(fallSound);
-                fallTimer = 0;
-            }
-            else
-            {
-                m_aModelAnimator.GetComponent<FootStepManager>().makeNoises = false;
-                m_bGrounded = false;
-                fallTimer += Time.deltaTime;
-            }
-
-            if (Input.GetKeyDown(m_kcSpeedUp))
-                m_fSprintMultiplier += 3;
-            if (Input.GetKeyDown(m_kcSpeedDown))
-                m_fSprintMultiplier -= 3;
-
+        if (s_bCanMove)
+        {
             if (!m_bLegacyMovement)
                 DoMovement();
             else
@@ -180,30 +184,37 @@ public class Movement : MonoBehaviour
         m_fSizeScalar = transform.localScale.y;
         m_aModelAnimator.SetBool("Standing", true);
 
-        m_v2DesiredVelocity.x = Input.GetAxis("Vertical");
-        m_v2DesiredVelocity.y = Input.GetAxis("Horizontal");
+        m_v2InputVec2.x = Input.GetAxis("Vertical");
+        m_v2InputVec2.y = Input.GetAxis("Horizontal");
+
+        m_v3MovementVec3 = new Vector3(m_v2InputVec2.x
+            * Mathf.Sqrt(1 - 0.5f * m_v2InputVec2.y * m_v2InputVec2.y),
+            m_v2InputVec2.y
+            * Mathf.Sqrt(1 - 0.5f * m_v2InputVec2.x * m_v2InputVec2.x));
+
+        m_v2InputVec2 = m_v3MovementVec3;
 
         // Converts the unit square to a unit circle as to maintain constant magnitude
-        m_v2DesiredVelocity.x = m_v2DesiredVelocity.x
-            * Mathf.Sqrt(1 - 0.5f * m_v2DesiredVelocity.y * m_v2DesiredVelocity.y);
-        m_v2DesiredVelocity.y = m_v2DesiredVelocity.y
-            * Mathf.Sqrt(1 - 0.5f * m_v2DesiredVelocity.x * m_v2DesiredVelocity.x);
+        m_v2InputVec2.x = m_v2InputVec2.x
+            * Mathf.Sqrt(1 - 0.5f * m_v2InputVec2.y * m_v2InputVec2.y);
+        m_v2InputVec2.y = m_v2InputVec2.y
+            * Mathf.Sqrt(1 - 0.5f * m_v2InputVec2.x * m_v2InputVec2.x);
 
         // Scales the unit circle
-        if (m_v2DesiredVelocity.x > 0)
-            m_v2DesiredVelocity.x *= m_fForwardSpeed;
+        if (m_v2InputVec2.x > 0)
+            m_v2InputVec2.x *= m_fForwardSpeed;
         else
-            m_v2DesiredVelocity.x *= m_fBackwardSpeed;
+            m_v2InputVec2.x *= m_fBackwardSpeed;
 
-        m_v2DesiredVelocity.y *= m_fStrafeSpeed;
+        m_v2InputVec2.y *= m_fStrafeSpeed;
 
-        m_v2DesiredVelocity *= m_fSizeScalar;
+        m_v2InputVec2 *= m_fSizeScalar;
 
         // Apply a speed multiplier
-        m_v2DesiredVelocity *= m_fSpeedMultiplier;
+        m_v2InputVec2 *= m_fSpeedMultiplier;
 
         // Test for movement
-        if (m_v2DesiredVelocity == Vector2.zero)
+        if (m_v2InputVec2 == Vector2.zero)
         {
             m_aModelAnimator.SetBool("Moving", false);
             if (m_fStepTimer != 0)
@@ -214,17 +225,18 @@ public class Movement : MonoBehaviour
             m_aModelAnimator.SetBool("Moving", true);
             m_fStepTimer += Time.deltaTime;
         }
+
         AnimUpdate();
 
         // Rotates the velocity to face the player's "forward" direction
-        Vector3 rotatedVelocity = transform.forward * m_v2DesiredVelocity.x;
-        rotatedVelocity += transform.right * m_v2DesiredVelocity.y;
+        m_v3MovementVec3 = transform.forward * m_v2InputVec2.x;
+        m_v3MovementVec3 += transform.right * m_v2InputVec2.y;
 
         Vector3 appliedForce;
 
         // Finds the difference between desired velocity and current
-        appliedForce.x = rotatedVelocity.x - m_rbRigidbody.velocity.x;
-        appliedForce.z = rotatedVelocity.z - m_rbRigidbody.velocity.z;
+        m_v3MovementVec3.x -= m_rbRigidbody.velocity.x;
+        m_v3MovementVec3.z -= m_rbRigidbody.velocity.z;
 
         if (m_bAllowJumping && m_bGrounded && Input.GetKeyDown(KeyCode.Space))
             appliedForce.y = m_fJumpForce;
@@ -233,12 +245,12 @@ public class Movement : MonoBehaviour
 
         // If the player is in the air, their movement control is extremely limited
         if (m_bGrounded)
-            appliedForce *= m_fSpeedScalar;
+            m_v3MovementVec3 *= m_fSpeedScalar;
         else
-            appliedForce *= m_fSpeedScalar * m_fAerialManuverability;
+            m_v3MovementVec3 *= m_fSpeedScalar * m_fAerialManuverability;
         
         // Pushes to in-engine physics
-        m_rbRigidbody.AddForce(appliedForce);
+        m_rbRigidbody.AddForce(m_v3MovementVec3);
     }
 
     /// <summary>
@@ -263,15 +275,15 @@ public class Movement : MonoBehaviour
         }
 
         if (Input.GetAxis("Vertical") > 0)
-            m_v2DesiredVelocity.x = m_fForwardSpeed * m_fSprint;
+            m_v2InputVec2.x = m_fForwardSpeed * m_fSprint;
         if (Input.GetAxis("Vertical") < 0)
-            m_v2DesiredVelocity.x = -m_fBackwardSpeed * m_fSprint;
+            m_v2InputVec2.x = -m_fBackwardSpeed * m_fSprint;
         if (Input.GetAxis("Vertical") == 0)
-            m_v2DesiredVelocity.x = 0;
+            m_v2InputVec2.x = 0;
 
-        m_v2DesiredVelocity.y = Input.GetAxis("Horizontal") * m_fStrafeSpeed * m_fSprint;
+        m_v2InputVec2.y = Input.GetAxis("Horizontal") * m_fStrafeSpeed * m_fSprint;
 
-        if (m_v2DesiredVelocity == Vector2.zero)
+        if (m_v2InputVec2 == Vector2.zero)
         {
             m_aModelAnimator.SetInteger("WalkDirection", 0);
             m_aModelAnimator.SetBool("Moving", false);
@@ -289,7 +301,7 @@ public class Movement : MonoBehaviour
         }
 
         Vector3 desiredPosition = Vector3.ClampMagnitude(
-            new Vector3(m_v2DesiredVelocity.x, 0, m_v2DesiredVelocity.y),
+            new Vector3(m_v2InputVec2.x, 0, m_v2InputVec2.y),
             m_fForwardSpeed * Time.deltaTime * m_fSprint);
 
         transform.position += transform.forward * desiredPosition.x * m_fSpeedMultiplier;
@@ -325,7 +337,7 @@ public class Movement : MonoBehaviour
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
                     m_aModelAnimator.SetBool("Sprinting", true);
-                    m_v2DesiredVelocity *= m_fSprintMultiplier;
+                    m_v2InputVec2 *= m_fSprintMultiplier;
                     m_bIsSprinting = true;
                 }
                 else

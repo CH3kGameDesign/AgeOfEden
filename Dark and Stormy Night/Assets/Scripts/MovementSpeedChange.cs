@@ -9,7 +9,7 @@ public class MovementSpeedChange : MonoBehaviour
 	// Called once before the first frame
 	private void Start()
     {
-        Movement.m_goPlayerObject.GetComponent<Movement>()
+        Movement.s_goPlayerObject.GetComponent<Movement>()
             .m_fSpeedMultiplier = tarSpeedMultiplier;
         GetComponent<MovementSpeedChange>().enabled = false;
 	}

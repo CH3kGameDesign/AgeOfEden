@@ -143,7 +143,7 @@ public class SmoothCameraMovement : MonoBehaviour
                     m_v2Rotation.y, m_v2RotationRangeY.x, m_v2RotationRangeY.y);
 
                 // Clamps by the chairs extents
-                if (!Movement.canMove && !s_bIgnoreSittingRotation)
+                if (!Movement.s_bCanMove && !s_bIgnoreSittingRotation)
                     m_v2Rotation.x = ClampAngle(
                         m_v2Rotation.x, s_v2SittingMaxRotation.x, s_v2SittingMaxRotation.y);
                 
@@ -167,7 +167,7 @@ public class SmoothCameraMovement : MonoBehaviour
 
                 rotAverageX += m_fRotateOffset;
 
-                //if (Movement.canMove == false)
+                //if (Movement.s_bCanMove == false)
                 //  rotAverageY = ClampAngle(rotAverageY, sittingMaxRotation.x, sittingMaxRotation.y);
 
                 // Clamps the x look to the range extents

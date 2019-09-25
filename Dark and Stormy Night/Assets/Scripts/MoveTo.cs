@@ -39,7 +39,7 @@ public class MoveTo : MonoBehaviour
         if (!Movee)
         {
             if (movePlayer)
-                Movee = Movement.m_goPlayerObject.transform;
+                Movee = Movement.s_goPlayerObject.transform;
             else
                 Movee = transform;
         }

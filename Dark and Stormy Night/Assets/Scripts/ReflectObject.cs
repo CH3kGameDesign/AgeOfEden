@@ -16,7 +16,7 @@ public class ReflectObject : MonoBehaviour
         if (!reflectPoint)
             reflectPoint = transform;
         if (reflectPlayer)
-            reflectableObject = Movement.m_goPlayerObject.GetComponent<Movement>()
+            reflectableObject = Movement.s_goPlayerObject.GetComponent<Movement>()
                 .m_aModelAnimator.transform;
 	}
 	

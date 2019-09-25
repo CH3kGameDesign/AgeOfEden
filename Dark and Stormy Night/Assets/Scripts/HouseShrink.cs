@@ -24,7 +24,7 @@ public class HouseShrink : MonoBehaviour {
             tarClipPlane = playerCamera.nearClipPlane;
         startPos += transform.position;
         endPos += transform.position;
-        playerTrans = Movement.m_goPlayerObject.transform;
+        playerTrans = Movement.s_goPlayerObject.transform;
         extents = Mathf.Abs(startPos.z - endPos.z);
 	}
 

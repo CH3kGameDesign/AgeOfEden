@@ -29,7 +29,7 @@ public class PlayerModel : MonoBehaviour
         //desiredYRotation = Mathf.Lerp(desiredYRotation,
         //    cameraHolder.transform.rotation.eulerAngles.y, rotSpeed);
 
-        if (Movement.canMove)
+        if (Movement.s_bCanMove)
         {
             if (faceDirection == Vector3.zero)
                 transform.rotation = Quaternion.Euler(0, cameraHolder.transform.rotation.eulerAngles.y,

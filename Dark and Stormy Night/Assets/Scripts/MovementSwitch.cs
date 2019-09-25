@@ -36,7 +36,7 @@ public class MovementSwitch : MonoBehaviour
             SmoothCameraMovement.s_v2SittingMaxRotation = sittingMaxRotation;
 
         if (choice != choices.camera)
-            Movement.canMove = enable;
+            Movement.s_bCanMove = enable;
 
         if (choice != choices.movement)
         {
@@ -46,9 +46,9 @@ public class MovementSwitch : MonoBehaviour
         }
 
         if (rigidBodyState == choices2.disable)
-            Movement.m_goPlayerObject.GetComponent<Rigidbody>().isKinematic = true;
+            Movement.s_goPlayerObject.GetComponent<Rigidbody>().isKinematic = true;
 
         if (rigidBodyState == choices2.enable)
-            Movement.m_goPlayerObject.GetComponent<Rigidbody>().isKinematic = false;
+            Movement.s_goPlayerObject.GetComponent<Rigidbody>().isKinematic = false;
     }
 }

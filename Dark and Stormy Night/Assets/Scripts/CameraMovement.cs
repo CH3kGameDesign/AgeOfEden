@@ -111,7 +111,7 @@ public class CameraMovement : MonoBehaviour
             if (Vector3.Distance(transform.position, m_tCameraHook.position) < 0.3f)
             {
                 s_bSnapToPlayer = true;
-                //Movement.canMove = true;
+                //Movement.s_bCanMove = true;
                 s_bGoToPlayer = false;
                 for (int i = 0; i < m_LgoEnableObjects.Count; i++)
                 {
@@ -154,8 +154,8 @@ public class CameraMovement : MonoBehaviour
     /// </summary>
 	private void RunShake()
 	{
-		float verSpeed = PlayerModel.player.GetComponent<Movement> ().m_v2DesiredVelocity.x;
-		float horSpeed = PlayerModel.player.GetComponent<Movement> ().m_v2DesiredVelocity.y;
+		float verSpeed = PlayerModel.player.GetComponent<Movement> ().m_v2InputVec2.x;
+		float horSpeed = PlayerModel.player.GetComponent<Movement> ().m_v2InputVec2.y;
         bool isSprinting = PlayerModel.player.GetComponent<Movement>().m_bIsSprinting;
         float sprintMult = PlayerModel.player.GetComponent<Movement>().m_fSprintMultiplier;
 
