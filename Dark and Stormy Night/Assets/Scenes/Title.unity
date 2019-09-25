@@ -10114,7 +10114,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: ALPHA.9-20a
+  m_text: ALPHA.9-25a
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 028c896bed41043408be11a2228d84f2, type: 2}
   m_sharedMaterial: {fileID: 21113873226524262, guid: 028c896bed41043408be11a2228d84f2,
@@ -11062,22 +11062,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c90136a73b7912a4bb754a87e4fb166a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axes: 0
-  sensitivityX: 5
-  sensitivityY: 5
-  minimumX: -360
-  maximumX: 360
-  startRotX: 0
-  startRotY: 85
-  minimumY: -75
-  maximumY: 75
-  rotationX: 0
-  rotationY: 0
-  publicSittingMaxRotation: {x: -60, y: 60}
-  rotateOffset: 0
-  frameCounter: 15
-  reset: 0
-  noShake: 0
+  m_raAxes: 0
+  m_bResetRotation: 0
+  m_bNoShake: 0
+  m_fSmoothingDelay: 15
+  m_fRotateOffset: 0
+  m_v2PublicSittingMaxRotation: {x: 1, y: 179}
+  m_v2Sensitivity: {x: 2, y: 2}
+  m_v2StartRotation: {x: 85, y: 0}
+  m_v2RotationRangeX: {x: -360, y: 360}
+  m_v2RotationRangeY: {x: -75, y: 75}
 --- !u!114 &1525873631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11090,8 +11084,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a926a99cdfa6ed24ea726e40a60ff217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_bCanMoveOnStart: 1
-  m_bSnapToPlayerOnStart: 1
+  m_bCanMoveOnStart: 0
+  m_bSnapToPlayerOnStart: 0
   underWaterQuad: {fileID: 0}
   m_fCamIdleTickAmount: 10
   m_fCamRunShakeSpeed: 0.04
@@ -11245,6 +11239,11 @@ MonoBehaviour:
   - {fileID: 1901675807}
   disableObjects:
   - {fileID: 1161322271}
+  activateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   endingCompleted: 5
   enableIfNotObjects: []
   lastCompleted: 1
@@ -11263,6 +11262,11 @@ MonoBehaviour:
   - {fileID: 1941565076}
   disableObjects:
   - {fileID: 1161322271}
+  activateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   endingCompleted: 1
   enableIfNotObjects: []
   lastCompleted: 1
@@ -11280,6 +11284,11 @@ MonoBehaviour:
   enableObjects:
   - {fileID: 1828728693}
   disableObjects: []
+  activateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   endingCompleted: 5
   enableIfNotObjects: []
   lastCompleted: 1
@@ -13108,6 +13117,11 @@ MonoBehaviour:
   enableObjects:
   - {fileID: 1929376045}
   disableObjects: []
+  activateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   endingCompleted: 0
   enableIfNotObjects:
   - {fileID: 389662316}
@@ -13126,6 +13140,11 @@ MonoBehaviour:
   enableObjects:
   - {fileID: 1503963169}
   disableObjects: []
+  activateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   endingCompleted: 5
   enableIfNotObjects: []
   lastCompleted: 0
