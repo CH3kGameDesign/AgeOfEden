@@ -10,7 +10,7 @@ public class CopyAnimations : MonoBehaviour
     private void Start()
     {
         if (copyPlayer)
-            target = Movement.m_goPlayerObject.GetComponent<Movement>().m_aModelAnimator;
+            target = Movement.s_goPlayerObject.GetComponent<Movement>().m_aModelAnimator;
 
         AnimatorStateInfo animationState = target.GetCurrentAnimatorStateInfo(0);
         AnimatorClipInfo[] myAnimatorClip = target.GetCurrentAnimatorClipInfo(0);

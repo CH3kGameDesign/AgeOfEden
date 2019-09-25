@@ -21,7 +21,7 @@ public class PlayerHolding : MonoBehaviour
 	private void Update()
     {
         CameraMovement.s_bGoToPlayer = false;
-        Movement.canMove = false;
+        Movement.s_bCanMove = false;
         RaycastHit hit;
 
         DepthOfFieldModel.Settings DOFSettings = CameraMovement.s_CameraObject.

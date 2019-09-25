@@ -22,7 +22,7 @@ public class RotateTo : MonoBehaviour
     private void Start()
     {
         if (!Movee && movePlayer)
-            Movee = Movement.m_goPlayerObject.transform;
+            Movee = Movement.s_goPlayerObject.transform;
 
         if (!Movee && moveCamera)
         {

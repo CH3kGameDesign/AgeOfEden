@@ -14,7 +14,7 @@ public class ChangeParent : MonoBehaviour
 	private void Start()
     {
         if (!child && playerChild)
-            child = Movement.m_goPlayerObject.transform;
+            child = Movement.s_goPlayerObject.transform;
         
         if (activateOnStart)
             Activate();

@@ -128,7 +128,7 @@ public class RaycastEnable : MonoBehaviour
             CameraMovement.s_CameraObject.transform.rotation = Quaternion.Slerp(
                 CameraMovement.s_CameraObject.transform.rotation, tarRot, Time.deltaTime * 0.5f);
 
-            Movement.canMove = false;
+            Movement.s_bCanMove = false;
         }
 
         for (int i = 0; i < GO.Count; i++)

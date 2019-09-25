@@ -16,10 +16,10 @@ public class MovementVariables : MonoBehaviour
                 CameraMovement.s_CanMove = true;
                 break;
             case 1:
-                Movement.canMove = true;
+                Movement.s_bCanMove = true;
                 break;
             case 2:
-                Movement.canMove = true;
+                Movement.s_bCanMove = true;
                 CameraMovement.s_CanMove = true;
                 break;
             default:

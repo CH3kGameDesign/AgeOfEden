@@ -12,7 +12,7 @@ public class SceneUnloader : MonoBehaviour
 	// Called once before the first frame
 	private void Start()
     {
-        if (Movement.m_goPlayerObject)
+        if (Movement.s_goPlayerObject)
         {
             if (justAudio)
             {
@@ -24,7 +24,7 @@ public class SceneUnloader : MonoBehaviour
             }
             else
             {
-                playerManagerObjects = Movement.m_goPlayerObject.transform
+                playerManagerObjects = Movement.s_goPlayerObject.transform
                     .parent.parent.gameObject;
             }
         }

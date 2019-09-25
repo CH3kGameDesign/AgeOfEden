@@ -16,7 +16,7 @@ public class CopyLocation : MonoBehaviour
         if (movee == null)
             movee = this.transform;
         if (copyPlayer)
-            target = Movement.m_goPlayerObject.transform;
+            target = Movement.s_goPlayerObject.transform;
         if (copyCamera)
             target = CameraMovement.s_CameraObject.transform;
     }

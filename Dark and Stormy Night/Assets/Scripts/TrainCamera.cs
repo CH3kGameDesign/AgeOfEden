@@ -23,7 +23,7 @@ public class TrainCamera : MonoBehaviour {
         startPos += transform.position;
         endPos += transform.position;
         cameraTrans = CameraMovement.s_CameraObject.transform;
-        playerTrans = Movement.m_goPlayerObject.transform;
+        playerTrans = Movement.s_goPlayerObject.transform;
         extents = Mathf.Abs(startPos.z - endPos.z);
         if (cameraTrans.GetComponent<CameraMovement>().m_tCameraHook.GetComponentInParent<FacePlayer>() != null)
             FP = cameraTrans.GetComponent<CameraMovement>().m_tCameraHook.GetComponentInParent<FacePlayer>();
@@ -33,7 +33,7 @@ public class TrainCamera : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Movement.canMove == false)
+        if (Movement.s_bCanMove == false)
             endingMoments();
         else
         {

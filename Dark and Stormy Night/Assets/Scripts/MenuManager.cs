@@ -14,10 +14,10 @@ public class MenuManager : MonoBehaviour
     {
 		if (Input.GetKeyDown(KeyCode.Alpha1) && !inRoom)
         {
-            portal.transform.position = Movement.m_goPlayerObject.transform.position
-                + Movement.m_goPlayerObject.transform.forward;
+            portal.transform.position = Movement.s_goPlayerObject.transform.position
+                + Movement.s_goPlayerObject.transform.forward;
 
-            portal.transform.LookAt(Movement.m_goPlayerObject.transform);
+            portal.transform.LookAt(Movement.s_goPlayerObject.transform);
 
             if (InvertGravity.invertedGravity)
                 portal.transform.eulerAngles = new Vector3(0, portal.transform.eulerAngles.y, 180);

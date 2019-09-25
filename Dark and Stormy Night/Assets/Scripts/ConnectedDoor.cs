@@ -9,9 +9,9 @@ public class ConnectedDoor : MonoBehaviour
 	// Update is called once per frame
 	private void Update()
     {
-		if (Vector3.Distance(Movement.m_goPlayerObject.transform.position, transform.position)
+		if (Vector3.Distance(Movement.s_goPlayerObject.transform.position, transform.position)
             < Vector3.Distance(
-                Movement.m_goPlayerObject.transform.position, OtherDoor.transform.position))
+                Movement.s_goPlayerObject.transform.position, OtherDoor.transform.position))
             OtherDoor.GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().velocity;
 	}
 }
