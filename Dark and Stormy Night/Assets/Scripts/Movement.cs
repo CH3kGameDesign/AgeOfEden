@@ -15,9 +15,9 @@ public class Movement : MonoBehaviour
     public bool m_bGrounded;
 
     [Space(5)]
-    [Tooltip("Button will automatically close the game")]
-    [SerializeField]
+    //Button will automatically close the game
     private KeyCode m_kcQuitButton = KeyCode.End;
+    // Debug speed tools
     private KeyCode m_kcSpeedUp = KeyCode.Equals;
     private KeyCode m_kcSpeedDown = KeyCode.Minus;
 
@@ -31,6 +31,8 @@ public class Movement : MonoBehaviour
     private bool m_bLegacyMovement = false;
     [SerializeField]
     private bool m_bAllowJumping = false;
+    [SerializeField]
+    private bool m_bDebugMode = false;
     
     [Header("Movement Variables")]
     [SerializeField]
@@ -49,18 +51,18 @@ public class Movement : MonoBehaviour
     [Tooltip("Scales the movement speed while airborne")]
     [SerializeField]
     private float m_fAerialManuverability = 0.1f;
-    [Tooltip("The y heigh of the ray origin")]
+    [Tooltip("The y height of the ray origin")]
     [SerializeField]
-    private float m_fRayOrigin = -0.5f;
+    private float m_fRayOrigin = -0.7f;
     [Tooltip("How long down the ray stretches" +
-        "\nWARNING: If ray length does not reach below the players hitbox" +
+        "\nWARNING: If ray length does not reach below the players hitbox " +
         "the player will have difficulty moving")]
     [SerializeField]
-    private float m_fRaylength = 0.52f;
-    [Tooltip("The ground check uses 4 rays to avoid pothole problems," +
+    private float m_fRaylength = 0.31f;
+    [Tooltip("The ground check uses 4 rays to avoid pothole problems, " +
         "this is how far from the center these rays are positioned")]
     [SerializeField]
-    private float m_fRaySpread = 0.25f;
+    private float m_fRaySpread = 0.35f;
 
     [Header("Tweaks")]
     [Tooltip("How much faster the player is while sprinting compared to normal movement")]
@@ -106,14 +108,22 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        //Debug.DrawRay(transform.position + new Vector3(0, m_fRayOrigin, m_fRaySpread),
-        //    new Vector3(0, -m_fRaylength, 0), Color.red);
-        //Debug.DrawRay(transform.position + new Vector3(m_fRaySpread, m_fRayOrigin, 0),
-        //    new Vector3(0, -m_fRaylength, 0), Color.red);
-        //Debug.DrawRay(transform.position + new Vector3(0, m_fRayOrigin, -m_fRaySpread),
-        //    new Vector3(0, -m_fRaylength, 0), Color.red);
-        //Debug.DrawRay(transform.position + new Vector3(-m_fRaySpread, m_fRayOrigin, 0),
-        //    new Vector3(0, -m_fRaylength, 0), Color.red);
+        if (m_bDebugMode)
+        {
+            Debug.DrawRay(transform.position + new Vector3(0, m_fRayOrigin, m_fRaySpread),
+                new Vector3(0, -m_fRaylength, 0), Color.red);
+            Debug.DrawRay(transform.position + new Vector3(m_fRaySpread, m_fRayOrigin, 0),
+                new Vector3(0, -m_fRaylength, 0), Color.red);
+            Debug.DrawRay(transform.position + new Vector3(0, m_fRayOrigin, -m_fRaySpread),
+                new Vector3(0, -m_fRaylength, 0), Color.red);
+            Debug.DrawRay(transform.position + new Vector3(-m_fRaySpread, m_fRayOrigin, 0),
+                new Vector3(0, -m_fRaylength, 0), Color.red);
+
+            if (Input.GetKeyDown(m_kcSpeedUp))
+                m_fSprintMultiplier += 3;
+            if (Input.GetKeyDown(m_kcSpeedDown))
+                m_fSprintMultiplier -= 3;
+        }
 
         // Test for ground below the player
         RaycastHit groundRay1;
@@ -138,15 +148,10 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            m_aModelAnimator.GetComponent<FootStepManager>().makeNoises = false;
             m_bGrounded = false;
+            m_aModelAnimator.GetComponent<FootStepManager>().makeNoises = false;
             fallTimer += Time.deltaTime;
         }
-
-        if (Input.GetKeyDown(m_kcSpeedUp))
-            m_fSprintMultiplier += 3;
-        if (Input.GetKeyDown(m_kcSpeedDown))
-            m_fSprintMultiplier -= 3;
 
         if (s_bCanMove)
         {
@@ -166,13 +171,13 @@ public class Movement : MonoBehaviour
         // Snuck in a quick quit button
         if (Input.GetKeyDown(m_kcQuitButton))
         {
-#if UNITY_STANDALONE
-            Application.Quit();
-#endif
+            #if UNITY_STANDALONE
+                Application.Quit();
+            #endif
 
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#endif
+            #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+            #endif
         }
     }
 
@@ -231,17 +236,15 @@ public class Movement : MonoBehaviour
         // Rotates the velocity to face the player's "forward" direction
         m_v3MovementVec3 = transform.forward * m_v2InputVec2.x;
         m_v3MovementVec3 += transform.right * m_v2InputVec2.y;
-
-        Vector3 appliedForce;
-
+        
         // Finds the difference between desired velocity and current
         m_v3MovementVec3.x -= m_rbRigidbody.velocity.x;
         m_v3MovementVec3.z -= m_rbRigidbody.velocity.z;
 
         if (m_bAllowJumping && m_bGrounded && Input.GetKeyDown(KeyCode.Space))
-            appliedForce.y = m_fJumpForce;
+            m_v3MovementVec3.y = m_fJumpForce;
         else
-            appliedForce.y = 0;
+            m_v3MovementVec3.y = 0;
 
         // If the player is in the air, their movement control is extremely limited
         if (m_bGrounded)

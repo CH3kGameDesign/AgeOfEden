@@ -118,7 +118,7 @@ public class RaycastEnable : MonoBehaviour
         // Potentially causing problems?
         if (CameraLookAt != null)
         {
-            Debug.Log("Raycast Enabled");
+            //Debug.Log("Raycast Enabled");
             CameraMovement.s_CanMove = false;
             Vector3 relPos = CameraLookAt.position
                 - CameraMovement.s_CameraObject.transform.position;
