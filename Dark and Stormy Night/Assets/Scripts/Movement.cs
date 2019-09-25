@@ -36,13 +36,17 @@ public class Movement : MonoBehaviour
     
     [Header("Movement Variables")]
     [SerializeField]
-    private float m_fForwardSpeed = 1.3f;
+    private float m_fForwardSpeed = 1.5f;
     [SerializeField]
-    private float m_fStrafeSpeed = 1.2f;
+    private float m_fStrafeSpeed = 1.3f;
     [SerializeField]
-    private float m_fBackwardSpeed = 1.15f;
+    private float m_fBackwardSpeed = 1f;
     [SerializeField]
     private float m_fSpeedScalar = 500;
+    [Tooltip("How much faster the player is while sprinting compared to normal movement")]
+    public float m_fSprintMultiplier = 2.4f;
+    [Tooltip("Entirely for legacy movement")]
+    public float m_fSpeedMultiplier = 1;
 
     [Header("Aerial Stuff")]
     [Tooltip("Only used if jumping is enabled")]
@@ -53,23 +57,17 @@ public class Movement : MonoBehaviour
     private float m_fAerialManuverability = 0.1f;
     [Tooltip("The y height of the ray origin")]
     [SerializeField]
-    private float m_fRayOrigin = -0.7f;
+    private float m_fRayOrigin = -0.8f;
     [Tooltip("How long down the ray stretches" +
         "\nWARNING: If ray length does not reach below the players hitbox " +
         "the player will have difficulty moving")]
     [SerializeField]
-    private float m_fRaylength = 0.31f;
+    private float m_fRaylength = 0.3f;
     [Tooltip("The ground check uses 4 rays to avoid pothole problems, " +
         "this is how far from the center these rays are positioned")]
     [SerializeField]
-    private float m_fRaySpread = 0.35f;
-
-    [Header("Tweaks")]
-    [Tooltip("How much faster the player is while sprinting compared to normal movement")]
-    public float m_fSprintMultiplier = 2;
-    [Tooltip("The first scaling done to the input")]
-    public float m_fSpeedMultiplier = 1;
-
+    private float m_fRaySpread = 0.3f;
+    
     private float m_fSizeScalar;
     private float m_fStepDelay;
     private float m_fStepTimer;
@@ -214,10 +212,7 @@ public class Movement : MonoBehaviour
         m_v2InputVec2.y *= m_fStrafeSpeed;
 
         m_v2InputVec2 *= m_fSizeScalar;
-
-        // Apply a speed multiplier
-        m_v2InputVec2 *= m_fSpeedMultiplier;
-
+        
         // Test for movement
         if (m_v2InputVec2 == Vector2.zero)
         {
