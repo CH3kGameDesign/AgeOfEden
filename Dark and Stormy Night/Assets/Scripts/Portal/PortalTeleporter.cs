@@ -9,7 +9,7 @@ public class PortalTeleporter : MonoBehaviour
     public GameObject[] activateOnTeleport;
     public GameObject[] DeActivateOnTeleport;
 
-    public enum PortalType {NotMenu, PlayerPortal, MenuPortal}
+    public enum PortalType { NotMenu, PlayerPortal, MenuPortal };
 
     public PortalType portalType;
 

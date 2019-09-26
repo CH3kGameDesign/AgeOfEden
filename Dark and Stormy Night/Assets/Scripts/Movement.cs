@@ -47,6 +47,7 @@ public class Movement : MonoBehaviour
     public float m_fSprintMultiplier = 2.4f;
     [Tooltip("Entirely for legacy movement")]
     public float m_fSpeedMultiplier = 1;
+    private float m_fSprint = 1f;
 
     [Header("Aerial Stuff")]
     [Tooltip("Only used if jumping is enabled")]
@@ -71,8 +72,8 @@ public class Movement : MonoBehaviour
     private float m_fSizeScalar;
     private float m_fStepDelay;
     private float m_fStepTimer;
-    
-    private float m_fSprint = 1f;
+
+    private float m_fStartMass;
 
     public GameObject fallSound;
     private float fallTimer;
@@ -101,6 +102,7 @@ public class Movement : MonoBehaviour
         m_v2InputVec2 = new Vector2();
         m_fStepDelay = m_fForwardSpeed / 4;
         m_fSizeScalar = transform.localScale.y;
+        m_fStartMass = m_rbRigidbody.mass;
     }
 
     // Update is called once per frame
@@ -212,7 +214,8 @@ public class Movement : MonoBehaviour
         m_v2InputVec2.y *= m_fStrafeSpeed;
 
         m_v2InputVec2 *= m_fSizeScalar;
-        
+        m_rbRigidbody.mass = m_fStartMass * m_fSizeScalar;
+
         // Test for movement
         if (m_v2InputVec2 == Vector2.zero)
         {

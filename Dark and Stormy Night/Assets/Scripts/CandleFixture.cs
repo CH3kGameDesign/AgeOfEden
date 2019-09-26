@@ -17,7 +17,7 @@ public class CandleFixture : MonoBehaviour
     public float m_fChangePerFrame = 0.02f;
 
     private float m_fSaveIntensity;
-    private List<Color> emissionStart = new List<Color>();
+    private List<Color> emissionStart;
 
     // Use this for initialization
     private void Start()

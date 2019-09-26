@@ -10,7 +10,6 @@ namespace UnityStandardAssets.Utility
         public GUIText camSwitchButton;
         public GameObject[] objects;
 
-
         private int m_CurrentActiveObject;
 
 
