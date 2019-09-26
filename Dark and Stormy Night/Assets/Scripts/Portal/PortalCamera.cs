@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PortalCamera : MonoBehaviour {
-
+public class PortalCamera : MonoBehaviour
+{
 	public Transform playerCamera;
 	public Transform portal;
 	public Transform otherPortal;
@@ -12,16 +12,18 @@ public class PortalCamera : MonoBehaviour {
 
     private void Start()
     {
-        if (CameraMovement.s_CameraObject != null && playerCamera == null)
+        if (CameraMovement.s_CameraObject && !playerCamera)
             playerCamera = CameraMovement.s_CameraObject.transform.GetChild(0);
     }
 
     // Update is called once per frame
-    void LateUpdate () {
+    private void LateUpdate()
+    {
 		Vector3 playerOffsetFromPortal = playerCamera.position - otherPortal.position;
         playerOffsetFromPortal *= portal.localScale.x;
         playerOffsetFromPortal /= otherPortal.localScale.x;
-        if (turnAround == false)
+
+        if (!turnAround)
         {
             transform.position = portal.position + playerOffsetFromPortal;
 
@@ -41,7 +43,8 @@ public class PortalCamera : MonoBehaviour {
             Vector3 newCameraDirection = portalRotationalDifference * playerCamera.forward;
             transform.rotation = Quaternion.LookRotation(newCameraDirection, Vector3.up);
         }
-        if (InvertGravity.invertedGravity == true)
+
+        if (InvertGravity.invertedGravity)
         {
             transform.localEulerAngles += new Vector3(0, 0, 180);
         }
