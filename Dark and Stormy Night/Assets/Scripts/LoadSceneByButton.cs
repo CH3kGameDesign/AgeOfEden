@@ -8,6 +8,7 @@ public class LoadSceneByButton : MonoBehaviour
 	// Update is called once per frame
 	private void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.Keypad0))
             SceneManager.LoadScene(0);
         if (Input.GetKeyDown(KeyCode.Keypad1))
@@ -16,6 +17,7 @@ public class LoadSceneByButton : MonoBehaviour
             SceneManager.LoadScene(2);
         if (Input.GetKeyDown(KeyCode.Keypad3))
             SceneManager.LoadScene(3);
+            */
         if (Input.GetKeyDown(KeyCode.Escape))
             SceneManager.LoadScene(0);
     }

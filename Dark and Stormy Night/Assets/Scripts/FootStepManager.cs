@@ -15,7 +15,9 @@ public class FootStepManager : MonoBehaviour
     [Help("FOOTSTEP ORGANISATION\n\n   Element0: Carpet Steps\n   Element1: Wood Steps\n   Element2: Tile Steps")]
     public int defaultSound;
 
+    [HideInInspector]
     public bool makeNoises = true;
+    public bool makeNoisesInspector = true;
 
     private int area = 100;
     private bool leftStepNext;
@@ -27,7 +29,7 @@ public class FootStepManager : MonoBehaviour
     /// </summary>
     public void MakeSound()
     {
-        if (makeNoises)
+        if (makeNoises && makeNoisesInspector)
         {
             int stepNo = 0;
 

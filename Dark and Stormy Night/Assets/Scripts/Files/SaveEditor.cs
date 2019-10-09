@@ -9,20 +9,21 @@ public class SaveEditor : MonoBehaviour
     public List<Text> buttons = new List<Text>();
     public TextMeshProUGUI lastEnding;
 
-    public bool trainPresent;
+    public bool PAXPresent;
 
 	// Use this for initialization
 	private void Start()
     {
-        UpdateDisplay();
-        if (trainPresent)
-            TrainDisplay();
-	}
+        if (PAXPresent)
+            PAXDisplay();
+        else
+            UpdateDisplay();
+    }
 	
 	// Update is called once per frame
 	private void Update()
     {
-        if (!trainPresent)
+        if (!PAXPresent)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -76,9 +77,9 @@ public class SaveEditor : MonoBehaviour
         SaveLoad.Save();
     }
 
-    public void TrainDisplay()
+    public void PAXDisplay()
     {
-        if (PermanentData.saveInfo.endingsAchieved.Count < 3)
+        if (PermanentData.saveInfo.endingsAchieved.Count < 10)
         {
             for (int i = PermanentData.saveInfo.endingsAchieved.Count; i < 3; i++)
                 PermanentData.saveInfo.endingsAchieved.Add(false);
@@ -86,6 +87,13 @@ public class SaveEditor : MonoBehaviour
         PermanentData.saveInfo.endingsAchieved[0] = true;
         PermanentData.saveInfo.endingsAchieved[1] = false;
         PermanentData.saveInfo.endingsAchieved[2] = false;
+        PermanentData.saveInfo.endingsAchieved[3] = false;
+        PermanentData.saveInfo.endingsAchieved[4] = false;
+        PermanentData.saveInfo.endingsAchieved[5] = false;
+        PermanentData.saveInfo.endingsAchieved[6] = false;
+        PermanentData.saveInfo.endingsAchieved[7] = false;
+        PermanentData.saveInfo.endingsAchieved[8] = false;
+        PermanentData.saveInfo.endingsAchieved[9] = false;
         PermanentData.saveInfo.lastEndingAchieved = 0;
         SaveLoad.Save();
     }

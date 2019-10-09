@@ -7,6 +7,7 @@ public class CollisionSound : MonoBehaviour
     public GameObject soundFX;
     public float velocityMultiplier;
     private float velocity;
+    public bool activateWithPlayer;
     
     private void LateUpdate()
     {
@@ -17,6 +18,13 @@ public class CollisionSound : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag != "Player")
+        {
+            GameObject GO = Instantiate(soundFX, collision.contacts[0].point,
+                soundFX.transform.rotation);
+            GO.GetComponent<AudioSource>().volume = velocity * velocityMultiplier;
+        }
+        else
+            if (activateWithPlayer)
         {
             GameObject GO = Instantiate(soundFX, collision.contacts[0].point,
                 soundFX.transform.rotation);
