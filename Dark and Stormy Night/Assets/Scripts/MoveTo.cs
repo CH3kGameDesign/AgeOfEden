@@ -13,6 +13,7 @@ public class MoveTo : MonoBehaviour
     public Transform Movee;
 
     public bool movePlayer;
+    public bool moveCamera = false;
 
     public Vector3 tarPos;
     public Transform TarTransPos;
@@ -40,6 +41,8 @@ public class MoveTo : MonoBehaviour
         {
             if (movePlayer)
                 Movee = Movement.s_goPlayerObject.transform;
+            else if (moveCamera)
+                Movee = CameraMovement.s_CameraObject.transform;
             else
                 Movee = transform;
         }

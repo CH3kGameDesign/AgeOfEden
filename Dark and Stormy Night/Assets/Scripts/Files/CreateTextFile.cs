@@ -44,6 +44,7 @@ public class CreateTextFile : MonoBehaviour
 
     // Prevents standard output from overwriting create output in same generation
     private bool m_bRecreated = false;
+    public bool activateOnStart = true;
 
     [Tooltip("The char that will be used to signify an enter press")]
     [SerializeField]
@@ -65,58 +66,61 @@ public class CreateTextFile : MonoBehaviour
     // Called once before the first frame
     private void Start()
     {
-        // Verifys the list is not emtpy
-        if (m_oOutputs.Length == 0)
-            return;
-
-        // Initialises the file path
-        string path = "";
-
-        for (int i = 0; i < m_oOutputs.Length; i++)
+        if (activateOnStart)
         {
-            if (m_oOutputs[i].m_bUseTypeWriter)
-                m_oOutputs[i].m_sMessage = m_sTypeWritterMessage;
+            // Verifys the list is not emtpy
+            if (m_oOutputs.Length == 0)
+                return;
 
-            m_oOutputs[i].m_sMessage = m_oOutputs[i].m_sMessage.Replace(m_cEnterChar.ToString(),
-                System.Environment.NewLine);
+            // Initialises the file path
+            string path = "";
 
-            // Sorts the message to a desired location
-            if (m_oOutputs[i].m_olOutputLocation == Location.Desktop)
-                path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop)
-                    + "\\" + m_oOutputs[i].m_sFileName + ".txt";
-            else if (m_oOutputs[i].m_olOutputLocation == Location.Documents)
-                path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments)
-                    + "\\" + m_oOutputs[i].m_sFileName + ".txt";
-            else if (m_oOutputs[i].m_olOutputLocation == Location.Music)
-                path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic)
-                    + "\\" + m_oOutputs[i].m_sFileName + ".txt";
-            else if (m_oOutputs[i].m_olOutputLocation == Location.Pictures)
-                path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyPictures)
-                    + "\\" + m_oOutputs[i].m_sFileName + ".txt";
+            for (int i = 0; i < m_oOutputs.Length; i++)
+            {
+                if (m_oOutputs[i].m_bUseTypeWriter)
+                    m_oOutputs[i].m_sMessage = m_sTypeWritterMessage;
 
-            // 1. A message displayed the first time the game is run and a certain ending is reached
-            // 2. A message displayed when no message file is found, either deleted or never created
-            // 3. A message displayed as a standard output
-            
-            if (m_oOutputs[i].m_osOutputState == State.First && GetPermanentStorage())
-            {
-                //Debug.Log("First message");
-                WriteMessage(path, m_oOutputs[i].m_sMessage);
-                SetPermanentStorage(false);
-            }
-            else if (m_oOutputs[i].m_osOutputState == State.Create && !DoesFileExist(path))
-            {
-                //Debug.Log("Created message");
-                WriteMessage(path, m_oOutputs[i].m_sMessage);
-                m_bRecreated = true;
-            }
-            else if (m_oOutputs[i].m_osOutputState == State.Standard && !m_bRecreated)
-            {
-                //Debug.Log("Regular message");
-                if (m_oOutputs[i].m_bOverwrite)
+                m_oOutputs[i].m_sMessage = m_oOutputs[i].m_sMessage.Replace(m_cEnterChar.ToString(),
+                    System.Environment.NewLine);
+
+                // Sorts the message to a desired location
+                if (m_oOutputs[i].m_olOutputLocation == Location.Desktop)
+                    path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop)
+                        + "\\" + m_oOutputs[i].m_sFileName + ".txt";
+                else if (m_oOutputs[i].m_olOutputLocation == Location.Documents)
+                    path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments)
+                        + "\\" + m_oOutputs[i].m_sFileName + ".txt";
+                else if (m_oOutputs[i].m_olOutputLocation == Location.Music)
+                    path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic)
+                        + "\\" + m_oOutputs[i].m_sFileName + ".txt";
+                else if (m_oOutputs[i].m_olOutputLocation == Location.Pictures)
+                    path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyPictures)
+                        + "\\" + m_oOutputs[i].m_sFileName + ".txt";
+
+                // 1. A message displayed the first time the game is run and a certain ending is reached
+                // 2. A message displayed when no message file is found, either deleted or never created
+                // 3. A message displayed as a standard output
+
+                if (m_oOutputs[i].m_osOutputState == State.First && GetPermanentStorage())
+                {
+                    //Debug.Log("First message");
                     WriteMessage(path, m_oOutputs[i].m_sMessage);
-                else
-                    WriteOnNewLine(path, m_oOutputs[i].m_sMessage);
+                    SetPermanentStorage(false);
+                }
+                else if (m_oOutputs[i].m_osOutputState == State.Create && !DoesFileExist(path))
+                {
+                    //Debug.Log("Created message");
+                    WriteMessage(path, m_oOutputs[i].m_sMessage);
+                    m_bRecreated = true;
+                }
+                else if (m_oOutputs[i].m_osOutputState == State.Standard && !m_bRecreated)
+                {
+                    //Debug.Log("Regular message");
+                    if (m_oOutputs[i].m_bOverwrite)
+                        WriteMessage(path, m_oOutputs[i].m_sMessage);
+                    else
+                        WriteOnNewLine(path, m_oOutputs[i].m_sMessage);
+                }
             }
         }
     }
