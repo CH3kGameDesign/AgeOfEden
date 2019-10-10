@@ -44,10 +44,11 @@ public class DoorSlammer : MonoBehaviour
             }
             counter = 0;
         }
+
         if (move)
         {
             transform.GetChild(0).GetComponent<Rigidbody>().AddForce(tarEuler, ForceMode.Impulse);
-            /*
+
             float tarMove = Quaternion.Angle(transform.localRotation, tarRot);
             if (Mathf.Abs(tarMove) < closeSpeed)
             {
@@ -55,8 +56,10 @@ public class DoorSlammer : MonoBehaviour
                 move = false;
             }
             else
-                transform.localRotation = Quaternion.RotateTowards(transform.localRotation, tarRot, closeSpeed);
-                */
+            {
+                transform.localRotation = Quaternion.RotateTowards(
+                    transform.localRotation, tarRot, closeSpeed);
+            }
         }
     }
 }

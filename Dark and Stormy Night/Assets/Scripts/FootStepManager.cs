@@ -12,7 +12,10 @@ public class FootStepManager : MonoBehaviour
     }
 
     [SerializeField]
-    [Help("FOOTSTEP ORGANISATION\n\n   Element0: Carpet Steps\n   Element1: Wood Steps\n   Element2: Tile Steps")]
+    [Help("FOOTSTEP ORGANISATION\n\n" +
+        "   Element0: Carpet Steps\n" +
+        "   Element1: Wood Steps\n" +
+        "   Element2: Tile Steps")]
     public int defaultSound;
 
     [HideInInspector]

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HouseShrink : MonoBehaviour {
-    
+public class HouseShrink : MonoBehaviour
+{
     private Transform playerTrans;
     private float extents;
 
@@ -17,11 +17,14 @@ public class HouseShrink : MonoBehaviour {
     private float tarClipPlane = 0;
 
 	// Use this for initialization
-	void Start () {
+	private void Start ()
+    {
         if (playerCamera == null)
             playerCamera = CameraMovement.s_CameraObject.GetComponentInChildren<Camera>();
-        if (tarClipPlane ==0)
+
+        if (tarClipPlane == 0)
             tarClipPlane = playerCamera.nearClipPlane;
+
         startPos += transform.position;
         endPos += transform.position;
         playerTrans = Movement.s_goPlayerObject.transform;
@@ -29,18 +32,23 @@ public class HouseShrink : MonoBehaviour {
 	}
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         float tarPos = 0;
+
         if (playerTrans.position.z > startPos.z && playerTrans.position.z < endPos.z)
             tarPos = Mathf.Abs(playerTrans.position.z - startPos.z) / extents;
+
         if (playerTrans.position.z > endPos.z || tarPos >= 0.9f)
             tarPos = 0.9f;
 
         //playerTrans.localScale = ((extents * tarPos) + minMaxSizes.x) * Vector3.one;
-        playerTrans.localScale = Vector3.Lerp(playerTrans.localScale, (tarPos + minMaxSizes.x) * Vector3.one, Time.deltaTime * 2);
+        playerTrans.localScale = Vector3.Lerp(playerTrans.localScale,
+            (tarPos + minMaxSizes.x) * Vector3.one, Time.deltaTime * 2);
+
         if (playerTrans.localScale.x >= 1)
             playerTrans.localScale = Vector3.one;
+
         playerCamera.nearClipPlane = tarClipPlane * (tarPos + minMaxSizes.x);
     }
 

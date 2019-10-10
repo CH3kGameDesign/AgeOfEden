@@ -76,7 +76,7 @@ public class SceneChanger : MonoBehaviour
 
     public void StartLoad()
     {
-        if (m_bAdditive == false)
+        if (!m_bAdditive)
             SmoothCameraMovement.s_bFlipOnReset = flipOnReset;
         eventOnStart.Invoke();
         if (!m_bAdded)
@@ -91,13 +91,13 @@ public class SceneChanger : MonoBehaviour
     {
         if (m_sbSceneToLoad == -1)
         {
-#if UNITY_STANDALONE
-            Application.Quit();
-#endif
+            #if UNITY_STANDALONE
+                Application.Quit();
+            #endif
 
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#endif
+            #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+            #endif
         }
         else
         {

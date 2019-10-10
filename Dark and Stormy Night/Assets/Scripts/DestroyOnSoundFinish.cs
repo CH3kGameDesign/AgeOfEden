@@ -16,18 +16,17 @@ public class DestroyOnSoundFinish : MonoBehaviour
     // Update is called once per frame
     private void Update ()
     {
-        if (GetComponent<AudioSource>().isPlaying == true)
+        if (GetComponent<AudioSource>().isPlaying)
             hasPlayed = true;
 
-        if (GetComponent<AudioSource>().isPlaying == false && hasPlayed == true)
+        if (!GetComponent<AudioSource>().isPlaying && hasPlayed)
         {
             if (enableOnFinish != null)
                 enableOnFinish.SetActive(true);
-            if (disable == false)
-                Destroy(this.gameObject);
+            if (!disable)
+                Destroy(gameObject);
             else
                 gameObject.SetActive(false);
-            
         }
 	}
 }

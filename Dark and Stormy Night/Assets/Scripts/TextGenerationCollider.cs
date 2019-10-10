@@ -8,13 +8,13 @@ public class TextGenerationCollider : MonoBehaviour
     public GameObject TextObject;
 
 	// Called once before the first frame
-	private void Start ()
+	private void Start()
     {
         if (!TextObject)
             TextObject = transform.parent.gameObject;
 	}
 	
-    private void OnTriggerEnter (Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player" && !TextObject.GetComponent<TextGeneration>().played)
         {
