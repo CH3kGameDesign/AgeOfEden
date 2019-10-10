@@ -12,7 +12,7 @@ public class PortalCameraEnabler : MonoBehaviour
         // NOTE: Look into - potential fps drain
 
 		Plane[] planes = GeometryUtility.CalculateFrustumPlanes(
-            CameraMovement.s_CameraObject.transform.GetChild (0).GetComponent<Camera> ());
+            CameraMovement.s_CameraObject.transform.GetChild(0).GetComponent<Camera>());
 
 		for (int i = 0; i < RenderPlanes.Length; i++)
         {

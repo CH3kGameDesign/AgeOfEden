@@ -23,8 +23,7 @@ public class CollisionSound : MonoBehaviour
                 soundFX.transform.rotation);
             GO.GetComponent<AudioSource>().volume = velocity * velocityMultiplier;
         }
-        else
-            if (activateWithPlayer)
+        else if (activateWithPlayer)
         {
             GameObject GO = Instantiate(soundFX, collision.contacts[0].point,
                 soundFX.transform.rotation);

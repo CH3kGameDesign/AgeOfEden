@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class SmoothCameraMovement : MonoBehaviour
 {
@@ -28,8 +27,7 @@ public class SmoothCameraMovement : MonoBehaviour
     private bool m_bNoShake = false;
     
     [Space(5)]
-
-    [FormerlySerializedAs("m_fSmoothDelay")]
+    
     [Tooltip("How many frames until a mouse movement is removed from the list")]
     [SerializeField]
     private float m_fSmoothingDelay = 15;

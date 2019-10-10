@@ -19,12 +19,10 @@ public class AnimationOveride : MonoBehaviour
 	private void Start()
     {
         if (!tarAnimator && player)
-            tarAnimator = Movement.s_goPlayerObject.GetComponent<Movement>().
-                m_aModelAnimator;
-        /*
-        if (activateOnStart)
-            Change();
-            */
+            tarAnimator = Movement.s_goPlayerObject.GetComponent<Movement>().m_aModelAnimator;
+
+        //if (activateOnStart)
+        //    Change();
 	}
 	
 	// Update is called once per frame

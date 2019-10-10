@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrainCamera : MonoBehaviour {
-
+public class TrainCamera : MonoBehaviour
+{
     private Transform cameraTrans;
     private Transform playerTrans;
     private float extents;
@@ -19,22 +19,30 @@ public class TrainCamera : MonoBehaviour {
     private FacePlayer FP;
 
 	// Use this for initialization
-	void Start () {
+	private void Start()
+    {
         startPos += transform.position;
         endPos += transform.position;
         cameraTrans = CameraMovement.s_CameraObject.transform;
         playerTrans = Movement.s_goPlayerObject.transform;
         extents = Mathf.Abs(startPos.z - endPos.z);
-        if (cameraTrans.GetComponent<CameraMovement>().m_tCameraHook.GetComponentInParent<FacePlayer>() != null)
-            FP = cameraTrans.GetComponent<CameraMovement>().m_tCameraHook.GetComponentInParent<FacePlayer>();
+        if (cameraTrans.GetComponent<CameraMovement>().m_tCameraHook
+            .GetComponentInParent<FacePlayer>() != null)
+        {
+            FP = cameraTrans.GetComponent<CameraMovement>().m_tCameraHook
+                .GetComponentInParent<FacePlayer>();
+        }
         cameraTrans.GetComponent<CameraMovement>().m_tCameraHook = null;
         SmoothCameraMovement.s_bIgnoreSittingRotation = true;
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        if (Movement.s_bCanMove == false)
+	private void Update()
+    {
+        if (!Movement.s_bCanMove)
+        {
             endingMoments();
+        }
         else
         {
             float tarPos = 0;
@@ -51,12 +59,13 @@ public class TrainCamera : MonoBehaviour {
                     PlayerModel.faceDirection = Vector3.zero;
             }
             else
+            {
                 cameraTrans.position = Vector3.Lerp(cameraTrans.position, line.GetPoint(tarPos), Time.deltaTime * 2);
-            
+            }
         }
 	}
 
-    void endingMoments ()
+    private void endingMoments()
     {
         if (FP != null)
             FP.enabled = true;
@@ -67,7 +76,7 @@ public class TrainCamera : MonoBehaviour {
             PlayerModel.player.GetComponentInChildren<Animator>().enabled = false;
     }
 
-    void OnDisable ()
+    private void OnDisable()
     {
         SmoothCameraMovement.s_bIgnoreSittingRotation = false;
     }

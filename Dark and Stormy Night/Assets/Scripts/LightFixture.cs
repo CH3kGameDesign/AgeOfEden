@@ -130,27 +130,34 @@ public class LightFixture : MonoBehaviour
                         }
                     }
                 }
+
                 for (int i = 0; i < LightObjects.Count; i++)
                     LightObjects[i].SetActive(on);
 
-                if (randomDarkObject == false)
+                if (!randomDarkObject)
+                {
                     for (int i = 0; i < DarkObjects.Count; i++)
                         DarkObjects[i].SetActive(!on);
+                }
                 else
                 {
-                    if (on == false)
+                    if (!on)
                     {
                         DarkObjects[darkObject].SetActive(true);
                         if (RandomDarkSounds.Count != 0)
                             Instantiate(RandomDarkSounds[Random.Range(0, RandomDarkSounds.Count)]);
                     }
                     else
+                    {
                         for (int i = 0; i < DarkObjects.Count; i++)
                             DarkObjects[i].SetActive(false);
+                    }
                 }
             }
             else
+            {
                 flashTimer = 0;
+            }
 
             setTimer += Time.deltaTime;
             flashTimer += Time.deltaTime;
