@@ -16,7 +16,7 @@ public class PortalCameraEnabler : MonoBehaviour
 
 		for (int i = 0; i < RenderPlanes.Length; i++)
         {
-			if (GeometryUtility.TestPlanesAABB (planes, RenderPlanes [i].bounds))
+			if (GeometryUtility.TestPlanesAABB (planes, RenderPlanes[i].bounds))
 				Cameras[i].SetActive(true);
             else
 				Cameras[i].SetActive(false);
