@@ -27,19 +27,24 @@ public class PortalCamera : MonoBehaviour
         {
             transform.position = portal.position + playerOffsetFromPortal;
 
-            float angularDifferenceBetweenPortalRotations = Quaternion.Angle(portal.rotation, otherPortal.rotation);
+            float angularDifferenceBetweenPortalRotations = Quaternion.Angle(
+                portal.rotation, otherPortal.rotation);
 
-            Quaternion portalRotationalDifference = Quaternion.AngleAxis(angularDifferenceBetweenPortalRotations, Vector3.up);
+            Quaternion portalRotationalDifference = Quaternion.AngleAxis(
+                angularDifferenceBetweenPortalRotations, Vector3.up);
             Vector3 newCameraDirection = portalRotationalDifference * playerCamera.forward;
             transform.rotation = Quaternion.LookRotation(newCameraDirection, Vector3.up);
         }
         else
         {
-            transform.position = portal.position + new Vector3(-playerOffsetFromPortal.x, playerOffsetFromPortal.y, -playerOffsetFromPortal.z);
+            transform.position = portal.position + new Vector3(
+                -playerOffsetFromPortal.x, playerOffsetFromPortal.y, -playerOffsetFromPortal.z);
 
-            float angularDifferenceBetweenPortalRotations = Quaternion.Angle(portal.rotation, otherPortal.rotation * Quaternion.Euler(new Vector3(0, 180, 0)));
+            float angularDifferenceBetweenPortalRotations = Quaternion.Angle(
+                portal.rotation, otherPortal.rotation * Quaternion.Euler(new Vector3(0, 180, 0)));
 
-            Quaternion portalRotationalDifference = Quaternion.AngleAxis(angularDifferenceBetweenPortalRotations, Vector3.up);
+            Quaternion portalRotationalDifference = Quaternion.AngleAxis(
+                angularDifferenceBetweenPortalRotations, Vector3.up);
             Vector3 newCameraDirection = portalRotationalDifference * playerCamera.forward;
             transform.rotation = Quaternion.LookRotation(newCameraDirection, Vector3.up);
         }
@@ -49,6 +54,7 @@ public class PortalCamera : MonoBehaviour
             transform.localEulerAngles += new Vector3(0, 0, 180);
         }
 
-		GetComponent<Camera> ().fieldOfView = CameraMovement.s_CameraObject.transform.GetChild (0).GetComponent<Camera> ().fieldOfView;
+		GetComponent<Camera> ().fieldOfView = CameraMovement.s_CameraObject.transform
+            .GetChild(0).GetComponent<Camera> ().fieldOfView;
 	}
 }
