@@ -61,7 +61,11 @@ public class CameraMovement : MonoBehaviour
     [Header("GameObjects")]
     [SerializeField]
     private List<GameObject> m_LgoEnableObjects;
-    
+
+    private void Awake()
+    {
+        s_CameraObject = gameObject;
+    }
 
     // Called once before the first frame
     private void Start()
@@ -69,7 +73,6 @@ public class CameraMovement : MonoBehaviour
         // Seizes control of the cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        s_CameraObject = gameObject;
         s_bSnapToPlayer = m_bSnapToPlayerOnStart;
         s_bGoToPlayer = m_bSnapToPlayerOnStart;
 		s_CanMove = m_bCanMoveOnStart;

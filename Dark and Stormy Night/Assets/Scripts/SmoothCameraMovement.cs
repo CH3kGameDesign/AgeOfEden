@@ -13,23 +13,19 @@ public class SmoothCameraMovement : MonoBehaviour
 
     private enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 };
     
-    [Tooltip("The input axes used for camera rotation")]
-    [SerializeField]
+    [SerializeField, Tooltip("The input axes used for camera rotation")]
     private RotationAxes m_raAxes = RotationAxes.MouseXAndY;
 
     [Space(5)]
 
-    [Tooltip("Resets the players rotation to default when they awake")]
-    [SerializeField]
+    [SerializeField, Tooltip("Resets the players rotation to default when they awake")]
     private bool m_bResetRotation = false;
-    [Tooltip("Applies no shake effect to the camera")]
-    [SerializeField]
+    [SerializeField, Tooltip("Applies no shake effect to the camera")]
     private bool m_bNoShake = false;
     
     [Space(5)]
     
-    [Tooltip("How many frames until a mouse movement is removed from the list")]
-    [SerializeField]
+    [SerializeField, Tooltip("How many frames until a mouse movement is removed from the list")]
     private float m_fSmoothingDelay = 15;
     
     [Tooltip("Applies an offset to the look direction in the X axis")]
@@ -37,25 +33,23 @@ public class SmoothCameraMovement : MonoBehaviour
 
     [Space(5)]
 
-    [Tooltip("The maximum the player can rotate while sitting down")]
-    [SerializeField]
+    [SerializeField, Tooltip("The maximum the player can rotate while sitting down")]
     private Vector2 m_v2PublicSittingMaxRotation = new Vector2 (1, 179);
 
     [Tooltip("The mouse sensitivity in both the horizontal and vertical directions")]
     public Vector2 m_v2Sensitivity = new Vector2(2, 2);
 
-    [Tooltip("The direction the player faces when the spawn in")]
-    [SerializeField]
+    [SerializeField, Tooltip("The direction the player faces when the spawn in")]
     private Vector2 m_v2StartRotation = new Vector2(85, 0);
 
     [Space(3)]
 
-    [Tooltip("The minimum and maximum angle the player can look in the X direction in one frame")]
-    [SerializeField]
+    [SerializeField,
+        Tooltip("The minimum and maximum angle the player can look in the X direction in one frame")]
     private Vector2 m_v2RotationRangeX = new Vector2(-360, 360);
     
-    [Tooltip("The minimum and maximum angle the player can look in the Y direction in one frame")]
-    [SerializeField]
+    [SerializeField,
+        Tooltip("The minimum and maximum angle the player can look in the Y direction in one frame")]
     private Vector2 m_v2RotationRangeY = new Vector2(-75, 75);
 
     // The current X and Y rotation of the player

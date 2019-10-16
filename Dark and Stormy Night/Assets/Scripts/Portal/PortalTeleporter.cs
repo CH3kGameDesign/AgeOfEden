@@ -1,13 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PortalTeleporter : MonoBehaviour
 {
-	public Transform player;
-	public Transform reciever;
-    public GameObject[] activateOnTeleport;
-    public GameObject[] DeActivateOnTeleport;
+    [FormerlySerializedAs("player")]
+	public Transform m_tPlayer;
+    [FormerlySerializedAs("reciever")]
+    public Transform m_tReciever;
+
+    [FormerlySerializedAs("activateOnTeleport")]
+    public GameObject[] m_goActivateOnTeleport;
+    [FormerlySerializedAs("DeActivateOnTeleport")]
+    public GameObject[] m_goDeactivateOnTeleport;
 
     public enum PortalType { NotMenu, PlayerPortal, MenuPortal };
 
@@ -18,7 +24,7 @@ public class PortalTeleporter : MonoBehaviour
     private void Start()
     {
         if (Movement.s_goPlayerObject)
-            player = Movement.s_goPlayerObject.transform;
+            m_tPlayer = Movement.s_goPlayerObject.transform;
     }
 
     // Update is called once per frame
@@ -26,27 +32,27 @@ public class PortalTeleporter : MonoBehaviour
     {
 		if (playerIsOverlapping)
 		{
-			Vector3 portalToPlayer = player.position - transform.position;
+			Vector3 portalToPlayer = m_tPlayer.position - transform.position;
 			float dotProduct = Vector3.Dot(transform.up, portalToPlayer);
 
 			// If this is true: The player has moved across the portal
 			if (dotProduct < 0f)
 			{
 				// Teleport him!
-				float rotationDiff = -Quaternion.Angle(transform.rotation, reciever.rotation);
+				float rotationDiff = -Quaternion.Angle(transform.rotation, m_tReciever.rotation);
 				rotationDiff += 180;
                 SmoothCameraMovement.s_fTurnAroundValue += rotationDiff;
 
 				Vector3 positionOffset = Quaternion.Euler(0f, rotationDiff, 0f) * portalToPlayer;
-				player.position = reciever.position + positionOffset;
+				m_tPlayer.position = m_tReciever.position + positionOffset;
 
 				playerIsOverlapping = false;
 
-                for (int i = 0; i < activateOnTeleport.Length; i++)
-                    activateOnTeleport[i].SetActive(true);
+                for (int i = 0; i < m_goActivateOnTeleport.Length; i++)
+                    m_goActivateOnTeleport[i].SetActive(true);
 
-                for (int i = 0; i < DeActivateOnTeleport.Length; i++)
-                    DeActivateOnTeleport[i].SetActive(false);
+                for (int i = 0; i < m_goDeactivateOnTeleport.Length; i++)
+                    m_goDeactivateOnTeleport[i].SetActive(false);
 
                 if (portalType == PortalType.PlayerPortal)
                     Menu.inRoom = true;
