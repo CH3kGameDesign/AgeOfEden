@@ -22,11 +22,9 @@ public class Movement : MonoBehaviour
     private KeyCode m_kcSpeedDown = KeyCode.Minus;
 
     [Header("Booleans")]
-    [Tooltip("Enable this if not at typewriter")]
-    [SerializeField]
+    [SerializeField, Tooltip("Enable this if not at typewriter")]
     private bool m_bCanMoveOnStart = true;
-    [SerializeField]
-    [Tooltip("Uses the old movement system based around translation" +
+    [SerializeField, Tooltip("Uses the old movement system based around translation" +
         "\nWARNING: Allows the player to force themselves through walls and other objects")]
     private bool m_bLegacyMovement = false;
     [SerializeField]
@@ -50,23 +48,18 @@ public class Movement : MonoBehaviour
     private float m_fSprint = 1f;
 
     [Header("Aerial Stuff")]
-    [Tooltip("Only used if jumping is enabled")]
-    [SerializeField]
+    [SerializeField, Tooltip("Only used if jumping is enabled")]
     private float m_fJumpForce = 30;
-    [Tooltip("Scales the movement speed while airborne")]
-    [SerializeField]
+    [SerializeField, Tooltip("Scales the movement speed while airborne")]
     private float m_fAerialManuverability = 0.1f;
-    [Tooltip("The y height of the ray origin")]
-    [SerializeField]
+    [SerializeField, Tooltip("The y height of the ray origin")]
     private float m_fRayOrigin = -0.8f;
-    [Tooltip("How long down the ray stretches" +
+    [SerializeField, Tooltip("How long down the ray stretches" +
         "\nWARNING: If ray length does not reach below the players hitbox " +
         "the player will have difficulty moving")]
-    [SerializeField]
     private float m_fRaylength = 0.3f;
-    [Tooltip("The ground check uses 4 rays to avoid pothole problems, " +
+    [SerializeField, Tooltip("The ground check uses 4 rays to avoid pothole problems, " +
         "this is how far from the center these rays are positioned")]
-    [SerializeField]
     private float m_fRaySpread = 0.3f;
     
     private float m_fSizeScalar;
