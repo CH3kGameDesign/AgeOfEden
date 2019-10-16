@@ -65,8 +65,8 @@ public class CreateTextFile : MonoBehaviour
 
     // Called once before the first frame
     private void Start()
-    {
-        if (activateOnStart)
+    { 
+            if (activateOnStart)
         {
             // Verifys the list is not emtpy
             if (m_oOutputs.Length == 0)
