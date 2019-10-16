@@ -10,6 +10,9 @@ public class Movement : MonoBehaviour
     public static bool s_bCanMove;
 
     [HideInInspector]
+    public bool m_bCanSprint = true;
+
+    [HideInInspector]
     public bool m_bIsSprinting = false;
     [HideInInspector]
     public bool m_bGrounded;
@@ -328,7 +331,7 @@ public class Movement : MonoBehaviour
             if (verSpeed > 0)
             {
                 m_aModelAnimator.SetInteger("WalkDirection", 0);
-                if (Input.GetKey(KeyCode.LeftShift))
+                if (Input.GetKey(KeyCode.LeftShift) && m_bCanSprint)
                 {
                     m_aModelAnimator.SetBool("Sprinting", true);
                     m_v2InputVec2 *= m_fSprintMultiplier;
