@@ -127,8 +127,9 @@ GameObject:
   - component: {fileID: 97600524}
   - component: {fileID: 97600523}
   - component: {fileID: 97600522}
+  - component: {fileID: 97600526}
   m_Layer: 0
-  m_Name: '--- 001 ??? ------------------------------------------'
+  m_Name: '--- 002 Monica ------------------------------------------'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,8 +152,9 @@ Transform:
   - {fileID: 754544266}
   - {fileID: 1428482933}
   - {fileID: 829157860}
+  - {fileID: 709638439}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &97600520
 MonoBehaviour:
@@ -194,7 +196,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  time: 3
+  time: 1
 --- !u!114 &97600521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,7 +237,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  time: 2
+  time: 0
 --- !u!114 &97600522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,7 +278,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  time: 10
+  time: 8
 --- !u!114 &97600523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,7 +319,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  time: 8
+  time: 6
 --- !u!114 &97600524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,7 +360,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  time: 6
+  time: 4
 --- !u!114 &97600525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -399,7 +401,206 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  time: 5
+  time: 3
+--- !u!114 &97600526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 97600518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9e5fa2b181fd35438a2ca71934add62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GO: []
+  GODisable: []
+  activateEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 709638438}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  time: 8.5
+--- !u!1 &425956711
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 425956713}
+  - component: {fileID: 425956712}
+  m_Layer: 0
+  m_Name: CreateTextFileReference
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &425956712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 425956711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fbd8e863de2d2145af38bdaeed658bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateOnStart: 0
+  m_cEnterChar: 124
+  m_oOutputs:
+  - m_olOutputLocation: 1
+    folderPath: []
+    m_osOutputState: 0
+    m_bOverwrite: 0
+    m_bUseTypeWriter: 0
+    m_sFileName: loadingloadingloading
+    m_bPlusRandom: 0
+    m_sMessage: 
+--- !u!4 &425956713
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 425956711}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1821587934}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &475599046
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 475599047}
+  - component: {fileID: 475599049}
+  - component: {fileID: 475599048}
+  m_Layer: 0
+  m_Name: '--- 002 Directory --------------------------------------------'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &475599047
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 475599046}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &475599048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 475599046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fbd8e863de2d2145af38bdaeed658bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateOnStart: 0
+  m_cEnterChar: 124
+  m_oOutputs:
+  - m_olOutputLocation: 0
+    folderPath:
+    - EDEN
+    m_osOutputState: 0
+    m_bOverwrite: 0
+    m_bUseTypeWriter: 0
+    m_sFileName: popoopo
+    m_bPlusRandom: 0
+    m_sMessage: 
+--- !u!114 &475599049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 475599046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8209a9332832ff54e92f27db608f79df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateOnStart: 1
+  hide: 0
+  openDirectory: 1
+  openAmount: 1
+--- !u!1 &709638438
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 709638439}
+  - component: {fileID: 709638440}
+  m_Layer: 0
+  m_Name: DeleteFiles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &709638439
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 709638438}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 97600519}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &709638440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 709638438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 354d0cf0750d0ec4abc3a2f02fe4b718, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CTF:
+  - {fileID: 425956712}
+  - {fileID: 741795146}
+  - {fileID: 1588972485}
+  - {fileID: 1657420739}
+  - {fileID: 754544268}
+  - {fileID: 1428482935}
+  - {fileID: 829157862}
+  deleteDirectory: 00000000000001
+  path: []
 --- !u!1 &741795144
 GameObject:
   m_ObjectHideFlags: 0
@@ -430,6 +631,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activateOnStart: 0
   hide: 0
+  openDirectory: 0
   openAmount: 1
 --- !u!114 &741795146
 MonoBehaviour:
@@ -445,11 +647,15 @@ MonoBehaviour:
   activateOnStart: 1
   m_cEnterChar: 124
   m_oOutputs:
-  - m_olOutputLocation: 1
+  - m_olOutputLocation: 0
+    folderPath:
+    - EDEN
+    - text
     m_osOutputState: 2
     m_bOverwrite: 1
     m_bUseTypeWriter: 0
-    m_sFileName: Mutual Dialogue
+    m_sFileName: 'Monica '
+    m_bPlusRandom: 1
     m_sMessage: Hello?
 --- !u!4 &741795147
 Transform:
@@ -507,6 +713,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activateOnStart: 0
   hide: 0
+  openDirectory: 0
   openAmount: 1
 --- !u!114 &754544268
 MonoBehaviour:
@@ -522,11 +729,15 @@ MonoBehaviour:
   activateOnStart: 1
   m_cEnterChar: 124
   m_oOutputs:
-  - m_olOutputLocation: 1
+  - m_olOutputLocation: 0
+    folderPath:
+    - EDEN
+    - text
     m_osOutputState: 2
     m_bOverwrite: 1
     m_bUseTypeWriter: 0
-    m_sFileName: Mutual Dialogue 3
+    m_sFileName: 'Monica '
+    m_bPlusRandom: 1
     m_sMessage: Hello? Is anyone There? I'm so...
 --- !u!1 &829157859
 GameObject:
@@ -571,6 +782,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activateOnStart: 0
   hide: 0
+  openDirectory: 0
   openAmount: 1
 --- !u!114 &829157862
 MonoBehaviour:
@@ -586,11 +798,15 @@ MonoBehaviour:
   activateOnStart: 1
   m_cEnterChar: 124
   m_oOutputs:
-  - m_olOutputLocation: 1
+  - m_olOutputLocation: 0
+    folderPath:
+    - EDEN
+    - text
     m_osOutputState: 2
     m_bOverwrite: 1
     m_bUseTypeWriter: 0
-    m_sFileName: Mutual Dialogue 5
+    m_sFileName: 'Monica '
+    m_bPlusRandom: 1
     m_sMessage: Hello? Is anyone There? I'm so.. so... hungry.....
 --- !u!1 &849427927
 GameObject:
@@ -639,7 +855,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1308943114
 GameObject:
@@ -682,7 +898,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GO:
-  - {fileID: 97600518}
+  - {fileID: 475599046}
   GODisable: []
   activateEvent:
     m_PersistentCalls:
@@ -733,6 +949,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activateOnStart: 0
   hide: 0
+  openDirectory: 0
   openAmount: 1
 --- !u!114 &1428482935
 MonoBehaviour:
@@ -748,11 +965,15 @@ MonoBehaviour:
   activateOnStart: 1
   m_cEnterChar: 124
   m_oOutputs:
-  - m_olOutputLocation: 1
+  - m_olOutputLocation: 0
+    folderPath:
+    - EDEN
+    - text
     m_osOutputState: 2
     m_bOverwrite: 1
     m_bUseTypeWriter: 0
-    m_sFileName: Mutual Dialogue 4
+    m_sFileName: 'Monica '
+    m_bPlusRandom: 1
     m_sMessage: Hello? Is anyone There? I'm so... so...
 --- !u!1 &1506556893
 GameObject:
@@ -838,6 +1059,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activateOnStart: 0
   hide: 0
+  openDirectory: 0
   openAmount: 1
 --- !u!114 &1588972485
 MonoBehaviour:
@@ -853,11 +1075,15 @@ MonoBehaviour:
   activateOnStart: 1
   m_cEnterChar: 124
   m_oOutputs:
-  - m_olOutputLocation: 1
+  - m_olOutputLocation: 0
+    folderPath:
+    - EDEN
+    - text
     m_osOutputState: 2
     m_bOverwrite: 1
     m_bUseTypeWriter: 0
-    m_sFileName: Mutual Dialogue 1
+    m_sFileName: 'Monica '
+    m_bPlusRandom: 1
     m_sMessage: Hello? Is anyone There?
 --- !u!1 &1605056909
 GameObject:
@@ -886,6 +1112,7 @@ Transform:
   m_Children:
   - {fileID: 1821587934}
   - {fileID: 1308943115}
+  - {fileID: 1860441936}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -932,6 +1159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activateOnStart: 0
   hide: 0
+  openDirectory: 0
   openAmount: 1
 --- !u!114 &1657420739
 MonoBehaviour:
@@ -947,12 +1175,60 @@ MonoBehaviour:
   activateOnStart: 1
   m_cEnterChar: 124
   m_oOutputs:
-  - m_olOutputLocation: 1
+  - m_olOutputLocation: 0
+    folderPath:
+    - EDEN
+    - text
     m_osOutputState: 2
     m_bOverwrite: 1
     m_bUseTypeWriter: 0
-    m_sFileName: Mutual Dialogue 2
+    m_sFileName: 'Monica '
+    m_bPlusRandom: 1
     m_sMessage: Hello? Is anyone There? I'm
+--- !u!1 &1667661561
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1667661563}
+  - component: {fileID: 1667661564}
+  m_Layer: 0
+  m_Name: CheckIfOpen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1667661563
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1667661561}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.63276255, y: 1.9865452, z: -26.422852}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1667661564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1667661561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 891d97cd98dbee346920264f24d4d3f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileName:
+  - Monica
+  activateWhenFileOpen:
+  - {fileID: 97600518}
 --- !u!1 &1821587932
 GameObject:
   m_ObjectHideFlags: 0
@@ -1025,7 +1301,61 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -33.428078, y: 5.168838, z: 47.249096}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 425956713}
   m_Father: {fileID: 1605056910}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1860441935
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1860441936}
+  - component: {fileID: 1860441937}
+  m_Layer: 0
+  m_Name: CreateFile
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1860441936
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1860441935}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1605056910}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1860441937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1860441935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fbd8e863de2d2145af38bdaeed658bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateOnStart: 1
+  m_cEnterChar: 124
+  m_oOutputs:
+  - m_olOutputLocation: 0
+    folderPath:
+    - EDEN
+    - Children
+    m_osOutputState: 2
+    m_bOverwrite: 1
+    m_bUseTypeWriter: 0
+    m_sFileName: Monica
+    m_bPlusRandom: 0
+    m_sMessage: 
