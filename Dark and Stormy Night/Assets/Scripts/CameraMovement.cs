@@ -15,8 +15,7 @@ public class CameraMovement : MonoBehaviour
     public static GameObject s_CameraObject;
 
     [Header("Booleans")]
-    [SerializeField]
-    [Tooltip("Allows the player to look around immediately")]
+    [SerializeField, Tooltip("Allows the player to look around immediately")]
     private bool m_bCanMoveOnStart = true;
     [SerializeField]
     private bool m_bSnapToPlayerOnStart = true;
@@ -51,8 +50,7 @@ public class CameraMovement : MonoBehaviour
     [Header("Transforms")]
     [Tooltip("The an object on the players face the camera is attached to")]
     public Transform m_tCameraHook;
-    [SerializeField]
-    [Tooltip("An object placed on the side of the object a player is looking at")]
+    [SerializeField, Tooltip("An object placed on the side of the object a player is looking at")]
     private Transform m_tAimPoint;
     // Unused
     //[SerializeField]

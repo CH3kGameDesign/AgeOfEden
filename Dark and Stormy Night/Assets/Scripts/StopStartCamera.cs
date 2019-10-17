@@ -11,6 +11,6 @@ public class StopStartCamera : MonoBehaviour
     {
         CameraMovement.s_bSnapToPlayer = variable;
         CameraMovement.s_bGoToPlayer = variable;
-        gameObject.GetComponent<StopStartCamera>().enabled = false;
+        enabled = false;
 	}
 }
