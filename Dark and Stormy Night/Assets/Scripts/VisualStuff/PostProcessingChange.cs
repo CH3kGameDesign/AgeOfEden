@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PostProcessing;
 
-public class PostProcessingChange : MonoBehaviour {
-
+public class PostProcessingChange : MonoBehaviour
+{
     public PostProcessingProfile tarProfile;
     public PostProcessingBehaviour tarCamera;
     
@@ -12,7 +12,8 @@ public class PostProcessingChange : MonoBehaviour {
     public float disableTime = 5;
 
 	// Use this for initialization
-	void Start () {
+	private void Start()
+    {
         if (tarCamera == null)
         {
             if (Camera.main != null)
@@ -22,23 +23,23 @@ public class PostProcessingChange : MonoBehaviour {
 
     private void Awake()
     {
-        
         //tarCamera.profile = tarProfile;
         Invoke("Disable", disableTime);
     }
 
     // Update is called once per frame
-    void Update () {
+    private void Update()
+    {
         if (tarCamera == null)
         {
             if (Camera.main != null)
                 tarCamera = Camera.main.GetComponent<PostProcessingBehaviour>();
         }
         else
-        Change();
+            Change();
 	}
 
-    void Change ()
+    private void Change ()
     {
         var tarCG = tarCamera.profile.colorGrading.settings;
 
@@ -75,7 +76,7 @@ public class PostProcessingChange : MonoBehaviour {
         tarCamera.profile.grain.settings = tarGrain;
     }
 
-    void Disable ()
+    private void Disable ()
     {
         GetComponent<PostProcessingChange>().enabled = false;
     }

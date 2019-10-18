@@ -31,12 +31,10 @@ public class TypeWriter : MonoBehaviour
     [Tooltip("Whether or not the player is currently typing")]
     public bool m_bIsTyping = true;
 
-    [Tooltip("Allows the player to type independant of the script")]
-    [SerializeField]
+    [SerializeField, Tooltip("Allows the player to type independant of the script")]
     private bool m_bNoScriptInterference = false;
 
-    [Tooltip("Half the width of the paper")]
-    [SerializeField]
+    [SerializeField, Tooltip("Half the width of the paper")]
     private float halfLength;
     // The length per character
     private float letterWidth;
@@ -77,55 +75,41 @@ public class TypeWriter : MonoBehaviour
 
     [Header("References")]
     
-    [Tooltip("The different scritps written to the paper")]
-    [SerializeField]
+    [SerializeField, Tooltip("The different scritps written to the paper")]
     private List<EndingData> m_edEndingChanges = new List<EndingData>();
-    [Tooltip("A list of all the typewriter arm objects")]
-    [SerializeField]
+    [SerializeField, Tooltip("A list of all the typewriter arm objects")]
     private List<Transform> m_tTypeWriterArms = new List<Transform>();
-    [Tooltip("A list of all the typewriter key objects")]
-    [SerializeField]
+    [SerializeField, Tooltip("A list of all the typewriter key objects")]
     private List<Transform> m_tTypeWriterKeys = new List<Transform>();
-    [SerializeField]
+    [SerializeField, Tooltip("A reference to the space key")]
     private Transform m_tSpaceKey;
-    [Tooltip("A list of sounds for when keys are pressed")]
-    [SerializeField]
+    [SerializeField, Tooltip("A list of sounds for when keys are pressed")]
     private List<GameObject> m_goClickSounds = new List<GameObject>();
-    [Tooltip("The sound played when the spacebar is pressed")]
-    [SerializeField]
+    [SerializeField, Tooltip("The sound played when the spacebar is pressed")]
     private GameObject m_goSpaceSound;
-    [Tooltip("The sound played when a line ends")]
-    [SerializeField]
+    [SerializeField, Tooltip("The sound played when a line ends")]
     private GameObject m_goEnterSound;
-    [Tooltip("The sound played when the event ends")]
-    [SerializeField]
+    [SerializeField, Tooltip("The sound played when the event ends")]
     private GameObject m_goExitSound;
 
     [Space(5)]
-    [Tooltip("A reference to the transform of the paperHolder")]
-    [SerializeField]
+    [SerializeField, Tooltip("A reference to the transform of the paperHolder")]
     private Transform m_tPaperHolder;
-    [Tooltip("A reference to the transform of the paper")]
-    [SerializeField]
+    [SerializeField, Tooltip("A reference to the transform of the paper")]
     private Transform m_tPaper;
-    [Tooltip("A reference to the transform of the text object")]
-    [SerializeField]
+    [SerializeField, Tooltip("A reference to the transform of the text object")]
     private Transform m_tText;
-    [Tooltip("A reference to the transforms of the paper meshes")]
-    [SerializeField]
+    [SerializeField, Tooltip("A reference to the transforms of the paper meshes")]
     private List<GameObject> m_tPaperMeshes = new List<GameObject>();
 
     [Space(10)]
-    [Tooltip("A list of gameobejcts to be enabled when the sequence ends")]
-    [SerializeField]
+    [SerializeField, Tooltip("A list of gameobejcts to be enabled when the sequence ends")]
     private List<GameObject> m_goActivateOnFinish = new List<GameObject>();
-    [Tooltip("A list of gameobjects to be disabled when the sequence ends")]
-    [SerializeField]
+    [SerializeField, Tooltip("A list of gameobjects to be disabled when the sequence ends")]
     private List<GameObject> m_goDeactivateOnFinish = new List<GameObject>();
 
     [Space(10)]
-    [Tooltip("Used to call certain scripts when the typewriter sequence ends")]
-    [SerializeField]
+    [SerializeField, Tooltip("Used to call certain scripts when the typewriter sequence ends")]
     private UnityEvent m_ueVoidOnFinish;
 
     private float selfTypeTimer;
@@ -223,12 +207,14 @@ public class TypeWriter : MonoBehaviour
             }
 
             // Initiates script typing once the conditions are met
-            if (charScriptTakesOverCounter >= freeCharsBeforeScript[scriptLineCounter] && freeCharsBeforeScript[scriptLineCounter] != -1)
+            if (charScriptTakesOverCounter >= freeCharsBeforeScript[scriptLineCounter]
+                && freeCharsBeforeScript[scriptLineCounter] != -1)
                 scriptTyping = true;
 
             ///////////////////////////// MOVED UP A BIT
             // Moves the paper to the new position
-            m_tPaperHolder.transform.localPosition = Vector3.Lerp(m_tPaperHolder.transform.localPosition, new Vector3(-0.121f,
+            m_tPaperHolder.transform.localPosition = Vector3.Lerp(
+                m_tPaperHolder.transform.localPosition, new Vector3(-0.121f,
                 0.247f,
                 halfLength - (letterWidth * m_tText.GetChild(0).GetComponent<TextMeshPro>().text.Length))
                 / 100, Time.deltaTime * 8);
@@ -243,7 +229,8 @@ public class TypeWriter : MonoBehaviour
                 KeyPress();
                 if (freeCharsBeforeScript[scriptLineCounter] == -1)
                 {
-                    if (Input.GetKeyDown(KeyCode.Return) || enterTimer <= 0 || charScriptTakesOverCounter > 10)
+                    if (Input.GetKeyDown(KeyCode.Return) || enterTimer <= 0
+                        || charScriptTakesOverCounter > 10)
                     {
                         scriptTyping = true;
                         Type("");
@@ -405,8 +392,8 @@ public class TypeWriter : MonoBehaviour
             if (choice >= 0)
             {
                 if (strikeThrough[i] && choice < m_tText.childCount)
-                    m_tText.GetChild(choice).GetComponent<TextMeshPro>().fontStyle = FontStyles.Strikethrough;
-                
+                    m_tText.GetChild(choice).GetComponent<TextMeshPro>().fontStyle
+                        = FontStyles.Strikethrough;
             }
         }
         row++;
@@ -423,7 +410,8 @@ public class TypeWriter : MonoBehaviour
         }
         for (int i = m_tText.childCount - 1; i > 0; i--)
         {
-            m_tText.GetChild(i).GetComponent<TextMeshPro>().text = m_tText.GetChild(i - 1).GetComponent<TextMeshPro>().text;
+            m_tText.GetChild(i).GetComponent<TextMeshPro>().text
+                = m_tText.GetChild(i - 1).GetComponent<TextMeshPro>().text;
         }
         m_tText.GetChild(0).GetComponent<TextMeshPro>().text = "";
     }
@@ -553,15 +541,19 @@ public class TypeWriter : MonoBehaviour
                 {
                     armMove = true;
                     armMoveRotation[i] += 30;
-                    m_tTypeWriterArms[i].localEulerAngles = new Vector3(0, m_tTypeWriterArms[i].localEulerAngles.y, armMoveRotation[i]);
-                    m_tTypeWriterKeys[i].localEulerAngles = new Vector3(0, 0, -armMoveRotation[i] / 3);
+                    m_tTypeWriterArms[i].localEulerAngles = new Vector3(
+                        0, m_tTypeWriterArms[i].localEulerAngles.y, armMoveRotation[i]);
+                    m_tTypeWriterKeys[i].localEulerAngles = new Vector3(
+                        0, 0, -armMoveRotation[i] / 3);
                 }
                 else
                 {
                     armMoveUpNow[i] = false;
                     armMoveRotation[i] = 90;
-                    m_tTypeWriterArms[i].localEulerAngles = new Vector3(0, m_tTypeWriterArms[i].localEulerAngles.y, 0);
-                    m_tTypeWriterKeys[i].localEulerAngles = new Vector3(0, 0, 0);
+                    m_tTypeWriterArms[i].localEulerAngles = new Vector3(
+                        0, m_tTypeWriterArms[i].localEulerAngles.y, 0);
+                    m_tTypeWriterKeys[i].localEulerAngles = new Vector3(
+                        0, 0, 0);
                 }
             }
         }
@@ -580,14 +572,18 @@ public class TypeWriter : MonoBehaviour
                 {
                     armMove = true;
                     armMoveRotation[i] -= 5;
-                    m_tTypeWriterArms[i].localEulerAngles = new Vector3(0, m_tTypeWriterArms[i].localEulerAngles.y, armMoveRotation[i]);
-                    m_tTypeWriterKeys[i].localEulerAngles = new Vector3(0, 0, -armMoveRotation[i] / 3);
+                    m_tTypeWriterArms[i].localEulerAngles = new Vector3(
+                        0, m_tTypeWriterArms[i].localEulerAngles.y, armMoveRotation[i]);
+                    m_tTypeWriterKeys[i].localEulerAngles = new Vector3(
+                        0, 0, -armMoveRotation[i] / 3);
                 }
                 else
                 {
                     armMoveRotation[i] = 0;
-                    m_tTypeWriterArms[i].localEulerAngles = new Vector3(0, m_tTypeWriterArms[i].localEulerAngles.y, 0);
-                    m_tTypeWriterKeys[i].localEulerAngles = new Vector3(0, 0, 0);
+                    m_tTypeWriterArms[i].localEulerAngles = new Vector3(
+                        0, m_tTypeWriterArms[i].localEulerAngles.y, 0);
+                    m_tTypeWriterKeys[i].localEulerAngles = new Vector3(
+                        0, 0, 0);
                 }
             }
         }
@@ -741,7 +737,11 @@ public class TypeWriter : MonoBehaviour
             if (m_tPaperMeshes[i].activeInHierarchy == true)
                 doThing = false;
         }
+
         if (doThing)
             m_tPaperMeshes[8].SetActive(true);
+
+        // Stops the scripts from running to reduce cpu load
+        enabled = false;
     }
 }

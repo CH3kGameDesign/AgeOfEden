@@ -31,14 +31,14 @@ public class RaycastEnable : MonoBehaviour
     private Transform MoveToHitPoint;
 
     // Use this for initialization
-    private void Start ()
+    private void Start()
     {
         if (activateEvent == null)
             activateEvent = new UnityEvent();
 	}
 	
 	// Update is called once per frame
-	private void Update ()
+	private void Update()
     {
         if (!onClick)
             RaycastyGoodness();
@@ -49,7 +49,7 @@ public class RaycastEnable : MonoBehaviour
         }
 	}
 
-    private void RaycastyGoodness ()
+    private void RaycastyGoodness()
     {
         RaycastHit hit;
         if (!throughObjects)
@@ -113,7 +113,7 @@ public class RaycastEnable : MonoBehaviour
         }
     }
 
-    private void EnableObjects ()
+    private void EnableObjects()
     {
         // Potentially causing problems?
         if (CameraLookAt != null)

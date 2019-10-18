@@ -82,13 +82,14 @@ public class Movement : MonoBehaviour
     private Rigidbody m_rbRigidbody;
     [HideInInspector]
     public Animator m_aModelAnimator;
-    //public FootStepManager footStepManager;
+    private FootStepManager m_fsmFootStepManager;
 
     private void Awake()
     {
         s_goPlayerObject = gameObject;
         m_rbRigidbody = GetComponent<Rigidbody>();
         m_aModelAnimator = gameObject.GetComponentInChildren<Animator>();
+        m_fsmFootStepManager = m_aModelAnimator.GetComponent<FootStepManager>();
     }
 
     // Called once before the first frame
@@ -137,7 +138,7 @@ public class Movement : MonoBehaviour
             Vector3.down, out groundRay4, m_fRaylength * transform.localScale.y))
         {
             m_bGrounded = true;
-            m_aModelAnimator.GetComponent<FootStepManager>().makeNoises = true;
+            m_fsmFootStepManager.makeNoises = true;
             if (fallTimer >= 0.3f && fallSound != null)
                 Instantiate(fallSound);
             fallTimer = 0;
@@ -145,7 +146,7 @@ public class Movement : MonoBehaviour
         else
         {
             m_bGrounded = false;
-            m_aModelAnimator.GetComponent<FootStepManager>().makeNoises = false;
+            m_fsmFootStepManager.makeNoises = false;
             fallTimer += Time.deltaTime;
         }
 
@@ -286,7 +287,7 @@ public class Movement : MonoBehaviour
             m_aModelAnimator.SetBool("Moving", false);
             if (m_fStepTimer != 0)
             {
-                //footStepManager.MakeSound();
+                //m_fsmFootStepManager.MakeSound();
                 m_fStepTimer = 0;
             }
         }
@@ -306,7 +307,7 @@ public class Movement : MonoBehaviour
 
         if (m_fStepTimer > m_fStepDelay / m_fSprint)
         {
-            //footStepManager.MakeSound();
+            //m_fsmFootStepManager.MakeSound();
             m_fStepTimer = 0;
         }
 

@@ -15,8 +15,7 @@ public class CameraMovement : MonoBehaviour
     public static GameObject s_CameraObject;
 
     [Header("Booleans")]
-    [SerializeField]
-    [Tooltip("Allows the player to look around immediately")]
+    [SerializeField, Tooltip("Allows the player to look around immediately")]
     private bool m_bCanMoveOnStart = true;
     [SerializeField]
     private bool m_bSnapToPlayerOnStart = true;
@@ -51,8 +50,7 @@ public class CameraMovement : MonoBehaviour
     [Header("Transforms")]
     [Tooltip("The an object on the players face the camera is attached to")]
     public Transform m_tCameraHook;
-    [SerializeField]
-    [Tooltip("An object placed on the side of the object a player is looking at")]
+    [SerializeField, Tooltip("An object placed on the side of the object a player is looking at")]
     private Transform m_tAimPoint;
     // Unused
     //[SerializeField]
@@ -61,6 +59,8 @@ public class CameraMovement : MonoBehaviour
     [Header("GameObjects")]
     [SerializeField]
     private List<GameObject> m_LgoEnableObjects;
+
+    private Movement m_mMovementRef;
 
     private void Awake()
     {
@@ -79,6 +79,13 @@ public class CameraMovement : MonoBehaviour
 
         // Starts the camera shake in a random direction
         m_v2CamRandomShakeDirection = Random.insideUnitCircle;
+
+        //m_mMovementRef = PlayerModel.player.GetComponent<Movement>();
+        // Its like this because the title screen has a different set-up
+        if (transform.parent.GetChild(2).GetComponent<Movement>())
+            m_mMovementRef = transform.parent.GetChild(2).GetComponent<Movement>();
+        else
+            m_mMovementRef = transform.parent.GetChild(3).GetComponent<Movement>();
     }
 	
 	// Update is called once per frame
@@ -157,10 +164,10 @@ public class CameraMovement : MonoBehaviour
     /// </summary>
 	private void RunShake()
 	{
-		float verSpeed = PlayerModel.player.GetComponent<Movement> ().m_v2InputVec2.x;
-		float horSpeed = PlayerModel.player.GetComponent<Movement> ().m_v2InputVec2.y;
-        bool isSprinting = PlayerModel.player.GetComponent<Movement>().m_bIsSprinting;
-        float sprintMult = PlayerModel.player.GetComponent<Movement>().m_fSprintMultiplier;
+		float verSpeed = m_mMovementRef.m_v2InputVec2.x;
+		float horSpeed = m_mMovementRef.m_v2InputVec2.y;
+        bool isSprinting = m_mMovementRef.m_bIsSprinting;
+        float sprintMult = m_mMovementRef.m_fSprintMultiplier;
 
 		if (verSpeed < 0)
 			verSpeed = -verSpeed;

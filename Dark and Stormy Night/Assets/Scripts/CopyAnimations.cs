@@ -7,6 +7,8 @@ public class CopyAnimations : MonoBehaviour
     public Animator target;
     public bool copyPlayer = false;
 
+    private Animator m_aLocalAnimator;
+
     private void Start()
     {
         if (copyPlayer)
@@ -16,15 +18,16 @@ public class CopyAnimations : MonoBehaviour
         AnimatorClipInfo[] myAnimatorClip = target.GetCurrentAnimatorClipInfo(0);
         float myTime = myAnimatorClip[0].clip.length * animationState.normalizedTime;
 
-        GetComponent<Animator>().Play(
-            target.GetCurrentAnimatorClipInfo(0)[0].clip.name, 0, myTime);
+        m_aLocalAnimator = GetComponent<Animator>();
+
+        m_aLocalAnimator.Play(target.GetCurrentAnimatorClipInfo(0)[0].clip.name, 0, myTime);
     }
 
     // Update is called once per frame
     private void Update()
     {
-        GetComponent<Animator>().SetBool("Standing", target.GetBool("Standing"));
-        GetComponent<Animator>().SetBool("Moving", target.GetBool("Moving"));
-        GetComponent<Animator>().SetBool("Sprinting", target.GetBool("Sprinting"));
+        m_aLocalAnimator.SetBool("Standing", target.GetBool("Standing"));
+        m_aLocalAnimator.SetBool("Moving", target.GetBool("Moving"));
+        m_aLocalAnimator.SetBool("Sprinting", target.GetBool("Sprinting"));
     }
 }

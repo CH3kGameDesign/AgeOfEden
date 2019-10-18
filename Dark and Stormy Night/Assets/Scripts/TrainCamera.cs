@@ -41,7 +41,7 @@ public class TrainCamera : MonoBehaviour
     {
         if (!Movement.s_bCanMove)
         {
-            endingMoments();
+            EndingMoments();
         }
         else
         {
@@ -65,7 +65,7 @@ public class TrainCamera : MonoBehaviour
         }
 	}
 
-    private void endingMoments()
+    private void EndingMoments()
     {
         if (FP != null)
             FP.enabled = true;

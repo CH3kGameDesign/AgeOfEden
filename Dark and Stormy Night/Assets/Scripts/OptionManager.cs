@@ -14,8 +14,10 @@ public class OptionManager : MonoBehaviour
     public TextMeshProUGUI windowedText;
     public TextMeshProUGUI fullscreenText;
 
-	// Called once before the first frame
-	private void Start()
+    private Vector2 camSensitivity;
+
+    // Called once before the first frame
+    private void Start()
     {
         Invoke("LateStart", 0.01f);
         if (!Screen.fullScreen)
@@ -35,10 +37,10 @@ public class OptionManager : MonoBehaviour
     /// </summary>
     private void LateStart()
     {
-        float camSensitivity = CameraMovement.s_CameraObject.
-            GetComponent<SmoothCameraMovement>().m_v2Sensitivity.x;
+        camSensitivity = CameraMovement.s_CameraObject.
+            GetComponent<SmoothCameraMovement>().m_v2Sensitivity;
 
-        camSensitivitySlider.value = camSensitivity;
+        camSensitivitySlider.value = camSensitivity.x;
         camSensitivityText.text = camSensitivitySlider.value.ToString();
     }
 
@@ -48,11 +50,9 @@ public class OptionManager : MonoBehaviour
     /// <param name="pAddedValue">The value added to the current value</param>
     public void CamSensitivityValueChange(int pAddedValue)
     {
-        CameraMovement.s_CameraObject.GetComponent
-            <SmoothCameraMovement>().m_v2Sensitivity.x += pAddedValue;
+        camSensitivity.x += pAddedValue;
 
-        CameraMovement.s_CameraObject.GetComponent
-            <SmoothCameraMovement>().m_v2Sensitivity.y += pAddedValue;
+        camSensitivity.y += pAddedValue;
 
         camSensitivitySlider.value += pAddedValue;
         camSensitivityText.text = camSensitivitySlider.value.ToString();

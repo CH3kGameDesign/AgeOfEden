@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChangeSkybox : MonoBehaviour {
-
+public class ChangeSkybox : MonoBehaviour
+{
     public Material tarSkybox;
     public float lerpPerSecond;
 
@@ -14,7 +14,8 @@ public class ChangeSkybox : MonoBehaviour {
     public float fogIntensity = 0.01f;
 
 	// Use this for initialization
-	void Start () {
+	private void Start()
+    {
 		if (activateOnStart)
         {
             RenderSettings.skybox.SetTexture("_RightTex", tarSkybox.GetTexture("_RightTex"));
@@ -27,13 +28,14 @@ public class ChangeSkybox : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	private void Update()
+    {
         if (activateOnStart)
             Change();
         Invoke("Disable", disableTime);
 	}
 
-    void Change ()
+    private void Change()
     {
         if (lerpPerSecond > 0)
         {
@@ -49,8 +51,8 @@ public class ChangeSkybox : MonoBehaviour {
         }
     }
 
-    void Disable ()
+    private void Disable ()
     {
-        GetComponent<ChangeSkybox>().enabled = false;
+        enabled = false;
     }
 }

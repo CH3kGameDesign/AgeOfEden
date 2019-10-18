@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.PostProcessing;
 
 public class SceneChanger : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class SceneChanger : MonoBehaviour
     [Space(8)]
     public UnityEngine.Events.UnityEvent eventOnStart = new UnityEngine.Events.UnityEvent();
 
+    private PostProcessingBehaviour m_ppbPostProcessingBehaviour;
+
     // Called once before the first frame
     private void Start()
     {
@@ -42,16 +45,16 @@ public class SceneChanger : MonoBehaviour
 
         if (m_bActivateOnStart)
             StartLoad();
-	}
+
+        m_ppbPostProcessingBehaviour = Camera.main.GetComponent<PostProcessingBehaviour>();
+    }
 	
 	// Update is called once per frame
 	private void Update()
     {
         if (m_bFadeOut && m_bAdded)
         {
-            var tarCG = Camera.main.GetComponent<
-                UnityEngine.PostProcessing.PostProcessingBehaviour>().
-                profile.colorGrading.settings;
+            ColorGradingModel.Settings tarCG = m_ppbPostProcessingBehaviour.profile.colorGrading.settings;
 
             tarCG.basic.postExposure = Mathf.Lerp(
                 tarCG.basic.postExposure, -10f, Time.deltaTime /m_fFadeSpeed);
@@ -59,17 +62,14 @@ public class SceneChanger : MonoBehaviour
             if (tarCG.basic.postExposure <= -8f)
             {
                 tarCG.basic.postExposure = -10f;
-                Camera.main.GetComponent<
-                    UnityEngine.PostProcessing.PostProcessingBehaviour>().
-                    profile.colorGrading.settings = tarCG;
+                m_ppbPostProcessingBehaviour.profile.colorGrading.settings = tarCG;
 
                 MidLoad();
                 m_bFadeOut = false;
             }
             else
             {
-                Camera.main.GetComponent<UnityEngine.PostProcessing.
-                    PostProcessingBehaviour>().profile.colorGrading.settings = tarCG;
+                m_ppbPostProcessingBehaviour.profile.colorGrading.settings = tarCG;
             }
         }
     }

@@ -15,6 +15,6 @@ public class MovementSpeedChange : MonoBehaviour
         Movement.s_goPlayerObject.GetComponent<Movement>()
             .m_bCanSprint = canSprint;
 
-        GetComponent<MovementSpeedChange>().enabled = false;
+        enabled = false;
 	}
 }

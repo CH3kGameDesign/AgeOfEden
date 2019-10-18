@@ -64,9 +64,10 @@ public class SmoothCameraMovement : MonoBehaviour
     // Called once before the first frame
     private void Awake()
     {
+        // Gets the rigidbody
+        Rigidbody rb = GetComponent<Rigidbody>();
         s_bIgnoreSittingRotation = false;
         s_v2SittingMaxRotation = m_v2PublicSittingMaxRotation;
-        Rigidbody rb = GetComponent<Rigidbody>();
         s_qOriginalRotation = Quaternion.Euler(Vector3.zero);
 
         if (rb)

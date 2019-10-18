@@ -8,8 +8,8 @@ public class VisibilityEnabler : MonoBehaviour
 {
     private bool visible = false;
 
-    [SerializeField, Tooltip("Scales the distance at which the plane will no longer be active")]
-    private float m_fFarClipDistance = 10.0f;
+    //[SerializeField, Tooltip("Scales the distance at which the plane will no longer be active")]
+    //private float m_fFarClipDistance = 10.0f;
 
     [SerializeField, FormerlySerializedAs("GOOnView"),
         Tooltip("A list of objects that are enabled when the object comes into view")]
@@ -56,17 +56,13 @@ public class VisibilityEnabler : MonoBehaviour
     private void FixedUpdate()
     {
         m_pPlanes = GeometryUtility.CalculateFrustumPlanes(m_cPlayerCamera);
-        m_pPlanes[5].Translate(m_pPlanes[5].normal * (m_cPlayerCamera.farClipPlane
-            * m_fFarClipDistance));
+        //m_pPlanes[5].Translate(m_pPlanes[5].normal * (m_cPlayerCamera.farClipPlane
+        //    * m_fFarClipDistance));
         
         if (GeometryUtility.TestPlanesAABB(m_pPlanes, m_bBounds))
-        {
             OnView();
-        }
         else
-        {
             OnHide();
-        }
     }
 
     private void OnView()

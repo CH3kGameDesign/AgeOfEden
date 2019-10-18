@@ -8,10 +8,12 @@ public class PushObject : MonoBehaviour
 
     public Vector3 pushForce;
 
-	// Update is called once per frame
-	private void Update()
+    private Rigidbody m_rb;
+
+    private void Start()
     {
-        pushee.GetComponent<Rigidbody>().AddForce(pushForce, ForceMode.Impulse);
+        m_rb = pushee.GetComponent<Rigidbody>();
+        m_rb.AddForce(pushForce, ForceMode.Impulse);
         gameObject.SetActive(false);
-	}
+    }
 }

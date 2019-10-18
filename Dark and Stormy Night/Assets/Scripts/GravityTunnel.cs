@@ -5,23 +5,6 @@ using UnityEngine.Serialization;
 
 public class GravityTunnel : MonoBehaviour
 {
-    /*
-     * TODO:
-     * Flesh out objects entering and exiting
-     * Four different object lists:
-     * 1. Locked in place
-     * 2. Follows the players gravity
-     * 3. Inverts the players gravity
-     * 4. Inverted x axis of players gravity
-     */
-
-    //[System.Serializable]
-    //private class ObjectGroup
-    //{
-    //    [SerializeField]
-    //    internal List<GameObject> m_LgoObjects;
-    //};
-
     [HideInInspector]
     public bool s_bInGravityTunnel = false;
 

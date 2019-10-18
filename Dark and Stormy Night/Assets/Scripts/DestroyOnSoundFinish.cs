@@ -8,21 +8,26 @@ public class DestroyOnSoundFinish : MonoBehaviour
     public GameObject enableOnFinish;
     private bool hasPlayed = false;
 
+    private AudioSource m_asLocalRef;
+
     private void Start()
     {
         hasPlayed = false;
+        m_asLocalRef = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
-    private void Update ()
+    private void Update()
     {
-        if (GetComponent<AudioSource>().isPlaying)
+        if (m_asLocalRef.isPlaying)
+        {
             hasPlayed = true;
-
-        if (!GetComponent<AudioSource>().isPlaying && hasPlayed)
+        }
+        else if (hasPlayed)
         {
             if (enableOnFinish != null)
                 enableOnFinish.SetActive(true);
+
             if (!disable)
                 Destroy(gameObject);
             else

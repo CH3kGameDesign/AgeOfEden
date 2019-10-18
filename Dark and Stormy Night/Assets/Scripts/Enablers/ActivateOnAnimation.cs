@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ActivateOnAnimation : MonoBehaviour {
-
+public class ActivateOnAnimation : MonoBehaviour
+{
     public string animationName;
     public Animator tarAnimator;
 
@@ -13,13 +13,18 @@ public class ActivateOnAnimation : MonoBehaviour {
 
     public UnityEvent activateEvent;
 
+    private ActivateOnAnimation m_aoaScriptRef;
+
     // Use this for initialization
-    void Start () {
-		
-	}
+    private void Start ()
+    {
+        m_aoaScriptRef = GetComponent<ActivateOnAnimation>();
+
+    }
 	
 	// Update is called once per frame
-	void Update () {
+	private void Update ()
+    {
 		if (tarAnimator.GetCurrentAnimatorStateInfo(0).IsName(animationName))
         {
             activateEvent.Invoke();
@@ -31,7 +36,7 @@ public class ActivateOnAnimation : MonoBehaviour {
             {
                 GODisable[i].SetActive(false);
             }
-            GetComponent<ActivateOnAnimation>().enabled = false;
+            m_aoaScriptRef.enabled = false;
         }
 	}
 }

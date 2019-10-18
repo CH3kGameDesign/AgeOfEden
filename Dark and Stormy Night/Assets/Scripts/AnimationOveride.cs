@@ -39,6 +39,6 @@ public class AnimationOveride : MonoBehaviour
     /// </summary>
     public void Change()
     {
-        tarAnimator.GetComponent<Animator>().SetBool(parameter, value);
+        tarAnimator.SetBool(parameter, value);
     }
 }
