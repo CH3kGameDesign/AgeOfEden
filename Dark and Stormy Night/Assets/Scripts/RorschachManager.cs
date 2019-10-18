@@ -77,12 +77,14 @@ public class RorschachManager : MonoBehaviour
     /// </summary>
     private void FinishLoad()
     {
-        var tarCG = Camera.main.GetComponent
-            <PostProcessingBehaviour>().profile.colorGrading.settings;
+        PostProcessingBehaviour tempRef = Camera.main.GetComponent
+            <PostProcessingBehaviour>();
+
+        var tarCG = tempRef.profile.colorGrading.settings;
 
         tarCG.basic.postExposure = -10;
 
-        Camera.main.GetComponent<PostProcessingBehaviour>().profile.colorGrading.settings = tarCG;
+        tempRef.profile.colorGrading.settings = tarCG;
 
         titlePlayerObject.SetActive(false);
 

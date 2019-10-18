@@ -14,10 +14,20 @@ public class PortalCamera : MonoBehaviour
 
     public bool turnAround = false;
 
+    private Camera m_cLocalCamera;
+    private Camera m_cPlayerCamera;
+
     private void Start()
     {
-        if (CameraMovement.s_CameraObject && !m_tPlayerCamera)
-            m_tPlayerCamera = CameraMovement.s_CameraObject.transform.GetChild(0);
+        if (CameraMovement.s_CameraObject)
+        {
+            m_cLocalCamera = GetComponent<Camera>();
+            m_cPlayerCamera = CameraMovement.s_CameraObject.transform.GetChild(0)
+                .GetComponent<Camera>();
+
+            if (!m_tPlayerCamera)
+                m_tPlayerCamera = CameraMovement.s_CameraObject.transform.GetChild(0);
+        }
     }
 
     // Update is called once per frame
@@ -58,7 +68,6 @@ public class PortalCamera : MonoBehaviour
             transform.localEulerAngles += new Vector3(0, 0, 180);
         }
 
-		GetComponent<Camera> ().fieldOfView = CameraMovement.s_CameraObject.transform
-            .GetChild(0).GetComponent<Camera> ().fieldOfView;
+        m_cLocalCamera.fieldOfView = m_cPlayerCamera.fieldOfView;
 	}
 }

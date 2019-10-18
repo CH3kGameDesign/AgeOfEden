@@ -7,21 +7,26 @@ public class TextGenerationCollider : MonoBehaviour
     [Header("GameObjects")]
     public GameObject TextObject;
 
+    // Fix this
+    private TextGeneration tempRef;
+
 	// Called once before the first frame
 	private void Start()
     {
         if (!TextObject)
             TextObject = transform.parent.gameObject;
-	}
+
+        tempRef = TextObject.GetComponent<TextGeneration>();
+    }
 	
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && !TextObject.GetComponent<TextGeneration>().played)
+        if (other.tag == "Player" && !tempRef.played)
         {
-            TextObject.GetComponent<TextGeneration>().StartCoroutine(
-                "TextGenerate", TextObject.GetComponent<TextGeneration>().textSpeed);
+            tempRef.StartCoroutine(
+                "TextGenerate", tempRef.textSpeed);
 
-            TextObject.GetComponent<TextGeneration>().played = true;
+            tempRef.played = true;
         }
     }
 }

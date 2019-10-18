@@ -9,8 +9,12 @@ public class PushObjectsRandom : MonoBehaviour
 
     public float pushForce;
 
+    private PushObjectsRandom m_porScriptRef;
+
     private void Start()
     {
+        m_porScriptRef = GetComponent<PushObjectsRandom>();
+
         if (childObjects)
         {
             pushee = new List<GameObject>();
@@ -27,6 +31,6 @@ public class PushObjectsRandom : MonoBehaviour
                 pushee[i].GetComponent<Rigidbody>().AddForce(
                     Random.insideUnitSphere * pushForce, ForceMode.Impulse);
 
-        GetComponent<PushObjectsRandom>().enabled = false;
+        m_porScriptRef.enabled = false;
     }
 }

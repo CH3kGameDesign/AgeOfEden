@@ -19,6 +19,6 @@ public class ClothFreePause : MonoBehaviour
         cloth.externalAcceleration = extForce;
         //cloth.enabled = false;
         //cloth.enabled = true;
-        GetComponent<ClothFreePause>().enabled = false;
+        enabled = false;
     }
 }

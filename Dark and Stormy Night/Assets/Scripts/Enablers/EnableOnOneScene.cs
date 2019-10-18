@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class EnableOnOneScene : MonoBehaviour {
-
+public class EnableOnOneScene : MonoBehaviour
+{
     public List<GameObject> GO = new List<GameObject>();
     public List<GameObject> GODisable = new List<GameObject>();
 
@@ -16,14 +16,14 @@ public class EnableOnOneScene : MonoBehaviour {
     public UnityEvent activateEvent;
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         if (activateEvent == null)
             activateEvent = new UnityEvent();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (SceneManager.sceneCount == 1)
         {
@@ -43,6 +43,5 @@ public class EnableOnOneScene : MonoBehaviour {
         {
             GODisable[i].SetActive(false);
         }
-
     }
 }

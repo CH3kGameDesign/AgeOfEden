@@ -13,11 +13,15 @@ public class DoorSlammer : MonoBehaviour
     private bool move;
     private bool closed;
 
+    private Rigidbody m_rbChildRb;
+
 	// Use this for initialization
 	private void Start()
     {
         tarRot = Quaternion.Euler(tarEuler);
-	}
+        m_rbChildRb = transform.GetChild(0).GetComponent<Rigidbody>();
+
+    }
 
     // Update is called once per frame
     private void Update()
@@ -30,7 +34,7 @@ public class DoorSlammer : MonoBehaviour
 
             if (dist2 > 4)
             {
-                //transform.GetChild(0).GetComponent<Rigidbody>().isKinematic = true;
+                //m_rbChildRb.isKinematic = true;
                 if (Mathf.Abs(Quaternion.Angle(tarRot, transform.localRotation)) > 0.5f)
                     move = true;
                 closed = true;
@@ -38,8 +42,8 @@ public class DoorSlammer : MonoBehaviour
             else if (closed)
             {
                 closed = false;
-                //transform.GetChild(0).GetComponent<Rigidbody>().isKinematic = false;
-                transform.GetChild(0).GetComponent<Rigidbody>().AddForce(
+                //m_rbChildRb.isKinematic = false;
+                m_rbChildRb.AddForce(
                     releaseForce, ForceMode.Impulse);
             }
             counter = 0;
@@ -47,7 +51,7 @@ public class DoorSlammer : MonoBehaviour
 
         if (move)
         {
-            transform.GetChild(0).GetComponent<Rigidbody>().AddForce(tarEuler, ForceMode.Impulse);
+            m_rbChildRb.AddForce(tarEuler, ForceMode.Impulse);
 
             float tarMove = Quaternion.Angle(transform.localRotation, tarRot);
             if (Mathf.Abs(tarMove) < closeSpeed)

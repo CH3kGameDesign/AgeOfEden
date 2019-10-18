@@ -60,6 +60,8 @@ public class CameraMovement : MonoBehaviour
     [SerializeField]
     private List<GameObject> m_LgoEnableObjects;
 
+    private Movement m_mMovementRef;
+
     private void Awake()
     {
         s_CameraObject = gameObject;
@@ -77,6 +79,13 @@ public class CameraMovement : MonoBehaviour
 
         // Starts the camera shake in a random direction
         m_v2CamRandomShakeDirection = Random.insideUnitCircle;
+
+        //m_mMovementRef = PlayerModel.player.GetComponent<Movement>();
+        // Its like this because the title screen has a different set-up
+        if (transform.parent.GetChild(2).GetComponent<Movement>())
+            m_mMovementRef = transform.parent.GetChild(2).GetComponent<Movement>();
+        else
+            m_mMovementRef = transform.parent.GetChild(3).GetComponent<Movement>();
     }
 	
 	// Update is called once per frame
@@ -155,10 +164,10 @@ public class CameraMovement : MonoBehaviour
     /// </summary>
 	private void RunShake()
 	{
-		float verSpeed = PlayerModel.player.GetComponent<Movement> ().m_v2InputVec2.x;
-		float horSpeed = PlayerModel.player.GetComponent<Movement> ().m_v2InputVec2.y;
-        bool isSprinting = PlayerModel.player.GetComponent<Movement>().m_bIsSprinting;
-        float sprintMult = PlayerModel.player.GetComponent<Movement>().m_fSprintMultiplier;
+		float verSpeed = m_mMovementRef.m_v2InputVec2.x;
+		float horSpeed = m_mMovementRef.m_v2InputVec2.y;
+        bool isSprinting = m_mMovementRef.m_bIsSprinting;
+        float sprintMult = m_mMovementRef.m_fSprintMultiplier;
 
 		if (verSpeed < 0)
 			verSpeed = -verSpeed;

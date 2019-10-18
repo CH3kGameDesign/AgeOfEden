@@ -2,118 +2,126 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
-public class TriggerEnabler : MonoBehaviour {
-
-    public List<GameObject> GO = new List<GameObject>();
-    public List<GameObject> GODisable = new List<GameObject>();
+public class TriggerEnabler : MonoBehaviour
+{
+    [SerializeField, FormerlySerializedAs("GO")]
+    private List<GameObject> m_LgoEnableObjects = new List<GameObject>();
+    [SerializeField, FormerlySerializedAs("GODisable")]
+    private List<GameObject> m_LgoDisableObjects = new List<GameObject>();
 
     [Space (10)]
 
-    public List<GameObject> Collider = new List<GameObject>();
-    public List<GameObject> ColliderDisable = new List<GameObject>();
+    [SerializeField, FormerlySerializedAs("Collider")]
+    private List<GameObject> m_LgoColliderEnable = new List<GameObject>();
+    [SerializeField, FormerlySerializedAs("ColliderDisable")]
+    private List<GameObject> m_LgoColliderDisable = new List<GameObject>();
 
     [Space(10)]
 
-    public List<Rigidbody> Gravity = new List<Rigidbody>();
-    public List<Rigidbody> GravityDisable = new List<Rigidbody>();
+    [SerializeField, FormerlySerializedAs("Gravity")]
+    private List<Rigidbody> m_LrbPhysicsEnable = new List<Rigidbody>();
+    [SerializeField, FormerlySerializedAs("GravityDisable")]
+    private List<Rigidbody> m_LrbPhysicsDisable = new List<Rigidbody>();
 
     [Space(10)]
 
-    public List<SoftRotation> SoftRotation = new List<SoftRotation>();
-    public List<SoftRotation> SoftRotationDisable = new List<SoftRotation>();
+    [SerializeField, FormerlySerializedAs("SoftRotation")]
+    private List<SoftRotation> m_LsrSoftRotationEnable = new List<SoftRotation>();
+    [SerializeField, FormerlySerializedAs("SoftRotationDisable")]
+    private List<SoftRotation> m_LsrSoftRotationDisable = new List<SoftRotation>();
 
     [Space(10)]
 
-	public List<FadeOut> FadeOut = new List<FadeOut>();
+    [SerializeField, FormerlySerializedAs("FadeOut")]
+    private List<FadeOut> m_LfoFadeOutList = new List<FadeOut>();
 
 	[Space(10)]
 
-    public float Timer;
+    [SerializeField, FormerlySerializedAs("Timer")]
+    private float m_fDelay;
 
-    public UnityEvent activateEvent;
-    public enum Collision {OnEnter, OnExit};
+    [SerializeField, FormerlySerializedAs("activateEvent")]
+    private UnityEvent m_ueActivateEvent;
 
-    public Collision collision;
+    private enum CollisionType { OnEnter, OnExit };
+    [SerializeField, FormerlySerializedAs("collision")]
+    private CollisionType m_ctCollision;
 
 	// Use this for initialization
-	void Start () {
-        if (activateEvent == null)
-            activateEvent = new UnityEvent();
+	private void Start()
+    {
+        if (m_ueActivateEvent == null)
+            m_ueActivateEvent = new UnityEvent();
     }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    void OnTriggerEnter (Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && collision == Collision.OnEnter)
+        if (other.tag == "Player" && m_ctCollision == CollisionType.OnEnter)
         {
-            Invoke("EnableObjects", Timer);
+            Invoke("EnableObjects", m_fDelay);
         }
     }
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player" && collision == Collision.OnExit)
+        if (other.tag == "Player" && m_ctCollision == CollisionType.OnExit)
         {
-            Invoke("EnableObjects", Timer);
+            Invoke("EnableObjects", m_fDelay);
         }
     }
 
-    private void EnableObjects ()
+    private void EnableObjects()
     {
-        activateEvent.Invoke();
-        for (int i = 0; i < GO.Count; i++)
+        m_ueActivateEvent.Invoke();
+        for (int i = 0; i < m_LgoEnableObjects.Count; i++)
         {
-            GO[i].SetActive(true);
+            m_LgoEnableObjects[i].SetActive(true);
         }
-        for (int i = 0; i < GODisable.Count; i++)
+        for (int i = 0; i < m_LgoDisableObjects.Count; i++)
         {
-            GODisable[i].SetActive(false);
+            m_LgoDisableObjects[i].SetActive(false);
         }
 
-        for (int i = 0; i < Collider.Count; i++)
+        for (int i = 0; i < m_LgoColliderEnable.Count; i++)
         {
-            for (int j = 0; j < Collider[i].GetComponentsInChildren<Collider>().Length; j++)
+            for (int j = 0; j < m_LgoColliderEnable[i].GetComponentsInChildren<Collider>().Length; j++)
             {
-                Collider[i].GetComponentsInChildren<Collider>()[j].enabled = true;
+                m_LgoColliderEnable[i].GetComponentsInChildren<Collider>()[j].enabled = true;
             }
             
         }
-        for (int i = 0; i < ColliderDisable.Count; i++)
+        for (int i = 0; i < m_LgoColliderDisable.Count; i++)
         {
-            for (int j = 0; j < ColliderDisable[i].GetComponentsInChildren<Collider>().Length; j++)
+            for (int j = 0; j < m_LgoColliderDisable[i].GetComponentsInChildren<Collider>().Length; j++)
             {
-                ColliderDisable[i].GetComponentsInChildren<Collider>()[j].enabled = false;
+                m_LgoColliderDisable[i].GetComponentsInChildren<Collider>()[j].enabled = false;
             }
         }
 
-        for (int i = 0; i < Gravity.Count; i++)
+        for (int i = 0; i < m_LrbPhysicsEnable.Count; i++)
         {
-            Gravity[i].useGravity = true;
-            Gravity[i].isKinematic = false;
+            m_LrbPhysicsEnable[i].useGravity = true;
+            m_LrbPhysicsEnable[i].isKinematic = false;
         }
-        for (int i = 0; i < GravityDisable.Count; i++)
+        for (int i = 0; i < m_LrbPhysicsDisable.Count; i++)
         {
-            Gravity[i].useGravity = false;
-            Gravity[i].isKinematic = true;
-        }
-
-        for (int i = 0; i < SoftRotation.Count; i++)
-        {
-            SoftRotation[i].enabled = true;
-        }
-        for (int i = 0; i < SoftRotationDisable.Count; i++)
-        {
-            SoftRotationDisable[i].enabled = false;
+            m_LrbPhysicsEnable[i].useGravity = false;
+            m_LrbPhysicsEnable[i].isKinematic = true;
         }
 
-		for (int i = 0; i < FadeOut.Count; i++)
+        for (int i = 0; i < m_LsrSoftRotationEnable.Count; i++)
+        {
+            m_LsrSoftRotationEnable[i].enabled = true;
+        }
+        for (int i = 0; i < m_LsrSoftRotationDisable.Count; i++)
+        {
+            m_LsrSoftRotationDisable[i].enabled = false;
+        }
+
+		for (int i = 0; i < m_LfoFadeOutList.Count; i++)
 		{
-			FadeOut[i].enabled = true;
+			m_LfoFadeOutList[i].enabled = true;
 		}
-
     }
 }
