@@ -42,6 +42,7 @@ public class CreateTextFile : MonoBehaviour
         [Tooltip("The message printed into the text file")]
         [TextArea]
         public string m_sMessage = @"I forgot a message";
+        public bool txtExtension = true;
     }
 
     // Prevents standard output from overwriting create output in same generation
@@ -123,8 +124,9 @@ public class CreateTextFile : MonoBehaviour
                 }
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
-                path += m_oOutputs[i].m_sFileName + ".txt";
-
+                path += m_oOutputs[i].m_sFileName;
+                if (m_oOutputs[i].txtExtension)
+                    path += ".txt";
                 // 1. A message displayed the first time the game is run and a certain ending is reached
                 // 2. A message displayed when no message file is found, either deleted or never created
                 // 3. A message displayed as a standard output

@@ -8,8 +8,15 @@ using UnityEngine;
 
 public class MemoryLeakTest : MonoBehaviour
 {
-    public List<string> fileName = new List<string>();
-    public List<GameObject> activateWhenFileOpen = new List<GameObject>();
+    [System.Serializable]
+    public class file
+    {
+        public string fileName;
+        public GameObject activateOnYes;
+        public bool removeOnFinish;
+    }
+
+    public List<file> m_fileList = new List<file>();
 
     public delegate bool EnumDelegate(IntPtr hWnd, int lParam);
 
@@ -27,9 +34,9 @@ public class MemoryLeakTest : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < fileName.Count; i++)
+        for (int i = 0; i < m_fileList.Count; i++)
         {
-            fileName[i] += ".txt - Notepad";
+            m_fileList[i].fileName += ".txt - Notepad";
         }
     }
 
@@ -47,10 +54,15 @@ public class MemoryLeakTest : MonoBehaviour
                 //collection.Add(strTitle);
                 if (strTitle.Contains("Notepad"))
                 {
-                    for (int i = 0; i < fileName.Count; i++)
+                    for (int i = 0; i < m_fileList.Count; i++)
                     {
-                        if (strTitle == fileName[i])
-                            activateWhenFileOpen[i].SetActive(true);
+                        if (strTitle == m_fileList[i].fileName)
+                        {
+                            m_fileList[i].activateOnYes.SetActive(true);
+
+                            if (m_fileList[i].removeOnFinish)
+                                m_fileList.RemoveAt(i);
+                        }
                     }
                     
                 }
