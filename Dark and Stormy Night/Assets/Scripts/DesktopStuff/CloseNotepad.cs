@@ -11,7 +11,17 @@ public class CloseNotepad : MonoBehaviour {
     public int targetWindow;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
+        DoThing();
+    }
+	
+	// Update is called once per frame
+	void Update () {
+		
+	}
+
+    public void DoThing()
+    {
         int targetCounter = 0;
         foreach (Process p in Process.GetProcessesByName("notepad.exe"))
         {
@@ -20,9 +30,4 @@ public class CloseNotepad : MonoBehaviour {
             targetCounter++;
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

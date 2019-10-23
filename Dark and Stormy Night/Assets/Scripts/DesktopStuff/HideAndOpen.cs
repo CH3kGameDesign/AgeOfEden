@@ -9,6 +9,7 @@ public class HideAndOpen : MonoBehaviour {
 
     public bool activateOnStart;
     public bool hide = true;
+    public bool openDirectory = false;
     public int openAmount = 1;
     private string fileName;
     private string fileDirectory;
@@ -42,17 +43,27 @@ public class HideAndOpen : MonoBehaviour {
             {
                 if (GetComponent<CreateTextFile>().m_oOutputs[i].m_olOutputLocation == CreateTextFile.Location.Desktop)
                     path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop)
-                        + "\\" + GetComponent<CreateTextFile>().m_oOutputs[i].m_sFileName + ".txt";
+                        + "\\";
                 else if (GetComponent<CreateTextFile>().m_oOutputs[i].m_olOutputLocation == CreateTextFile.Location.Documents)
                     path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments)
-                        + "\\" + GetComponent<CreateTextFile>().m_oOutputs[i].m_sFileName + ".txt";
+                        + "\\";
                 else if (GetComponent<CreateTextFile>().m_oOutputs[i].m_olOutputLocation == CreateTextFile.Location.Music)
                     path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic)
-                        + "\\" + GetComponent<CreateTextFile>().m_oOutputs[i].m_sFileName + ".txt";
+                        + "\\";
                 else if (GetComponent<CreateTextFile>().m_oOutputs[i].m_olOutputLocation == CreateTextFile.Location.Pictures)
                     path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyPictures)
-                        + "\\" + GetComponent<CreateTextFile>().m_oOutputs[i].m_sFileName + ".txt";
-                if (File.Exists(path))
+                        + "\\";
+                for (int k = 0; k < GetComponent<CreateTextFile>().m_oOutputs[i].folderPath.Count; k++)
+                {
+                    path += GetComponent<CreateTextFile>().m_oOutputs[i].folderPath[k];
+                    path += "\\";
+                }
+                if (!openDirectory)
+                    path += GetComponent<CreateTextFile>().m_oOutputs[i].m_sFileName + ".txt";
+                
+                if (File.Exists(path) && !openDirectory)
+                    Application.OpenURL(path);
+                if (Directory.Exists(path) && openDirectory)
                     Application.OpenURL(path);
             }
         }

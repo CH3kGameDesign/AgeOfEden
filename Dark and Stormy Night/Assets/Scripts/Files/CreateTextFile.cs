@@ -27,6 +27,7 @@ public class CreateTextFile : MonoBehaviour
     {
         [Tooltip("The output location")]
         public Location m_olOutputLocation = Location.Desktop;
+        public List<string> folderPath = new List<string>();
         [Tooltip("How the file will be created and dealt with, ordering must be: First, Create, Standard")]
         public State m_osOutputState = State.Standard;
         [Space(3)]
@@ -37,9 +38,11 @@ public class CreateTextFile : MonoBehaviour
         [Space(3)]
         [Tooltip("The desired file name (file will always be a text document)")]
         public string m_sFileName = "I forgot a file name";
+        public bool m_bPlusRandom;
         [Tooltip("The message printed into the text file")]
         [TextArea]
         public string m_sMessage = @"I forgot a message";
+        public bool txtExtension = true;
     }
 
     // Prevents standard output from overwriting create output in same generation
@@ -63,8 +66,26 @@ public class CreateTextFile : MonoBehaviour
         }
     }
 
+    public void Awake()
+    {
+        string ranLetters = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
+        for (int i = 0; i < m_oOutputs.Length; i++)
+        {
+            if (m_oOutputs[i].m_bPlusRandom)
+            {
+                string name = "";
+                int num = Random.Range(10, 20);
+                for (int j = 0; j < num; j++)
+                {
+                    name += ranLetters[Random.Range(0, ranLetters.Length)];
+                }
+                m_oOutputs[i].m_sFileName += name;
+            }
+        }
+    }
+
     // Called once before the first frame
-    private void Start()
+    public void Start()
     { 
             if (activateOnStart)
         {
@@ -86,17 +107,26 @@ public class CreateTextFile : MonoBehaviour
                 // Sorts the message to a desired location
                 if (m_oOutputs[i].m_olOutputLocation == Location.Desktop)
                     path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop)
-                        + "\\" + m_oOutputs[i].m_sFileName + ".txt";
+                        + "\\";
                 else if (m_oOutputs[i].m_olOutputLocation == Location.Documents)
                     path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments)
-                        + "\\" + m_oOutputs[i].m_sFileName + ".txt";
+                        + "\\";
                 else if (m_oOutputs[i].m_olOutputLocation == Location.Music)
                     path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic)
-                        + "\\" + m_oOutputs[i].m_sFileName + ".txt";
+                        + "\\";
                 else if (m_oOutputs[i].m_olOutputLocation == Location.Pictures)
                     path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyPictures)
-                        + "\\" + m_oOutputs[i].m_sFileName + ".txt";
-
+                        + "\\";
+                for (int j = 0; j < m_oOutputs[i].folderPath.Count; j++)
+                {
+                    path += m_oOutputs[i].folderPath[j];
+                    path += "\\";
+                }
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
+                path += m_oOutputs[i].m_sFileName;
+                if (m_oOutputs[i].txtExtension)
+                    path += ".txt";
                 // 1. A message displayed the first time the game is run and a certain ending is reached
                 // 2. A message displayed when no message file is found, either deleted or never created
                 // 3. A message displayed as a standard output

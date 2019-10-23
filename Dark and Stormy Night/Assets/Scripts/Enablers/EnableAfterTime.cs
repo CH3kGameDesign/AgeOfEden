@@ -13,16 +13,23 @@ public class EnableAfterTime : MonoBehaviour {
 
 
     public float time;
+    public bool repeatable = false;
 
 
 
 	// Use this for initialization
 	void Start () {
+        if (!repeatable)
         Invoke("DoThing", time);
 	}
-	
-	// Update is called once per frame
-	void Update () {
+    private void OnEnable()
+    {
+        if (repeatable)
+            Invoke("DoThing", time);
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 

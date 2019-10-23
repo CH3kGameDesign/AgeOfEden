@@ -115,7 +115,10 @@ public class TypeWriter : MonoBehaviour
     private float selfTypeTimer;
     public Vector2 selfTypeBounds;
 
-    private float enterTimer = 1000;
+    private float enterTimer = 100000;
+    private bool activatedEnding = false;
+    public GameObject activateOnAllEndings;
+    private int endNo= 0;
 
 	// Called once before the first frame
 	private void Start()
@@ -183,6 +186,7 @@ public class TypeWriter : MonoBehaviour
             if (m_tText.GetChild(0).GetComponent<TextMeshPro>().text.Length >= letterPerRow)
                 NextRow();
 
+            /*
             // Once max rows have been reached, end typewriter sequence
             if (row >= m_tText.childCount)
             {
@@ -205,6 +209,7 @@ public class TypeWriter : MonoBehaviour
                 OnHopefullyDisable();
                 return;
             }
+            */
 
             // Initiates script typing once the conditions are met
             if (charScriptTakesOverCounter >= freeCharsBeforeScript[scriptLineCounter]
@@ -229,8 +234,7 @@ public class TypeWriter : MonoBehaviour
                 KeyPress();
                 if (freeCharsBeforeScript[scriptLineCounter] == -1)
                 {
-                    if (Input.GetKeyDown(KeyCode.Return) || enterTimer <= 0
-                        || charScriptTakesOverCounter > 10)
+                    if (Input.GetKeyDown(KeyCode.Return) || enterTimer <= 0 || charScriptTakesOverCounter > 12)
                     {
                         scriptTyping = true;
                         Type("");
@@ -275,7 +279,10 @@ public class TypeWriter : MonoBehaviour
         if (freeCharsBeforeScript[scriptLineCounter] == -1)
         {
             PermanentData.saveInfo.name += pLetter;
-            enterTimer = 2;
+            if (enterTimer > 10000)
+                enterTimer = 10000;
+            else
+                enterTimer = 2.5f;
         }
         // String used to test if the character inputted was a space
         string textSound = "";
@@ -319,15 +326,32 @@ public class TypeWriter : MonoBehaviour
     /// </summary>
     private void ScriptType()
     {
+        char scriptLetter = ' ';
+        string st = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
+        if (scriptLines[scriptLineCounter][scriptCharCounter] == '|')
+        {
+            scriptLetter = st[Random.Range(0, 61)];
+        }
+        else
+        {
+            scriptLetter = scriptLines[scriptLineCounter][scriptCharCounter];
+        }
         // Enters the letter into the typewriter text
         m_tText.GetChild(0).GetComponent<TextMeshPro>().text +=
-            scriptLines[scriptLineCounter][scriptCharCounter];
-        m_sMessageLine += scriptLines[scriptLineCounter][scriptCharCounter];
+            scriptLetter;
+        m_sMessageLine += scriptLetter;
 
         scriptCharCounter++;
 
         if (scriptCharCounter >= scriptLines[scriptLineCounter].Length)
         {
+            endNo = 0;
+            for (int i = 0; i < PermanentData.saveInfo.endingsAchieved.Count; i++)
+            {
+                if (PermanentData.saveInfo.endingsAchieved[i])
+                    endNo++;
+            }
+
             if (scriptLineCounter < scriptLines.Count - 1)
             {
                 if (newLineAfter[scriptLineCounter] == true)
@@ -342,6 +366,30 @@ public class TypeWriter : MonoBehaviour
                 charScriptTakesOverCounter = -1000;
                 scriptTyping = false;
             }
+            else if (endNo >= PermanentData.saveInfo.endingsAchieved.Count - 2)
+            {
+                if (activatedEnding == true)
+                    activateOnAllEndings.SetActive(true);
+                else
+                {
+                    activatedEnding = true;
+                    scriptLines.Add("Wait.");
+                    scriptLines.Add("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+                    playerType.Add(false);
+                    playerType.Add(false);
+                    freeCharsBeforeScript.Add(0);
+                    freeCharsBeforeScript.Add(0);
+                    newLineAfter.Add(true);
+                    newLineAfter.Add(false);
+                    NextRow();
+                    NextRow();
+                    scriptLineCounter++;
+                    scriptCharCounter = 0;
+                    scriptTyping = false;
+                    selfTypeBounds *= 0.5f;
+                    charScriptTakesOverCounter = 0;
+                }
+            }
             else
             {
                 makeRowSound = false;
@@ -353,7 +401,7 @@ public class TypeWriter : MonoBehaviour
                     m_tText.GetChild(0).GetComponent<TextMeshPro>().text += lastLine;
                     m_sMessageLine += lastLine;
                 }
-                    m_sFullMessage.Add(m_sMessageLine);
+                m_sFullMessage.Add(m_sMessageLine);
 
                 // Finalisation stuff
                 if (m_goActivateOnFinish.Count != 0)
@@ -397,16 +445,22 @@ public class TypeWriter : MonoBehaviour
             }
         }
         row++;
-        if (row != m_tText.childCount)
+        
+        if (row != m_tText.childCount || endNo >= PermanentData.saveInfo.endingsAchieved.Count - 2)
             m_tPaper.transform.localPosition = new Vector3(0, 0.025f * (row + 1), 0) / 100;
         m_sFullMessage.Add(m_sMessageLine);
         m_sMessageLine = "";
-        for (int i = 0; i < m_tPaperMeshes.Count; i++)
+        if (row >= m_tPaperMeshes.Count)
+            m_tPaperMeshes[m_tPaperMeshes.Count - 1].SetActive(true);
+        else
         {
-            if (i == row)
-                m_tPaperMeshes[i].SetActive(true);
-            else
-                m_tPaperMeshes[i].SetActive(false);
+            for (int i = 0; i < m_tPaperMeshes.Count; i++)
+            {
+                if (i == row)
+                    m_tPaperMeshes[i].SetActive(true);
+                else
+                    m_tPaperMeshes[i].SetActive(false);
+            }
         }
         for (int i = m_tText.childCount - 1; i > 0; i--)
         {

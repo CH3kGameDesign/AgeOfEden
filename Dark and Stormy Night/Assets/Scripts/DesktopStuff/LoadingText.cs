@@ -7,9 +7,12 @@ using System.Diagnostics;
 public class LoadingText : MonoBehaviour {
 
     public float timeBetween;
+    public float timeOnLast;
     private float timer;
 
     private int percent;
+
+    public GameObject activateOnFinish;
 
     [TextArea]
     public string m_sFinalMessage = @"I forgot a message";
@@ -24,10 +27,11 @@ public class LoadingText : MonoBehaviour {
         if (timer > timeBetween)
         {
             string updateText = "";
-            timer = 0;
+            if (percent < 100)
+                timer = 0;
             if (percent < 100)
             {
-                percent += Random.Range(5, 10);
+                percent += Random.Range(1, 2);
                 if (percent > 100)
                     percent = 100;
             }
@@ -51,11 +55,11 @@ public class LoadingText : MonoBehaviour {
                 {
                     if (percent < 10)
                     {
-                        updateText += "-----" + percent + "----";
+                        updateText += "- - - - - - - - - - - - - - - - - - - - - - - - " + percent + "  - - - - - - - - - - - - - - - - - - - - - - -";
                     }
                     else
                     {
-                        updateText += "----" + percent + "----";
+                        updateText += "- - - - - - - - - - - - - - - - - - - - - - - - " + percent + " - - - - - - - - - - - - - - - - - - - - - - - -";
                     }
                 }
                 else
@@ -81,15 +85,24 @@ public class LoadingText : MonoBehaviour {
             string path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments) + "\\" + "loadingloadingloading.txt";
             WriteMessage(path, updateText);
 
-            foreach (Process p in Process.GetProcessesByName("notepad.exe"))
+            if (updateText == m_sFinalMessage)
             {
-                p.CloseMainWindow();
+                foreach (Process p in Process.GetProcessesByName("notepad.exe"))
+                {
+                    p.CloseMainWindow();
+                }
             }
 
             if (percent <= 100)
                 Application.OpenURL(path);
             else
-                GetComponent<LoadingText>().enabled = false;
+            {
+                if (timer < timeOnLast)
+                {
+                    activateOnFinish.SetActive(true);
+                    GetComponent<LoadingText>().enabled = false;
+                }
+            }
         }
         timer += Time.deltaTime;
     }
