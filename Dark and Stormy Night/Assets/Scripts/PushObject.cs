@@ -14,6 +14,7 @@ public class PushObject : MonoBehaviour
     {
         m_rb = pushee.GetComponent<Rigidbody>();
         m_rb.AddForce(pushForce, ForceMode.Impulse);
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        GetComponent<PushObject>().enabled = false;
     }
 }
