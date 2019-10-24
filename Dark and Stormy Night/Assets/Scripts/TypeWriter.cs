@@ -120,9 +120,15 @@ public class TypeWriter : MonoBehaviour
     public GameObject activateOnAllEndings;
     private int endNo= 0;
 
-	// Called once before the first frame
-	private void Start()
+    private Transform m_tTransCache;
+    private TextMeshPro m_tmpTextFirstChildTmp;
+
+    // Called once before the first frame
+    private void Start()
     {
+        m_tTransCache = transform;
+        m_tmpTextFirstChildTmp = m_tText.GetChild(0).GetComponent<TextMeshPro>();
+
         // Gets the most recent ending completed
         endingNo = PermanentData.saveInfo.lastEndingAchieved;
 
@@ -139,7 +145,7 @@ public class TypeWriter : MonoBehaviour
         // Loads the start text onto the typewriter
         for (int i = 0; i < m_edEndingChanges[endingNo].m_sStartLines.Count; i++)
         {
-            m_tText.GetChild(0).GetComponent<TextMeshPro>().text =
+            m_tmpTextFirstChildTmp.text =
                 m_edEndingChanges[endingNo].m_sStartLines[i];
             NextRow();
         }
@@ -166,7 +172,7 @@ public class TypeWriter : MonoBehaviour
         // Gets the total amount of characters that can fit on one line
         letterPerRow = Mathf.RoundToInt(0.166f *
             (m_tText.GetChild(0).GetComponent<RectTransform>().rect.width * 100)
-            / m_tText.GetChild(0).GetComponent<TextMeshPro>().fontSize);
+            / m_tmpTextFirstChildTmp.fontSize);
         // Uses the paper width and the letters per row to find the letter width
         letterWidth = (halfLength * 2) / letterPerRow;
         // Offsets the paper so the first character lines up with the arm
@@ -183,7 +189,7 @@ public class TypeWriter : MonoBehaviour
             updateLetter = null;
 
             // Moves to the next row if the max letters per row is reached
-            if (m_tText.GetChild(0).GetComponent<TextMeshPro>().text.Length >= letterPerRow)
+            if (m_tmpTextFirstChildTmp.text.Length >= letterPerRow)
                 NextRow();
 
             /*
@@ -221,7 +227,7 @@ public class TypeWriter : MonoBehaviour
             m_tPaperHolder.transform.localPosition = Vector3.Lerp(
                 m_tPaperHolder.transform.localPosition, new Vector3(-0.121f,
                 0.247f,
-                halfLength - (letterWidth * m_tText.GetChild(0).GetComponent<TextMeshPro>().text.Length))
+                halfLength - (letterWidth * m_tmpTextFirstChildTmp.text.Length))
                 / 100, Time.deltaTime * 8);
             m_tPaper.transform.localPosition = new Vector3(0,
                 0.025f * (row + 1),
@@ -300,7 +306,7 @@ public class TypeWriter : MonoBehaviour
                 pLetter = pLetter.ToUpper();
 
             // Applies the letter to the paper text
-            m_tText.GetChild(0).GetComponent<TextMeshPro>().text += pLetter;
+            m_tmpTextFirstChildTmp.text += pLetter;
             m_sMessageLine += pLetter;
             charScriptTakesOverCounter++;
         }
@@ -311,11 +317,11 @@ public class TypeWriter : MonoBehaviour
         if (textSound != " ")
         {
             ArmMove(textSound);
-            Instantiate(m_goClickSounds[ranInt], transform.position, transform.rotation);
+            Instantiate(m_goClickSounds[ranInt], m_tTransCache.position, m_tTransCache.rotation);
         }
         else
         {
-            Instantiate(m_goSpaceSound, transform.position, transform.rotation);
+            Instantiate(m_goSpaceSound, m_tTransCache.position, m_tTransCache.rotation);
             spaceKeyRotation = -5;
             m_tSpaceKey.localEulerAngles = new Vector3(0, 0, -5);
         }
@@ -329,15 +335,12 @@ public class TypeWriter : MonoBehaviour
         char scriptLetter = ' ';
         string st = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
         if (scriptLines[scriptLineCounter][scriptCharCounter] == '|')
-        {
             scriptLetter = st[Random.Range(0, 61)];
-        }
         else
-        {
             scriptLetter = scriptLines[scriptLineCounter][scriptCharCounter];
-        }
+
         // Enters the letter into the typewriter text
-        m_tText.GetChild(0).GetComponent<TextMeshPro>().text +=
+        m_tmpTextFirstChildTmp.text +=
             scriptLetter;
         m_sMessageLine += scriptLetter;
 
@@ -398,7 +401,7 @@ public class TypeWriter : MonoBehaviour
                 {
                     NextRow();
                     NextRow();
-                    m_tText.GetChild(0).GetComponent<TextMeshPro>().text += lastLine;
+                    m_tmpTextFirstChildTmp.text += lastLine;
                     m_sMessageLine += lastLine;
                 }
                 m_sFullMessage.Add(m_sMessageLine);
@@ -419,7 +422,7 @@ public class TypeWriter : MonoBehaviour
                 CreateTextFile.SetMessage(m_sFullMessage);
                 m_ueVoidOnFinish.Invoke();
                 m_bIsTyping = false;
-                Instantiate(m_goExitSound, transform.position, transform.rotation);
+                Instantiate(m_goExitSound, m_tTransCache.position, m_tTransCache.rotation);
                 OnHopefullyDisable();
             }
         }
@@ -431,7 +434,7 @@ public class TypeWriter : MonoBehaviour
     private void NextRow()
     {
         if (makeRowSound)
-            Instantiate(m_goEnterSound, transform.position, transform.rotation);
+            Instantiate(m_goEnterSound, m_tTransCache.position, m_tTransCache.rotation);
         for (int i = 0; i < m_tText.childCount; i++)
             m_tText.GetChild(i).GetComponent<TextMeshPro>().fontStyle = FontStyles.Normal;
         for (int i = 0; i < strikeThrough.Count; i++)
@@ -467,7 +470,7 @@ public class TypeWriter : MonoBehaviour
             m_tText.GetChild(i).GetComponent<TextMeshPro>().text
                 = m_tText.GetChild(i - 1).GetComponent<TextMeshPro>().text;
         }
-        m_tText.GetChild(0).GetComponent<TextMeshPro>().text = "";
+        m_tmpTextFirstChildTmp.text = "";
     }
 
     /// <summary>

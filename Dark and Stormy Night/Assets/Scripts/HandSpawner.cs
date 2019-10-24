@@ -17,9 +17,9 @@ public class HandSpawner : MonoBehaviour
     private float spawnTimer;
 
     public bool spawnHands;
-    
-	// Update is called once per frame
-	private void Update()
+
+    // Update is called once per frame
+    private void Update()
     {
 		if (spawnHands)
         {

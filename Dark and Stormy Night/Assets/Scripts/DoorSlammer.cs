@@ -15,12 +15,16 @@ public class DoorSlammer : MonoBehaviour
 
     private Rigidbody m_rbChildRb;
 
-	// Use this for initialization
-	private void Start()
+    private Transform m_tTransCache;
+    private Transform m_tCameraTransform;
+
+    // Use this for initialization
+    private void Start()
     {
         tarRot = Quaternion.Euler(tarEuler);
         m_rbChildRb = transform.GetChild(0).GetComponent<Rigidbody>();
-
+        m_tTransCache = transform;
+        m_tCameraTransform = CameraMovement.s_CameraObject.transform;
     }
 
     // Update is called once per frame
@@ -29,13 +33,12 @@ public class DoorSlammer : MonoBehaviour
         counter++;
         if (counter > 5)
         {
-            float dist2 = Vector3.Distance(transform.position,
-                CameraMovement.s_CameraObject.transform.position);
+            float dist2 = Vector3.Distance(m_tTransCache.position, m_tCameraTransform.position);
 
             if (dist2 > 4)
             {
                 //m_rbChildRb.isKinematic = true;
-                if (Mathf.Abs(Quaternion.Angle(tarRot, transform.localRotation)) > 0.5f)
+                if (Mathf.Abs(Quaternion.Angle(tarRot, m_tTransCache.localRotation)) > 0.5f)
                     move = true;
                 closed = true;
             }
@@ -53,16 +56,16 @@ public class DoorSlammer : MonoBehaviour
         {
             m_rbChildRb.AddForce(tarEuler, ForceMode.Impulse);
 
-            float tarMove = Quaternion.Angle(transform.localRotation, tarRot);
+            float tarMove = Quaternion.Angle(m_tTransCache.localRotation, tarRot);
             if (Mathf.Abs(tarMove) < closeSpeed)
             {
-                transform.localRotation = tarRot;
+                m_tTransCache.localRotation = tarRot;
                 move = false;
             }
             else
             {
-                transform.localRotation = Quaternion.RotateTowards(
-                    transform.localRotation, tarRot, closeSpeed);
+                m_tTransCache.localRotation = Quaternion.RotateTowards(
+                    m_tTransCache.localRotation, tarRot, closeSpeed);
             }
         }
     }

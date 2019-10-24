@@ -15,9 +15,7 @@ public class PortalTextureSetup : MonoBehaviour
         for (int i = 0; i < m_LcCameras.Count; i++)
         {
             if (m_LcCameras[i].targetTexture != null)
-            {
                 m_LcCameras[i].targetTexture.Release();
-            }
 
             m_LcCameras[i].targetTexture = new RenderTexture(Screen.width, Screen.height, 24);
             m_LmCameraMats[i].mainTexture = m_LcCameras[i].targetTexture;

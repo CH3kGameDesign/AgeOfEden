@@ -9,15 +9,20 @@ public class NeverEndingCorridor : MonoBehaviour
     public GameObject corridorSegment;
     public GameObject corridorSegmentLight;
 
+    private Transform m_tChildTrans;
+
 	// Called once before the first frame
 	private void Start()
     {
         if (!corridorSegment)
             corridorSegment = transform.GetChild(0).GetChild(0).gameObject;
 
+        // If problem, add '.transform' to the end of this
+        m_tChildTrans = transform.GetChild(0);
+        
         for (int i = 0; i < 99; i++)
             Instantiate(corridorSegment, transform.position
-                + new Vector3(-i * 3, 0, 0), transform.rotation, transform.GetChild(0));
+                + new Vector3(-i * 3, 0, 0), transform.rotation, m_tChildTrans);
 	}
 	
     private void OnCollisionStay(Collision collision)
@@ -27,12 +32,12 @@ public class NeverEndingCorridor : MonoBehaviour
             float verSpeed = collision.collider.GetComponent<Movement>().m_v2InputVec2.x;
 
             if (verSpeed > 0)
-                transform.GetChild(0).transform.position += new Vector3(
+                m_tChildTrans.position += new Vector3(
                     verSpeed*Time.deltaTime, 0, 0);
 
             if (verSpeed < 0 && goBackwards)
             {
-                transform.GetChild(0).transform.position -= new Vector3(10000, 0, 0);
+                m_tChildTrans.position -= new Vector3(10000, 0, 0);
                 goBackwards = false;
             }
         }
@@ -40,7 +45,7 @@ public class NeverEndingCorridor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.parent.parent == transform.GetChild(0))
+        if (other.transform.parent.parent == m_tChildTrans)
         {
             other.transform.parent.position = transform.position + new Vector3(
                 -corridorSegmentCount * 3, 0, 0);

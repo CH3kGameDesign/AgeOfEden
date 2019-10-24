@@ -36,9 +36,15 @@ public class TextGeneration : MonoBehaviour
     [HideInInspector]
     public string textString;
 
+    private Transform m_tTransCache;
+    private Transform m_tFirstChild;
+
     // Called once before the first frame
     private void Start()
     {
+        m_tTransCache = transform;
+        m_tFirstChild = transform.GetChild(0);
+
         textString = textObject.GetComponent<TextMeshPro>().text;
         textObject.GetComponent<TextMeshPro>().text = "";
 
@@ -52,14 +58,14 @@ public class TextGeneration : MonoBehaviour
     // Called once per frame
     private void Update()
     {
-        if (transform.childCount == textString.Length + 1)
+        if (m_tTransCache.childCount == textString.Length + 1)
         {
             for (int i = 0; i < activateOnFinish.Length; i++)
                 activateOnFinish[i].SetActive(true);
 
             if (destroyTime >= destroyTimer)
             {
-                Destroy(transform.GetChild(0).gameObject);
+                Destroy(m_tFirstChild.gameObject);
                 textCount = 0;
 
                 if (disperseOption == 0)
@@ -72,7 +78,7 @@ public class TextGeneration : MonoBehaviour
                 destroyTime += Time.deltaTime;
         }
 
-        if (destroyTime >= destroyTimer && transform.childCount == 0)
+        if (destroyTime >= destroyTimer && m_tTransCache.childCount == 0)
         {
             for (int i = 0; i < activateOnDestroy.Length; i++)
                 activateOnDestroy[i].SetActive(true);
@@ -100,7 +106,7 @@ public class TextGeneration : MonoBehaviour
             yield return new WaitForSeconds(pWaitTime);
 
             GameObject GOText = Instantiate(
-                textObject, transform.position, transform.rotation, transform);
+                textObject, m_tTransCache.position, m_tTransCache.rotation, m_tTransCache);
 
             GOText.transform.localPosition = new Vector3(
                 GOText.GetComponent<TextMeshPro>().fontSize / 17 * textCount * direction.x,
@@ -142,6 +148,7 @@ public class TextGeneration : MonoBehaviour
         {
             yield return new WaitForSeconds(pWaitTime);
 
+            // This is yucky
             //Destroy(transform.GetChild(0).gameObject);
             transform.GetChild(0).GetComponent<FadeOut>().fade = true;
             transform.GetChild(0).SetParent(transform.parent);

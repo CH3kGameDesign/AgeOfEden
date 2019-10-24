@@ -50,6 +50,6 @@ public class DropStuff : MonoBehaviour
             objectsToDrop[i].gameObject.SetActive(false);
 
         ActivateOnFinish.SetActive(true);
-        GetComponent<DropStuff>().enabled = false;
+        enabled = false;
     }
 }

@@ -13,9 +13,16 @@ public class BathroomManager : MonoBehaviour
     public choices Room;
 
     private int counter;
-	
-	// Update is called once per frame
-	private void Update()
+
+    private Transform m_tCameraTransform;
+
+    private void Start()
+    {
+        m_tCameraTransform = CameraMovement.s_CameraObject.transform;
+    }
+
+    // Update is called once per frame
+    private void Update()
     {
         counter++;
         if (counter > 5)
@@ -24,10 +31,12 @@ public class BathroomManager : MonoBehaviour
             {
                 int choice = 0;
                 float dist = 100;
+
                 for (int i = 0; i < bathroomDoorPivots.Count; i++)
                 {
                     float dist2 = Vector3.Distance(bathroomDoorPivots[i].position,
-                        CameraMovement.s_CameraObject.transform.position);
+                        m_tCameraTransform.position);
+
                     if (dist2 < dist)
                     {
                         dist = dist2;
@@ -38,6 +47,7 @@ public class BathroomManager : MonoBehaviour
             }
             else
             {
+                // This is really bad for performance - Fix
                 if (Room == choices.bathroom)
                 {
                     // Attempts to assign the bathroom transform to the bathroom object's

@@ -28,7 +28,7 @@ public class EnableOnOneScene : MonoBehaviour
         if (SceneManager.sceneCount == 1)
         {
             EnableObjects();
-            GetComponent<EnableOnOneScene>().enabled = false;
+            enabled = false;
         }
     }
 

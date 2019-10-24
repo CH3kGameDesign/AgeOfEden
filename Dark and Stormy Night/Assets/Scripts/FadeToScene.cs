@@ -15,14 +15,18 @@ public class FadeToScene : MonoBehaviour
     public int tarSceneNumber = 1;
 
 	private float startVignetteStrength = -1;
-    
-	// Update is called once per frame
-	private void Update()
+
+    private PostProcessingBehaviour m_ppbPostProcessing;
+
+    // Update is called once per frame
+    private void Update()
     {
-		if (startVignetteStrength == -1)
+        m_ppbPostProcessing = CameraMovement.s_CameraObject.
+            GetComponentInChildren<PostProcessingBehaviour>();
+
+        if (startVignetteStrength == -1)
         {
-			PostProcessingProfile mainCamProfile = CameraMovement.s_CameraObject.
-                GetComponentInChildren<PostProcessingBehaviour>().profile;
+			PostProcessingProfile mainCamProfile = m_ppbPostProcessing.profile;
 			startVignetteStrength = mainCamProfile.vignette.settings.intensity;
 		}
 
@@ -45,8 +49,7 @@ public class FadeToScene : MonoBehaviour
         {
             RenderSettings.fogDensity += fadeSpeed * Time.deltaTime;
 
-            PostProcessingProfile mainCamProfile = CameraMovement.
-                s_CameraObject.GetComponentInChildren<PostProcessingBehaviour>().profile;
+            PostProcessingProfile mainCamProfile = m_ppbPostProcessing.profile;
 
             var vignette = mainCamProfile.vignette.settings;
 
@@ -55,8 +58,7 @@ public class FadeToScene : MonoBehaviour
         }
         else
         {
-			PostProcessingProfile mainCamProfile = CameraMovement.
-                s_CameraObject.GetComponentInChildren<PostProcessingBehaviour>().profile;
+			PostProcessingProfile mainCamProfile = m_ppbPostProcessing.profile;
 
             var vignette = mainCamProfile.vignette.settings;
 

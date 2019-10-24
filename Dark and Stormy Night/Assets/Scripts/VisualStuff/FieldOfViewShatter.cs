@@ -18,14 +18,14 @@ public class FieldOfViewShatter : MonoBehaviour
     private Camera mainCam;
     
 	// Use this for initialization
-	private void Start ()
+	private void Start()
     {
         mainCam = Camera.main;
         //startFOV = mainCam.fieldOfView;
 	}
 	
 	// Update is called once per frame
-	private void Update ()
+	private void Update()
     {
         lerpSpeedActual = Mathf.Lerp(lerpSpeedActual, lerpSpeed, Time.deltaTime);
         if (timer >= currentTimeLimit)

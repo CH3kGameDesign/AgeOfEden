@@ -11,6 +11,8 @@ public class CopyLocation : MonoBehaviour
     public Vector3 direction;
     public bool copyRotation = false;
 
+    private Transform m_tTransCache;
+
     private void Start()
     {
         if (movee == null)
@@ -19,6 +21,8 @@ public class CopyLocation : MonoBehaviour
             target = Movement.s_goPlayerObject.transform;
         if (copyCamera)
             target = CameraMovement.s_CameraObject.transform;
+
+        m_tTransCache = transform;
     }
 
 
@@ -26,13 +30,16 @@ public class CopyLocation : MonoBehaviour
     private void LateUpdate ()
     {
         if (direction.x != 0)
-            movee.position = new Vector3(target.position.x, transform.position.y, transform.position.z);
+            movee.position = new Vector3(target.position.x, m_tTransCache.position.y,
+                m_tTransCache.position.z);
 
         if (direction.y != 0)
-            movee.position = new Vector3(transform.position.x, target.position.y, transform.position.z);
+            movee.position = new Vector3(m_tTransCache.position.x, target.position.y,
+                m_tTransCache.position.z);
 
         if (direction.z != 0)
-            movee.position = new Vector3(transform.position.x, transform.position.y, target.position.z);
+            movee.position = new Vector3(m_tTransCache.position.x,
+                m_tTransCache.position.y, target.position.z);
                 
         if (copyRotation == true)
             movee.rotation = target.rotation;

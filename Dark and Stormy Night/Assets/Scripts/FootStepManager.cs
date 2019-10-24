@@ -26,7 +26,14 @@ public class FootStepManager : MonoBehaviour
     private bool leftStepNext;
 
     public List<footStepHolder> footSteps = new List<footStepHolder>(1);
-    
+
+    private Transform m_tTransCache;
+
+    private void Start()
+    {
+        m_tTransCache = transform;
+    }
+
     /// <summary>
     /// Called to make a footstep sound
     /// </summary>
@@ -44,18 +51,20 @@ public class FootStepManager : MonoBehaviour
             if (area != 100)
             {
                 if (leftStepNext)
-                    Instantiate(footSteps[area].leftStep[stepNo], transform.position, transform.rotation);
+                    Instantiate(footSteps[area].leftStep[stepNo],
+                        m_tTransCache.position, m_tTransCache.rotation);
                 else
-                    Instantiate(footSteps[area].rightStep[stepNo], transform.position, transform.rotation);
+                    Instantiate(footSteps[area].rightStep[stepNo],
+                        m_tTransCache.position, m_tTransCache.rotation);
             }
             else
             {
                 if (leftStepNext)
                     Instantiate(footSteps[defaultSound].leftStep[stepNo],
-                        transform.position, transform.rotation);
+                        m_tTransCache.position, m_tTransCache.rotation);
                 else
                     Instantiate(footSteps[defaultSound].rightStep[stepNo],
-                        transform.position, transform.rotation);
+                        m_tTransCache.position, m_tTransCache.rotation);
             }
         }
     }

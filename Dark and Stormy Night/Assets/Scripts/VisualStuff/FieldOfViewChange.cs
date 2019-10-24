@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FieldOfViewChange : MonoBehaviour {
-
+public class FieldOfViewChange : MonoBehaviour
+{
     public float tarFOV;
     private float startFOV;
 
@@ -16,13 +16,15 @@ public class FieldOfViewChange : MonoBehaviour {
     public FOVVar FOVChange;
 
 	// Use this for initialization
-	void Start () {
+	private void Start()
+    {
         mainCam = Camera.main;
         startFOV = mainCam.fieldOfView;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	private void Update()
+    {
         lerpSpeedActual = Mathf.Lerp(lerpSpeedActual, lerpSpeed, Time.deltaTime);
         if (FOVChange == FOVVar.outwards)
             ZoomOut();
@@ -32,7 +34,7 @@ public class FieldOfViewChange : MonoBehaviour {
             ZoomBack2();
     }
 
-    void ZoomOut ()
+    private void ZoomOut()
     {
         CameraMovement.s_CanZoom = false;
         mainCam.fieldOfView = Mathf.Lerp(mainCam.fieldOfView, tarFOV, lerpSpeedActual * Time.deltaTime);
@@ -42,7 +44,7 @@ public class FieldOfViewChange : MonoBehaviour {
         }
     }
 
-    void ZoomBack ()
+    private void ZoomBack()
     {
         mainCam.fieldOfView = Mathf.Lerp(mainCam.fieldOfView, startFOV - 25, lerpSpeedActual * Time.deltaTime);
         if (Mathf.Abs(mainCam.fieldOfView - (startFOV - 25)) < 0.5f)
@@ -51,7 +53,8 @@ public class FieldOfViewChange : MonoBehaviour {
             FOVChange = FOVVar.back2;
         }
     }
-    void ZoomBack2()
+
+    private void ZoomBack2()
     {
         mainCam.fieldOfView = Mathf.Lerp(mainCam.fieldOfView, startFOV, lerpSpeed * Time.deltaTime/ 2);
         if (Mathf.Abs(mainCam.fieldOfView - startFOV) < 0.5f)

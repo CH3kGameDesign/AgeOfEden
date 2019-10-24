@@ -8,21 +8,31 @@ public class MenuManager : MonoBehaviour
     public GameObject room;
 
     public static bool inRoom = false;
-    
-	// Update is called once per frame
-	private void Update()
+
+    private Transform m_tPortalTrans;
+    private Transform m_tRoomTrans;
+    private Transform m_tPlayerTrans;
+
+    private void Start()
+    {
+        m_tPortalTrans = portal.transform;
+        m_tRoomTrans = room.transform;
+        m_tPlayerTrans = Movement.s_goPlayerObject.transform;
+    }
+
+    // Update is called once per frame
+    private void Update()
     {
 		if (Input.GetKeyDown(KeyCode.Alpha1) && !inRoom)
         {
-            portal.transform.position = Movement.s_goPlayerObject.transform.position
-                + Movement.s_goPlayerObject.transform.forward;
+            m_tPortalTrans.position = m_tPlayerTrans.position + m_tPlayerTrans.forward;
 
-            portal.transform.LookAt(Movement.s_goPlayerObject.transform);
+            m_tPortalTrans.LookAt(m_tPlayerTrans);
 
             if (InvertGravity.invertedGravity)
-                portal.transform.eulerAngles = new Vector3(0, portal.transform.eulerAngles.y, 180);
+                m_tPortalTrans.eulerAngles = new Vector3(0, m_tPortalTrans.eulerAngles.y, 180);
 
-            room.transform.rotation = portal.transform.rotation;
+            m_tRoomTrans.rotation = m_tPortalTrans.rotation;
         }
 	}
 }

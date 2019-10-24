@@ -16,26 +16,32 @@ public class PlayerModel : MonoBehaviour
 
     private float desiredYRotation;
 
+    private Transform m_tTransCache;
+    private Transform m_tCameraTrans;
+
     // Use this for initialization
     private void Start()
     {
         faceDirection = Vector3.zero;
         player = gameObject;
-	}
+        m_tTransCache = transform;
+        m_tCameraTrans = cameraHolder.transform;
+    }
 	
 	// Update is called once per frame
 	private void Update()
     {
         //desiredYRotation = Mathf.Lerp(desiredYRotation,
-        //    cameraHolder.transform.rotation.eulerAngles.y, rotSpeed);
+        //    m_tCameraTrans.rotation.eulerAngles.y, rotSpeed);
 
         if (Movement.s_bCanMove)
         {
             if (faceDirection == Vector3.zero)
-                transform.rotation = Quaternion.Euler(0, cameraHolder.transform.rotation.eulerAngles.y,
-                    cameraHolder.transform.rotation.eulerAngles.z);
+                m_tTransCache.rotation = Quaternion.Euler(0, m_tCameraTrans.rotation.eulerAngles.y,
+                    m_tCameraTrans.rotation.eulerAngles.z);
             else
-                transform.LookAt(new Vector3(transform.position.x + faceDirection.x, transform.position.y, transform.position.z + faceDirection.z));
+                m_tTransCache.LookAt(new Vector3(m_tTransCache.position.x + faceDirection.x,
+                    m_tTransCache.position.y, m_tTransCache.position.z + faceDirection.z));
         }
 	}
 }

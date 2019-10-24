@@ -61,11 +61,15 @@ public class SmoothCameraMovement : MonoBehaviour
     private List<float> rotArrayY = new List<float>();
     private float rotAverageY = 0F;
 
+    private Transform m_tTransCache;
+
     // Called once before the first frame
-    private void Awake()
+    private void Start()
     {
         // Gets the rigidbody
         Rigidbody rb = GetComponent<Rigidbody>();
+        m_tTransCache = transform;
+
         s_bIgnoreSittingRotation = false;
         s_v2SittingMaxRotation = m_v2PublicSittingMaxRotation;
         s_qOriginalRotation = Quaternion.Euler(Vector3.zero);
@@ -169,7 +173,7 @@ public class SmoothCameraMovement : MonoBehaviour
                 Quaternion xQuaternion = Quaternion.AngleAxis(rotAverageX, Vector3.up);
                 Quaternion yQuaternion = Quaternion.AngleAxis(rotAverageY, Vector3.left);
 
-                transform.localRotation = s_qOriginalRotation * xQuaternion * yQuaternion;
+                m_tTransCache.localRotation = s_qOriginalRotation * xQuaternion * yQuaternion;
             }
             else if (m_raAxes == RotationAxes.MouseX)
             {
@@ -190,7 +194,7 @@ public class SmoothCameraMovement : MonoBehaviour
                 rotAverageX = ClampAngle(rotAverageX, m_v2RotationRangeX.x, m_v2RotationRangeX.y);
 
                 Quaternion xQuaternion = Quaternion.AngleAxis(rotAverageX, Vector3.up);
-                transform.localRotation = s_qOriginalRotation * xQuaternion;
+                m_tTransCache.localRotation = s_qOriginalRotation * xQuaternion;
             }
             else
             {
@@ -211,7 +215,7 @@ public class SmoothCameraMovement : MonoBehaviour
                 rotAverageY = ClampAngle(rotAverageY, m_v2RotationRangeY.x, m_v2RotationRangeY.y);
 
                 Quaternion yQuaternion = Quaternion.AngleAxis(rotAverageY, Vector3.left);
-                transform.localRotation = s_qOriginalRotation * yQuaternion;
+                m_tTransCache.localRotation = s_qOriginalRotation * yQuaternion;
             }
         }
     }
