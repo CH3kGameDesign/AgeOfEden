@@ -38,11 +38,14 @@ public class TrainBounce : MonoBehaviour
     private Vector3 m_v3DefaultPos;
     private Quaternion m_qDefaultRot;
 
+    private Transform m_tTransCache;
+
     // Start is called before the first frame update
     private void Start()
     {
         m_v3DefaultPos = transform.position;
         m_qDefaultRot = transform.rotation;
+        m_tTransCache = transform;
     }
 
     // Update is called once per frame
@@ -50,7 +53,7 @@ public class TrainBounce : MonoBehaviour
     {
         m_fTimeStep += Time.deltaTime;
 
-        transform.position = m_v3DefaultPos + new Vector3(
+        m_tTransCache.position = m_v3DefaultPos + new Vector3(
             /*Oscillates in the x direction*/
             m_fTranslation_Amplitude_X1 * Mathf.Sin(m_fTranslation_Frequency_X1 * m_fTimeStep),
             /*Oscillates in the y direction*/
@@ -58,7 +61,7 @@ public class TrainBounce : MonoBehaviour
             m_fTranslation_Amplitude_Y2 * Mathf.Sin(m_fTranslation_Frequency_Y2 * m_fTimeStep),
             0);
 
-        transform.rotation = m_qDefaultRot *
+        m_tTransCache.rotation = m_qDefaultRot *
             /*Oscillates foward and backward (pitch)*/
             Quaternion.AngleAxis(m_fRotation_Amplitude_Pitch1 *
             Mathf.Sin(m_fRotation_Frequency_Pitch1 * m_fTimeStep), Vector3.right) *

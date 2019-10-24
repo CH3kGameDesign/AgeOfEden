@@ -46,7 +46,8 @@ public class SceneChanger : MonoBehaviour
         if (m_bActivateOnStart)
             StartLoad();
 
-        m_ppbPostProcessingBehaviour = Camera.main.GetComponent<PostProcessingBehaviour>();
+        try { m_ppbPostProcessingBehaviour = Camera.main.GetComponent<PostProcessingBehaviour>(); }
+        catch { m_ppbPostProcessingBehaviour = null; }
     }
 	
 	// Update is called once per frame

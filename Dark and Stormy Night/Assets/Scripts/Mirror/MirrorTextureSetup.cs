@@ -8,7 +8,7 @@ public class MirrorTextureSetup : MonoBehaviour
 
     public Material cameraMat;
 
-	private void Start ()
+	private void Start()
     {
         if (m_cCamera.targetTexture)
             m_cCamera.targetTexture.Release();

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NonVisibleEnable : MonoBehaviour {
+public class NonVisibleEnable : MonoBehaviour
+{
     public List<GameObject> GOOnView = new List<GameObject>();
     public List<GameObject> GODisableOnView = new List<GameObject>();
 
@@ -13,28 +14,33 @@ public class NonVisibleEnable : MonoBehaviour {
 
     private int visible = -1;
 
+    // Memory storage for the camera frustum
+    private Plane[] m_pPlanes = new Plane[6];
+    // The outer bounds for the render plane
+    private Bounds m_bBounds;
+    // Local reference to the players camera
+    private Camera m_cPlayerCamera;
+
     // Use this for initialization
-    void Start () {
-		
-	}
-
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(CameraMovement
-            .s_CameraObject.transform.GetChild(0).GetComponent<Camera>());
-
-        if (GeometryUtility.TestPlanesAABB(planes, GetComponent<Renderer>().bounds))
-        {
-            EnableObjects();
-        }
-        else
-        {
-            DisableObjects();
-        }
+        m_bBounds = GetComponent<Renderer>().bounds;
+        m_cPlayerCamera = CameraMovement.s_CameraObject.transform.GetChild(0)
+            .GetComponent<Camera>();
     }
 
-    private void EnableObjects ()
+    // Update is called once per frame
+    private void Update()
+    {
+        m_pPlanes = GeometryUtility.CalculateFrustumPlanes(m_cPlayerCamera);
+
+        if (GeometryUtility.TestPlanesAABB(m_pPlanes, m_bBounds))
+            EnableObjects();
+        else
+            DisableObjects();
+    }
+
+    private void EnableObjects()
     {
         if (visible != 0)
         {
@@ -50,7 +56,7 @@ public class NonVisibleEnable : MonoBehaviour {
         visible = 0;
     }
 
-    private void DisableObjects ()
+    private void DisableObjects()
     {
         if (visible != 1)
         {

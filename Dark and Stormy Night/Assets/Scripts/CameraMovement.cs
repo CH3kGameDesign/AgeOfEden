@@ -62,6 +62,10 @@ public class CameraMovement : MonoBehaviour
 
     private Movement m_mMovementRef;
 
+    private Transform m_tTransCache;
+    private Transform m_tFirstChild;
+    private Camera m_cFirstChildCamera;
+
     private void Awake()
     {
         s_CameraObject = gameObject;
@@ -70,6 +74,10 @@ public class CameraMovement : MonoBehaviour
     // Called once before the first frame
     private void Start()
     {
+        m_tTransCache = transform;
+        m_tFirstChild = transform.GetChild(0);
+        m_cFirstChildCamera = transform.GetChild(0).GetComponent<Camera>();
+
         // Seizes control of the cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -93,7 +101,7 @@ public class CameraMovement : MonoBehaviour
     {
         // Keeps the camera snapped to the characters face
         if (s_bSnapToPlayer && m_tCameraHook)
-            transform.position = m_tCameraHook.position;
+            m_tTransCache.position = m_tCameraHook.position;
 
         if (s_Shake)
         {
@@ -104,21 +112,21 @@ public class CameraMovement : MonoBehaviour
         if (m_tAimPoint)
         {
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
+            if (Physics.Raycast(m_tTransCache.position, m_tTransCache.forward, out hit, 100))
                 m_tAimPoint.position = hit.point;
             else
-                m_tAimPoint.position = transform.position + (transform.forward * 100);
+                m_tAimPoint.position = m_tTransCache.position + (m_tTransCache.forward * 100);
         }
 
-        transform.GetChild(0).localPosition = Vector3.Lerp(
-            transform.GetChild(0).localPosition, Vector3.zero, 0.3f);
+        m_tFirstChild.localPosition = Vector3.Lerp(
+            m_tFirstChild.localPosition, Vector3.zero, 0.3f);
 
         if (s_bGoToPlayer)
         {
-            transform.position = Vector3.Lerp(
-                transform.position, m_tCameraHook.position, 1.5f * Time.deltaTime);
+            m_tTransCache.position = Vector3.Lerp(
+                m_tTransCache.position, m_tCameraHook.position, 1.5f * Time.deltaTime);
 
-            if (Vector3.Distance(transform.position, m_tCameraHook.position) < 0.3f)
+            if (Vector3.Distance(m_tTransCache.position, m_tCameraHook.position) < 0.3f)
             {
                 s_bSnapToPlayer = true;
                 //Movement.s_bCanMove = true;
@@ -137,24 +145,22 @@ public class CameraMovement : MonoBehaviour
             {
                 if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
                 {
-                    transform.GetChild(0).GetComponent<Camera>().fieldOfView =
-                        Mathf.Lerp(transform.GetChild(0).GetComponent<Camera>().fieldOfView,
+                    m_cFirstChildCamera.fieldOfView = Mathf.Lerp(m_cFirstChildCamera.fieldOfView,
                         m_fFovMin, Time.deltaTime * m_fZoomSpeed);
                     s_bIsZoomed = true;
                 }
                 else
                 {
-                    transform.GetChild(0).GetComponent<Camera>().fieldOfView =
-                        Mathf.Lerp(transform.GetChild(0).GetComponent<Camera>().fieldOfView,
+                    m_cFirstChildCamera.fieldOfView =Mathf.Lerp(m_cFirstChildCamera.fieldOfView,
                         m_fFovNormal, Time.deltaTime * m_fZoomSpeed * 2);
                     s_bIsZoomed = false;
                 }
             }
             else
             {
-                transform.GetChild(0).GetComponent<Camera>().fieldOfView =
-                    Mathf.Lerp(transform.GetChild(0).GetComponent<Camera>().fieldOfView,
+                m_cFirstChildCamera.fieldOfView =Mathf.Lerp(m_cFirstChildCamera.fieldOfView,
                     m_fFovNormal, Time.deltaTime * m_fZoomSpeed * 2);
+                s_bIsZoomed = false;
             }
         }
     }

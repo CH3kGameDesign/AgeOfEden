@@ -8,21 +8,28 @@ public class BreathingObject : MonoBehaviour
     public Vector3 breathMax;
 
     private bool inflate = true;
-    
-	// Update is called once per frame
-	private void Update()
+
+    private Transform m_tTransCache;
+
+    private void Start()
+    {
+        m_tTransCache = transform;
+    }
+
+    // Update is called once per frame
+    private void Update()
     {
         if (inflate)
-            transform.localScale = Vector3.Lerp(transform.localScale,
+            m_tTransCache.localScale = Vector3.Lerp(m_tTransCache.localScale,
                 breathMax, breathSpeed * Time.deltaTime);
         else
-            transform.localScale = Vector3.Lerp(transform.localScale,
+            m_tTransCache.localScale = Vector3.Lerp(m_tTransCache.localScale,
                 Vector3.one, breathSpeed * Time.deltaTime);
 
-        if (Vector3.Distance(transform.localScale, breathMax) <= 0.01f)
+        if (Vector3.Distance(m_tTransCache.localScale, breathMax) <= 0.01f)
             inflate = false;
 
-        if (Vector3.Distance(transform.localScale, Vector3.one) <= 0.01f)
+        if (Vector3.Distance(m_tTransCache.localScale, Vector3.one) <= 0.01f)
             inflate = true;
     }
 }

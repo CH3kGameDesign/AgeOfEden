@@ -11,10 +11,17 @@ public class PlayerHolding : MonoBehaviour
     private float lookTime;
     private float FOV = 0.7f;
 
+    private Camera m_cCamera;
+    private PostProcessingBehaviour m_ppbPostProcessingRef;
+
     // Called once before the first frame
     private void Start()
     {
         FOV = 0.7f;
+
+        m_cCamera = CameraMovement.s_CameraObject.GetComponentInChildren<Camera>();
+        m_ppbPostProcessingRef = CameraMovement.s_CameraObject
+            .GetComponentInChildren<PostProcessingBehaviour>();
     }
 	
 	// Update is called once per frame
@@ -24,8 +31,7 @@ public class PlayerHolding : MonoBehaviour
         Movement.s_bCanMove = false;
         RaycastHit hit;
 
-        DepthOfFieldModel.Settings DOFSettings = CameraMovement.s_CameraObject.
-            GetComponentInChildren<PostProcessingBehaviour>().profile.depthOfField.settings;
+        DepthOfFieldModel.Settings DOFSettings = m_ppbPostProcessingRef.profile.depthOfField.settings;
 
         if (Physics.Raycast(CameraMovement.s_CameraObject.transform.position, 
             CameraMovement.s_CameraObject.transform.forward, out hit, 10, 1 << 9))
@@ -36,12 +42,10 @@ public class PlayerHolding : MonoBehaviour
                 {
                     CameraMovement.s_bGoToPlayer = true;
                     lookTime = 0;
-                    CameraMovement.s_CameraObject.GetComponentInChildren<Camera>().
-                        fieldOfView = 60 - (lookTime * zoomAmount);
+                    m_cCamera.fieldOfView = 60 - (lookTime * zoomAmount);
 
                     DOFSettings.focusDistance = 3f;
-                    CameraMovement.s_CameraObject.GetComponentInChildren
-                        <PostProcessingBehaviour>().profile.depthOfField.settings = DOFSettings;
+                    m_ppbPostProcessingRef.profile.depthOfField.settings = DOFSettings;
 
                     Destroy(hit.transform.gameObject);
                     return;
@@ -64,10 +68,8 @@ public class PlayerHolding : MonoBehaviour
             lookTime = Mathf.Lerp(lookTime, 0, 0.4f);
         }
 
-        CameraMovement.s_CameraObject.GetComponentInChildren
-            <Camera>().fieldOfView = 60 - (lookTime * zoomAmount);
-        
-        CameraMovement.s_CameraObject.GetComponentInChildren
-            <PostProcessingBehaviour>().profile.depthOfField.settings = DOFSettings;
+        m_cCamera.fieldOfView = 60 - (lookTime * zoomAmount);
+
+        m_ppbPostProcessingRef.profile.depthOfField.settings = DOFSettings;
     }
 }

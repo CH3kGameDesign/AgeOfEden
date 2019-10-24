@@ -20,9 +20,15 @@ public class ObjectPickup : MonoBehaviour
     private Transform m_tObjectTransform;
     private Rigidbody m_rbObjectRb;
 
+    private Transform m_tCameraTrans;
+    private Transform m_tCameraHookTrans;
+    //m_tTransCache
+
     private void Start()
     {
         m_cmCameraMovement = GetComponent<CameraMovement>();
+        m_tCameraTrans = m_cmCameraMovement.transform;
+        m_tCameraHookTrans = m_cmCameraMovement.m_tCameraHook.transform;
     }
 
     private void Update()
@@ -44,7 +50,7 @@ public class ObjectPickup : MonoBehaviour
 
                 Vector3 translatedPosition = transform.forward * m_v3ObjectOffsetFromPlayer.x
                     + new Vector3(0, m_v3ObjectOffsetFromPlayer.y)
-                    + m_cmCameraMovement.transform.position;
+                    + m_tCameraTrans.position;
 
                 Vector3 relPos = translatedPosition - m_tObjectTransform.position
                      - m_rbObjectRb.velocity * 0.5f;
@@ -54,20 +60,18 @@ public class ObjectPickup : MonoBehaviour
 
                 m_rbObjectRb.AddForce(appliedForce);
 
-                m_v3ObjectRelativePos = m_cmCameraMovement.transform.position
+                m_v3ObjectRelativePos = m_tCameraTrans.position
                     - m_tObjectTransform.position;
             }
             else
             {
                 // Simulates the ray
-                Debug.DrawLine(m_cmCameraMovement.m_tCameraHook.transform.position,
-                    transform.forward * m_fPickupDistance +
-                    m_cmCameraMovement.transform.position,
-                    Color.red);
+                Debug.DrawLine(m_tCameraHookTrans.position, transform.forward * m_fPickupDistance +
+                    m_tCameraTrans.position, Color.red);
 
                 // Tests for an object under players vision
                 RaycastHit ray;
-                if (Physics.Raycast(m_cmCameraMovement.m_tCameraHook.transform.position,
+                if (Physics.Raycast(m_tCameraHookTrans.position,
                     transform.forward, out ray, m_fPickupDistance))
                 {
                     // If the object can be moved
@@ -108,7 +112,7 @@ public class ObjectPickup : MonoBehaviour
 
     public void TeleportToPlayer()
     {
-        m_tObjectTransform.position = m_cmCameraMovement.transform.position
+        m_tObjectTransform.position = m_tCameraTrans.position
             + m_v3ObjectRelativePos;
     }
 }

@@ -17,8 +17,12 @@ public class PortalCamera : MonoBehaviour
     private Camera m_cLocalCamera;
     private Camera m_cPlayerCamera;
 
+    private Transform m_tTransCache;
+
     private void Start()
     {
+        m_tTransCache = transform;
+
         if (CameraMovement.s_CameraObject)
         {
             m_cLocalCamera = GetComponent<Camera>();
@@ -39,7 +43,7 @@ public class PortalCamera : MonoBehaviour
 
         if (!turnAround)
         {
-            transform.position = m_tPortal.position + playerOffsetFromPortal;
+            m_tTransCache.position = m_tPortal.position + playerOffsetFromPortal;
 
             float angularDifferenceBetweenPortalRotations = Quaternion.Angle(
                 m_tPortal.rotation, m_tOtherPortal.rotation);
@@ -47,11 +51,11 @@ public class PortalCamera : MonoBehaviour
             Quaternion portalRotationalDifference = Quaternion.AngleAxis(
                 angularDifferenceBetweenPortalRotations, Vector3.up);
             Vector3 newCameraDirection = portalRotationalDifference * m_tPlayerCamera.forward;
-            transform.rotation = Quaternion.LookRotation(newCameraDirection, Vector3.up);
+            m_tTransCache.rotation = Quaternion.LookRotation(newCameraDirection, Vector3.up);
         }
         else
         {
-            transform.position = m_tPortal.position + new Vector3(
+            m_tTransCache.position = m_tPortal.position + new Vector3(
                 -playerOffsetFromPortal.x, playerOffsetFromPortal.y, -playerOffsetFromPortal.z);
 
             float angularDifferenceBetweenPortalRotations = Quaternion.Angle(
@@ -60,12 +64,12 @@ public class PortalCamera : MonoBehaviour
             Quaternion portalRotationalDifference = Quaternion.AngleAxis(
                 angularDifferenceBetweenPortalRotations, Vector3.up);
             Vector3 newCameraDirection = portalRotationalDifference * m_tPlayerCamera.forward;
-            transform.rotation = Quaternion.LookRotation(newCameraDirection, Vector3.up);
+            m_tTransCache.rotation = Quaternion.LookRotation(newCameraDirection, Vector3.up);
         }
 
         if (InvertGravity.invertedGravity)
         {
-            transform.localEulerAngles += new Vector3(0, 0, 180);
+            m_tTransCache.localEulerAngles += new Vector3(0, 0, 180);
         }
 
         m_cLocalCamera.fieldOfView = m_cPlayerCamera.fieldOfView;

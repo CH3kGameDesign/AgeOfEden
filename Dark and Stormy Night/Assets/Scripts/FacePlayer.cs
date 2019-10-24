@@ -12,46 +12,57 @@ public class FacePlayer : MonoBehaviour
     public bool faceCamera = true;
     public bool tilt = false;
     public float delay = 1;
-    
-	// Update is called once per frame
-	private void Update()
+
+    private Transform m_tTransCache;
+    private Transform m_tCameraTrans;
+    private Transform m_tPlayerTrans;
+
+    private void Start()
+    {
+        m_tTransCache = transform;
+        m_tCameraTrans = CameraMovement.s_CameraObject.transform;
+        m_tPlayerTrans = Movement.s_goPlayerObject.transform;
+    }
+
+    // Update is called once per frame
+    private void Update()
     {
         if (faceCamera)
         {
             if (tilt)
             {
-                transform.LookAt(CameraMovement.s_CameraObject.transform.position + offset);
+                m_tTransCache.LookAt(m_tCameraTrans.position + offset);
                 if (InvertGravity.invertedGravity)
-                    transform.localEulerAngles = new Vector3(
-                        transform.localEulerAngles.x, transform.localEulerAngles.y, 0);
+                    m_tTransCache.localEulerAngles = new Vector3(
+                        m_tTransCache.localEulerAngles.x, m_tTransCache.localEulerAngles.y, 0);
             }
             else
             {
-                Vector3 lookPos = transform.position
-                    - (CameraMovement.s_CameraObject.transform.position + offset);
+                Vector3 lookPos = m_tTransCache.position
+                    - (m_tCameraTrans.position + offset);
                 lookPos.y = 0;
                 Quaternion rotation = Quaternion.LookRotation(lookPos);
-                transform.rotation = Quaternion.Slerp(
-                    transform.rotation, rotation, Time.deltaTime * delay);
+                m_tTransCache.rotation = Quaternion.Slerp(
+                    m_tTransCache.rotation, rotation, Time.deltaTime * delay);
             }
         }
         else
         {
             if (tilt)
             {
-                transform.LookAt(Movement.s_goPlayerObject.transform.position + offset);
+                m_tTransCache.LookAt(m_tPlayerTrans.position + offset);
                 if (InvertGravity.invertedGravity)
-                    transform.localEulerAngles = new Vector3(
-                        transform.localEulerAngles.x, transform.localEulerAngles.y, 0);
+                    m_tTransCache.localEulerAngles = new Vector3(
+                        m_tTransCache.localEulerAngles.x, m_tTransCache.localEulerAngles.y, 0);
             }
             else
             {
-                Vector3 lookPos = transform.position
-                    - (Movement.s_goPlayerObject.transform.position + offset);
+                Vector3 lookPos = m_tTransCache.position
+                    - (m_tPlayerTrans.position + offset);
                 lookPos.y = 0;
                 Quaternion rotation = Quaternion.LookRotation(lookPos);
-                transform.rotation = Quaternion.Slerp(
-                    transform.rotation, rotation, Time.deltaTime * delay);
+                m_tTransCache.rotation = Quaternion.Slerp(
+                    m_tTransCache.rotation, rotation, Time.deltaTime * delay);
             }
         }
 	}

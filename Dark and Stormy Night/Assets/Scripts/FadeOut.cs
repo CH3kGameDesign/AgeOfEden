@@ -10,7 +10,18 @@ public class FadeOut : MonoBehaviour
     public float fadeWait = 100000;
 
     public float fadeSpeed = 1;
-    
+
+    private TextMeshPro m_tmpText;
+    private MeshRenderer m_mrMesh;
+    private RawImage m_riImage;
+
+    private void Start()
+    {
+        m_tmpText = GetComponent<TextMeshPro>();
+        m_mrMesh = GetComponent<MeshRenderer>();
+        m_riImage = GetComponent<RawImage>();
+    }
+
     // Update is called once per frame
     private void Update()
     {
@@ -19,35 +30,35 @@ public class FadeOut : MonoBehaviour
 
         if (fade)
         {
-            if (GetComponent<TextMeshPro>())
+            if (m_tmpText)
             {
-                GetComponent<TextMeshPro>().color = Color.Lerp(
-                    GetComponent<TextMeshPro>().color, Color.clear,
+                m_tmpText.color = Color.Lerp(
+                    m_tmpText.color, Color.clear,
                     fadeSpeed * Time.deltaTime); 
 
-                if (GetComponent<TextMeshPro>().color.a == 0)
+                if (m_tmpText.color.a == 0)
                     Destroy(gameObject);
             }
             else
             {
-                if (GetComponent<MeshRenderer>())
+                if (m_mrMesh)
                 {
-                    GetComponent<MeshRenderer>().material.color = Color.Lerp(
-                        GetComponent<MeshRenderer>().material.color,
+                    m_mrMesh.material.color = Color.Lerp(
+                        m_mrMesh.material.color,
                         Color.clear, fadeSpeed * Time.deltaTime);
 
-                    if (GetComponent<MeshRenderer>().material.color.a == 0)
+                    if (m_mrMesh.material.color.a == 0)
                         Destroy(gameObject);
                 }
                 else
                 {
-                    if (GetComponent<RawImage>())
+                    if (m_riImage)
                     {
-                        GetComponent<RawImage>().color = Color.Lerp(
-                            GetComponent<RawImage>().color, Color.clear,
+                        m_riImage.color = Color.Lerp(
+                            m_riImage.color, Color.clear,
                             fadeSpeed * Time.deltaTime);
 
-                        if (GetComponent<RawImage>().color.a <= 0.05)
+                        if (m_riImage.color.a <= 0.05)
                             Destroy(gameObject);
                     }
                 }

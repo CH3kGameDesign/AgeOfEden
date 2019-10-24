@@ -30,9 +30,13 @@ public class RaycastEnable : MonoBehaviour
     [SerializeField]
     private Transform MoveToHitPoint;
 
+    private Transform m_tCameraTrans;
+
     // Use this for initialization
     private void Start()
     {
+        m_tCameraTrans = CameraMovement.s_CameraObject.transform;
+
         if (activateEvent == null)
             activateEvent = new UnityEvent();
 	}
@@ -120,13 +124,12 @@ public class RaycastEnable : MonoBehaviour
         {
             //Debug.Log("Raycast Enabled");
             CameraMovement.s_CanMove = false;
-            Vector3 relPos = CameraLookAt.position
-                - CameraMovement.s_CameraObject.transform.position;
+            Vector3 relPos = CameraLookAt.position - m_tCameraTrans.position;
 
             Quaternion tarRot = Quaternion.LookRotation(relPos, -Vector3.up);
 
-            CameraMovement.s_CameraObject.transform.rotation = Quaternion.Slerp(
-                CameraMovement.s_CameraObject.transform.rotation, tarRot, Time.deltaTime * 0.5f);
+            m_tCameraTrans.rotation = Quaternion.Slerp(m_tCameraTrans.rotation, tarRot,
+                Time.deltaTime * 0.5f);
 
             Movement.s_bCanMove = false;
         }

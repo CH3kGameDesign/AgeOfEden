@@ -9,17 +9,34 @@ public class FadeIn : MonoBehaviour
     public float fadeSpeed;
     public float fadeOutTimer;
 
+    private FadeOut m_foFadeOut;
+    private SpriteRenderer m_srSpriteRenderer;
+    private RawImage m_riRawImage;
+    private MeshRenderer m_mrMeshRenderer;
+
 	// Use this for initialization
 	private void Start()
     {
         if (GetComponent<FadeOut>() != null)
-            GetComponent<FadeOut>().enabled = false;
+        {
+            m_foFadeOut = GetComponent<FadeOut>();
+            m_foFadeOut.enabled = false;
+        }
 
         if (GetComponent<SpriteRenderer>() != null)
-            GetComponent<SpriteRenderer>().color = Color.clear;
+        {
+            m_srSpriteRenderer = GetComponent<SpriteRenderer>();
+            m_srSpriteRenderer.color = Color.clear;
+        }
 
         if (GetComponent<RawImage>() != null)
-            GetComponent<RawImage>().color = Color.clear;
+        {
+            m_riRawImage = GetComponent<RawImage>();
+            m_riRawImage.color = Color.clear;
+        }
+
+        if (GetComponent<MeshRenderer>() != null)
+            m_mrMeshRenderer = GetComponent<MeshRenderer>();
 
         if (fadeOutTimer != 0)
             Invoke("FadeOutActivate", fadeOutTimer);
@@ -28,18 +45,17 @@ public class FadeIn : MonoBehaviour
 	// Update is called once per frame
 	private void Update()
     {
-        if (GetComponent<SpriteRenderer>() != null)
-            GetComponent<SpriteRenderer>().color = Color.Lerp(
-                GetComponent<SpriteRenderer>().color, Color.white, fadeSpeed * Time.deltaTime);
+        if (m_srSpriteRenderer != null)
+            m_srSpriteRenderer.color = Color.Lerp(
+                m_srSpriteRenderer.color, Color.white, fadeSpeed * Time.deltaTime);
 
-        if (GetComponent<RawImage>() != null)
-            GetComponent<RawImage>().color = Color.Lerp(
-                GetComponent<RawImage>().color, Color.white, fadeSpeed * Time.deltaTime);
+        if (m_riRawImage != null)
+            m_riRawImage.color = Color.Lerp(
+                m_riRawImage.color, Color.white, fadeSpeed * Time.deltaTime);
 
-		if (GetComponent<MeshRenderer>() != null)
-			GetComponent<MeshRenderer>().material.color = Color.Lerp(
-                GetComponent<MeshRenderer>().material.color, Color.white, fadeSpeed *
-                Time.deltaTime);
+		if (m_mrMeshRenderer != null)
+            m_mrMeshRenderer.material.color = Color.Lerp(
+                m_mrMeshRenderer.material.color, Color.white, fadeSpeed * Time.deltaTime);
     }
 
     /// <summary>
@@ -47,9 +63,9 @@ public class FadeIn : MonoBehaviour
     /// </summary>
     private void FadeOutActivate()
     {
-        if (GetComponent<FadeOut>())
-            GetComponent<FadeOut>().enabled = true;
+        if (m_foFadeOut)
+            m_foFadeOut.enabled = true;
 
-        GetComponent<FadeIn>().enabled = false;
+        enabled = false;
     }
 }

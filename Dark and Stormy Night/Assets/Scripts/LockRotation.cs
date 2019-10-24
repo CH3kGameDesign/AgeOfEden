@@ -9,43 +9,48 @@ public class LockRotation : MonoBehaviour
     public Vector3 rotationLock;
 
     private Vector3 startRotation;
-	// Use this for initialization
-	private void Start ()
+
+    private Transform m_tTransCache;
+
+    // Use this for initialization
+    private void Start()
     {
+        m_tTransCache = transform;
+
         if (global)
-            startRotation = transform.eulerAngles;
+            startRotation = m_tTransCache.eulerAngles;
         else
-            startRotation = transform.localEulerAngles;
+            startRotation = m_tTransCache.localEulerAngles;
 
         Debug.Log(startRotation);
     }
 	
 	// Update is called once per frame
-	private void Update ()
+	private void Update()
     {
 		if (global)
         {
             if (rotationLock.x != 0)
-                transform.eulerAngles = new Vector3(
-                    startRotation.x, transform.eulerAngles.y, transform.eulerAngles.z);
+                m_tTransCache.eulerAngles = new Vector3(
+                    startRotation.x, m_tTransCache.eulerAngles.y, m_tTransCache.eulerAngles.z);
             if (rotationLock.y != 0)
-                transform.eulerAngles = new Vector3(
-                    transform.eulerAngles.x, startRotation.y, transform.eulerAngles.z);
+                m_tTransCache.eulerAngles = new Vector3(
+                    m_tTransCache.eulerAngles.x, startRotation.y, m_tTransCache.eulerAngles.z);
             if (rotationLock.z != 0)
-                transform.eulerAngles = new Vector3(
-                    transform.eulerAngles.x, transform.eulerAngles.y, startRotation.z);
+                m_tTransCache.eulerAngles = new Vector3(
+                    m_tTransCache.eulerAngles.x, m_tTransCache.eulerAngles.y, startRotation.z);
         }
         else
         {
             if (rotationLock.x != 0)
-                transform.localEulerAngles = new Vector3(
-                    startRotation.x, transform.localEulerAngles.y, transform.localEulerAngles.z);
+                m_tTransCache.localEulerAngles = new Vector3(
+                    startRotation.x, m_tTransCache.localEulerAngles.y, m_tTransCache.localEulerAngles.z);
             if (rotationLock.y != 0)
-                transform.localEulerAngles = new Vector3(
-                    transform.localEulerAngles.x, startRotation.y, transform.localEulerAngles.z);
+                m_tTransCache.localEulerAngles = new Vector3(
+                    m_tTransCache.localEulerAngles.x, startRotation.y, m_tTransCache.localEulerAngles.z);
             if (rotationLock.z != 0)
-                transform.localEulerAngles = new Vector3(
-                    transform.localEulerAngles.x, transform.localEulerAngles.y, startRotation.z);
+                m_tTransCache.localEulerAngles = new Vector3(
+                    m_tTransCache.localEulerAngles.x, m_tTransCache.localEulerAngles.y, startRotation.z);
         }
 	}
 }

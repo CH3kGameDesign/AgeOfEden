@@ -18,7 +18,7 @@ public class CandleFixture : MonoBehaviour
 
     private float m_fSaveIntensity;
     private List<Color> emissionStart;
-
+    
     // Use this for initialization
     private void Start()
     {

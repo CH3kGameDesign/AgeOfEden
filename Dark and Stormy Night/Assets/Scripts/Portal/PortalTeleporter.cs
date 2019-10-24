@@ -21,8 +21,12 @@ public class PortalTeleporter : MonoBehaviour
 
     private bool playerIsOverlapping = false;
 
+    private Transform m_tTransCache;
+
     private void Start()
     {
+        m_tTransCache = transform;
+
         if (Movement.s_goPlayerObject)
             m_tPlayer = Movement.s_goPlayerObject.transform;
     }
@@ -32,14 +36,14 @@ public class PortalTeleporter : MonoBehaviour
     {
 		if (playerIsOverlapping)
 		{
-			Vector3 portalToPlayer = m_tPlayer.position - transform.position;
-			float dotProduct = Vector3.Dot(transform.up, portalToPlayer);
+			Vector3 portalToPlayer = m_tPlayer.position - m_tTransCache.position;
+			float dotProduct = Vector3.Dot(m_tTransCache.up, portalToPlayer);
 
 			// If this is true: The player has moved across the portal
 			if (dotProduct < 0f)
 			{
 				// Teleport him!
-				float rotationDiff = -Quaternion.Angle(transform.rotation, m_tReciever.rotation);
+				float rotationDiff = -Quaternion.Angle(m_tTransCache.rotation, m_tReciever.rotation);
 				rotationDiff += 180;
                 SmoothCameraMovement.s_fTurnAroundValue += rotationDiff;
 

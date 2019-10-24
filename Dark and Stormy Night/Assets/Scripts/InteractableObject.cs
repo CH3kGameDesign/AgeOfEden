@@ -16,45 +16,59 @@ public class InteractableObject : MonoBehaviour
     public GameObject grabObject;
 
     public bool inUse = false;
-    
-	// Update is called once per frame
-	private void Update()
+
+    private Transform m_tTransCache;
+    private Transform m_tPlayerTrans;
+    private Transform m_tSecondChild;
+
+    private SpriteRenderer m_srSpriteRenderer;
+    private Movement m_mPlayerMovement;
+
+    private void Start()
     {
-        if (Vector3.Distance(transform.position, Movement.s_goPlayerObject.transform.position) < 2)
+        m_tTransCache = transform;
+        m_tPlayerTrans = Movement.s_goPlayerObject.transform;
+        m_tSecondChild = transform.parent.GetChild(1);
+        m_srSpriteRenderer = GetComponent<SpriteRenderer>();
+        m_mPlayerMovement = Movement.s_goPlayerObject.GetComponent<Movement>();
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {
+        if (Vector3.Distance(m_tTransCache.position, m_tPlayerTrans.position) < 2)
         {
             if (!inUse)
             {
-                GetComponent<SpriteRenderer>().color = Color.Lerp(
-                    GetComponent<SpriteRenderer>().color, hoverOverColor, Time.deltaTime);
-
-                transform.localScale = Vector3.Lerp(
-                    transform.localScale, new Vector3(0.1f, 0.1f, 0.1f), Time.deltaTime);
+                m_srSpriteRenderer.color = Color.Lerp(
+                    m_srSpriteRenderer.color, hoverOverColor, Time.deltaTime);
+                m_tTransCache.localScale = Vector3.Lerp(
+                    m_tTransCache.localScale, new Vector3(0.1f, 0.1f, 0.1f), Time.deltaTime);
 
                 if (Input.GetMouseButtonDown(0))
                 {
                     inUse = true;
                     GetComponent<SpriteRenderer>().color = clickColor;
-
-                    Movement.s_goPlayerObject.GetComponent<Movement>().
-                        m_aModelAnimator.SetInteger("Interaction", 1);
+                    m_mPlayerMovement.m_aModelAnimator.SetInteger("Interaction", 1);
                 }
             }
         }
         else
         {
-            GetComponent<SpriteRenderer>().color = Color.Lerp(
-                GetComponent<SpriteRenderer>().color, defaultColor, Time.deltaTime);
-            transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, Time.deltaTime);
+            m_srSpriteRenderer.color = Color.Lerp(
+                m_srSpriteRenderer.color, defaultColor, Time.deltaTime);
+            m_tTransCache.localScale = Vector3.Lerp(
+                m_tTransCache.localScale, Vector3.zero, Time.deltaTime);
         }
         
         if (inUse)
         {
-            transform.localScale = Vector3.Lerp(
-                transform.localScale, Vector3.zero, Time.deltaTime * 2);
+            m_tTransCache.localScale = Vector3.Lerp(
+                m_tTransCache.localScale, Vector3.zero, Time.deltaTime * 2);
 
             Movement.s_bCanMove = false;
-            Movement.s_goPlayerObject.transform.position = Vector3.Lerp(
-                Movement.s_goPlayerObject.transform.position, transform.parent.GetChild(1).position,
+            m_tPlayerTrans.position = Vector3.Lerp(
+                m_tPlayerTrans.position, m_tSecondChild.position,
                 Time.deltaTime);
 
             CameraMovement.s_CanMove = false;
