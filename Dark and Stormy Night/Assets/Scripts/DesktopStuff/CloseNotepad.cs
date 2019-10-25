@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.Text;
 using UnityEngine;
-using System;
-using System.IO;
 using System.Diagnostics;
 
 public class CloseNotepad : MonoBehaviour {
@@ -30,4 +32,26 @@ public class CloseNotepad : MonoBehaviour {
             targetCounter++;
         }
     }
+    public void CloseSpecificWindow (string win)
+    {
+        IntPtr windowPtr = FindWindowByCaption(IntPtr.Zero, win);
+        if (windowPtr != IntPtr.Zero)
+        {
+            SendMessage(windowPtr, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+        }
+    }
+
+    [DllImport("user32.dll", SetLastError = true)]
+    static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+    /// <summary>
+    /// Find window by Caption only. Note you must pass IntPtr.Zero as the first parameter.
+    /// </summary>
+    [DllImport("user32.dll", EntryPoint = "FindWindow", SetLastError = true)]
+    static extern IntPtr FindWindowByCaption(IntPtr ZeroOnly, string lpWindowName);
+
+    [DllImport("user32.dll", CharSet = CharSet.Auto)]
+    static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
+
+    const UInt32 WM_CLOSE = 0x0010;
 }

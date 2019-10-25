@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class InterruptExit : MonoBehaviour {
     public bool active;
     public UnityEvent activateOnExitAttempt = new UnityEvent();
+    public bool removeOnDisable = true;
 
 	// Use this for initialization
 	void Start () {
@@ -22,7 +23,13 @@ public class InterruptExit : MonoBehaviour {
         if (active)
             activateOnExitAttempt.Invoke();
     }
-    
+
+    private void OnDisable()
+    {
+        if (removeOnDisable)
+            Application.wantsToQuit -= WantsToQuit;
+    }
+
     static bool WantsToQuit()
     {
         Debug.Log("Player prevented from quitting.");

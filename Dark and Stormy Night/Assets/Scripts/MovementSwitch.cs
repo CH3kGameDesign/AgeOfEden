@@ -41,6 +41,7 @@ public class MovementSwitch : MonoBehaviour
         if (choice != choices.movement)
         {
             CameraMovement.s_CanMove = enable;
+            CameraMovement.s_CameraObject.GetComponent<CameraMovement>().ChangeShakeStatus(false);
             //CameraMovement.s_CameraObject.GetComponent<SmoothCameraMovement>()
             //    .resetRotation();
         }

@@ -12,7 +12,17 @@ public class DeleteFile : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (CTF == null && path == null)
+        DoThing();
+    }
+	
+	// Update is called once per frame
+	void Update () {
+		
+	}
+
+    public void DoThing ()
+    {
+        if (CTF == null && path == null)
         {
             if (GetComponent<CreateTextFile>() != null)
                 CTF.Add(GetComponent<CreateTextFile>());
@@ -57,9 +67,4 @@ public class DeleteFile : MonoBehaviour {
             }
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

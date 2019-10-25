@@ -7,6 +7,7 @@ public class FadeIn : MonoBehaviour
 {
     [Header("Variables")]
     public float fadeSpeed;
+    public Color tarColor = Color.white;
     public float fadeOutTimer;
 
     private FadeOut m_foFadeOut;
@@ -47,15 +48,15 @@ public class FadeIn : MonoBehaviour
     {
         if (m_srSpriteRenderer != null)
             m_srSpriteRenderer.color = Color.Lerp(
-                m_srSpriteRenderer.color, Color.white, fadeSpeed * Time.deltaTime);
+                m_srSpriteRenderer.color, tarColor, fadeSpeed * Time.deltaTime);
 
         if (m_riRawImage != null)
             m_riRawImage.color = Color.Lerp(
-                m_riRawImage.color, Color.white, fadeSpeed * Time.deltaTime);
+                m_riRawImage.color, tarColor, fadeSpeed * Time.deltaTime);
 
 		if (m_mrMeshRenderer != null)
             m_mrMeshRenderer.material.color = Color.Lerp(
-                m_mrMeshRenderer.material.color, Color.white, fadeSpeed * Time.deltaTime);
+                m_mrMeshRenderer.material.color, tarColor, fadeSpeed * Time.deltaTime);
     }
 
     /// <summary>
