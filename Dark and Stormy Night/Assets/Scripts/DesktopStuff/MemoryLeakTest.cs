@@ -46,7 +46,7 @@ public class MemoryLeakTest : MonoBehaviour
         EnumDelegate filter = delegate (IntPtr hWnd, int lParam)
         {
             StringBuilder strbTitle = new StringBuilder(255);
-            int nLength = GetWindowText(hWnd, strbTitle, strbTitle.Capacity + 1);
+            //int nLength = GetWindowText(hWnd, strbTitle, strbTitle.Capacity + 1);
             string strTitle = strbTitle.ToString();
 
             if (IsWindowVisible(hWnd) && string.IsNullOrEmpty(strTitle) == false)
@@ -69,6 +69,7 @@ public class MemoryLeakTest : MonoBehaviour
             }
             return true;
         };
+
         if (EnumDesktopWindows(IntPtr.Zero, filter, IntPtr.Zero))
         {
             //

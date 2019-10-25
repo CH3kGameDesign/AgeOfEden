@@ -37,13 +37,11 @@ public class TextGeneration : MonoBehaviour
     public string textString;
 
     private Transform m_tTransCache;
-    private Transform m_tFirstChild;
 
     // Called once before the first frame
     private void Start()
     {
         m_tTransCache = transform;
-        m_tFirstChild = transform.GetChild(0);
 
         textString = textObject.GetComponent<TextMeshPro>().text;
         textObject.GetComponent<TextMeshPro>().text = "";
@@ -65,7 +63,7 @@ public class TextGeneration : MonoBehaviour
 
             if (destroyTime >= destroyTimer)
             {
-                Destroy(m_tFirstChild.gameObject);
+                Destroy(transform.GetChild(0).gameObject);
                 textCount = 0;
 
                 if (disperseOption == 0)
@@ -151,6 +149,7 @@ public class TextGeneration : MonoBehaviour
             // This is yucky
             //Destroy(transform.GetChild(0).gameObject);
             transform.GetChild(0).GetComponent<FadeOut>().fade = true;
+            Transform viewer = transform.GetChild(0);
             transform.GetChild(0).SetParent(transform.parent);
 
             textCount++;
