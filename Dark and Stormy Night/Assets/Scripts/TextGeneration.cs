@@ -1,182 +1,212 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using TMPro;
 
 public class TextGeneration : MonoBehaviour
 {
-    [Header("Child GameObjects")]
-    public GameObject textObject;
-    [Header("Variables")]
-    public float textSpeed = 0.1f;
-    public float destroyTimer;
-    public Vector3 direction;
-    public float randomPositioning;
-
-    public List<GameObject> singleKeySounds = new List<GameObject>();
-    public GameObject spaceKeySound;
-
-    [Tooltip("0: Delete || 1: BlowAway")]
-    public int disperseOption;
-
-    public bool playOnAwake = false;
-
-    [Space(20)]
-
-    [Header("Activate")]
-    public GameObject[] activateOnFinish;
-    public GameObject[] activateOnDestroy;
-
-    private float destroyTime;
-
-    private int textCount;
-
     [HideInInspector]
-    public bool played = false;
-    [HideInInspector]
-    public string textString;
+    public bool m_bPlayed = false;
+
+    [SerializeField]
+    private bool m_bBlowAway = false;
+
+    [SerializeField, FormerlySerializedAs("playOnAwake")]
+    private bool m_bPlayOnAwake = false;
+
+    [FormerlySerializedAs("textSpeed")]
+    public float m_fTextSpeed = 0.1f;
+
+    [SerializeField, FormerlySerializedAs("destroyTimer")]
+    private float m_fDestroyDelay = 0f;
+    
+    [SerializeField, FormerlySerializedAs("randomPositioning")]
+    private float m_fRandomOffsetStrength;
+
+    [SerializeField, FormerlySerializedAs("direction")]
+    private Vector3 m_v3TextDirection;
+
+    [Header("References")]
+    [SerializeField, FormerlySerializedAs("textObject")]
+    private GameObject m_goTextObject;
+
+    [SerializeField, FormerlySerializedAs("spaceKeySound")]
+    private GameObject m_goSpaceKeySound;
+    [SerializeField, FormerlySerializedAs("singleKeySounds")]
+    private List<GameObject> m_LgoSingleKeySounds = new List<GameObject>();
+
+    [Header("Activations")]
+    [FormerlySerializedAs("activateOnFinish")]
+    public GameObject[] m_AgoActivateOnFinish;
+    [FormerlySerializedAs("activateOnDestroy")]
+    public GameObject[] m_AgoActivateOnDestroy;
+    
+    private float m_fTimer;
+
+    private string m_sMessage;
 
     private Transform m_tTransCache;
+
+    private List<Transform> m_LtCharacters = new List<Transform>();
 
     // Called once before the first frame
     private void Start()
     {
         m_tTransCache = transform;
+        
+        if (m_goTextObject == null)
+            m_goTextObject = m_tTransCache.GetChild(0).gameObject;
 
-        textString = textObject.GetComponent<TextMeshPro>().text;
-        textObject.GetComponent<TextMeshPro>().text = "";
+        // Loads the message into local storage then clears it
+        TextMeshPro textObject = m_goTextObject.GetComponent<TextMeshPro>();
+        m_sMessage = textObject.text;
+        textObject.text = "";
+        
+        TextGenerate();
 
-        if (playOnAwake)
+        Destroy(m_tTransCache.GetChild(0).gameObject);
+
+        if (m_bPlayOnAwake)
         {
-            StartCoroutine("TextGenerate", textSpeed);
-            played = true;
+            StartCoroutine("PresentText");
         }
     }
 
     // Called once per frame
-    private void Update()
+    private void FixedUpdate()
     {
-        if (m_tTransCache.childCount == textString.Length + 1)
+        // Full text list
+        if (m_bPlayed && m_LtCharacters.Count == m_sMessage.Length)
         {
-            for (int i = 0; i < activateOnFinish.Length; i++)
-                activateOnFinish[i].SetActive(true);
-
-            if (destroyTime >= destroyTimer)
+            if (m_fTimer >= m_fDestroyDelay)
             {
-                Destroy(transform.GetChild(0).gameObject);
-                textCount = 0;
-
-                if (disperseOption == 0)
-                    StartCoroutine("TextDestroy", textSpeed);
-
-                if (disperseOption == 1)
-                    StartCoroutine("BlowUsAllAway", textSpeed);
+                if (m_bBlowAway)
+                    StartCoroutine("BlowUsAllAway");
+                else
+                    StartCoroutine("TextDestroy");
             }
             else
-                destroyTime += Time.deltaTime;
+                m_fTimer += Time.deltaTime;
         }
 
-        if (destroyTime >= destroyTimer && m_tTransCache.childCount == 0)
+        if (m_fTimer >= m_fDestroyDelay && m_LtCharacters.Count == 0)
         {
-            for (int i = 0; i < activateOnDestroy.Length; i++)
-                activateOnDestroy[i].SetActive(true);
+            for (int i = 0; i < m_AgoActivateOnDestroy.Length; i++)
+                m_AgoActivateOnDestroy[i].SetActive(true);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && !played)
+        // ONLY WORKS IF A TRIGGER IS ATTACHED TO THIS OBJECT
+        // OTHERWISE LOOK INTO TextGenerationCollider
+        if (other.tag == "Player" && !m_bPlayed)
         {
-            StartCoroutine("TextGenerate", textSpeed);
-            played = true;
+            StartCoroutine("PresentText");
         }
     }
 
     /// <summary>
     /// Generates text after a delay
     /// </summary>
-    /// <param name="pWaitTime">The delay before generating</param>
-    /// <returns></returns>
-    private IEnumerator TextGenerate(float pWaitTime)
+    private void TextGenerate()
     {
-        while (textCount < textString.Length)
+        int letterCount = 0;
+        while (letterCount < m_sMessage.Length)
         {
-            yield return new WaitForSeconds(pWaitTime);
+            // Creates the character object
+            GameObject newChar = Instantiate(
+                m_goTextObject, m_tTransCache.position, m_tTransCache.rotation, m_tTransCache);
 
-            GameObject GOText = Instantiate(
-                textObject, m_tTransCache.position, m_tTransCache.rotation, m_tTransCache);
+            TextMeshPro charTMP = newChar.GetComponent<TextMeshPro>();
 
-            GOText.transform.localPosition = new Vector3(
-                GOText.GetComponent<TextMeshPro>().fontSize / 17 * textCount * direction.x,
-                GOText.GetComponent<TextMeshPro>().fontSize / 13 * textCount * direction.y,
-                GOText.GetComponent<TextMeshPro>().fontSize / 17 * textCount * direction.z);
+            // Offsets position
+            newChar.transform.localPosition = new Vector3(
+                charTMP.fontSize / 17 * letterCount * m_v3TextDirection.x,
+                charTMP.fontSize / 13 * letterCount * m_v3TextDirection.y,
+                charTMP.fontSize / 17 * letterCount * m_v3TextDirection.z);
 
-            GOText.transform.position += Random.insideUnitSphere * randomPositioning;
+            // Apply randomness
+            newChar.transform.position += Random.insideUnitSphere * m_fRandomOffsetStrength;
 
-            GOText.GetComponent<TextMeshPro>().text =
-                textString.ToCharArray()[textCount].ToString();
+            // Sets the specific character
+            charTMP.text = m_sMessage.ToCharArray()[letterCount].ToString();
 
-            if (singleKeySounds.Count != 0)
+            // Adds the fadeout script to the object
+            newChar.AddComponent<FadeOut>();
+
+            m_LtCharacters.Add(newChar.transform);
+
+            newChar.SetActive(false);
+
+            letterCount++;
+        }
+    }
+
+    public void PresentTextCoroutine()
+    {
+        StartCoroutine(PresentText());
+    }
+    
+    private IEnumerator PresentText()
+    {
+        int letterCount = 0;
+        while (letterCount < m_sMessage.Length)
+        {
+            yield return new WaitForSeconds(m_fTextSpeed);
+      
+            m_LtCharacters[letterCount].gameObject.SetActive(true);
+
+            // If the key list isnt empty and the character isn't a space
+            if (m_LgoSingleKeySounds.Count != 0
+                && m_sMessage[letterCount].ToString() != " ")
             {
-                if (textString.ToCharArray()[textCount].ToString() == " ")
-                    Instantiate(
-                        spaceKeySound, GOText.transform.position, transform.rotation);
-                else
-                {
-                    int no = Random.Range(0, singleKeySounds.Count);
-                    Instantiate(
-                        singleKeySounds[no], GOText.transform.position, transform.rotation);
-                }
+                // Play a random key noise
+                Instantiate(m_LgoSingleKeySounds[Random.Range(0, m_LgoSingleKeySounds.Count)],
+                    m_LtCharacters[letterCount].transform.position, m_tTransCache.rotation);
+            }
+            else
+            {
+                Instantiate(m_goSpaceKeySound, m_LtCharacters[letterCount].transform.position,
+                    m_tTransCache.rotation);
             }
 
-            GOText.AddComponent<FadeOut>();
+            letterCount++;
+        }
 
-            textCount++;
+        for (int i = 0; i < m_AgoActivateOnFinish.Length; i++)
+            m_AgoActivateOnFinish[i].SetActive(true);
+
+        m_bPlayed = true;
+    }
+    
+    private IEnumerator TextDestroy()
+    {
+        int letterCount = 0;
+        while (letterCount < m_sMessage.Length)
+        {
+            yield return new WaitForSeconds(m_fTextSpeed);
+
+            m_LtCharacters[letterCount].GetComponent<FadeOut>().fade = true;
+            //m_LtCharacters[letterCount].SetParent(m_tTransCache.parent);
+
+            letterCount++;
         }
     }
-
-    /// <summary>
-    /// Destroys the text after a delay
-    /// </summary>
-    /// <param name="pWaitTime">The delay before destroying</param>
-    /// <returns></returns>
-    private IEnumerator TextDestroy(float pWaitTime)
+    
+    private IEnumerator BlowUsAllAway()
     {
-        while (textCount < textString.Length)
+        int letterCount = 0;
+        while (letterCount < m_sMessage.Length)
         {
-            yield return new WaitForSeconds(pWaitTime);
+            yield return new WaitForSeconds(m_fTextSpeed);
 
-            // This is yucky
-            //Destroy(transform.GetChild(0).gameObject);
-            transform.GetChild(0).GetComponent<FadeOut>().fade = true;
-            Transform viewer = transform.GetChild(0);
-            transform.GetChild(0).SetParent(transform.parent);
-
-            textCount++;
-        }
-    }
-
-    /// <summary>
-    /// Blows the text away
-    /// </summary>
-    /// <param name="pWaitTime">The delay before animating</param>
-    /// <returns></returns>
-    private IEnumerator BlowUsAllAway(float pWaitTime)
-    {
-        while (textCount < textString.Length)
-        {
-            yield return new WaitForSeconds(pWaitTime);
-
-            transform.GetChild(textCount).GetComponent<Rigidbody>().AddForce(
+            m_LtCharacters[letterCount].GetComponent<FadeOut>().fade = true;
+            m_LtCharacters[letterCount].GetComponent<Rigidbody>().AddForce(
                 Random.insideUnitSphere, ForceMode.Impulse);
 
-            textCount++;
-        }
-
-        while (textCount == textString.Length)
-        {
-            textCount = 0;
-            yield return StartCoroutine("TextDestroy", pWaitTime);
+            letterCount++;
         }
     }
 }
