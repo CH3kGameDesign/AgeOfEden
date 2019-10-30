@@ -21,12 +21,9 @@ public class TextGenerationCollider : MonoBehaviour
 	
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && !tempRef.played)
+        if (other.tag == "Player" && !tempRef.m_bPlayed)
         {
-            tempRef.StartCoroutine(
-                "TextGenerate", tempRef.textSpeed);
-
-            tempRef.played = true;
+            tempRef.PresentTextCoroutine();
         }
     }
 }
