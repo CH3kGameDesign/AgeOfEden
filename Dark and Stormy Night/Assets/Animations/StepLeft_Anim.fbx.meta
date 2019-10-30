@@ -1,0 +1,249 @@
+fileFormatVersion: 2
+guid: 260ea1af13feecf4db838326056d6439
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Character_Low
+    100002: Joint_Base
+    100004: Joint_Head
+    100006: Joint_Neck
+    100008: Joint_Pelvis
+    100010: Joint_TorsoBottom
+    100012: Joint_TorsoMid
+    100014: Joint_TorsoRibLower
+    100016: Joint_TorsoUpper
+    100018: L_Joint_Ankle
+    100020: L_Joint_Elbow
+    100022: L_Joint_FootBack
+    100024: L_Joint_Front
+    100026: L_Joint_IndexLM
+    100028: L_Joint_IndexLower
+    100030: L_Joint_IndexUM
+    100032: L_Joint_IndexUpper
+    100034: L_Joint_Knee
+    100036: L_Joint_MiddleLM
+    100038: L_Joint_MiddleLower
+    100040: L_Joint_MiddleUM
+    100042: L_Joint_MiddleUpper
+    100044: L_Joint_PinkyLM
+    100046: L_Joint_PinkyLower
+    100048: L_Joint_PinkyUM
+    100050: L_Joint_PinkyUpper
+    100052: L_Joint_RingLM
+    100054: L_Joint_RingLM1
+    100056: L_Joint_RingUM
+    100058: L_Joint_RingUpper
+    100060: L_Joint_Shoulder
+    100062: L_Joint_ThumbLower
+    100064: L_Joint_ThumbMid
+    100066: L_Joint_ThumbUpper
+    100068: L_Joint_UpperLeg
+    100070: L_Joint_Wrist
+    100072: R_Joint_Ankle
+    100074: R_Joint_Elbow
+    100076: R_Joint_FootBack
+    100078: R_Joint_Front
+    100080: R_Joint_IndexLM
+    100082: R_Joint_IndexLower
+    100084: R_Joint_IndexUM
+    100086: R_Joint_IndexUpper
+    100088: R_Joint_Knee
+    100090: R_Joint_MiddleLM
+    100092: R_Joint_MiddleLower
+    100094: R_Joint_MiddleUM
+    100096: R_Joint_MiddleUpper
+    100098: R_Joint_PinkyLM
+    100100: R_Joint_PinkyLower
+    100102: R_Joint_PinkyUM
+    100104: R_Joint_PinkyUpper
+    100106: R_Joint_RingLM
+    100108: R_Joint_RingLM1
+    100110: R_Joint_RingUM
+    100112: R_Joint_RingUpper
+    100114: R_Joint_Shoulder
+    100116: R_Joint_ThumbLower
+    100118: R_Joint_ThumbMid
+    100120: R_Joint_ThumbUpper
+    100122: R_Joint_UpperLeg
+    100124: R_Joint_Wrist
+    100126: //RootNode
+    400000: Character_Low
+    400002: Joint_Base
+    400004: Joint_Head
+    400006: Joint_Neck
+    400008: Joint_Pelvis
+    400010: Joint_TorsoBottom
+    400012: Joint_TorsoMid
+    400014: Joint_TorsoRibLower
+    400016: Joint_TorsoUpper
+    400018: L_Joint_Ankle
+    400020: L_Joint_Elbow
+    400022: L_Joint_FootBack
+    400024: L_Joint_Front
+    400026: L_Joint_IndexLM
+    400028: L_Joint_IndexLower
+    400030: L_Joint_IndexUM
+    400032: L_Joint_IndexUpper
+    400034: L_Joint_Knee
+    400036: L_Joint_MiddleLM
+    400038: L_Joint_MiddleLower
+    400040: L_Joint_MiddleUM
+    400042: L_Joint_MiddleUpper
+    400044: L_Joint_PinkyLM
+    400046: L_Joint_PinkyLower
+    400048: L_Joint_PinkyUM
+    400050: L_Joint_PinkyUpper
+    400052: L_Joint_RingLM
+    400054: L_Joint_RingLM1
+    400056: L_Joint_RingUM
+    400058: L_Joint_RingUpper
+    400060: L_Joint_Shoulder
+    400062: L_Joint_ThumbLower
+    400064: L_Joint_ThumbMid
+    400066: L_Joint_ThumbUpper
+    400068: L_Joint_UpperLeg
+    400070: L_Joint_Wrist
+    400072: R_Joint_Ankle
+    400074: R_Joint_Elbow
+    400076: R_Joint_FootBack
+    400078: R_Joint_Front
+    400080: R_Joint_IndexLM
+    400082: R_Joint_IndexLower
+    400084: R_Joint_IndexUM
+    400086: R_Joint_IndexUpper
+    400088: R_Joint_Knee
+    400090: R_Joint_MiddleLM
+    400092: R_Joint_MiddleLower
+    400094: R_Joint_MiddleUM
+    400096: R_Joint_MiddleUpper
+    400098: R_Joint_PinkyLM
+    400100: R_Joint_PinkyLower
+    400102: R_Joint_PinkyUM
+    400104: R_Joint_PinkyUpper
+    400106: R_Joint_RingLM
+    400108: R_Joint_RingLM1
+    400110: R_Joint_RingUM
+    400112: R_Joint_RingUpper
+    400114: R_Joint_Shoulder
+    400116: R_Joint_ThumbLower
+    400118: R_Joint_ThumbMid
+    400120: R_Joint_ThumbUpper
+    400122: R_Joint_UpperLeg
+    400124: R_Joint_Wrist
+    400126: //RootNode
+    2100000: CharacterSkin
+    4300000: Character_Low
+    7400000: StepLeft_Anim
+    9500000: //RootNode
+    13700000: Character_Low
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: StepLeft_Anim
+      takeName: StepLeft_Anim
+      firstFrame: 313
+      lastFrame: 345
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

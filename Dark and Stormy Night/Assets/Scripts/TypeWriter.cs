@@ -371,7 +371,7 @@ public class TypeWriter : MonoBehaviour
                 charScriptTakesOverCounter = -1000;
                 scriptTyping = false;
             }
-            else if (endNo >= PermanentData.saveInfo.endingsAchieved.Count - 2)
+            else if (endNo >= PermanentData.saveInfo.endingsAchieved.Count - 1)
             {
                 if (activatedEnding == true)
                     activateOnAllEndings.SetActive(true);
