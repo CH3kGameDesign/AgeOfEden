@@ -12,12 +12,14 @@ public class FadeOut : MonoBehaviour
     public float fadeSpeed = 1;
 
     private TextMeshPro m_tmpText;
+    private TextMeshProUGUI m_tmpUIText;
     private MeshRenderer m_mrMesh;
     private RawImage m_riImage;
 
     private void Start()
     {
         m_tmpText = GetComponent<TextMeshPro>();
+        m_tmpUIText = GetComponent<TextMeshProUGUI>();
         m_mrMesh = GetComponent<MeshRenderer>();
         m_riImage = GetComponent<RawImage>();
     }
@@ -60,6 +62,18 @@ public class FadeOut : MonoBehaviour
 
                         if (m_riImage.color.a <= 0.05)
                             Destroy(gameObject);
+                    }
+                    else
+                    {
+                        if (m_tmpUIText)
+                        {
+                            m_tmpUIText.color = Color.Lerp(
+                                m_tmpUIText.color, Color.clear,
+                                fadeSpeed * Time.deltaTime);
+
+                            if (m_tmpUIText.color.a == 0)
+                                Destroy(gameObject);
+                        }
                     }
                 }
             }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class KeyEnable : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class KeyEnable : MonoBehaviour
     public List<GameObject> enableObjects = new List<GameObject>();
     public List<GameObject> disableObjects = new List<GameObject>();
     public bool toggle = false;
+    public UnityEvent activateOnPress = new UnityEvent();
 
     // Update is called once per frame
     private void Update()
@@ -22,6 +24,7 @@ public class KeyEnable : MonoBehaviour
     /// </summary>
     private void DoThing()
     {
+        activateOnPress.Invoke();
         if (toggle)
         {
             for (int i = 0; i < enableObjects.Count; i++)
