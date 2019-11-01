@@ -750,7 +750,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activateOnStart: 1
-  m_cEnterChar: 63
+  m_cEnterChar: 80
   m_oOutputs:
   - m_olOutputLocation: 2
     folderPath:
@@ -1601,7 +1601,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activateOnStart: 1
-  m_cEnterChar: 63
+  m_cEnterChar: 80
   m_oOutputs:
   - m_olOutputLocation: 2
     folderPath:
@@ -3952,7 +3952,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activateOnStart: 1
-  m_cEnterChar: 63
+  m_cEnterChar: 80
   m_oOutputs:
   - m_olOutputLocation: 2
     folderPath:
@@ -4889,7 +4889,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activateOnStart: 1
-  m_cEnterChar: 63
+  m_cEnterChar: 80
   m_oOutputs:
   - m_olOutputLocation: 2
     folderPath:
@@ -5000,7 +5000,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &384070312
 GameObject:
@@ -6520,24 +6520,28 @@ MonoBehaviour:
     m_waitTime: 0
     replace: 1
     oneByOneTimer: 0.15
+    lettersAtATime: 1
     changeTitle: 0
   - m_message: '||||D o n '' t   Y o u . . . ?'
     fileToCopy: {fileID: 0}
     m_waitTime: 1.5
     replace: 0
     oneByOneTimer: 0.3
+    lettersAtATime: 1
     changeTitle: 0
   - m_message: say yes
     fileToCopy: {fileID: 0}
     m_waitTime: 1.5
     replace: 1
     oneByOneTimer: 0.05
+    lettersAtATime: 1
     changeTitle: 1
   - m_message: yes
     fileToCopy: {fileID: 0}
     m_waitTime: 0.15
     replace: 1
     oneByOneTimer: 0
+    lettersAtATime: 1
     changeTitle: 0
   closeOnFileOnFinal: 1
   activateOnFinish: {fileID: 1006024460}
@@ -7339,7 +7343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activateOnStart: 1
-  m_cEnterChar: 63
+  m_cEnterChar: 80
   m_oOutputs:
   - m_olOutputLocation: 2
     folderPath:
@@ -9328,6 +9332,51 @@ MonoBehaviour:
       Thank you.... thank you.... thank you.'
     m_sMessageFile: {fileID: 0}
     txtExtension: 1
+--- !u!1 &766975759
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 766975761}
+  - component: {fileID: 766975760}
+  m_Layer: 0
+  m_Name: DeleteFiles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &766975760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 766975759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 354d0cf0750d0ec4abc3a2f02fe4b718, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CTF:
+  - {fileID: 1481461672}
+  - {fileID: 1702805923}
+  deleteDirectory: 0101
+  path: []
+--- !u!4 &766975761
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 766975759}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1687054047}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &771301742
 GameObject:
   m_ObjectHideFlags: 0
@@ -10016,7 +10065,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &854494445
 GameObject:
@@ -11336,7 +11385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activateOnStart: 1
-  m_cEnterChar: 63
+  m_cEnterChar: 80
   m_oOutputs:
   - m_olOutputLocation: 2
     folderPath:
@@ -12137,7 +12186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activateOnStart: 1
-  m_cEnterChar: 63
+  m_cEnterChar: 80
   m_oOutputs:
   - m_olOutputLocation: 2
     folderPath:
@@ -12866,7 +12915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activateOnStart: 1
-  m_cEnterChar: 63
+  m_cEnterChar: 80
   m_oOutputs:
   - m_olOutputLocation: 2
     folderPath:
@@ -12920,7 +12969,7 @@ Transform:
   - {fileID: 1006024462}
   - {fileID: 505051584}
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1156324441
 GameObject:
@@ -14396,7 +14445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activateOnStart: 1
-  m_cEnterChar: 63
+  m_cEnterChar: 80
   m_oOutputs:
   - m_olOutputLocation: 2
     folderPath:
@@ -14619,7 +14668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activateOnStart: 1
-  m_cEnterChar: 63
+  m_cEnterChar: 80
   m_oOutputs:
   - m_olOutputLocation: 2
     folderPath:
@@ -15160,6 +15209,47 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1347076185}
   m_RootOrder: 23
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1340232395
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1340232397}
+  - component: {fileID: 1340232396}
+  m_Layer: 0
+  m_Name: CloseNotepad
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1340232396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1340232395}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8efab8723c43a4a4e948c44f2db07786, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetWindow: -1
+--- !u!4 &1340232397
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1340232395}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -33.428078, y: 5.168838, z: 47.249096}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1687054047}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1343385495
 GameObject:
@@ -16731,7 +16821,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activateOnStart: 1
-  m_cEnterChar: 63
+  m_cEnterChar: 80
   m_oOutputs:
   - m_olOutputLocation: 2
     folderPath:
@@ -18145,7 +18235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activateOnStart: 1
-  m_cEnterChar: 63
+  m_cEnterChar: 80
   m_oOutputs:
   - m_olOutputLocation: 2
     folderPath:
@@ -18241,6 +18331,79 @@ MonoBehaviour:
     m_sMessage: Hello? Is anyone There?
     m_sMessageFile: {fileID: 4900000, guid: f88198fe946648d4494cd8d9ac281b3a, type: 3}
     txtExtension: 1
+--- !u!1 &1481461671
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1481461674}
+  - component: {fileID: 1481461672}
+  - component: {fileID: 1481461673}
+  m_Layer: 0
+  m_Name: (0)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1481461672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1481461671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fbd8e863de2d2145af38bdaeed658bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateOnStart: 0
+  m_cEnterChar: 63
+  m_oOutputs:
+  - m_olOutputLocation: 0
+    folderPath:
+    - EDEN
+    - Foyer
+    - Upstairs
+    - Attic
+    m_osOutputState: 2
+    m_bOverwrite: 1
+    m_bUseTypeWriter: 0
+    m_sFileName: Struggling
+    m_bPlusRandom: 0
+    m_sMessage: ' '
+    m_sMessageFile: {fileID: 0}
+    txtExtension: 1
+--- !u!114 &1481461673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1481461671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8209a9332832ff54e92f27db608f79df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateOnStart: 0
+  hide: 0
+  openDirectory: 0
+  openAmount: 1
+--- !u!4 &1481461674
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1481461671}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -23.816074, y: 35.736176, z: -321.77255}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1687054047}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1484000378
 GameObject:
   m_ObjectHideFlags: 0
@@ -18735,7 +18898,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activateOnStart: 1
-  m_cEnterChar: 63
+  m_cEnterChar: 80
   m_oOutputs:
   - m_olOutputLocation: 2
     folderPath:
@@ -19015,7 +19178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activateOnStart: 1
-  m_cEnterChar: 63
+  m_cEnterChar: 80
   m_oOutputs:
   - m_olOutputLocation: 2
     folderPath:
@@ -19726,7 +19889,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1667661564
 MonoBehaviour:
@@ -19879,6 +20042,11 @@ MonoBehaviour:
     activateOnYes: {fileID: 1154062089}
     removeOnFinish: 1
     notepad: 1
+    closeFile: 0
+  - fileName: Canvas
+    activateOnYes: {fileID: 1687054043}
+    removeOnFinish: 1
+    notepad: 0
     closeFile: 0
 --- !u!1 &1671891150
 GameObject:
@@ -20150,7 +20318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activateOnStart: 1
-  m_cEnterChar: 63
+  m_cEnterChar: 80
   m_oOutputs:
   - m_olOutputLocation: 2
     folderPath:
@@ -20175,6 +20343,137 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1276274912}
   m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1687054043
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1687054047}
+  - component: {fileID: 1687054046}
+  - component: {fileID: 1687054045}
+  - component: {fileID: 1687054044}
+  m_Layer: 0
+  m_Name: '--- 014 Canvas ------------------------------------'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1687054044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1687054043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ce8788ce5da27b45847bfdbf2295309, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_fileName: _Canvas_
+  m_enterChar: '|'
+  textList:
+  - m_message: Canvas
+    fileToCopy: {fileID: 4900000, guid: 42553b42e565a2c40aa262c3d1a4ae9b, type: 3}
+    m_waitTime: 0
+    replace: 1
+    oneByOneTimer: 0.0001
+    lettersAtATime: 5
+    changeTitle: 0
+  closeOnFileOnFinal: 0
+  activateOnFinish: {fileID: 0}
+--- !u!114 &1687054045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1687054043}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9e5fa2b181fd35438a2ca71934add62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GO: []
+  GODisable: []
+  activateEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1340232396}
+        m_MethodName: DoThing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 766975759}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  time: 3.5
+  repeatable: 0
+--- !u!114 &1687054046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1687054043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9e5fa2b181fd35438a2ca71934add62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GO: []
+  GODisable: []
+  activateEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1702805924}
+        m_MethodName: Hide
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  time: 0
+  repeatable: 0
+--- !u!4 &1687054047
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1687054043}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 33.428078, y: -5.168838, z: -47.249096}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1340232397}
+  - {fileID: 1481461674}
+  - {fileID: 1702805925}
+  - {fileID: 766975761}
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1687760014
 GameObject:
@@ -20441,6 +20740,76 @@ Transform:
   m_Children: []
   m_Father: {fileID: 176029089}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1702805922
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1702805925}
+  - component: {fileID: 1702805923}
+  - component: {fileID: 1702805924}
+  m_Layer: 0
+  m_Name: (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1702805923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1702805922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fbd8e863de2d2145af38bdaeed658bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateOnStart: 1
+  m_cEnterChar: 80
+  m_oOutputs:
+  - m_olOutputLocation: 2
+    folderPath:
+    - tempText
+    m_osOutputState: 2
+    m_bOverwrite: 1
+    m_bUseTypeWriter: 0
+    m_sFileName: _Canvas_
+    m_bPlusRandom: 0
+    m_sMessage: ' '
+    m_sMessageFile: {fileID: 0}
+    txtExtension: 1
+--- !u!114 &1702805924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1702805922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8209a9332832ff54e92f27db608f79df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateOnStart: 0
+  hide: 0
+  openDirectory: 0
+  openAmount: 1
+--- !u!4 &1702805925
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1702805922}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -23.816074, y: 35.736176, z: -321.77255}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1687054047}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1702858807
 GameObject:
@@ -20813,18 +21182,21 @@ MonoBehaviour:
     m_waitTime: 0
     replace: 1
     oneByOneTimer: 0.1
+    lettersAtATime: 1
     changeTitle: 0
   - m_message: '||How''s The Weather In Hell?'
     fileToCopy: {fileID: 0}
     m_waitTime: 2
     replace: 0
     oneByOneTimer: 0.05
+    lettersAtATime: 1
     changeTitle: 0
   - m_message: '...Not Too Bad Actually'
     fileToCopy: {fileID: 0}
     m_waitTime: 2
     replace: 1
     oneByOneTimer: 0.05
+    lettersAtATime: 1
     changeTitle: 1
   closeOnFileOnFinal: 0
   activateOnFinish: {fileID: 379410497}
@@ -20839,7 +21211,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1743421074
 GameObject:
@@ -21763,7 +22135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activateOnStart: 1
-  m_cEnterChar: 63
+  m_cEnterChar: 80
   m_oOutputs:
   - m_olOutputLocation: 2
     folderPath:
@@ -22131,7 +22503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activateOnStart: 1
-  m_cEnterChar: 63
+  m_cEnterChar: 80
   m_oOutputs:
   - m_olOutputLocation: 2
     folderPath:
@@ -22373,7 +22745,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1943978840
 MonoBehaviour:

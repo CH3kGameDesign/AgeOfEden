@@ -23,6 +23,7 @@ public class ChangeTextRuntimeTest : MonoBehaviour
         public bool replace;
         [Tooltip("0 For All Text At Once")]
         public float oneByOneTimer = 0;
+        public int lettersAtATime = 1;
         public bool changeTitle;
     }
     
@@ -129,7 +130,7 @@ public class ChangeTextRuntimeTest : MonoBehaviour
                             }
                         }
                         charTimer = 0;
-                        charLineCounter++;
+                        charLineCounter += 1;
                         if (charLineCounter >= textList[textLineCounter].m_message.Length)
                         {
                             textLineCounter++;
