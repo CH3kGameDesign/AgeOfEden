@@ -69,6 +69,7 @@ ModelImporter:
     100126: R_Joint_UpperLeg
     100128: R_Joint_Wrist
     100130: //RootNode
+    100132: Pelvis_CTRL
     400000: Base_CTRL
     400002: Character_Low
     400004: CTRLs
@@ -135,7 +136,9 @@ ModelImporter:
     400126: R_Joint_UpperLeg
     400128: R_Joint_Wrist
     400130: //RootNode
+    400132: Pelvis_CTRL
     2100000: CharacterSkin
+    2100002: lambert1
     2300000: Character_Low
     3300000: Character_Low
     4300000: Character_Low

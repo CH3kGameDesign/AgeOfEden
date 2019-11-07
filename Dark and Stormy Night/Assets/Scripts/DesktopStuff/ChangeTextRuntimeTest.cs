@@ -98,7 +98,10 @@ public class ChangeTextRuntimeTest : MonoBehaviour
                 {
                     if (charTimer >= textList[textLineCounter].oneByOneTimer)
                     {
-                        string currentLetter = textList[textLineCounter].m_message.Substring(charLineCounter, 1);
+                        int lettersAtATime = textList[textLineCounter].lettersAtATime;
+                        if (charLineCounter + lettersAtATime > textList[textLineCounter].m_message.Length)
+                            lettersAtATime = textList[textLineCounter].m_message.Length - charLineCounter;
+                        string currentLetter = textList[textLineCounter].m_message.Substring(charLineCounter, lettersAtATime);
                         if (charLineCounter == 0)
                         {
                             
@@ -130,7 +133,7 @@ public class ChangeTextRuntimeTest : MonoBehaviour
                             }
                         }
                         charTimer = 0;
-                        charLineCounter += 1;
+                        charLineCounter += lettersAtATime;
                         if (charLineCounter >= textList[textLineCounter].m_message.Length)
                         {
                             textLineCounter++;
@@ -207,7 +210,7 @@ public class ChangeTextRuntimeTest : MonoBehaviour
     /// Find window by Caption only. Note you must pass IntPtr.Zero as the first parameter.
     /// </summary>
     [DllImport("user32.dll", EntryPoint = "FindWindow", SetLastError = true)]
-    static extern IntPtr FindWindowByCaption(IntPtr ZeroOnly, string lpWindowName);
+    public static extern IntPtr FindWindowByCaption(IntPtr ZeroOnly, string lpWindowName);
 
     [DllImport("user32.dll")]
     public static extern int SendMessage(IntPtr hWnd, int uMsg, int wParam, string lParam);

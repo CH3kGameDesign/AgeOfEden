@@ -14,6 +14,7 @@ public class MemoryLeakTest : MonoBehaviour
     public class file
     {
         public string fileName;
+        public string fileContents;
         public GameObject activateOnYes;
         public bool removeOnFinish;
         [Tooltip ("False for File Explorer")]
@@ -43,6 +44,8 @@ public class MemoryLeakTest : MonoBehaviour
         {
             if (m_fileList[i].notepad)
                 m_fileList[i].fileName += ".txt - Notepad";
+            m_fileList[i].fileContents = m_fileList[i].fileContents.Replace("|",
+                    System.Environment.NewLine);
         }
     }
 
@@ -65,20 +68,28 @@ public class MemoryLeakTest : MonoBehaviour
                     {
                         if (strTitle == m_fileList[i].fileName && m_fileList[i].notepad)
                         {
-                            m_fileList[i].activateOnYes.SetActive(true);
-
-
-
-                            if (m_fileList[i].closeFile)
+                            string contents = "";
+                            if (m_fileList[i].fileContents != "")
                             {
-                                IntPtr windowPtr = FindWindowByCaption(IntPtr.Zero, m_fileList[i].fileName);
-                                if (windowPtr != IntPtr.Zero)
-                                {
-                                    SendMessage(windowPtr, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
-                                }
+                                IntPtr windowPtr = ChangeTextRuntimeTest.FindWindowByCaption(IntPtr.Zero, strTitle);
+                                IntPtr textWindowPtr = ChangeTextRuntimeTest.FindWindowEx(windowPtr, IntPtr.Zero, "Edit", null);
+                                contents = GetControlText(textWindowPtr);
                             }
-                            if (m_fileList[i].removeOnFinish)
-                                m_fileList.RemoveAt(i);
+                            if (contents.Contains(m_fileList[i].fileContents))
+                            {
+                                m_fileList[i].activateOnYes.SetActive(true);
+
+                                if (m_fileList[i].closeFile)
+                                {
+                                    IntPtr windowPtr = FindWindowByCaption(IntPtr.Zero, m_fileList[i].fileName);
+                                    if (windowPtr != IntPtr.Zero)
+                                    {
+                                        SendMessage(windowPtr, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+                                    }
+                                }
+                                if (m_fileList[i].removeOnFinish)
+                                    m_fileList.RemoveAt(i);
+                            }
                         }
                     }
 
@@ -114,6 +125,23 @@ public class MemoryLeakTest : MonoBehaviour
         }
     }
 
+    public string GetControlText(IntPtr hWnd)
+    {
+
+        // Get the size of the string required to hold the window title (including trailing null.) 
+        Int32 titleSize = SendMessage((int)hWnd, WM_GETTEXTLENGTH, 0, 0).ToInt32();
+
+        // If titleSize is 0, there is no title so return an empty string (or null)
+        if (titleSize == 0)
+            return "null";
+
+        StringBuilder title = new StringBuilder(titleSize + 1);
+
+        SendMessage(hWnd, (int)WM_GETTEXT, title.Capacity, title);
+
+        return title.ToString();
+    }
+
     [DllImport("user32.dll", SetLastError = true)]
     static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
@@ -122,9 +150,20 @@ public class MemoryLeakTest : MonoBehaviour
     /// </summary>
     [DllImport("user32.dll", EntryPoint = "FindWindow", SetLastError = true)]
     static extern IntPtr FindWindowByCaption(IntPtr ZeroOnly, string lpWindowName);
+    
+    [DllImport("user32.dll")]
+    public static extern int SendMessage(IntPtr hWnd, int uMsg, int wParam, string lParam);
 
     [DllImport("user32.dll", CharSet = CharSet.Auto)]
     static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
 
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern IntPtr SendMessage(int hWnd, int Msg, int wparam, int lparam);
+
+    [DllImport("user32.dll", EntryPoint = "SendMessage", CharSet = CharSet.Auto)]
+    public static extern bool SendMessage(IntPtr hWnd, uint Msg, int wParam, StringBuilder lParam);
+
     const UInt32 WM_CLOSE = 0x0010;
+    const UInt32 WM_GETTEXT = 0X000D;
+    const int WM_GETTEXTLENGTH = 0x000E;
 }
