@@ -126,5 +126,7 @@ public class KeyEnable : MonoBehaviour
             DoThing();
         if (Input.GetKeyDown(KeyCode.Delete) && keyPress.ToUpper() == "DELETE")
             DoThing();
+        if (Input.GetKeyDown(KeyCode.End) && keyPress.ToUpper() == "END")
+            DoThing();
     }
 }

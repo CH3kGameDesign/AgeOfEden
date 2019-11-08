@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.Runtime.InteropServices;
 
 public class QuitGame : MonoBehaviour {
 
@@ -11,7 +13,9 @@ public class QuitGame : MonoBehaviour {
 #endif
 
 #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
+        Application.runInBackground = false;
+        ShowWindow(HideAndOpen.editorWindow, SW_SHOW);
+        UnityEditor.EditorApplication.isPlaying = false;
 #endif
     }
 	
@@ -19,4 +23,16 @@ public class QuitGame : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    [DllImport("user32.dll")]
+    private static extern IntPtr GetActiveWindow();
+
+    [DllImport("user32.dll")]
+    static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+    [DllImport("user32.dll", EntryPoint = "FindWindow", SetLastError = true)]
+    public static extern IntPtr FindWindowByCaption(IntPtr ZeroOnly, string lpWindowName);
+
+    const int SW_HIDE = 0;
+    const int SW_SHOW = 5;
 }

@@ -14,6 +14,8 @@ public class HideAndOpen : MonoBehaviour {
     private string fileName;
     private string fileDirectory;
 
+    public static IntPtr editorWindow = IntPtr.Zero;
+
     [DllImport("user32.dll")]
     private static extern IntPtr GetActiveWindow();
 
@@ -71,8 +73,8 @@ public class HideAndOpen : MonoBehaviour {
 
         if (hide)
         {
-            var hwnd = GetActiveWindow();
-            ShowWindow(hwnd, SW_HIDE);
+            editorWindow = GetActiveWindow();
+            ShowWindow(editorWindow, SW_HIDE);
         }
     }
 }
