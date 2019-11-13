@@ -8,6 +8,9 @@ Shader "Unlit/Rorschach"
 		_Color ("Tint", Color) = (1,1,1,1)
         _BlackLevel("Black Level", Range(0, 1)) = 0.27
         _Contrast("Contrast", float) = 60
+		_SpeedX("SpeedX", float) = 1
+		_SpeedY("SpeedY", float) = 1
+		_SpeedZ("SpeedZ", float) = 1
     }
     SubShader
     {
@@ -39,6 +42,9 @@ Shader "Unlit/Rorschach"
             float _BlackLevel;
             float _Contrast;
 			fixed4 _Color;
+			float _SpeedX;
+			float _SpeedY;
+			float _SpeedZ;
 
             v2f vert (appdata v)
             {
@@ -56,8 +62,8 @@ Shader "Unlit/Rorschach"
                 float2 uv = float2(mirrored.x, i.uv.y) * _MainTex_ST.xy;
 
                 // Mess with these values tos change the movement speed/direction/blobbiness.
-                float noise = tex2D(_MainTex, 0.3f * uv + _Time.x * float2(0.2f, 0.1f)).r
-                    * tex2D(_MainTex, uv + _Time.x * float2(-0.3f, -0.1f) + float2(0.2f, 0.3f)).r;
+                float noise = tex2D(_MainTex, 0.3f * uv + _Time.x * float2(0.2f * _SpeedX, 0.1f * _SpeedX)).r
+                    * tex2D(_MainTex, uv + _Time.x * float2(-0.3f * _SpeedY, -0.1f * _SpeedY) + float2(0.2f * _SpeedZ, 0.3f * _SpeedZ)).r;
 
                 float mask = max(mirrored.x, mirrored.y);
                 mask *= mask * mask * _BlackLevel;

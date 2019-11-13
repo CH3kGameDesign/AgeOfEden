@@ -25,6 +25,7 @@ public class MoveTo : MonoBehaviour
 
     public bool lerp = false;
     public bool moveOnStart = true;
+    public bool jumpOnFinish = true;
 
     public bool disableAfterFinish = false;
     public GameObject activateOnFinish;
@@ -127,7 +128,7 @@ public class MoveTo : MonoBehaviour
 
         if (localPos)
         {
-            if (Vector3.Distance(Movee.position, Movee.parent.position + tarPos) < 0.5f)
+            if (Vector3.Distance(Movee.position, Movee.parent.position + tarPos) < 0.5f / transform.lossyScale.x)
             {
                 Movee.localPosition = tarPos;
                 if (disableAfterFinish)
@@ -141,7 +142,7 @@ public class MoveTo : MonoBehaviour
         }
         else
         {
-            if (Vector3.Distance(Movee.position, tarPos) < 0.5f)
+            if (Vector3.Distance(Movee.position, tarPos) < 0.5f / transform.lossyScale.x)
             {
                 Movee.position = tarPos;
                 if (disableAfterFinish)

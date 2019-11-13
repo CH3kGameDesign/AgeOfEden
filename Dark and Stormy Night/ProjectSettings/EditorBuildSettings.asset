@@ -41,6 +41,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Desktop.unity
     guid: adb5c0d8d1b6c894daf228d7821e38a2
+  - enabled: 1
+    path: Assets/Scenes/Exit.unity
+    guid: c7e0f7d837849714791fae658f835e17
   - enabled: 0
     path: Assets/Scenes/PresentationSlides.unity
     guid: e80acf4a61f857a4b9d3d5c3e84fc200
