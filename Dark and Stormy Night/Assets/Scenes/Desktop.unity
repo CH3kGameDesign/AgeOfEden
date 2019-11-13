@@ -7693,6 +7693,7 @@ Transform:
   - {fileID: 559530472}
   - {fileID: 1015995660}
   - {fileID: 1072526972}
+  - {fileID: 1288075467}
   m_Father: {fileID: 1892813849}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9228,6 +9229,64 @@ MonoBehaviour:
   deleteDirectory: 01
   path: []
   deleteSpecific: 
+--- !u!1 &483027999
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 483028001}
+  - component: {fileID: 483028000}
+  m_Layer: 0
+  m_Name: Debug EndingSkip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &483028000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 483027999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9e5fa2b181fd35438a2ca71934add62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GO:
+  - {fileID: 1892813848}
+  - {fileID: 394099130}
+  GODisable:
+  - {fileID: 1639481416}
+  - {fileID: 992377218}
+  - {fileID: 1961135232}
+  - {fileID: 562142419}
+  - {fileID: 1384346331}
+  - {fileID: 360600352}
+  - {fileID: 2005104314}
+  activateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  time: 0
+  repeatable: 0
+--- !u!4 &483028001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 483027999}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.776872, y: 3.5569127, z: -76.89408}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 27
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &485102342
 GameObject:
   m_ObjectHideFlags: 0
@@ -9866,8 +9925,9 @@ MonoBehaviour:
   CTF:
   - {fileID: 559530474}
   - {fileID: 1072526974}
+  - {fileID: 1288075469}
   SFTD: []
-  deleteDirectory: 0101
+  deleteDirectory: 010101
   path: []
   deleteSpecific: 
 --- !u!4 &510799839
@@ -18618,6 +18678,7 @@ MonoBehaviour:
   - Doorway
   - _
   - Leaving
+  - Go Straight To Ending (Debug)
   waitBeforePopUp: 1
   activateOnClose:
     m_PersistentCalls:
@@ -18987,6 +19048,19 @@ MonoBehaviour:
     m_bOverwrite: 1
     m_bUseTypeWriter: 0
     m_sFileName: Yes
+    m_bPlusRandom: 0
+    m_sMessage: 
+    m_sMessageFile: {fileID: 0}
+    txtExtension: 1
+  - m_olOutputLocation: 2
+    folderPath:
+    - EDEN
+    - Leaving
+    - Go Straight To Ending (Debug)
+    m_osOutputState: 2
+    m_bOverwrite: 1
+    m_bUseTypeWriter: 0
+    m_sFileName: Going
     m_bPlusRandom: 0
     m_sMessage: 
     m_sMessageFile: {fileID: 0}
@@ -22046,6 +22120,76 @@ Transform:
   m_Father: {fileID: 992377219}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1288075466
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1288075467}
+  - component: {fileID: 1288075469}
+  - component: {fileID: 1288075468}
+  m_Layer: 0
+  m_Name: ' (1)'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1288075467
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1288075466}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -23.816074, y: 35.736176, z: -321.77255}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 394099131}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1288075468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1288075466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8209a9332832ff54e92f27db608f79df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateOnStart: 0
+  hide: 0
+  openDirectory: 0
+  openAmount: 1
+--- !u!114 &1288075469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1288075466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fbd8e863de2d2145af38bdaeed658bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateOnStart: 1
+  m_cEnterChar: 63
+  m_oOutputs:
+  - m_olOutputLocation: 2
+    folderPath:
+    - EDEN
+    m_osOutputState: 2
+    m_bOverwrite: 1
+    m_bUseTypeWriter: 0
+    m_sFileName: hiHihiHihiHihiHi
+    m_bPlusRandom: 0
+    m_sMessage: 
+    m_sMessageFile: {fileID: 0}
+    txtExtension: 1
 --- !u!1 &1290383157
 GameObject:
   m_ObjectHideFlags: 0
@@ -30357,6 +30501,12 @@ MonoBehaviour:
     removeOnFinish: 1
     notepad: 0
     closeFile: 0
+  - fileName: Go Straight To Ending (Debug)
+    fileContents: 
+    activateOnYes: {fileID: 483027999}
+    removeOnFinish: 0
+    notepad: 0
+    closeFile: 1
 --- !u!1 &1671891150
 GameObject:
   m_ObjectHideFlags: 0
