@@ -37,17 +37,12 @@ public class MemoryLeakTest : MonoBehaviour
     [DllImport("user32.dll", EntryPoint = "EnumDesktopWindows",
     ExactSpelling = false, CharSet = CharSet.Auto, SetLastError = true)]
     public static extern bool EnumDesktopWindows(IntPtr hDesktop, EnumDelegate lpEnumCallbackFunction, IntPtr lParam);
-    
+
+    private bool referenceSet = false;
 
     private void Start()
     {
-        for (int i = 0; i < m_fileList.Count; i++)
-        {
-            if (m_fileList[i].notepad)
-                m_fileList[i].fileName += ".txt - Notepad";
-            m_fileList[i].fileContents = m_fileList[i].fileContents.Replace("|",
-                    System.Environment.NewLine);
-        }
+        
     }
 
     private void Update()
@@ -65,6 +60,30 @@ public class MemoryLeakTest : MonoBehaviour
                 //collection.Add(strTitle);
                 if (strTitle.Contains("Notepad"))
                 {
+                    if (!referenceSet && !strTitle.Contains("Untitled"))
+                    {
+                        if (strTitle.Contains(".txt"))
+                        {
+                            for (int i = 0; i < m_fileList.Count; i++)
+                            {
+                                if (m_fileList[i].notepad)
+                                    m_fileList[i].fileName += ".txt - Notepad";
+                                m_fileList[i].fileContents = m_fileList[i].fileContents.Replace("|",
+                                        System.Environment.NewLine);
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < m_fileList.Count; i++)
+                            {
+                                if (m_fileList[i].notepad)
+                                    m_fileList[i].fileName += " - Notepad";
+                                m_fileList[i].fileContents = m_fileList[i].fileContents.Replace("|",
+                                        System.Environment.NewLine);
+                            }
+                        }
+                        referenceSet = true;
+                    }
                     for (int i = 0; i < m_fileList.Count; i++)
                     {
                         if (strTitle == m_fileList[i].fileName && m_fileList[i].notepad)

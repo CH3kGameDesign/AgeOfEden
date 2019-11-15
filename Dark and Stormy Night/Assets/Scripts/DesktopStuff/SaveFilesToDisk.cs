@@ -24,8 +24,17 @@ public class SaveFilesToDisk : MonoBehaviour {
             path += fileActual[i].name;
             if (fileExtension.Count > i)
                 path += fileExtension[i];
+            var splitFile = new string[] { "\r\n", "\r", "\n" };
+            var lines = fileActual[i].text.Split(splitFile, StringSplitOptions.None);
 
-            File.WriteAllBytes(path, fileActual[i].bytes);
+            for (int j = 0; j < lines.Length; j++)
+            {
+                WriteMessage(path, lines[j]);
+                //WriteMessage(path, Environment.NewLine);
+            }
+            //File.WriteAllBytes(path, fileActual[i].bytes);
+            //string message = fileActual[i].text;
+            //WriteMessage(path, fileActual[i].text);
         }
 	}
 	
@@ -33,4 +42,12 @@ public class SaveFilesToDisk : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    private void WriteMessage(string pPath, string pMessage)
+    {
+        // Rewrites the file with new message
+        StreamWriter writer = new StreamWriter(pPath, true);
+        writer.WriteLine(pMessage);
+        writer.Close();
+    }
 }

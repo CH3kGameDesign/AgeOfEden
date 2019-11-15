@@ -59,7 +59,6 @@ public class ChangeTextRuntimeTest : MonoBehaviour
 
     private void Start()
     {
-        m_fileName += ".txt - Notepad";
         for (int i = 0; i < textList.Count; i++)
         {
             if (textList[i].fileToCopy != null)
@@ -67,7 +66,6 @@ public class ChangeTextRuntimeTest : MonoBehaviour
             textList[i].m_message = textList[i].m_message.Replace(m_enterChar,
                     System.Environment.NewLine);
         }
-        
     }
 
     private void Awake ()
@@ -167,9 +165,9 @@ public class ChangeTextRuntimeTest : MonoBehaviour
                 if (IsWindowVisible(hWnd) && string.IsNullOrEmpty(strTitle) == false)
                 {
                     //collection.Add(strTitle);
-                    if (strTitle == m_fileName)
+                    if (strTitle.Contains(m_fileName))
                     {
-                        windowPtr = FindWindowByCaption(IntPtr.Zero, m_fileName);
+                        windowPtr = FindWindowByCaption(IntPtr.Zero, strTitle);
                         textWindowPtr = FindWindowEx(windowPtr, IntPtr.Zero, "Edit", null);
                     }
                 }
