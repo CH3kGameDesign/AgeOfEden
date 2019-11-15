@@ -137,22 +137,48 @@ public class CreateTextFile : MonoBehaviour
                 if (m_oOutputs[i].m_osOutputState == State.First && GetPermanentStorage())
                 {
                     //Debug.Log("First message");
-                    WriteMessage(path, m_oOutputs[i].m_sMessage);
+                    //WriteMessage(path, m_oOutputs[i].m_sMessage);
+                    var splitFile = new string[] { "\r\n", "\r", "\n" };
+                    var lines = m_oOutputs[i].m_sMessage.Split(splitFile, System.StringSplitOptions.None);
+
+                    for (int j = 0; j < lines.Length; j++)
+                    {
+                        WriteOnNewLine(path, lines[j]);
+                        //WriteMessage(path, Environment.NewLine);
+                    }
                     SetPermanentStorage(false);
                 }
                 else if (m_oOutputs[i].m_osOutputState == State.Create && !DoesFileExist(path))
                 {
                     //Debug.Log("Created message");
-                    WriteMessage(path, m_oOutputs[i].m_sMessage);
+                    //WriteMessage(path, m_oOutputs[i].m_sMessage);
+                    var splitFile = new string[] { "\r\n", "\r", "\n" };
+                    var lines = m_oOutputs[i].m_sMessage.Split(splitFile, System.StringSplitOptions.None);
+
+                    for (int j = 0; j < lines.Length; j++)
+                    {
+                        WriteOnNewLine(path, lines[j]);
+                        //WriteMessage(path, Environment.NewLine);
+                    }
                     m_bRecreated = true;
                 }
                 else if (m_oOutputs[i].m_osOutputState == State.Standard && !m_bRecreated)
                 {
                     //Debug.Log("Regular message");
+                    /*
                     if (m_oOutputs[i].m_bOverwrite)
                         WriteMessage(path, m_oOutputs[i].m_sMessage);
                     else
                         WriteOnNewLine(path, m_oOutputs[i].m_sMessage);
+                        */
+                    var splitFile = new string[] { "\r\n", "\r", "\n" };
+                    var lines = m_oOutputs[i].m_sMessage.Split(splitFile, System.StringSplitOptions.None);
+
+                    for (int j = 0; j < lines.Length; j++)
+                    {
+                        WriteOnNewLine(path, lines[j]);
+                        //WriteMessage(path, Environment.NewLine);
+                    }
                 }
             }
         }
