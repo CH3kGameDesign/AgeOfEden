@@ -13675,10 +13675,11 @@ MonoBehaviour:
   - {fileID: 1657420739}
   - {fileID: 754544268}
   - {fileID: 1428482935}
+  - {fileID: 1860441937}
   SFTD: []
   deleteDirectory: 000000000000
   path: []
-  deleteSpecific: 
+  deleteSpecific: ffffffffffffffffffffffffffffffffffffffffffffffff00000000
 --- !u!1 &710940442
 GameObject:
   m_ObjectHideFlags: 0

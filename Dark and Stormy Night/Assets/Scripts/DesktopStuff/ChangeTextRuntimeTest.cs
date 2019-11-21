@@ -62,7 +62,18 @@ public class ChangeTextRuntimeTest : MonoBehaviour
         for (int i = 0; i < textList.Count; i++)
         {
             if (textList[i].fileToCopy != null)
-                textList[i].m_message = textList[i].fileToCopy.text;
+            {
+                textList[i].m_message = "";
+                var splitFile = new string[] { "\r\n", "\r", "\n" };
+                var lines = textList[i].fileToCopy.text.Split(splitFile, System.StringSplitOptions.None);
+
+                for (int j = 0; j < lines.Length; j++)
+                {
+                    textList[i].m_message += lines[j];
+                    textList[i].m_message += System.Environment.NewLine;
+                    //WriteMessage(path, Environment.NewLine);
+                }
+            }
             textList[i].m_message = textList[i].m_message.Replace(m_enterChar,
                     System.Environment.NewLine);
         }
