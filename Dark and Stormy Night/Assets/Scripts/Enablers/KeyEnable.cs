@@ -128,5 +128,7 @@ public class KeyEnable : MonoBehaviour
             DoThing();
         if (Input.GetKeyDown(KeyCode.End) && keyPress.ToUpper() == "END")
             DoThing();
+        if (Input.GetKeyDown(KeyCode.Space) && keyPress.ToUpper() == "SPACE")
+            DoThing();
     }
 }

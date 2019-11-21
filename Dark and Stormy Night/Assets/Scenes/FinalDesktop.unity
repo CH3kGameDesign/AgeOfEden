@@ -1,0 +1,1273 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!29 &1
+OcclusionCullingSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_OcclusionBakeSettings:
+    smallestOccluder: 5
+    smallestHole: 0.25
+    backfaceThreshold: 100
+  m_SceneGUID: 00000000000000000000000000000000
+  m_OcclusionCullingData: {fileID: 0}
+--- !u!104 &2
+RenderSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 9
+  m_Fog: 0
+  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_FogMode: 3
+  m_FogDensity: 0.01
+  m_LinearFogStart: 0
+  m_LinearFogEnd: 300
+  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
+  m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
+  m_AmbientIntensity: 1
+  m_AmbientMode: 0
+  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
+  m_SkyboxMaterial: {fileID: 0}
+  m_HaloStrength: 0.5
+  m_FlareStrength: 1
+  m_FlareFadeSpeed: 3
+  m_HaloTexture: {fileID: 0}
+  m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
+  m_DefaultReflectionMode: 0
+  m_DefaultReflectionResolution: 128
+  m_ReflectionBounces: 1
+  m_ReflectionIntensity: 1
+  m_CustomReflection: {fileID: 0}
+  m_Sun: {fileID: 0}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_UseRadianceAmbientProbe: 0
+--- !u!157 &3
+LightmapSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 11
+  m_GIWorkflowMode: 0
+  m_GISettings:
+    serializedVersion: 2
+    m_BounceScale: 1
+    m_IndirectOutputScale: 1
+    m_AlbedoBoost: 1
+    m_TemporalCoherenceThreshold: 1
+    m_EnvironmentLightingMode: 0
+    m_EnableBakedLightmaps: 1
+    m_EnableRealtimeLightmaps: 1
+  m_LightmapEditorSettings:
+    serializedVersion: 10
+    m_Resolution: 2
+    m_BakeResolution: 40
+    m_AtlasSize: 1024
+    m_AO: 0
+    m_AOMaxDistance: 1
+    m_CompAOExponent: 1
+    m_CompAOExponentDirect: 0
+    m_Padding: 2
+    m_LightmapParameters: {fileID: 0}
+    m_LightmapsBakeMode: 1
+    m_TextureCompression: 1
+    m_FinalGather: 0
+    m_FinalGatherFiltering: 1
+    m_FinalGatherRayCount: 256
+    m_ReflectionCompression: 2
+    m_MixedBakeMode: 2
+    m_BakeBackend: 1
+    m_PVRSampling: 1
+    m_PVRDirectSampleCount: 32
+    m_PVRSampleCount: 500
+    m_PVRBounces: 2
+    m_PVRFilterTypeDirect: 0
+    m_PVRFilterTypeIndirect: 0
+    m_PVRFilterTypeAO: 0
+    m_PVRFilteringMode: 1
+    m_PVRCulling: 1
+    m_PVRFilteringGaussRadiusDirect: 1
+    m_PVRFilteringGaussRadiusIndirect: 5
+    m_PVRFilteringGaussRadiusAO: 2
+    m_PVRFilteringAtrousPositionSigmaDirect: 0.5
+    m_PVRFilteringAtrousPositionSigmaIndirect: 2
+    m_PVRFilteringAtrousPositionSigmaAO: 1
+    m_ShowResolutionOverlay: 1
+  m_LightingDataAsset: {fileID: 0}
+  m_UseShadowmask: 1
+--- !u!196 &4
+NavMeshSettings:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_BuildSettings:
+    serializedVersion: 2
+    agentTypeID: 0
+    agentRadius: 0.5
+    agentHeight: 2
+    agentSlope: 45
+    agentClimb: 0.4
+    ledgeDropHeight: 0
+    maxJumpAcrossDistance: 0
+    minRegionArea: 2
+    manualCellSize: 0
+    cellSize: 0.16666667
+    manualTileSize: 0
+    tileSize: 256
+    accuratePlacement: 0
+    debug:
+      m_Flags: 0
+  m_NavMeshData: {fileID: 0}
+--- !u!1 &174655081
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 174655082}
+  - component: {fileID: 174655084}
+  - component: {fileID: 174655083}
+  m_Layer: 0
+  m_Name: Hide Game
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &174655082
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 174655081}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -34.06084, y: 7.155383, z: 20.826244}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1605056910}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &174655083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 174655081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fbd8e863de2d2145af38bdaeed658bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateOnStart: 0
+  m_cEnterChar: 124
+  m_oOutputs:
+  - m_olOutputLocation: 2
+    folderPath:
+    - tempText
+    m_osOutputState: 0
+    m_bOverwrite: 0
+    m_bUseTypeWriter: 0
+    m_sFileName: popoopo
+    m_bPlusRandom: 0
+    m_sMessage: 
+    m_sMessageFile: {fileID: 0}
+    txtExtension: 1
+--- !u!114 &174655084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 174655081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8209a9332832ff54e92f27db608f79df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateOnStart: 1
+  hide: 1
+  openDirectory: 0
+  openAmount: 1
+--- !u!1 &214497992
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 214498012}
+  - component: {fileID: 214498011}
+  - component: {fileID: 214497993}
+  m_Layer: 0
+  m_Name: '--- 001 Talk ------------------------------------------ '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &214497993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 214497992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ce8788ce5da27b45847bfdbf2295309, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_fileName: Just A Talk
+  m_enterChar: '|'
+  textList:
+  - m_message: You're Not Special.
+    fileToCopy: {fileID: 0}
+    m_waitTime: 1
+    replace: 1
+    oneByOneTimer: 0.1
+    lettersAtATime: 1
+    changeTitle: 0
+  - m_message: '||Don''t Take This The Wrong Way But...'
+    fileToCopy: {fileID: 0}
+    m_waitTime: 1
+    replace: 0
+    oneByOneTimer: 0.05
+    lettersAtATime: 1
+    changeTitle: 0
+  - m_message: '||You''re Not.'
+    fileToCopy: {fileID: 0}
+    m_waitTime: 1
+    replace: 0
+    oneByOneTimer: 0.1
+    lettersAtATime: 1
+    changeTitle: 0
+  - m_message: ..
+    fileToCopy: {fileID: 0}
+    m_waitTime: 1
+    replace: 0
+    oneByOneTimer: 1
+    lettersAtATime: 1
+    changeTitle: 0
+  - m_message: Don't Wait For Something To Come Along.
+    fileToCopy: {fileID: 0}
+    m_waitTime: 1
+    replace: 1
+    oneByOneTimer: 0.05
+    lettersAtATime: 1
+    changeTitle: 0
+  - m_message: '||There''s No Deus Ex Machina Coming To Give You Meaning.'
+    fileToCopy: {fileID: 0}
+    m_waitTime: 1
+    replace: 0
+    oneByOneTimer: 0.05
+    lettersAtATime: 1
+    changeTitle: 0
+  - m_message: Seize The Day.
+    fileToCopy: {fileID: 0}
+    m_waitTime: 1
+    replace: 1
+    oneByOneTimer: 0.1
+    lettersAtATime: 1
+    changeTitle: 0
+  - m_message: Make That Thing.
+    fileToCopy: {fileID: 0}
+    m_waitTime: 1
+    replace: 1
+    oneByOneTimer: 0.1
+    lettersAtATime: 1
+    changeTitle: 0
+  - m_message: Leave A Mark.
+    fileToCopy: {fileID: 0}
+    m_waitTime: 1
+    replace: 1
+    oneByOneTimer: 0.1
+    lettersAtATime: 1
+    changeTitle: 0
+  - m_message: Or Don't.
+    fileToCopy: {fileID: 0}
+    m_waitTime: 1
+    replace: 1
+    oneByOneTimer: 0.1
+    lettersAtATime: 1
+    changeTitle: 0
+  - m_message: Either Way Thanks For Playing Ours.
+    fileToCopy: {fileID: 0}
+    m_waitTime: 1
+    replace: 1
+    oneByOneTimer: 0.05
+    lettersAtATime: 1
+    changeTitle: 0
+  - m_message: '||...And We Hope To See Yours Soon.'
+    fileToCopy: {fileID: 0}
+    m_waitTime: 1
+    replace: 0
+    oneByOneTimer: 0.05
+    lettersAtATime: 1
+    changeTitle: 0
+  - m_message: '||||Sincerely Thank You,'
+    fileToCopy: {fileID: 0}
+    m_waitTime: 1
+    replace: 0
+    oneByOneTimer: 0.05
+    lettersAtATime: 1
+    changeTitle: 0
+  - m_message: '||  Nathan     Jake|  Tamie      Liam|  Aidan     Dylan'
+    fileToCopy: {fileID: 0}
+    m_waitTime: 1
+    replace: 0
+    oneByOneTimer: 0.05
+    lettersAtATime: 1
+    changeTitle: 0
+  - m_message: '||P.S. Don''t Worry It''s Closed Now'
+    fileToCopy: {fileID: 0}
+    m_waitTime: 2
+    replace: 0
+    oneByOneTimer: 0.05
+    lettersAtATime: 1
+    changeTitle: 0
+  closeOnFileOnFinal: 0
+  activateOnFinish: {fileID: 1015995659}
+--- !u!114 &214498011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 214497992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9e5fa2b181fd35438a2ca71934add62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GO: []
+  GODisable: []
+  activateEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 601042124}
+        m_MethodName: Hide
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  time: 0.1
+  repeatable: 0
+--- !u!4 &214498012
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 214497992}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 33.428078, y: -5.168838, z: -47.249096}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 409444411}
+  - {fileID: 601042125}
+  - {fileID: 1015995660}
+  - {fileID: 1377765967}
+  - {fileID: 2091049925}
+  - {fileID: 862350631}
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &409444409
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 409444411}
+  - component: {fileID: 409444410}
+  m_Layer: 0
+  m_Name: CloseNotepad
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &409444410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 409444409}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8efab8723c43a4a4e948c44f2db07786, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetWindow: -1
+--- !u!4 &409444411
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 409444409}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -33.428078, y: 5.168838, z: 47.249096}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 214498012}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &601042122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 601042125}
+  - component: {fileID: 601042123}
+  - component: {fileID: 601042124}
+  m_Layer: 0
+  m_Name: (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &601042123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 601042122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fbd8e863de2d2145af38bdaeed658bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateOnStart: 1
+  m_cEnterChar: 63
+  m_oOutputs:
+  - m_olOutputLocation: 2
+    folderPath:
+    - tempText
+    m_osOutputState: 2
+    m_bOverwrite: 1
+    m_bUseTypeWriter: 0
+    m_sFileName: Just A Talk
+    m_bPlusRandom: 0
+    m_sMessage: 
+    m_sMessageFile: {fileID: 0}
+    txtExtension: 1
+--- !u!114 &601042124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 601042122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8209a9332832ff54e92f27db608f79df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateOnStart: 0
+  hide: 0
+  openDirectory: 0
+  openAmount: 1
+--- !u!4 &601042125
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 601042122}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -23.816074, y: 35.736176, z: -321.77255}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 214498012}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &763916366
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 763916368}
+  - component: {fileID: 763916367}
+  m_Layer: 0
+  m_Name: EnableAfterTime
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &763916367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 763916366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9e5fa2b181fd35438a2ca71934add62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GO:
+  - {fileID: 1015995659}
+  GODisable: []
+  activateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  time: 80
+  repeatable: 0
+--- !u!4 &763916368
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 763916366}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.826462, y: 2.0353062, z: -79.44804}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &862350630
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 862350631}
+  - component: {fileID: 862350633}
+  - component: {fileID: 862350632}
+  m_Layer: 0
+  m_Name: ' (1)'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &862350631
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 862350630}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -23.816074, y: 35.736176, z: -321.77255}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 214498012}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &862350632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 862350630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8209a9332832ff54e92f27db608f79df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateOnStart: 0
+  hide: 0
+  openDirectory: 0
+  openAmount: 1
+--- !u!114 &862350633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 862350630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fbd8e863de2d2145af38bdaeed658bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateOnStart: 0
+  m_cEnterChar: 63
+  m_oOutputs:
+  - m_olOutputLocation: 2
+    folderPath:
+    - EDEN
+    m_osOutputState: 2
+    m_bOverwrite: 1
+    m_bUseTypeWriter: 0
+    m_sFileName: Just A Talk
+    m_bPlusRandom: 0
+    m_sMessage: 
+    m_sMessageFile: {fileID: 0}
+    txtExtension: 1
+--- !u!1 &1015995659
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1015995660}
+  - component: {fileID: 1015995661}
+  - component: {fileID: 1015995662}
+  m_Layer: 0
+  m_Name: JumpBackIn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1015995660
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1015995659}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 214498012}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1015995661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1015995659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdec33830c30bed4e88359b5557d233c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1015995662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1015995659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0a6c30ab6eb7d24f8896a60f7e26b85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_bActivateOnStart: 1
+  m_bAdditive: 0
+  m_bAsync: 1
+  m_sbSceneToLoad: -1
+  m_bFadeOut: 0
+  m_fFadeSpeed: 0.01
+  flipOnReset: 0
+  eventOnStart:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!1 &1377765965
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1377765967}
+  - component: {fileID: 1377765966}
+  m_Layer: 0
+  m_Name: DeleteFiles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1377765966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1377765965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 354d0cf0750d0ec4abc3a2f02fe4b718, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CTF:
+  - {fileID: 862350633}
+  - {fileID: 601042123}
+  SFTD: []
+  deleteDirectory: 0101
+  path: []
+  deleteSpecific: ffffffffffffffff
+--- !u!4 &1377765967
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1377765965}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 214498012}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1605056909
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1605056910}
+  m_Layer: 0
+  m_Name: '--- 000 Entry ------------------------------------------'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1605056910
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1605056909}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 33.428078, y: -5.168838, z: -47.249096}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 174655082}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1667661561
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1667661563}
+  - component: {fileID: 1667661564}
+  m_Layer: 0
+  m_Name: CheckIfOpen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1667661563
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1667661561}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.63276255, y: 1.9865452, z: -26.422852}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1667661564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1667661561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 891d97cd98dbee346920264f24d4d3f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_fileList:
+  - fileName: _Monica
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 0
+    notepad: 1
+    closeFile: 0
+  - fileName: TypeWriter
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Chris
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Tyler
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Moss
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Joe
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: zxcvcv
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 0
+    notepad: 0
+    closeFile: 1
+  - fileName: zxcvcv
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 0
+    notepad: 1
+    closeFile: 1
+  - fileName: Void
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 0
+    notepad: 1
+    closeFile: 1
+  - fileName: ({ })
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 0
+    notepad: 0
+    closeFile: 1
+  - fileName: Drowning
+    fileContents: 
+    activateOnYes: {fileID: 214497992}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: empty seat
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Hand
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 0
+    closeFile: 0
+  - fileName: Struggling
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 1
+  - fileName: kjasdn Room
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 0
+    closeFile: 0
+  - fileName: poasdf Room
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 0
+    closeFile: 0
+  - fileName: ndasjk Room
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 0
+    closeFile: 0
+  - fileName: oudbdk Room
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 0
+    closeFile: 0
+  - fileName: chsdfd Room
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 0
+    closeFile: 0
+  - fileName: qzwxex Room
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 0
+    closeFile: 0
+  - fileName: tbjsgf Room
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 0
+    closeFile: 0
+  - fileName: lmkvgd Room
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 0
+    closeFile: 0
+  - fileName: xdkvhs Room
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 0
+    closeFile: 0
+  - fileName: gakdfd Room
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 0
+    closeFile: 0
+  - fileName: imfjsh Room
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 0
+    closeFile: 0
+  - fileName: dkjnxf Room
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 0
+    closeFile: 0
+  - fileName: wjhvas Room
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 0
+    closeFile: 0
+  - fileName: AdrianH4GV1sdfk85jhg4vUYT
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Canvas
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 0
+    closeFile: 0
+  - fileName: Judith
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Brian
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Brianna
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Quentin
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Adrian
+    fileContents: We Need To Get Out Of Here, Liv... There's No Time!
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Adrian
+    fileContents: Shhh.... be careful of the plank
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Adrian
+    fileContents: i can't see anything... Maybe We're In The Clear?
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Adrian
+    fileContents: Careful Now, careful... up by the cabinet, peter... try not to touch
+      the glass.
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Adrian
+    fileContents: remember the plan, head straight for the trees and don't look back--
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Adrian
+    fileContents: '   '
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Adrian
+    fileContents: '...   '
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Adrian
+    fileContents: I Still Remember It...
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Adrian
+    fileContents: '... you know? ...'
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Adrian
+    fileContents: I Still Get Those Nightmares...
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: A d r i a n
+    fileContents: t h e y   w o n ' t   l e a v e
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Adrian
+    fileContents: I Write Them Down Too...||There's Drawers Full Of Them...
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Adrian
+    fileContents: They Used To Help...||||but the shadows started to look too familiar...
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Adrian
+    fileContents: I Leave The Lanterns On At Night Too...
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: A d r i a n
+    fileContents: t h e y   s m i l e||||||a n d   i   s m i l e   b a c k
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Adrian
+    fileContents: I Know It Sounds Crazy...||||and honestly knowing it makes it worse...
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Adrian
+    fileContents: But I Guess That's Why I'm Here, talking to you--
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Adrian
+    fileContents: '... he''s asked me to come back--'
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Pete
+    fileContents: Are You Insane? Master Joseph Says We Can't Leave Our Rooms!
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Pete
+    fileContents: '... it wasn''t me'
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Pete
+    fileContents: What Was That?!||I Wasn't The Only One, right? ..it was coming from
+      the bathroom...
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Pete
+    fileContents: hey, it wasn't my fault--
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Pete
+    fileContents: the door... it's stuck... come On... Come On....
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Olivia
+    fileContents: I... don't know. What If They're Just On A Break?| The Nurses Will
+      Be Back Soon, they have to be
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Olivia
+    fileContents: Damn It, Peter! Quickly, Towards The Study!
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Olivia
+    fileContents: i knew this was a mistake.. I Knew It...
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 1
+    closeFile: 0
+  - fileName: Are you Sure you Want To Leave
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 0
+    notepad: 0
+    closeFile: 1
+  - fileName: No
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 0
+    notepad: 0
+    closeFile: 1
+  - fileName: Yes
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 0
+    notepad: 0
+    closeFile: 1
+  - fileName: Doorway
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 1
+    notepad: 0
+    closeFile: 0
+  - fileName: Go Straight To Ending (Debug)
+    fileContents: 
+    activateOnYes: {fileID: 0}
+    removeOnFinish: 0
+    notepad: 0
+    closeFile: 1
+--- !u!1 &1943978838
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1943978839}
+  - component: {fileID: 1943978840}
+  m_Layer: 0
+  m_Name: CloseNotepad
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1943978839
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1943978838}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1943978840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1943978838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8efab8723c43a4a4e948c44f2db07786, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetWindow: -1
+--- !u!1 &2091049924
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2091049925}
+  - component: {fileID: 2091049926}
+  m_Layer: 0
+  m_Name: DeleteEnable
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2091049925
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2091049924}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 214498012}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2091049926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2091049924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9e5fa2b181fd35438a2ca71934add62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GO: []
+  GODisable: []
+  activateEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1377765965}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  time: 0.5
+  repeatable: 0

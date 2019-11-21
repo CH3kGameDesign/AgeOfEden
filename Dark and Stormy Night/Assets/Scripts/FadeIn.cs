@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class FadeIn : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class FadeIn : MonoBehaviour
     private SpriteRenderer m_srSpriteRenderer;
     private RawImage m_riRawImage;
     private MeshRenderer m_mrMeshRenderer;
+    private TextMeshProUGUI m_tmpTextMeshProUI;
 
 	// Use this for initialization
 	private void Start()
@@ -39,6 +41,9 @@ public class FadeIn : MonoBehaviour
         if (GetComponent<MeshRenderer>() != null)
             m_mrMeshRenderer = GetComponent<MeshRenderer>();
 
+        if (GetComponent<TextMeshProUGUI>() != null)
+            m_tmpTextMeshProUI = GetComponent<TextMeshProUGUI>();
+
         if (fadeOutTimer != 0)
             Invoke("FadeOutActivate", fadeOutTimer);
     }
@@ -57,6 +62,9 @@ public class FadeIn : MonoBehaviour
 		if (m_mrMeshRenderer != null)
             m_mrMeshRenderer.material.color = Color.Lerp(
                 m_mrMeshRenderer.material.color, tarColor, fadeSpeed * Time.deltaTime);
+        if (m_tmpTextMeshProUI != null)
+            m_tmpTextMeshProUI.color = Color.Lerp(
+                m_tmpTextMeshProUI.color, tarColor, fadeSpeed * Time.deltaTime);
     }
 
     /// <summary>
