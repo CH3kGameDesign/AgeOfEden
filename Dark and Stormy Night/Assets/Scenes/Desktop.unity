@@ -19053,19 +19053,6 @@ MonoBehaviour:
     m_sMessage: 
     m_sMessageFile: {fileID: 0}
     txtExtension: 1
-  - m_olOutputLocation: 2
-    folderPath:
-    - EDEN
-    - Leaving
-    - Go Straight To Ending (Debug)
-    m_osOutputState: 2
-    m_bOverwrite: 1
-    m_bUseTypeWriter: 0
-    m_sFileName: Going
-    m_bPlusRandom: 0
-    m_sMessage: 
-    m_sMessageFile: {fileID: 0}
-    txtExtension: 1
 --- !u!1 &1050727953
 GameObject:
   m_ObjectHideFlags: 0
