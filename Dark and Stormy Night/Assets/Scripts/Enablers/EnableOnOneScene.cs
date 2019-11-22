@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class EnableOnOneScene : MonoBehaviour
 {
+    public int sceneAmount = 1;
+
     public List<GameObject> GO = new List<GameObject>();
     public List<GameObject> GODisable = new List<GameObject>();
 
@@ -25,7 +27,7 @@ public class EnableOnOneScene : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (SceneManager.sceneCount == 1)
+        if (SceneManager.sceneCount == sceneAmount)
         {
             EnableObjects();
             enabled = false;

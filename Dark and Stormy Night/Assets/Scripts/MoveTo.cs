@@ -130,7 +130,11 @@ public class MoveTo : MonoBehaviour
         {
             if (Vector3.Distance(Movee.position, Movee.parent.position + tarPos) < 0.5f / transform.lossyScale.x)
             {
-                Movee.localPosition = tarPos;
+                if (jumpOnFinish)
+                    Movee.localPosition = tarPos;
+                else
+                    Movee.localPosition = Vector3.Lerp(
+                        Movee.localPosition, tarPos, lerpSpeedActual * Time.deltaTime);
                 if (disableAfterFinish)
                     Finish();
             }
