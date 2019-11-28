@@ -9,6 +9,9 @@ public class ChangeSkybox : MonoBehaviour
 
     public bool activateOnStart;
     public float disableTime = 5;
+
+    public float lightingIntensity = 0.23f;
+    public float reflectionIntensity = 1;
     
     public Color changeFogColor = Color.white;
     public float fogIntensity = 0.01f;
@@ -42,12 +45,16 @@ public class ChangeSkybox : MonoBehaviour
             RenderSettings.skybox.SetColor("_Tint", Color.Lerp(RenderSettings.skybox.GetColor("_Tint"), tarSkybox.GetColor("_Tint"), lerpPerSecond * Time.deltaTime));
             RenderSettings.fogColor = Color.Lerp(RenderSettings.fogColor, changeFogColor, lerpPerSecond * Time.deltaTime);
             RenderSettings.fogDensity = Mathf.Lerp(RenderSettings.fogDensity, fogIntensity, lerpPerSecond * Time.deltaTime);
+            RenderSettings.ambientIntensity = Mathf.Lerp(RenderSettings.ambientIntensity, lightingIntensity, lerpPerSecond * Time.deltaTime);
+            RenderSettings.reflectionIntensity = Mathf.Lerp(RenderSettings.reflectionIntensity, reflectionIntensity, lerpPerSecond * Time.deltaTime);
         }
         else
         {
             RenderSettings.skybox.SetColor("_Tint", tarSkybox.GetColor("_Tint"));
             RenderSettings.fogColor = changeFogColor;
             RenderSettings.fogDensity = fogIntensity;
+            RenderSettings.ambientIntensity = lightingIntensity;
+            RenderSettings.reflectionIntensity = reflectionIntensity;
         }
     }
 
