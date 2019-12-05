@@ -163,6 +163,14 @@ public class CameraMovement : MonoBehaviour
                 s_bIsZoomed = false;
             }
         }
+        else
+        {
+            if (s_bIsZoomed)
+            {
+                m_cFirstChildCamera.fieldOfView = m_fFovNormal;
+                s_bIsZoomed = false;
+            }
+        }
     }
 
     /// <summary>
