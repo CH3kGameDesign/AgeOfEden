@@ -130,5 +130,7 @@ public class KeyEnable : MonoBehaviour
             DoThing();
         if (Input.GetKeyDown(KeyCode.Space) && keyPress.ToUpper() == "SPACE")
             DoThing();
+        if (Input.GetKeyDown(KeyCode.Escape) && keyPress.ToUpper() == "ESCAPE")
+            DoThing();
     }
 }

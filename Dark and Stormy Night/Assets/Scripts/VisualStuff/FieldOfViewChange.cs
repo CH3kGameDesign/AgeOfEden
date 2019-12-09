@@ -19,7 +19,7 @@ public class FieldOfViewChange : MonoBehaviour
 	private void Start()
     {
         mainCam = Camera.main;
-        startFOV = mainCam.fieldOfView;
+        startFOV = 60;
 	}
 	
 	// Update is called once per frame
