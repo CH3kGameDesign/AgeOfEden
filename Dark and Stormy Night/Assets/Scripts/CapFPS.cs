@@ -8,6 +8,7 @@ public class CapFPS : MonoBehaviour
 
 	private void Awake()
     {
+        QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = m_iFrameCap;
         //Debug.Log("Capped");
     }
