@@ -37,7 +37,19 @@ public class LoadSceneByButton : MonoBehaviour
             canvasObject.SetActive(true);
             float timerText = Mathf.Round(timer * 100);
             timerText /= 100;
-            TMProUI.text = "Quitting In: " + timerText;
+            float timerOpacity = 0;
+            if (timerText > 2)
+                timerOpacity = Mathf.Abs(timerText - 2.5f) + 0.3f;
+            else
+            {
+                if (timerText > 1)
+                    timerOpacity = Mathf.Abs(timerText - 1.5f) + 0.3f;
+                else
+                    timerOpacity = Mathf.Abs(timerText - 0.5f) + 0.3f;
+            }
+            //TMProUI.text = "Quitting In: " + timerText;
+            TMProUI.color = new Color(1, 1, 1, timerOpacity);
+            TMProUI.text = "Quitting...";
         }
         else
         {
@@ -48,7 +60,13 @@ public class LoadSceneByButton : MonoBehaviour
         }
         if (timer <= 0)
         {
-            SceneManager.LoadScene(0);
+#if UNITY_STANDALONE
+            Application.Quit();
+#endif
+
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#endif
         }
     }
 }
